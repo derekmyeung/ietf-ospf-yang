@@ -69,11 +69,6 @@ module ietf-ospf-bfd {
       "RFC XXXX: A YANG Data Model for OSPF BFD.";
   }
 
-  feature bfd-protocol-parms {
-    description
-      "OSPF BFD protocol specific parameters support.";
-  }
-
   /* Configuration */
 
   augment "/rt:routing/rt:routing-instance/rt:routing-protocols/"
@@ -95,9 +90,6 @@ module ietf-ospf-bfd {
         default false;
         description
           "True if BFD is enabled for the OSPF interface.";
-      }
-      uses bfd:bfd-grouping-base-cfg-parms {
-        if-feature bfd-protocol-parms;
       }
     }
   }
@@ -123,9 +115,6 @@ module ietf-ospf-bfd {
         type boolean;
         description
           "True if BFD is enabled for the OSPF interface.";
-      }
-      uses bfd:bfd-grouping-base-cfg-parms {
-        if-feature bfd-protocol-parms;
       }
     }
   }
