@@ -1010,6 +1010,7 @@ module ietf-ospf {
     uses interface-fast-reroute-config;
     uses interface-common-config;
   } // grouping interface-config
+
   grouping tlv {
     description
       "TLV";
@@ -2246,12 +2247,22 @@ module ietf-ospf {
       description "Wait timer.";
     }
 
-    leaf dr {
-      type inet:ipv4-address;
+    leaf dr-router-id {
+      type yang:dotted-quad;
+      description "Designated Router (DR) router ID.";
+    }
+
+    leaf dr-ip-addr {
+      type inet:ip-address;
       description "Designated Router (DR) IP address.";
     }
 
-    leaf bdr {
+    leaf bdr-router-id {
+      type yang:dotted-quad;
+      description "Backup Designated Router (DR) router ID.";
+    }
+
+    leaf bdr-ip-addr {
       type inet:ipv4-address;
       description "Backup Designated Router (BDR) IP Address.";
     }
@@ -2271,15 +2282,24 @@ module ietf-ospf {
       description
         "Neighbor address.";
     }
-    leaf dr {
+    leaf dr-router-id {
       type yang:dotted-quad;
-      description
-        "Designated Router.";
+      description "Designated Router (DR) router ID.";
     }
-    leaf bdr {
+
+    leaf dr-ip-addr {
+      type inet:ip-address;
+      description "Designated Router (DR) IP address.";
+    }
+
+    leaf bdr-router-id {
       type yang:dotted-quad;
-      description
-        "Backup Designated Router.";
+      description "Backup Designated Router (DR) router ID.";
+    }
+
+    leaf bdr-ip-addr {
+      type inet:ipv4-address;
+      description "Backup Designated Router (BDR) IP Address.";
     }
     leaf state {
       type nbr-state-type;
@@ -2545,6 +2565,24 @@ module ietf-ospf {
       }
     }
   }
+  
+  augment "/rt:routing/rt:routing-instance/rt:routing-protocols/"
+        + "rt:routing-protocol/ospf:ospf/ospf:instance/"
+        + "ospf:areas/ospf:area/ospf:interfaces/ospf:interface" {
+    when "../../../../../../rt:type = 'ospf:ospfv3'" {
+      description
+        "This augmentation is only valid for OSPFv3.";
+    }
+    leaf instance-id {
+      type uint8 {
+        range "0 .. 31";
+      }
+      description
+        "OSPFv3 instance ID.";
+    }
+    description
+      "OSPFv3 interface specific configuration.";
+  } 
 
 
   augment "/rt:routing-state/rt:routing-instance/"
@@ -2842,6 +2880,30 @@ module ietf-ospf {
       }
     }
   }
+
+  augment "/rt:routing-state/rt:routing-instance/"
+        + "rt:routing-protocols/rt:routing-protocol/"
+        + "ospf:ospf/ospf:instance/ospf:areas/ospf:area/"
+        + "ospf:interfaces/ospf:interface" {
+    when "../../../../../../rt:type = 'ospf:ospfv3'" {
+      description
+        "This augmentation is only valid for OSPFv3.";
+    }
+    leaf instance-id {
+      type uint8;
+      description
+        "OSPFv3 instance ID.";
+    }
+    leaf interface-id {
+      type uint16;
+      description
+        "OSPFv3 interface ID.";
+    }
+    description
+      "OSPFv3 interface specific operation state.";
+  }
+
+
 
   grouping route-content {
     description
