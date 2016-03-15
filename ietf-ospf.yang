@@ -2249,12 +2249,12 @@ module ietf-ospf {
 
     leaf dr-router-id {
       type yang:dotted-quad;
-      description "Designated Router (DR) router ID.";
+      description "Neighbor's Designated Router (DR) router ID.";
     }
 
     leaf dr-ip-addr {
       type inet:ip-address;
-      description "Designated Router (DR) IP address.";
+      description "Neighbor's Designated Router (DR) IP address.";
     }
 
     leaf bdr-router-id {
