@@ -2259,7 +2259,7 @@ module ietf-ospf {
 
     leaf bdr-router-id {
       type yang:dotted-quad;
-      description "Backup Designated Router (DR) router ID.";
+      description "Backup Designated Router (BDR) router ID.";
     }
 
     leaf bdr-ip-addr {
@@ -2294,12 +2294,12 @@ module ietf-ospf {
 
     leaf bdr-router-id {
       type yang:dotted-quad;
-      description "Backup Designated Router (DR) router ID.";
+      description "Neighbor's Backup Designated Router (BDR) router ID.";
     }
 
     leaf bdr-ip-addr {
       type inet:ipv4-address;
-      description "Backup Designated Router (BDR) IP Address.";
+      description "Neighbor's Backup Designated Router (BDR) IP Address.";
     }
     leaf state {
       type nbr-state-type;
