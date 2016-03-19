@@ -102,7 +102,7 @@ module ietf-ospf-sr {
 
   /* Configuration */
 
-  augment "/rt:routing/rt:routing-instance/rt:routing-protocols"
+  augment "/rt:routing/rt:routing-protocols"
         + "/rt:routing-protocol/ospf:ospf/ospf:instance" {
     when "../../rt:type = 'ospf:ospfv2' or "
        + "../../rt:type = 'ospf:ospfv3'" {
@@ -121,7 +121,7 @@ module ietf-ospf-sr {
     }
   }
 
-  augment "/rt:routing/rt:routing-instance/rt:routing-protocols/"
+  augment "/rt:routing/rt:routing-protocols/"
         + "rt:routing-protocol/ospf:ospf/ospf:instance/"
         + "ospf:areas/ospf:area/ospf:interfaces/ospf:interface" {
     when "../../../../../../rt:type = 'ospf:ospfv2' or "
@@ -137,7 +137,7 @@ module ietf-ospf-sr {
     uses sr:igp-interface-cfg;
   }
 
-  augment "/rt:routing/rt:routing-instance/rt:routing-protocols/"
+  augment "/rt:routing/rt:routing-protocols/"
         + "rt:routing-protocol/ospf:ospf/ospf:instance/"
         + "ospf:areas/ospf:area/ospf:interfaces/ospf:interface/"
         + "ospf:fast-reroute" {
@@ -164,7 +164,7 @@ module ietf-ospf-sr {
 
   /* Operational states */
 
-  augment "/rt:routing-state/rt:routing-instance/"
+  augment "/rt:routing-state/"
         + "rt:routing-protocols/rt:routing-protocol/"
         + "ospf:ospf/ospf:instance" {
     when "../../rt:type = 'ospf:ospfv2' or "
@@ -185,7 +185,7 @@ module ietf-ospf-sr {
     }
   }
 
-  augment "/rt:routing-state/rt:routing-instance/"
+  augment "/rt:routing-state/"
         + "rt:routing-protocols/rt:routing-protocol/"
         + "ospf:ospf/ospf:instance/ospf:areas/ospf:area/"
         + "ospf:interfaces/ospf:interface" {
@@ -453,7 +453,7 @@ module ietf-ospf-sr {
       }
     }
   }
-  augment "/rt:routing-state/rt:routing-instance/"
+  augment "/rt:routing-state/"
         + "rt:routing-protocols/rt:routing-protocol/"
         + "ospf:ospf/ospf:instance/ospf:areas/ospf:area/"
         + "ospf:interfaces/ospf:interface/ospf:database/"
@@ -473,7 +473,7 @@ module ietf-ospf-sr {
     uses sid-binding-sub-tlvs;
   }
 
-  augment "/rt:routing-state/rt:routing-instance/"
+  augment "/rt:routing-state/"
         + "rt:routing-protocols/rt:routing-protocol/"
         + "ospf:ospf/ospf:instance/ospf:areas/"
         + "ospf:area/ospf:database/"
@@ -493,7 +493,7 @@ module ietf-ospf-sr {
     uses sid-binding-sub-tlvs;
   }
 
-  augment "/rt:routing-state/rt:routing-instance/"
+  augment "/rt:routing-state/"
         + "rt:routing-protocols/rt:routing-protocol/"
         + "ospf:ospf/ospf:instance/ospf:database/"
         + "ospf:as-scope-lsa-type/ospf:as-scope-lsas/"
@@ -512,7 +512,7 @@ module ietf-ospf-sr {
     uses sid-binding-sub-tlvs;
   }
 
-  augment "/rt:routing-state/rt:routing-instance/"
+  augment "/rt:routing-state/"
         + "rt:routing-protocols/rt:routing-protocol/"
         + "ospf:ospf/ospf:instance/ospf:areas/"
         + "ospf:area/ospf:database/"
@@ -614,7 +614,7 @@ module ietf-ospf-sr {
     }
   }
 
-  augment "/rt:routing-state/rt:routing-instance/"
+  augment "/rt:routing-state/"
         + "rt:routing-protocols/rt:routing-protocol/"
         + "ospf:ospf/ospf:instance/ospf:areas/ospf:area/"
         + "ospf:interfaces/ospf:interface/ospf:database/"
@@ -635,7 +635,7 @@ module ietf-ospf-sr {
     uses sid-range-tlvs;
   }
 
-  augment "/rt:routing-state/rt:routing-instance/"
+  augment "/rt:routing-state/"
         + "rt:routing-protocols/rt:routing-protocol/"
         + "ospf:ospf/ospf:instance/ospf:areas/"
         + "ospf:area/ospf:database/"
@@ -656,7 +656,7 @@ module ietf-ospf-sr {
     uses sid-range-tlvs;
   }
 
-  augment "/rt:routing-state/rt:routing-instance/"
+  augment "/rt:routing-state/"
         + "rt:routing-protocols/rt:routing-protocol/"
         + "ospf:ospf/ospf:instance/ospf:database/"
         + "ospf:as-scope-lsa-type/ospf:as-scope-lsas/"

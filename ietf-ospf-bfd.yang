@@ -71,7 +71,7 @@ module ietf-ospf-bfd {
 
   /* Configuration */
 
-  augment "/rt:routing/rt:routing-instance/rt:routing-protocols/"
+  augment "/rt:routing/rt:routing-protocols/"
         + "rt:routing-protocol/ospf:ospf/ospf:instance/"
         + "ospf:areas/ospf:area/ospf:interfaces/ospf:interface" {
     when "../../../../../../rt:type = 'ospf:ospfv2' or "
@@ -96,7 +96,7 @@ module ietf-ospf-bfd {
 
   /* Operational states */
 
-  augment "/rt:routing-state/rt:routing-instance/"
+  augment "/rt:routing-state/"
         + "rt:routing-protocols/rt:routing-protocol/"
         + "ospf:ospf/ospf:instance/ospf:areas/ospf:area/"
         + "ospf:interfaces/ospf:interface" {
