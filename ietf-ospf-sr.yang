@@ -71,6 +71,13 @@ module ietf-ospf-sr {
      IPv6 (ipv6): Internet Protocol Version 6
     ";
 
+  revision 2016-03-20 {
+    description
+      "* Remove routing-instance."
+    reference
+      "RFC XXXX: A YANG Data Model for OSPF Segment Routing.";
+  }
+
   revision 2015-10-19 {
     description
       "* Add per-protocol SRGB support.
