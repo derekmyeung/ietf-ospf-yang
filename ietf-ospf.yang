@@ -19,7 +19,7 @@ module ietf-ospf {
     prefix "rt";
   }
 
-  import ietf-key-chain {
+  import ietf-routing-key-chain {
     prefix "key-chain";
   }
 
@@ -80,7 +80,12 @@ module ietf-ospf {
       "* Reorganize *-config and *-operation groupings.
        * Use *-config under state tree for applied config.
        * Rename config router-id to explicit-router-id.
-       * Rename feature router-id to explicit-router-id.";
+       * Rename feature router-id to explicit-router-id.
+       * Add OSPFv3 instance ID.
+       * Add OSPFv3 interface ID.
+       * Add ip-address for DR and BDR.
+       * Remove routing-instance.
+       * Change import module name to ietf-routing-key-chain.";
     reference
       "RFC XXXX: A YANG Data Model for OSPF.";
   }
@@ -2627,7 +2632,7 @@ module ietf-ospf {
       "OSPF top operation state.";
   }
 
-  augment "/rt:routing/rt:routing-instance/rt:routing-protocols/"
+  augment "/rt:routing/rt:routing-protocols/"
         + "rt:routing-protocol" {
      when "rt:type = 'ospf:ospfv2' or rt:type = 'ospf:ospfv3'" {
       description
@@ -2731,7 +2736,7 @@ module ietf-ospf {
     } // container ospf
   }
 
-  augment "/rt:routing/rt:routing-instance/rt:routing-protocols/"
+  augment "/rt:routing/rt:routing-protocols/"
         + "rt:routing-protocol/ospf:ospf/ospf:instance" {
     when "../../rt:type = 'ospf:ospfv2' or
           ../../rt:type = 'ospf:ospfv3'" {
@@ -2773,7 +2778,7 @@ module ietf-ospf {
     }
   }
 
-  augment "/rt:routing/rt:routing-instance/rt:routing-protocols/"
+  augment "/rt:routing/rt:routing-protocols/"
         + "rt:routing-protocol/ospf:ospf/ospf:instance/"
         + "ospf:areas/ospf:area/ospf:interfaces/ospf:interface" {
     when "../../../../../../rt:type = 'ospf:ospfv2'" {
@@ -2804,7 +2809,7 @@ module ietf-ospf {
     }
   }
   
-  augment "/rt:routing/rt:routing-instance/rt:routing-protocols/"
+  augment "/rt:routing/rt:routing-protocols/"
         + "rt:routing-protocol/ospf:ospf/ospf:instance/"
         + "ospf:areas/ospf:area/ospf:interfaces/ospf:interface" {
     when "../../../../../../rt:type = 'ospf:ospfv3'" {
@@ -2816,7 +2821,7 @@ module ietf-ospf {
     uses ospfv3-interface-config;
   }
 
-  augment "/rt:routing-state/rt:routing-instance/"
+  augment "/rt:routing-state/"
         + "rt:routing-protocols/rt:routing-protocol" {
     when "rt:type = 'ospf:ospfv2' or "
        + "rt:type = 'ospf:ospfv3'"  {
@@ -2918,7 +2923,7 @@ module ietf-ospf {
     } // container ospf
   }
 
-  augment "/rt:routing-state/rt:routing-instance/"
+  augment "/rt:routing-state/"
         + "rt:routing-protocols/rt:routing-protocol/"
         + "ospf:ospf/ospf:instance" {
     when "../../rt:type = 'ospf:ospfv2'" {
@@ -2962,7 +2967,7 @@ module ietf-ospf {
     }
   }
 
-  augment "/rt:routing-state/rt:routing-instance/"
+  augment "/rt:routing-state/"
         + "rt:routing-protocols/rt:routing-protocol/"
         + "ospf:ospf/ospf:instance/ospf:areas/ospf:area/"
         + "ospf:interfaces/ospf:interface" {
@@ -2989,7 +2994,7 @@ module ietf-ospf {
     }
   }
 
-  augment "/rt:routing-state/rt:routing-instance/"
+  augment "/rt:routing-state/"
         + "rt:routing-protocols/rt:routing-protocol/"
         + "ospf:ospf/ospf:instance/ospf:areas/ospf:area/"
         + "ospf:interfaces/ospf:interface" {
@@ -3021,7 +3026,7 @@ module ietf-ospf {
     }
   }
 
-  augment "/rt:routing-state/rt:routing-instance/"
+  augment "/rt:routing-state/"
         + "rt:ribs/rt:rib/rt:routes/rt:route" {
     when "rt:source-protocol = 'ospf:ospfv2' or "
        + "rt:source-protocol = 'ospf:ospfv3'" {
@@ -3039,18 +3044,20 @@ module ietf-ospf {
      "This group describes common instance specific
       data for notifications.";
 
+    /*
+     * TBD:
+     * Need to define a way to reference routing-instance.
+     */
     leaf routing-instance {
-      type rt:routing-instance-ref;
+      type string;
       description
         "Describe the routing instance.";
     }
 
     leaf routing-protocol-type {
       type leafref {
-        path "/rt:routing/rt:routing-instance"
-           + "[rt:name=current()/../routing-instance]/"
-           + "rt:routing-protocols/rt:routing-protocol/"
-           + "rt:type";
+        path "/rt:routing/rt:routing-protocols/"
+           + "rt:routing-protocol/rt:type";
       }
       must ". = 'ospf:ospfv2' or . = 'ospf:ospfv3'" {
         description "Only applies to the OSPF routing protocol.";
@@ -3061,8 +3068,7 @@ module ietf-ospf {
 
     leaf routing-protocol-name {
       type leafref {
-        path "/rt:routing/rt:routing-instance"
-           + "[rt:name=current()/../routing-instance]/"
+        path "/rt:routing/"
            + "rt:routing-protocols/rt:routing-protocol"
            + "[rt:type=current()/../routing-protocol-type]/"
            + "rt:name";
@@ -3073,8 +3079,7 @@ module ietf-ospf {
 
     leaf af {
       type leafref {
-        path "/rt:routing/rt:routing-instance"
-           + "[rt:name=current()/../routing-instance]/"
+        path "/rt:routing/"
            + "rt:routing-protocols/rt:routing-protocol"
            + "[rt:name=current()/../routing-protocol-name]"
            + "[rt:type=current()/../routing-protocol-type]/"

@@ -59,8 +59,17 @@ module ietf-ospf-bfd {
      IP (ip): Internet Protocol
 
      IPv4 (ipv4):Internet Protocol Version 4
+
      IPv6 (ipv6): Internet Protocol Version 6
     ";
+
+  revision 2016-03-20 {
+    description
+      "* Remove routing-instance.
+       * Remove use of bfd-protocol-parms from BFD module.";
+    reference
+      "RFC XXXX: A YANG Data Model for OSPF BFD.";
+  }
 
   revision 2015-10-19 {
     description
@@ -71,7 +80,7 @@ module ietf-ospf-bfd {
 
   /* Configuration */
 
-  augment "/rt:routing/rt:routing-instance/rt:routing-protocols/"
+  augment "/rt:routing/rt:routing-protocols/"
         + "rt:routing-protocol/ospf:ospf/ospf:instance/"
         + "ospf:areas/ospf:area/ospf:interfaces/ospf:interface" {
     when "../../../../../../rt:type = 'ospf:ospfv2' or "
@@ -96,7 +105,7 @@ module ietf-ospf-bfd {
 
   /* Operational states */
 
-  augment "/rt:routing-state/rt:routing-instance/"
+  augment "/rt:routing-state/"
         + "rt:routing-protocols/rt:routing-protocol/"
         + "ospf:ospf/ospf:instance/ospf:areas/ospf:area/"
         + "ospf:interfaces/ospf:interface" {
