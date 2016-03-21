@@ -2074,30 +2074,6 @@ module ietf-ospf {
     uses interface-common-operation;
   }
 
-  grouping ospfv3-interface-config {
-    description
-      "OSPFv3 interface specific configuration state.";
-
-    leaf instance-id {
-      type uint8 {
-        range "0 .. 31";
-      }
-      description
-        "OSPFv3 instance ID.";
-    }
-  }
-
-  grouping ospfv3-interface-operation {
-    description
-      "OSPFv3 interface specific operation state.";
-
-    leaf interface-id {
-      type uint16;
-      description
-        "OSPFv3 interface ID.";
-    }
-  }
-
   grouping af-area-config {
     description
       "OSPF address-family specific area config state.";
@@ -2190,21 +2166,6 @@ module ietf-ospf {
 
     uses af-area-config {
       when "../../operation-mode = "
-         + "'ospf:ships-in-the-night'" {
-        description
-          "Ships in the night configuration.";
-      }
-    }
-  }
-
-  grouping multi-topology-area-config {
-    description
-      "OSPF multi-topology area configuration state.";
-
-    uses area-common-config;
-
-    uses af-area-config {
-      when "../../../../operation-mode = "
          + "'ospf:ships-in-the-night'" {
         description
           "Ships in the night configuration.";
@@ -2633,6 +2594,78 @@ module ietf-ospf {
       "OSPF top operation state.";
   }
 
+  grouping multi-topology-area-config {
+    description
+      "OSPF multi-topology area configuration state.";
+
+    uses area-common-config;
+
+    uses af-area-config {
+      when "../../../../operation-mode = "
+         + "'ospf:ships-in-the-night'" {
+        description
+          "Ships in the night configuration.";
+      }
+    }
+  }
+
+  grouping multi-topology-area-operation {
+    description
+      "OSPF multi-topology area operation state.";
+  }
+
+  grouping multi-topology-config {
+    description
+      "OSPF multi-topology configuration state.";
+  }
+
+  grouping multi-topology-operation {
+    description
+      "OSPF multi-topology operation state.";
+
+    uses local-rib;
+  }
+
+  grouping multi-topology-interface-config {
+    description
+      "OSPF multi-topology configuration state.";
+
+    leaf cost {
+       type uint32;
+       description
+         "Interface cost for this topology.";
+    }
+  }
+
+  grouping multi-topology-interface-operation {
+    description
+      "OSPF multi-topology operation state.";
+  }
+
+  grouping ospfv3-interface-config {
+    description
+      "OSPFv3 interface specific configuration state.";
+
+    leaf instance-id {
+      type uint8 {
+        range "0 .. 31";
+      }
+      description
+        "OSPFv3 instance ID.";
+    }
+  }
+
+  grouping ospfv3-interface-operation {
+    description
+      "OSPFv3 interface specific operation state.";
+
+    leaf interface-id {
+      type uint16;
+      description
+        "OSPFv3 interface ID.";
+    }
+  }
+
   augment "/rt:routing/rt:routing-protocols/"
         + "rt:routing-protocol" {
      when "rt:type = 'ospf:ospfv2' or rt:type = 'ospf:ospfv3'" {
@@ -2747,7 +2780,8 @@ module ietf-ospf {
     }
     if-feature multi-topology;
     description
-      "OSPF multi-topology routing-protocol augmentation.";
+      "OSPF multi-topology instance configuration
+       state augmentation.";
     container topologies {
       description "All topologies.";
       list topology {
@@ -2761,6 +2795,9 @@ module ietf-ospf {
           }
           description "RIB";
         }
+
+        uses multi-topology-config;
+
         container areas {
           description "All areas in the topology.";
           list area {
@@ -2787,7 +2824,9 @@ module ietf-ospf {
         "This augmentation is only valid for OSPFv2.";
     }
     if-feature ospf:multi-topology;
-    description "OSPF multi-topology interface augmentation.";
+    description
+      "OSPF multi-topology interface configuration state
+       augmentation.";
     container topologies {
       description "All topologies for the interface.";
       list topology {
@@ -2801,11 +2840,8 @@ module ietf-ospf {
           description
             "One of the topologies enabled on this interface.";
         }
-        leaf cost {
-           type uint32;
-           description
-             "Interface cost for this topology.";
-        }
+
+        uses multi-topology-interface-config;
       }
     }
   }
@@ -2818,7 +2854,8 @@ module ietf-ospf {
         "This augmentation is only valid for OSPFv3.";
     }
     description
-      "OSPFv3 interface specific configuration state augmentation.";
+      "OSPFv3 interface specific configuration state
+       augmentation.";
     uses ospfv3-interface-config;
   }
 
@@ -2933,7 +2970,8 @@ module ietf-ospf {
     }
     if-feature multi-topology;
     description
-      "OSPF multi-topology routing-protocol augmentation.";
+      "OSPF multi-topology instance operation state
+       augmentation.";
     container topologies {
       description "All topologies.";
       list topology {
@@ -2949,7 +2987,8 @@ module ietf-ospf {
           description "RIB";
         }
 
-        uses local-rib;
+        uses multi-topology-config;
+        uses multi-topology-operation;
 
         container areas {
           description "All areas in the topology.";
@@ -2962,6 +3001,8 @@ module ietf-ospf {
               description
                 "Area ID.";
             }
+            uses multi-topology-area-config;
+            uses multi-topology-area-operation;
           }
         }
       }
@@ -2977,7 +3018,9 @@ module ietf-ospf {
         "This augmentation is only valid for OSPFv2.";
     }
     if-feature ospf:multi-topology;
-    description "OSPF multi-topology interface augmentation.";
+    description
+      "OSPF multi-topology interface operation state
+       augmentation.";
     container topologies {
       description "All topologies.";
       list topology {
@@ -2991,6 +3034,8 @@ module ietf-ospf {
           description
             "One of the topologies enabled on this interface.";
         }
+        uses multi-topology-interface-config;
+        uses multi-topology-interface-operation;
       }
     }
   }
@@ -3004,7 +3049,8 @@ module ietf-ospf {
         "This augmentation is only valid for OSPFv3.";
     }
     description
-      "OSPFv3 interface specific operation state augmentation.";
+      "OSPFv3 interface specific operation state
+       augmentation.";
     uses ospfv3-interface-config;
     uses ospfv3-interface-operation;
   }
