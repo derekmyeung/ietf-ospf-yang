@@ -816,7 +816,7 @@ notifications:
     <figure align="left">
       <artwork align="left">     
 module: ietf-ospf-sr
-augment /rt:routing/rt:routing-instance/rt:routing-protocols
+augment /rt:routing/rt:routing-protocols
         /rt:routing-protocol/ospf:ospf/ospf:instance:
    +--rw segment-routing
    |  +--rw enabled?    boolean
@@ -828,7 +828,7 @@ augment /rt:routing/rt:routing-instance/rt:routing-protocols
       +--rw srgb* [lower-bound upper-bound]
          +--rw lower-bound    uint32
          +--rw upper-bound    uint32
-augment /rt:routing/rt:routing-instance/rt:routing-protocols
+augment /rt:routing/rt:routing-protocols
         /rt:routing-protocol/ospf:ospf/ospf:instance
         /ospf:areas/ospf:area/ospf:interfaces/ospf:interface:
    +--rw segment-routing
@@ -836,12 +836,12 @@ augment /rt:routing/rt:routing-instance/rt:routing-protocols
          +--rw advertise-adj-group-sid* [group-id]
          |  +--rw group-id    uint32
          +--rw advertise-protection?      enumeration
-augment /rt:routing/rt:routing-instance/rt:routing-protocols
+augment /rt:routing/rt:routing-protocols
         /rt:routing-protocol/ospf:ospf/ospf:instance/ospf:areas
         /ospf:area/ospf:interfaces/ospf:interface/ospf:fast-reroute:
    +--rw ti-lfa {ti-lfa}?
       +--rw enable?   boolean
-augment /rt:routing-state/rt:routing-instance/rt:routing-protocols
+augment /rt:routing-state/rt:routing-protocols
         /rt:routing-protocol/ospf:ospf/ospf:instance:
    +--ro segment-routing
    |  +--ro enabled?    boolean
@@ -853,7 +853,7 @@ augment /rt:routing-state/rt:routing-instance/rt:routing-protocols
       +--ro srgb* [lower-bound upper-bound]
          +--ro lower-bound    uint32
          +--ro upper-bound    uint32
-augment /rt:routing-state/rt:routing-instance/rt:routing-protocols
+augment /rt:routing-state/rt:routing-protocols
         /rt:routing-protocol/ospf:ospf/ospf:instance
         /ospf:areas/ospf:area/ospf:interfaces/ospf:interface:
    +--ro segment-routing
@@ -861,7 +861,7 @@ augment /rt:routing-state/rt:routing-instance/rt:routing-protocols
          +--ro advertise-adj-group-sid* [group-id]
          |  +--ro group-id    uint32
          +--ro advertise-protection?      enumeration
-augment /rt:routing-state/rt:routing-instance/rt:routing-protocols
+augment /rt:routing-state/rt:routing-protocols
         /rt:routing-protocol/ospf:ospf/ospf:instance/ospf:areas
         /ospf:area/ospf:interfaces/ospf:interface/ospf:database
         /ospf:link-scope-lsa-type/ospf:link-scope-lsas
@@ -897,7 +897,7 @@ augment /rt:routing-state/rt:routing-instance/rt:routing-protocols
             +--ro flags?          bits
             +--ro router-id?      yang:dotted-quad
             +--ro interface-id?   uint32
-augment /rt:routing-state/rt:routing-instance/rt:routing-protocols
+augment /rt:routing-state/rt:routing-protocols
         /rt:routing-protocol/ospf:ospf/ospf:instance
         /ospf:areas/ospf:area/ospf:database
         /ospf:area-scope-lsa-type/ospf:area-scope-lsas
@@ -933,7 +933,7 @@ augment /rt:routing-state/rt:routing-instance/rt:routing-protocols
             +--ro flags?          bits
             +--ro router-id?      yang:dotted-quad
             +--ro interface-id?   uint32
-augment /rt:routing-state/rt:routing-instance/rt:routing-protocols
+augment /rt:routing-state/rt:routing-protocols
         /rt:routing-protocol/ospf:ospf/ospf:instance
         /ospf:database/ospf:as-scope-lsa-type/ospf:as-scope-lsas
         /ospf:as-scope-lsa/ospf:version/ospf:ospfv2
@@ -968,7 +968,7 @@ augment /rt:routing-state/rt:routing-instance/rt:routing-protocols
             +--ro flags?          bits
             +--ro router-id?      yang:dotted-quad
             +--ro interface-id?   uint32
-augment /rt:routing-state/rt:routing-instance/rt:routing-protocols
+augment /rt:routing-state/rt:routing-protocols
         /rt:routing-protocol/ospf:ospf/ospf:instance
         /ospf:areas/ospf:area/ospf:database
         /ospf:area-scope-lsa-type/ospf:area-scope-lsas
@@ -988,7 +988,7 @@ augment /rt:routing-state/rt:routing-instance/rt:routing-protocols
          +--ro weight?               uint8
          +--ro neighbor-router-id?   yang:dotted-quad
          +--ro sid?                  uint32
-augment /rt:routing-state/rt:routing-instance/rt:routing-protocols
+augment /rt:routing-state/rt:routing-protocols
         /rt:routing-protocol/ospf:ospf/ospf:instance/ospf:areas
         /ospf:area/ospf:interfaces/ospf:interface
         /ospf:database/ospf:link-scope-lsa-type/ospf:link-scope-lsas
@@ -1040,7 +1040,7 @@ augment /rt:routing-state/rt:routing-instance/rt:routing-protocols
          +--ro range-size?    ospf:uint24
          +--ro sid-sub-tlv
             +--ro sid?   uint32
-augment /rt:routing-state/rt:routing-instance/rt:routing-protocols
+augment /rt:routing-state/rt:routing-protocols
         /rt:routing-protocol/ospf:ospf/ospf:instance/ospf:areas
         /ospf:area/ospf:database/ospf:area-scope-lsa-type
         /ospf:area-scope-lsas/ospf:area-scope-lsa
@@ -1091,7 +1091,7 @@ augment /rt:routing-state/rt:routing-instance/rt:routing-protocols
          +--ro range-size?    ospf:uint24
          +--ro sid-sub-tlv
             +--ro sid?   uint32
-augment /rt:routing-state/rt:routing-instance/rt:routing-protocols
+augment /rt:routing-state/rt:routing-protocols
         /rt:routing-protocol/ospf:ospf/ospf:instance/ospf:database
         /ospf:as-scope-lsa-type/ospf:as-scope-lsas/ospf:as-scope-lsa
         /ospf:version/ospf:ospfv2/ospf:ospfv2/ospf:body/ospf:opaque:
@@ -1162,30 +1162,16 @@ augment /rt:routing-state/rt:routing-instance/rt:routing-protocols
     <figure align="left">
       <artwork align="left">
 module: ietf-ospf-bfd
-augment /rt:routing/rt:routing-instance/rt:routing-protocols
+augment /rt:routing/rt:routing-protocols
         /rt:routing-protocol/ospf:ospf/ospf:instance
         /ospf:areas/ospf:area/ospf:interfaces/ospf:interface:
    +--rw bfd
       +--rw enabled?                    boolean
-      +--rw local-multiplier?           multiplier
-      +--rw (interval-config-type)?
-         +--:(tx-rx-intervals)
-         |  +--rw desired-min-tx-interval     uint32
-         |  +--rw required-min-rx-interval    uint32
-         +--:(single-interval)
-            +--rw min-interval                uint32
-augment /rt:routing-state/rt:routing-instance/rt:routing-protocols
+augment /rt:routing-state/rt:routing-protocols
         /rt:routing-protocol/ospf:ospf/ospf:instance
         /ospf:areas/ospf:area/ospf:interfaces/ospf:interface:
    +--ro bfd
       +--ro enabled?                    boolean
-      +--ro local-multiplier?           multiplier
-      +--ro (interval-config-type)?
-         +--:(tx-rx-intervals)
-         |  +--ro desired-min-tx-interval     uint32
-         |  +--ro required-min-rx-interval    uint32
-         +--:(single-interval)
-            +--ro min-interval                uint32
       </artwork>
     </figure>
   </section>
@@ -1193,7 +1179,7 @@ augment /rt:routing-state/rt:routing-instance/rt:routing-protocols
   <t>
     <figure>
       <artwork><![CDATA[
-<CODE BEGINS> file "ietf-ospf@2016-03-18.yang"
+<CODE BEGINS> file "ietf-ospf@2016-03-20.yang"
 <CODE ENDS>
       ]]></artwork>
     </figure>
@@ -1204,7 +1190,7 @@ augment /rt:routing-state/rt:routing-instance/rt:routing-protocols
   <t>
     <figure>
       <artwork><![CDATA[
-<CODE BEGINS> file "ietf-ospf-sr@2016-03-18.yang"
+<CODE BEGINS> file "ietf-ospf-sr@2016-03-20.yang"
 <CODE ENDS>
       ]]></artwork>
     </figure>
@@ -1215,7 +1201,7 @@ augment /rt:routing-state/rt:routing-instance/rt:routing-protocols
   <t>
     <figure>
       <artwork><![CDATA[
-<CODE BEGINS> file "ietf-ospf-bfd@2016-03-18.yang"
+<CODE BEGINS> file "ietf-ospf-bfd@2016-03-20.yang"
 <CODE ENDS>
       ]]></artwork>
     </figure>
@@ -1232,7 +1218,7 @@ augment /rt:routing-state/rt:routing-instance/rt:routing-protocols
     <section anchor="Acknowledgements" title="Acknowledgements">
       <t>The authors wish to thank Acee Lindem, Yi Yang, Alexander Clemm, 
       Gaurav Gupta, Ing-Wher Chen, Ladislav Lhotka, Stephane Litkowski, 
-      Greg Hankins and Manish Gupta for their thorough reviews 
+      Greg Hankins, Manish Gupta and Alan Davey for their thorough reviews 
       and helpful comments.</t>
       <t>This document was produced using Marshall Rose's xml2rfc tool.</t>
     </section>   
