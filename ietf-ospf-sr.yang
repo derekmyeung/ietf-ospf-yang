@@ -73,7 +73,7 @@ module ietf-ospf-sr {
 
   revision 2016-03-20 {
     description
-      "* Remove routing-instance."
+      "* Remove routing-instance.";
     reference
       "RFC XXXX: A YANG Data Model for OSPF Segment Routing.";
   }
