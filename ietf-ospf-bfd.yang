@@ -6,9 +6,6 @@ module ietf-ospf-bfd {
   import ietf-routing {
     prefix "rt";
   }
-  import ietf-bfd {
-    prefix "bfd";
-  }
   import ietf-ospf {
     prefix "ospf";
   }
@@ -66,7 +63,8 @@ module ietf-ospf-bfd {
   revision 2016-03-20 {
     description
       "* Remove routing-instance.
-       * Remove use of bfd-protocol-parms from BFD module.";
+       * Remove use of bfd-protocol-parms from ietf-bfd module.
+       * Remove import of ietf-bfd module.";
     reference
       "RFC XXXX: A YANG Data Model for OSPF BFD.";
   }
