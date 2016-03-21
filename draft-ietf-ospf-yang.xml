@@ -293,41 +293,40 @@
       <artwork align="left">
 module: ospf
 +--rw routing
- +--rw routing-instance [name]
-  +--rw routing-protocols
-   +--rw routing-protocol [name]
-     +--rw ospf
-           .
-           .
-        +--rw all-instances-inherit {instance-inheritance}?
-        |   .
-        |   .
-        +--rw instance* [routing-instance af]
-              .
-              .
-          +--rw areas
-          |  +--rw area* [area-id]
-          |     .
-          |     .
-          |     +--rw all-interfaces-inherit {interface-inheritance}?
-          |     .
-          |     .
-          |     +--rw virtual-links
-          |     |  +--rw virtual-link* [router-id]
-          |     |     .
-          |     |     .
-          |     +--rw sham-links
-          |     |  +--rw sham-link* [local-id remote-id]
-          |     |     .
-          |     |     .
-          |     +--rw interfaces
-          |     |  +--rw interface* [interface]
-          |     |     .
-          |     |     .
-          |     .
-          |     .
-          +--rw topologies
-             +--rw topology* [name]
+ +--rw routing-protocols
+  +--rw routing-protocol [name]
+    +--rw ospf
+          .
+          .
+       +--rw all-instances-inherit {instance-inheritance}?
+       |   .
+       |   .
+       +--rw instance* [routing-instance af]
+             .
+             .
+         +--rw areas
+         |  +--rw area* [area-id]
+         |     .
+         |     .
+         |     +--rw all-interfaces-inherit {interface-inheritance}?
+         |     .
+         |     .
+         |     +--rw virtual-links
+         |     |  +--rw virtual-link* [router-id]
+         |     |     .
+         |     |     .
+         |     +--rw sham-links
+         |     |  +--rw sham-link* [local-id remote-id]
+         |     |     .
+         |     |     .
+         |     +--rw interfaces
+         |     |  +--rw interface* [interface]
+         |     |     .
+         |     |     .
+         |     .
+         |     .
+         +--rw topologies
+            +--rw topology* [name]
       </artwork>
     </figure>
     
@@ -407,59 +406,58 @@ module: ospf
     <figure align="center">
       <artwork align="left">
 module: ospf
-
-   +--rw ospf
-        .
-        .
-      +--rw instance* [af]
-         +--rw af                   identityref
-         +--rw router-id?           yang:dotted-quad {router-id}?
-         +--rw admin-distance
-         |  +--rw (scope)?
-         |     +--:(single-value)
-         |     |  +--rw all?          uint8
-         |     +--:(multi-values)
-         |        +--rw (granularity)?
-         |        |  +--:(detail)
-         |        |  |  +--rw intra-area?   uint8
-         |        |  |  +--rw inter-area?   uint8
-         |        |  +--:(coarse)
-         |        |     +--rw internal?     uint8
-         |        +--rw external?     uint8
-         +--rw nsr {nsr}?
-         |  +--rw enable?   boolean
-         +--rw graceful-restart {graceful-restart}?
-         |  +--rw enable?                       boolean
-         |  +--rw helper-enable?                boolean
-         |  +--rw restart-interval?             uint16
-         |  +--rw helper-strict-lsa-checking?   boolean
-         +--rw enable?              boolean {admin-control}?
-         +--rw auto-cost {auto-cost}?
-         |  +--rw enable?                boolean
-         |  +--rw reference-bandwidth?   uint32
-         +--rw spf-control
-         |  +--rw paths?   uint16 {max-ecmp}?
-         +--rw database-control
-         |  +--rw max-lsa?   uint32 {max-lsa}?
-         +--rw stub-router {stub-router}?
-         |  +--rw (trigger)?
-         |     +--:(always)
-         |        +--rw always!
-         +--rw mpls
-         |  +--rw te-rid {te-rid}?
-         |  |  +--rw (source)?
-         |  |     +--:(interface)
-         |  |     |  +--rw interface?   if:interface-ref
-         |  |     +--:(explicit)
-         |  |        +--rw router-id?   inet:ipv4-address
-         |  +--rw ldp
-         |     +--rw igp-sync?     boolean {ldp-igp-sync}?
-         |     +--rw autoconfig?   boolean {ldp-igp-autoconfig}?
-         +--rw fast-reroute {fast-reroute}?
-         |  +--rw lfa {lfa}?
-         +--rw all-areas-inherit {area-inheritance}?
-         |  +--rw area
-         |  +--rw interface
+ +--rw ospf
+     .
+     .
+   +--rw instance* [af]
+      +--rw af                   identityref
+      +--rw all-areas-inherit {area-inheritance}?
+      |  +--rw area
+      |  +--rw interface
+      +--rw explicit-router-id?  yang:dotted-quad {explicit-router-id}?
+      +--rw admin-distance
+      |  +--rw (scope)?
+      |     +--:(single-value)
+      |     |  +--rw all?          uint8
+      |     +--:(multi-values)
+      |        +--rw (granularity)?
+      |        |  +--:(detail)
+      |        |  |  +--rw intra-area?   uint8
+      |        |  |  +--rw inter-area?   uint8
+      |        |  +--:(coarse)
+      |        |     +--rw internal?     uint8
+      |        +--rw external?     uint8
+      +--rw nsr {nsr}?
+      |  +--rw enable?   boolean
+      +--rw graceful-restart {graceful-restart}?
+      |  +--rw enable?                       boolean
+      |  +--rw helper-enable?                boolean
+      |  +--rw restart-interval?             uint16
+      |  +--rw helper-strict-lsa-checking?   boolean
+      +--rw enable?              boolean {admin-control}?
+      +--rw auto-cost {auto-cost}?
+      |  +--rw enable?                boolean
+      |  +--rw reference-bandwidth?   uint32
+      +--rw spf-control
+      |  +--rw paths?   uint16 {max-ecmp}?
+      +--rw database-control
+      |  +--rw max-lsa?   uint32 {max-lsa}?
+      +--rw stub-router {stub-router}?
+      |  +--rw (trigger)?
+      |     +--:(always)
+      |        +--rw always!
+      +--rw mpls
+      |  +--rw te-rid {te-rid}?
+      |  |  +--rw (source)?
+      |  |     +--:(interface)
+      |  |     |  +--rw interface?   if:interface-ref
+      |  |     +--:(explicit)
+      |  |        +--rw router-id?   inet:ipv4-address
+      |  +--rw ldp
+      |     +--rw igp-sync?     boolean {ldp-igp-sync}?
+      |     +--rw autoconfig?   boolean {ldp-igp-autoconfig}?
+      +--rw fast-reroute {fast-reroute}?
+      |  +--rw lfa {lfa}?
       </artwork>
     </figure>
     </section>
@@ -481,6 +479,8 @@ module: ospf
   +--rw areas
   |  +--rw area* [area-id]
   |    +--rw area-id                   area-id-type
+  |    +--rw all-interfaces-inherit {interface-inheritance}?
+  |    |  +--rw interface
   |    +--rw area-type?                identityref
   |    +--rw summary?                  boolean
   |    +--rw default-cost?             uint32
@@ -489,8 +489,6 @@ module: ospf
   |    |     +--rw prefix       inet:ip-prefix
   |    |     +--rw advertise?   boolean
   |    |     +--rw cost?        uint24
-  |    +--rw all-interfaces-inherit {interface-inheritance}?
-  |    |  +--rw interface
   |    +--rw virtual-links
   |    |  +--rw virtual-link* [router-id]
   |    |     +--rw router-id            yang:dotted-quad
@@ -529,7 +527,9 @@ module: ospf
   |    |                  +--:(hmac-sha-384)
   |    |                  |  +--rw hmac-sha-384?   empty
   |    |                  +--:(hmac-sha-512)
-  |    |                     +--rw hmac-sha-512?   empty
+  |    |                  |  +--rw hmac-sha-512?   empty
+  |    |                  +--:(clear-text) {clear-text}?
+  |    |                     +--rw clear-text?     empty
   |    +--rw sham-link
   |    |  +--rw sham-link* [local-id remote-id]
   |    |     +--rw local-id             inet:ip-address
@@ -570,7 +570,9 @@ module: ospf
   |    |                  +--:(hmac-sha-384)
   |    |                  |  +--rw hmac-sha-384?   empty
   |    |                  +--:(hmac-sha-512)
-  |    |                     +--rw hmac-sha-512?   empty
+  |    |                  |  +--rw hmac-sha-512?   empty
+  |    |                  +--:(clear-text) {clear-text}?
+  |    |                     +--rw clear-text?     empty
       </artwork>
     </figure>
     </section>
@@ -647,11 +649,14 @@ module: ospf
    |         |            +--:(hmac-sha-384)
    |         |            |  +--rw hmac-sha-384?   empty
    |         |            +--:(hmac-sha-512)
-   |         |               +--rw hmac-sha-512?   empty
+   |         |            |  +--rw hmac-sha-512?   empty
+   |         |            +--:(clear-text) {clear-text}?
+   |         |               +--rw clear-text?     empty
    |         +--rw topologies
-   |            +--rw topology* [name]
-   |               +--rw name    leafref
-   |               +--rw cost?   uint32
+   |         |  +--rw topology* [name]
+   |         |     +--rw name    leafref
+   |         |     +--rw cost?   uint32
+   |         +--rw instance-id?         uint8
       </artwork>
     </figure>
     </section>
@@ -665,7 +670,7 @@ module: ospf
 module: ospf      
 notifications:
    +---n if-state-change
-   |  +--ro routing-instance?        rt:routing-instance-ref
+   |  +--ro routing-instance?        string
    |  +--ro routing-protocol-type?   -> ...
    |  +--ro routing-protocol-name?   -> ...
    |  +--ro af?                      -> ...
@@ -684,7 +689,7 @@ notifications:
    |  |        +--ro remote-ip-addr?   inet:ip-address
    |  +--ro state?                   if-state-type
    +---n if-config-error
-   |  +--ro routing-instance?        rt:routing-instance-ref
+   |  +--ro routing-instance?        string
    |  +--ro routing-protocol-type?   -> ...
    |  +--ro routing-protocol-name?   -> ...
    |  +--ro af?                      -> ...
@@ -705,7 +710,7 @@ notifications:
    |  +--ro packet-type?             packet-type
    |  +--ro error?                   enumeration
    +---n nbr-state-change
-   |  +--ro routing-instance?        rt:routing-instance-ref
+   |  +--ro routing-instance?        string
    |  +--ro routing-protocol-type?   -> ...
    |  +--ro routing-protocol-name?   -> ...
    |  +--ro af?                      -> ...
@@ -726,7 +731,7 @@ notifications:
    |  +--ro neighbor-ip-addr?        yang:dotted-quad
    |  +--ro state?                   nbr-state-type
    +---n nbr-restart-helper-status-change
-   |  +--ro routing-instance?        rt:routing-instance-ref
+   |  +--ro routing-instance?        string
    |  +--ro routing-protocol-type?   -> ...
    |  +--ro routing-protocol-name?   -> ...
    |  +--ro af?                      -> ...
@@ -749,7 +754,7 @@ notifications:
    |  +--ro age?                     uint32
    |  +--ro exit-reason?             restart-exit-reason-type
    +---n rx-bad-packet
-   |  +--ro routing-instance?        rt:routing-instance-ref
+   |  +--ro routing-instance?        string
    |  +--ro routing-protocol-type?   -> ...
    |  +--ro routing-protocol-name?   -> ...
    |  +--ro af?                      -> ...
@@ -769,26 +774,26 @@ notifications:
    |  +--ro packet-source?           yang:dotted-quad
    |  +--ro packet-type?             packet-type
    +---n lsdb-approaching-overflow
-   |  +--ro routing-instance?        rt:routing-instance-ref
+   |  +--ro routing-instance?        string
    |  +--ro routing-protocol-type?   -> ...
    |  +--ro routing-protocol-name?   -> ...
    |  +--ro af?                      -> ...
    |  +--ro ext-lsdb-limit?          uint32
    +---n lsdb-overflow
-   |  +--ro routing-instance?        rt:routing-instance-ref
+   |  +--ro routing-instance?        string
    |  +--ro routing-protocol-type?   -> ...
    |  +--ro routing-protocol-name?   -> ...
    |  +--ro af?                      -> ...
    |  +--ro ext-lsdb-limit?          uint32
    +---n nssa-translator-status-change
-   |  +--ro routing-instance?        rt:routing-instance-ref
+   |  +--ro routing-instance?        string
    |  +--ro routing-protocol-type?   -> ...
    |  +--ro routing-protocol-name?   -> ...
    |  +--ro af?                      -> ...
    |  +--ro area-id?                 area-id-type
    |  +--ro status?                  nssa-translator-state-type
    +---n restart-status-change
-      +--ro routing-instance?        rt:routing-instance-ref
+      +--ro routing-instance?        string
       +--ro routing-protocol-type?   -> ...
       +--ro routing-protocol-name?   -> ...
       +--ro af?                      -> ...
