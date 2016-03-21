@@ -2395,13 +2395,14 @@ module ietf-ospf {
       leaf enable {
         type boolean;
         description
-          "Enable/Disable graceful restart as defined in RFC 3623.";
+          "Enable/Disable graceful restart as defined in RFC 3623
+           for OSPFv2 and RFC 5187 for OSPFv3.";
       }
       leaf helper-enable {
         type boolean;
         description
           "Enable graceful restart helper support for restarting
-           routers (RFC 3623 Section B.2).";
+           routers (RFC 3623 Section 3).";
       }
       leaf restart-interval {
         type uint16 {
