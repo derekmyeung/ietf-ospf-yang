@@ -409,55 +409,55 @@ module: ospf
  +--rw ospf
      .
      .
-   +--rw instance* [af]
-      +--rw af                   identityref
-      +--rw all-areas-inherit {area-inheritance}?
-      |  +--rw area
-      |  +--rw interface
-      +--rw explicit-router-id?  yang:dotted-quad {explicit-router-id}?
-      +--rw admin-distance
-      |  +--rw (scope)?
-      |     +--:(single-value)
-      |     |  +--rw all?          uint8
-      |     +--:(multi-values)
-      |        +--rw (granularity)?
-      |        |  +--:(detail)
-      |        |  |  +--rw intra-area?   uint8
-      |        |  |  +--rw inter-area?   uint8
-      |        |  +--:(coarse)
-      |        |     +--rw internal?     uint8
-      |        +--rw external?     uint8
-      +--rw nsr {nsr}?
-      |  +--rw enable?   boolean
-      +--rw graceful-restart {graceful-restart}?
-      |  +--rw enable?                       boolean
-      |  +--rw helper-enable?                boolean
-      |  +--rw restart-interval?             uint16
-      |  +--rw helper-strict-lsa-checking?   boolean
-      +--rw enable?              boolean {admin-control}?
-      +--rw auto-cost {auto-cost}?
-      |  +--rw enable?                boolean
-      |  +--rw reference-bandwidth?   uint32
-      +--rw spf-control
-      |  +--rw paths?   uint16 {max-ecmp}?
-      +--rw database-control
-      |  +--rw max-lsa?   uint32 {max-lsa}?
-      +--rw stub-router {stub-router}?
-      |  +--rw (trigger)?
-      |     +--:(always)
-      |        +--rw always!
-      +--rw mpls
-      |  +--rw te-rid {te-rid}?
-      |  |  +--rw (source)?
-      |  |     +--:(interface)
-      |  |     |  +--rw interface?   if:interface-ref
-      |  |     +--:(explicit)
-      |  |        +--rw router-id?   inet:ipv4-address
-      |  +--rw ldp
-      |     +--rw igp-sync?     boolean {ldp-igp-sync}?
-      |     +--rw autoconfig?   boolean {ldp-igp-autoconfig}?
-      +--rw fast-reroute {fast-reroute}?
-      |  +--rw lfa {lfa}?
+  +--rw instance* [af]
+     +--rw af                  identityref
+     +--rw all-areas-inherit {area-inheritance}?
+     |  +--rw area
+     |  +--rw interface
+     +--rw explicit-router-id? yang:dotted-quad {explicit-router-id}?
+     +--rw admin-distance
+     |  +--rw (scope)?
+     |     +--:(single-value)
+     |     |  +--rw all?          uint8
+     |     +--:(multi-values)
+     |        +--rw (granularity)?
+     |        |  +--:(detail)
+     |        |  |  +--rw intra-area?   uint8
+     |        |  |  +--rw inter-area?   uint8
+     |        |  +--:(coarse)
+     |        |     +--rw internal?     uint8
+     |        +--rw external?     uint8
+     +--rw nsr {nsr}?
+     |  +--rw enable?   boolean
+     +--rw graceful-restart {graceful-restart}?
+     |  +--rw enable?                       boolean
+     |  +--rw helper-enable?                boolean
+     |  +--rw restart-interval?             uint16
+     |  +--rw helper-strict-lsa-checking?   boolean
+     +--rw enable?              boolean {admin-control}?
+     +--rw auto-cost {auto-cost}?
+     |  +--rw enable?                boolean
+     |  +--rw reference-bandwidth?   uint32
+     +--rw spf-control
+     |  +--rw paths?   uint16 {max-ecmp}?
+     +--rw database-control
+     |  +--rw max-lsa?   uint32 {max-lsa}?
+     +--rw stub-router {stub-router}?
+     |  +--rw (trigger)?
+     |     +--:(always)
+     |        +--rw always!
+     +--rw mpls
+     |  +--rw te-rid {te-rid}?
+     |  |  +--rw (source)?
+     |  |     +--:(interface)
+     |  |     |  +--rw interface?   if:interface-ref
+     |  |     +--:(explicit)
+     |  |        +--rw router-id?   inet:ipv4-address
+     |  +--rw ldp
+     |     +--rw igp-sync?     boolean {ldp-igp-sync}?
+     |     +--rw autoconfig?   boolean {ldp-igp-autoconfig}?
+     +--rw fast-reroute {fast-reroute}?
+     |  +--rw lfa {lfa}?
       </artwork>
     </figure>
     </section>
@@ -3103,12 +3103,14 @@ module ietf-ospf {
 
     leaf bdr-router-id {
       type yang:dotted-quad;
-      description "Neighbor's Backup Designated Router (BDR) router ID.";
+      description
+        "Neighbor's Backup Designated Router (BDR) router ID.";
     }
 
     leaf bdr-ip-addr {
       type inet:ipv4-address;
-      description "Neighbor's Backup Designated Router (BDR) IP Address.";
+      description
+        "Neighbor's Backup Designated Router (BDR) IP Address.";
     }
     leaf state {
       type nbr-state-type;
