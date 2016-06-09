@@ -75,6 +75,18 @@ module ietf-ospf {
      MTU (mtu) Maximum Transmission Unit
     ";
 
+  revision 2016-06-09 {
+    description
+      "* Added ospfv3 AF bit.
+       * Added ospfv2 MT, L, O, DN bit.
+       * Added interface priority config.
+       * Changed bdr-ip-address to type ip-address.
+       * Renamed leaf interface to name.
+       * Renamed rx-bad-packet to if-rx-bad-packet."; 
+    reference
+      "RFC XXXX: A YANG Data Model for OSPF.";
+  }
+
   revision 2016-03-20 {
     description
       "* Reorganize *-config and *-operation groupings.
