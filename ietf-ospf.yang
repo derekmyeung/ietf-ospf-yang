@@ -953,6 +953,10 @@ module ietf-ospf {
     description "OSPFv3 LSA options";
     leaf options {
       type bits {
+        bit AF {
+          description
+            "When set, the router supprts OSPFv3 AFs as in RFC5838. ";
+        }
         bit DC {
           description
             "When set, the router supports demand circuits.";
@@ -1329,6 +1333,10 @@ module ietf-ospf {
         "Decoded OSPFv2 LSA header data.";
       leaf option {
         type bits {
+          bit MT {
+            description
+              "When set, the router supports multi-topology as in RFC 4915.";
+          }
           bit DC {
             description
               "When set, the router supports demand circuits.";
@@ -1346,7 +1354,21 @@ module ietf-ospf {
           bit E {
             description
               "This bit describes the way AS-external LSAs
-               are flooded";
+               are flooded.";
+          }
+          bit L {
+            description
+              "L-bit is set in Hello and DD packets to indicate that
+               the packet contains an LLS data block as in RFC 5613.";
+          }
+          bit O {
+            description
+              "When set, the router is opaque-capable as in RFC 5250.";
+          }
+          bit DN {
+            description
+              "When a type 3, 5 or 7 LSA is sent from a PE to a CE, the DN
+              bit must be set. See RFC 4576.";
           }
         }
         mandatory true;
@@ -1833,6 +1855,12 @@ module ietf-ospf {
         "Enable/Disable demand circuit.";
     }
 
+    leaf priority {
+      type uint8;
+      description
+        "Configure OSPF router priority.";
+    }
+
     container multi-areas {
       description "Container for multi-area config.";
       list multi-area {
@@ -1926,7 +1954,7 @@ module ietf-ospf {
     }
 
     leaf bdr-ip-addr {
-      type inet:ipv4-address;
+      type inet:ip-address;
       description
         "Neighbor's Backup Designated Router (BDR) IP Address.";
     }
@@ -1979,7 +2007,7 @@ module ietf-ospf {
     }
 
     leaf bdr-ip-addr {
-      type inet:ipv4-address;
+      type inet:ip-address;
       description "Backup Designated Router (BDR) IP Address.";
     }
 
@@ -2755,13 +2783,13 @@ module ietf-ospf {
             container interfaces {
               description "All interfaces.";
               list interface {
-                key "interface";
+                key "name";
                 description
                   "List of OSPF interfaces.";
-                leaf interface {
+                leaf name {
                   type if:interface-ref;
                   description
-                    "Interface.";
+                    "Interface name.";
                 }
                 uses interface-config;
               } // list of interfaces
@@ -2944,13 +2972,13 @@ module ietf-ospf {
             container interfaces {
               description "All interfaces in the area.";
               list interface {
-                key "interface";
+                key "name";
                 description
                   "List of OSPF interfaces.";
-                leaf interface {
+                leaf name {
                   // Should it refer to config state leaf?
                   type if:interface-ref;
-                  description "Interface.";
+                  description "Interface name.";
                 }
 
                 uses interface-config;
@@ -3319,7 +3347,7 @@ module ietf-ospf {
        helper status change is detected.";
   }
 
-  notification rx-bad-packet {
+  notification if-rx-bad-packet {
     uses notification-instance-hdr;
     uses notification-interface;
 
@@ -3337,6 +3365,7 @@ module ietf-ospf {
       "This notification is sent when an OSPF packet that
        cannot be parsed is received on an OSPF interface.";
   }
+
   notification lsdb-approaching-overflow {
     uses notification-instance-hdr;
 
