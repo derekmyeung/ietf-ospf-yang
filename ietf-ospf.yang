@@ -19,7 +19,7 @@ module ietf-ospf {
     prefix "rt";
   }
 
-  import ietf-routing-key-chain {
+  import ietf-key-chain {
     prefix "key-chain";
   }
 
@@ -75,14 +75,20 @@ module ietf-ospf {
      MTU (mtu) Maximum Transmission Unit
     ";
 
-  revision 2016-06-09 {
+  revision 2016-06-30 {
     description
-      "* Added ospfv3 AF bit.
-       * Added ospfv2 MT, L, O, DN bit.
-       * Added interface priority config.
-       * Changed bdr-ip-address to type ip-address.
-       * Renamed leaf interface to name.
-       * Renamed rx-bad-packet to if-rx-bad-packet."; 
+      "* Add ospfv3 AF bit.
+       * Add ospfv2 MT, L, O, DN bit.
+       * Add interface priority config.
+       * Change bdr-ip-address to type ip-address.
+       * Rename leaf interface to name.
+       * Rename rx-bad-packet to if-rx-bad-packet.
+       * Move virtual link placement to backbone area.
+       * Remove cost configuration from virtual link.
+       * Move if-feature multi-area-adj statement.
+       * Add type checksum16-type.
+       * Change LSA header checksum to use checksum16-type.
+       * Change import module name to ietf-key-chain."; 
     reference
       "RFC XXXX: A YANG Data Model for OSPF.";
   }
@@ -453,6 +459,14 @@ module ietf-ospf {
     }
     description
       "OSPF graceful restart status type.";
+  }
+
+  typedef checksum16-type {
+    type string {
+       pattern '(0x)?[0-9a-fA-F]{4}';
+    }
+    description
+      "16-bit checksum in hex-string format 0xXXXX.";
   }
 
   feature multi-topology {
@@ -1318,7 +1332,7 @@ module ietf-ospf {
       description "LSA sequence number.";
     }
     leaf checksum {
-      type uint16;
+      type checksum16-type;
       mandatory true;
       description "LSA checksum.";
     }
@@ -1681,11 +1695,10 @@ module ietf-ospf {
     }
   }
 
-  grouping interface-common-config {
+  grouping interface-cost-config {
     description
-      "Common configuration for all types of interfaces,
-       including virtual links and sham links.";
-
+      "Interface cost configuration that only applies to
+       physical interfaces and sham links.";
     leaf cost {
       type uint16 {
         range "1..65535";
@@ -1693,6 +1706,13 @@ module ietf-ospf {
       description
         "Interface cost.";
     }
+  }
+
+  grouping interface-common-config {
+    description
+      "Common configuration for all types of interfaces,
+       including virtual links and sham links.";
+
     leaf hello-interval {
       type uint16 {
         range "1..65535";
@@ -1874,9 +1894,9 @@ module ietf-ospf {
     }
 
     container multi-areas {
+      if-feature multi-area-adj;
       description "Container for multi-area config.";
       list multi-area {
-        if-feature multi-area-adj;
         key multi-area-id;
         description
           "Configure OSPF multi-area adjacency.";
@@ -1933,11 +1953,11 @@ module ietf-ospf {
       type boolean;
       default false;
       description
-        "Set prefix as a segment routing (SR) node
-         representative prefix.";
+        "Set prefix as a node representative prefix.";
     }
     uses interface-fast-reroute-config;
     uses interface-common-config;
+    uses interface-cost-config;
   } // grouping interface-config
 
   grouping neighbor-operation {
@@ -2099,6 +2119,13 @@ module ietf-ospf {
     description
       "OSPF virtual link operation state.";
 
+    leaf cost {
+      type uint16 {
+        range "1..65535";
+      }
+      description
+        "Virtual link interface cost.";
+    }
     uses interface-common-operation;
   }
 
@@ -2107,6 +2134,7 @@ module ietf-ospf {
       "OSPF sham link configuration state.";
 
     uses interface-common-config;
+    uses interface-cost-config;
   }
 
   grouping sham-link-operation {
@@ -2753,17 +2781,23 @@ module ietf-ospf {
             uses area-config;
 
             container virtual-links {
+              when "../area-id = '0' and "
+                 + "../area-type = 'ospf:normal'" {
+                description
+                  "Virutal links must be in backbone area.";
+                }
               description "All virtual links.";
               list virtual-link {
-                when "../../area-id != '0' and "
-                   + "../../area-type = 'ospf:normal'" {
-                  description
-                    "Transit area must be a non-backbone
-                     normal area.";
-                }
-                key "router-id";
+                key "transit-area-id router-id";
                 description
                   "OSPF virtual link";
+                leaf transit-area-id {
+                  type leafref {
+                    path "../../../area-id";
+                  }
+                  description
+                    "Virtual link tranist area ID.";
+                }
                 leaf router-id {
                   type yang:dotted-quad;
                   description
@@ -2951,6 +2985,13 @@ module ietf-ospf {
               list virtual-link {
                 description
                   "OSPF virtual link";
+                leaf transit-area-id {
+                  type leafref {
+                    path "../../../area-id";
+                  }
+                  description
+                    "Virutal link transit area ID.";
+                }
                 leaf router-id {
                   type yang:dotted-quad;
                   description
@@ -3196,7 +3237,7 @@ module ietf-ospf {
       }
       container virtual-link {
         description "virtual-link.";
-        leaf area-id {
+        leaf transit-area-id {
           type area-id-type;
           description "Area ID.";
         }
