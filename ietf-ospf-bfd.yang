@@ -60,6 +60,13 @@ module ietf-ospf-bfd {
      IPv6 (ipv6): Internet Protocol Version 6
     ";
 
+  revision 2016-07-07 {
+    description
+      "* Change routing-protocol to control-plane-protocol.";
+    reference
+      "RFC XXXX: A YANG Data Model for OSPF BFD.";
+  }
+
   revision 2016-03-20 {
     description
       "* Remove routing-instance.
@@ -78,8 +85,8 @@ module ietf-ospf-bfd {
 
   /* Configuration */
 
-  augment "/rt:routing/rt:routing-protocols/"
-        + "rt:routing-protocol/ospf:ospf/ospf:instance/"
+  augment "/rt:routing/rt:control-plane-protocols/"
+        + "rt:control-plane-protocol/ospf:ospf/ospf:instance/"
         + "ospf:areas/ospf:area/ospf:interfaces/ospf:interface" {
     when "../../../../../../rt:type = 'ospf:ospfv2' or "
        + "../../../../../../rt:type = 'ospf:ospfv3'" {
@@ -104,7 +111,7 @@ module ietf-ospf-bfd {
   /* Operational states */
 
   augment "/rt:routing-state/"
-        + "rt:routing-protocols/rt:routing-protocol/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
         + "ospf:ospf/ospf:instance/ospf:areas/ospf:area/"
         + "ospf:interfaces/ospf:interface" {
     when "../../../../../../rt:type = 'ospf:ospfv2' or "

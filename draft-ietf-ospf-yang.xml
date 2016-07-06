@@ -32,14 +32,14 @@
       'http://xml.resource.org/public/rfc/bibxml/reference.RFC.5643.xml'>
     <!ENTITY RFC5880 PUBLIC '' 
       'http://xml.resource.org/public/rfc/bibxml/reference.RFC.5880.xml'>
-    <!ENTITY I-D.acee-rtg-yang-key-chain PUBLIC '' 
-      'http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.acee-rtg-yang-key-chain.xml'>
+    <!ENTITY I-D.ietf-rtgwg-yang-key-chain PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.draft-ietf-rtgwg-yang-key-chain-06.xml'>
     <!ENTITY I-D.ietf-spring-sr-yang PUBLIC '' 
-      'http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.draft-ietf-spring-sr-yang-00.xml'>
+      'http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.draft-ietf-spring-sr-yang-02.xml'>
     <!ENTITY I-D.ietf-bfd-yang PUBLIC '' 
-      'http://xml2rfc.ietf.org/public/rfc/bibxml-ids/reference.I-D.draft-ietf-bfd-yang-00.xml'>
+      'http://xml2rfc.ietf.org/public/rfc/bibxml-ids/reference.I-D.draft-ietf-bfd-yang-01.xml'>
     <!ENTITY I-D.ietf-netmod-routing-cfg PUBLIC '' 
-      'http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.draft-ietf-netmod-routing-cfg-20.xml'>
+      'http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.draft-ietf-netmod-routing-cfg-22.xml'>
     ]>
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 <?rfc strict="no" ?>
@@ -50,7 +50,7 @@
 <?rfc rfcedstyle="yes" ?>
 <?rfc subcompact="no" ?>
 
-<rfc category="info" docName="draft-ietf-ospf-yang-04" ipr="trust200902">
+<rfc category="info" docName="draft-ietf-ospf-yang-05" ipr="trust200902">
   <!-- category values: std, bcp, info, exp, and historic
      ipr values: full3667, noModification3667, noDerivatives3667
      you can add the attributes updates="NNNN" and obsoletes="NNNN" 
@@ -250,7 +250,7 @@
     protocols.  The interface data model is defined in 
     <xref target="RFC7223"></xref> and is used for referencing 
     interfaces from the routing protocol. The key-chain data model used for
-    OSPF authentication is defined in <xref target="I-D.acee-rtg-yang-key-chain"></xref> 
+    OSPF authentication is defined in <xref target="I-D.ietf-rtgwg-yang-key-chain"></xref> 
     and provides both a reference to configured key-chains and an 
     enumeration of cryptographic algorithms.</t>
      
@@ -293,8 +293,9 @@
       <artwork align="left">
 module: ospf
 +--rw routing
- +--rw routing-protocols
-  +--rw routing-protocol [name]
+ +--rw router-id?                 yang:dotted-quad
+ +--rw control-plane-protocols
+  +--rw control-plane-protocol* [type name]
     +--rw ospf
           .
           .
@@ -491,8 +492,8 @@ module: ospf
   |    |     +--rw cost?        uint24
   |    +--rw virtual-links
   |    |  +--rw virtual-link* [router-id]
+  |    |     +--rw transit-area-id      -> ../../../area-id
   |    |     +--rw router-id            yang:dotted-quad
-  |    |     +--rw cost?                uint16
   |    |     +--rw hello-interval?      uint16
   |    |     +--rw dead-interval?       uint16
   |    |     +--rw retransmit-interval? uint16
@@ -530,6 +531,8 @@ module: ospf
   |    |                  |  +--rw hmac-sha-512?   empty
   |    |                  +--:(clear-text) {clear-text}?
   |    |                     +--rw clear-text?     empty
+  |    |                  +--:(replay-protection-only) {replay-protection-only}?
+  |    |                     +--rw replay-protection-only?   empty
   |    +--rw sham-link
   |    |  +--rw sham-link* [local-id remote-id]
   |    |     +--rw local-id             inet:ip-address
@@ -573,6 +576,9 @@ module: ospf
   |    |                  |  +--rw hmac-sha-512?   empty
   |    |                  +--:(clear-text) {clear-text}?
   |    |                     +--rw clear-text?     empty
+  |    |                  +--:(replay-protection-only) {replay-protection-only}?
+  |    |                     +--rw replay-protection-only?   empty
+
       </artwork>
     </figure>
     </section>
@@ -593,7 +599,7 @@ module: ospf
          .                  
    |     +--rw interfaces
    |      +--rw interface* [interface]
-   |         +--rw interface              if:interface-ref
+   |         +--rw name                   if:interface-ref
    |         +--rw network-type?          enumeration
    |         +--rw passive?               boolean
    |         +--rw demand-circuit?        boolean {demand-circuit}?
@@ -614,7 +620,6 @@ module: ospf
    |         |     +--rw enabled?              boolean
    |         |     +--rw remote-lfa {remote-lfa}?
    |         |        +--rw enabled?   boolean
-   |         +--rw cost?                uint16
    |         +--rw hello-interval?      uint16
    |         +--rw dead-interval?       uint16
    |         +--rw retransmit-interval? uint16
@@ -652,6 +657,9 @@ module: ospf
    |         |            |  +--rw hmac-sha-512?   empty
    |         |            +--:(clear-text) {clear-text}?
    |         |               +--rw clear-text?     empty
+   |         |            +--:(replay-protection-only) {replay-protection-only}?
+   |         |               +--rw replay-protection-only?   empty
+   |         +--rw cost?                uint16
    |         +--rw topologies
    |         |  +--rw topology* [name]
    |         |     +--rw name    leafref
@@ -816,8 +824,8 @@ notifications:
     <figure align="left">
       <artwork align="left">     
 module: ietf-ospf-sr
-augment /rt:routing/rt:routing-protocols
-        /rt:routing-protocol/ospf:ospf/ospf:instance:
+augment /rt:routing/rt:control-plane-protocols
+        /rt:control-plane-protocol/ospf:ospf/ospf:instance:
    +--rw segment-routing
    |  +--rw enabled?    boolean
    |  +--rw bindings
@@ -828,21 +836,22 @@ augment /rt:routing/rt:routing-protocols
       +--rw srgb* [lower-bound upper-bound]
          +--rw lower-bound    uint32
          +--rw upper-bound    uint32
-augment /rt:routing/rt:routing-protocols
-        /rt:routing-protocol/ospf:ospf/ospf:instance
+augment /rt:routing/rt:control-plane-protocols
+        /rt:control-plane-protocol/ospf:ospf/ospf:instance
         /ospf:areas/ospf:area/ospf:interfaces/ospf:interface:
    +--rw segment-routing
       +--rw adjacency-sid
          +--rw advertise-adj-group-sid* [group-id]
          |  +--rw group-id    uint32
          +--rw advertise-protection?      enumeration
-augment /rt:routing/rt:routing-protocols
-        /rt:routing-protocol/ospf:ospf/ospf:instance/ospf:areas
-        /ospf:area/ospf:interfaces/ospf:interface/ospf:fast-reroute:
+augment /rt:routing/rt:control-plane-protocols
+        /rt:control-plane-protocol/ospf:ospf/ospf:instance
+        /ospf:areas/ospf:area/ospf:interfaces/ospf:interface
+        /ospf:fast-reroute:
    +--rw ti-lfa {ti-lfa}?
       +--rw enable?   boolean
-augment /rt:routing-state/rt:routing-protocols
-        /rt:routing-protocol/ospf:ospf/ospf:instance:
+augment /rt:routing-state/rt:control-plane-protocols
+        /rt:control-plane-protocol/ospf:ospf/ospf:instance:
    +--ro segment-routing
    |  +--ro enabled?    boolean
    |  +--ro bindings
@@ -853,20 +862,20 @@ augment /rt:routing-state/rt:routing-protocols
       +--ro srgb* [lower-bound upper-bound]
          +--ro lower-bound    uint32
          +--ro upper-bound    uint32
-augment /rt:routing-state/rt:routing-protocols
-        /rt:routing-protocol/ospf:ospf/ospf:instance
+augment /rt:routing-state/rt:control-plane-protocols
+        /rt:control-plane-protocol/ospf:ospf/ospf:instance
         /ospf:areas/ospf:area/ospf:interfaces/ospf:interface:
    +--ro segment-routing
       +--ro adjacency-sid
          +--ro advertise-adj-group-sid* [group-id]
          |  +--ro group-id    uint32
          +--ro advertise-protection?      enumeration
-augment /rt:routing-state/rt:routing-protocols
-        /rt:routing-protocol/ospf:ospf/ospf:instance/ospf:areas
-        /ospf:area/ospf:interfaces/ospf:interface/ospf:database
-        /ospf:link-scope-lsa-type/ospf:link-scope-lsas
-        /ospf:link-scope-lsa/ospf:version/ospf:ospfv2
-        /ospf:ospfv2/ospf:body/ospf:opaque
+augment /rt:routing-state/rt:control-plane-protocols
+        /rt:control-plane-protocol/ospf:ospf/ospf:instance
+        /ospf:areas/ospf:area/ospf:interfaces/ospf:interface
+        /ospf:database/ospf:link-scope-lsa-type
+        /ospf:link-scope-lsas/ospf:link-scope-lsa/ospf:version
+        /ospf:ospfv2/ospf:ospfv2/ospf:body/ospf:opaque
         /ospf:extended-prefix-tlvs/ospf:extended-prefix-tlv:
    +--ro perfix-sid-sub-tlvs
    |  +--ro prefix-sid-sub-tlv*
@@ -897,8 +906,8 @@ augment /rt:routing-state/rt:routing-protocols
             +--ro flags?          bits
             +--ro router-id?      yang:dotted-quad
             +--ro interface-id?   uint32
-augment /rt:routing-state/rt:routing-protocols
-        /rt:routing-protocol/ospf:ospf/ospf:instance
+augment /rt:routing-state/rt:control-plane-protocols
+        /rt:control-plane-protocol/ospf:ospf/ospf:instance
         /ospf:areas/ospf:area/ospf:database
         /ospf:area-scope-lsa-type/ospf:area-scope-lsas
         /ospf:area-scope-lsa/ospf:version/ospf:ospfv2
@@ -933,11 +942,11 @@ augment /rt:routing-state/rt:routing-protocols
             +--ro flags?          bits
             +--ro router-id?      yang:dotted-quad
             +--ro interface-id?   uint32
-augment /rt:routing-state/rt:routing-protocols
-        /rt:routing-protocol/ospf:ospf/ospf:instance
+augment /rt:routing-state/rt:control-plane-protocols
+        /rt:control-plane-protocol/ospf:ospf/ospf:instance
         /ospf:database/ospf:as-scope-lsa-type/ospf:as-scope-lsas
         /ospf:as-scope-lsa/ospf:version/ospf:ospfv2
-        /ospf:ospfv2/ospf:body/ospf:opaque
+        ospf:ospfv2/ospf:body/ospf:opaque
         /ospf:extended-prefix-tlvs/ospf:extended-prefix-tlv:
    +--ro perfix-sid-sub-tlvs
    |  +--ro prefix-sid-sub-tlv*
@@ -968,8 +977,8 @@ augment /rt:routing-state/rt:routing-protocols
             +--ro flags?          bits
             +--ro router-id?      yang:dotted-quad
             +--ro interface-id?   uint32
-augment /rt:routing-state/rt:routing-protocols
-        /rt:routing-protocol/ospf:ospf/ospf:instance
+augment /rt:routing-state/rt:control-plane-protocols
+        /rt:control-plane-protocol/ospf:ospf/ospf:instance
         /ospf:areas/ospf:area/ospf:database
         /ospf:area-scope-lsa-type/ospf:area-scope-lsas
         /ospf:area-scope-lsa/ospf:version/ospf:ospfv2
@@ -988,11 +997,64 @@ augment /rt:routing-state/rt:routing-protocols
          +--ro weight?               uint8
          +--ro neighbor-router-id?   yang:dotted-quad
          +--ro sid?                  uint32
-augment /rt:routing-state/rt:routing-protocols
-        /rt:routing-protocol/ospf:ospf/ospf:instance/ospf:areas
-        /ospf:area/ospf:interfaces/ospf:interface
-        /ospf:database/ospf:link-scope-lsa-type/ospf:link-scope-lsas
-        /ospf:link-scope-lsa/ospf:version/ospf:ospfv2
+augment /rt:routing-state/rt:control-plane-protocols
+        /rt:control-plane-protocol/ospf:ospf/ospf:instance
+        /ospf:areas/ospf:area/ospf:interfaces/ospf:interface
+        /ospf:database/ospf:link-scope-lsa-type
+        /ospf:link-scope-lsas/ospf:link-scope-lsa
+        /ospf:version/ospf:ospfv2/ospf:ospfv2
+        /ospf:body/ospf:opaque:
+   +--ro extended-prefix-range-tlvs
+   |  +--ro extended-prefix-range-tlv*
+   |     +--ro range-size?             uint16
+   |     +--ro flags?                  bits
+   |     +--ro prefix?                 inet:ip-prefix
+   |     +--ro perfix-sid-sub-tlvs
+   |     |  +--ro prefix-sid-sub-tlv*
+   |     |     +--ro flags?       bits
+   |     |     +--ro mt-id?       uint8
+   |     |     +--ro algorithm?   uint8
+   |     |     +--ro sid?         uint32
+   |     +--ro sid-binding-sub-tlvs
+   |     |  +--ro sid-binding-sub-tlv*
+   |     |     +--ro flags?                           bits
+   |     |     +--ro mt-id?                           uint8
+   |     |     +--ro weight?                          uint8
+   |     |     +--ro sid-sub-tlv
+   |     |     |  +--ro sid?   uint32
+   |     |     +--ro ero-metric-sub-tlv
+   |     |     |  +--ro metric?   uint32
+   |     |     +--ro ipv4-ero-sub-tlv
+   |     |     |  +--ro flags?          bits
+   |     |     |  +--ro ipv4-address?   inet:ipv4-address
+   |     |     +--ro unnumbered-ero-sub-tlv
+   |     |     |  +--ro flags?          bits
+   |     |     |  +--ro router-id?      yang:dotted-quad
+   |     |     |  +--ro interface-id?   uint32
+   |     |     +--ro ipv4-backup-ero-sub-tlv
+   |     |     |  +--ro flags?          bits
+   |     |     |  +--ro ipv4-address?   inet:ipv4-address
+   |     |     +--ro unnumbered-backup-ero-sub-tlv
+   |     |        +--ro flags?          bits
+   |     |        +--ro router-id?      yang:dotted-quad
+   |     |        +--ro interface-id?   uint32
+   |     +--ro unknown-tlvs
+   |        +--ro unknown-tlv*
+   |           +--ro type?     uint16
+   |           +--ro length?   uint16
+   |           +--ro value?    yang:hex-string
+   +--ro sr-algorithm-tlv
+   |  +--ro sr-algorithm*   uint8
+   +--ro sid-range-tlvs
+      +--ro sid-range-tlv*
+         +--ro range-size?    ospf:uint24
+         +--ro sid-sub-tlv
+            +--ro sid?   uint32
+augment /rt:routing-state/rt:control-plane-protocols
+        /rt:control-plane-protocol/ospf:ospf/ospf:instance
+        /ospf:areas/ospf:area/ospf:database
+        /ospf:area-scope-lsa-type/ospf:area-scope-lsas
+        /ospf:area-scope-lsa/ospf:version/ospf:ospfv2
         /ospf:ospfv2/ospf:body/ospf:opaque:
    +--ro extended-prefix-range-tlvs
    |  +--ro extended-prefix-range-tlv*
@@ -1040,61 +1102,11 @@ augment /rt:routing-state/rt:routing-protocols
          +--ro range-size?    ospf:uint24
          +--ro sid-sub-tlv
             +--ro sid?   uint32
-augment /rt:routing-state/rt:routing-protocols
-        /rt:routing-protocol/ospf:ospf/ospf:instance/ospf:areas
-        /ospf:area/ospf:database/ospf:area-scope-lsa-type
-        /ospf:area-scope-lsas/ospf:area-scope-lsa
-        /ospf:version/ospf:ospfv2/ospf:ospfv2/ospf:body/ospf:opaque:
-   +--ro extended-prefix-range-tlvs
-   |  +--ro extended-prefix-range-tlv*
-   |     +--ro range-size?             uint16
-   |     +--ro flags?                  bits
-   |     +--ro prefix?                 inet:ip-prefix
-   |     +--ro perfix-sid-sub-tlvs
-   |     |  +--ro prefix-sid-sub-tlv*
-   |     |     +--ro flags?       bits
-   |     |     +--ro mt-id?       uint8
-   |     |     +--ro algorithm?   uint8
-   |     |     +--ro sid?         uint32
-   |     +--ro sid-binding-sub-tlvs
-   |     |  +--ro sid-binding-sub-tlv*
-   |     |     +--ro flags?                           bits
-   |     |     +--ro mt-id?                           uint8
-   |     |     +--ro weight?                          uint8
-   |     |     +--ro sid-sub-tlv
-   |     |     |  +--ro sid?   uint32
-   |     |     +--ro ero-metric-sub-tlv
-   |     |     |  +--ro metric?   uint32
-   |     |     +--ro ipv4-ero-sub-tlv
-   |     |     |  +--ro flags?          bits
-   |     |     |  +--ro ipv4-address?   inet:ipv4-address
-   |     |     +--ro unnumbered-ero-sub-tlv
-   |     |     |  +--ro flags?          bits
-   |     |     |  +--ro router-id?      yang:dotted-quad
-   |     |     |  +--ro interface-id?   uint32
-   |     |     +--ro ipv4-backup-ero-sub-tlv
-   |     |     |  +--ro flags?          bits
-   |     |     |  +--ro ipv4-address?   inet:ipv4-address
-   |     |     +--ro unnumbered-backup-ero-sub-tlv
-   |     |        +--ro flags?          bits
-   |     |        +--ro router-id?      yang:dotted-quad
-   |     |        +--ro interface-id?   uint32
-   |     +--ro unknown-tlvs
-   |        +--ro unknown-tlv*
-   |           +--ro type?     uint16
-   |           +--ro length?   uint16
-   |           +--ro value?    yang:hex-string
-   +--ro sr-algorithm-tlv
-   |  +--ro sr-algorithm*   uint8
-   +--ro sid-range-tlvs
-      +--ro sid-range-tlv*
-         +--ro range-size?    ospf:uint24
-         +--ro sid-sub-tlv
-            +--ro sid?   uint32
-augment /rt:routing-state/rt:routing-protocols
-        /rt:routing-protocol/ospf:ospf/ospf:instance/ospf:database
-        /ospf:as-scope-lsa-type/ospf:as-scope-lsas/ospf:as-scope-lsa
-        /ospf:version/ospf:ospfv2/ospf:ospfv2/ospf:body/ospf:opaque:
+augment /rt:routing-state/rt:control-plane-protocols
+        /rt:control-plane-protocol/ospf:ospf/ospf:instance
+        /ospf:database/ospf:as-scope-lsa-type
+        /ospf:as-scope-lsas/ospf:as-scope-lsa/ospf:version
+        /ospf:ospfv2/ospf:ospfv2/ospf:body/ospf:opaque:
    +--ro extended-prefix-range-tlvs
    |  +--ro extended-prefix-range-tlv*
    |     +--ro range-size?             uint16
@@ -1162,13 +1174,13 @@ augment /rt:routing-state/rt:routing-protocols
     <figure align="left">
       <artwork align="left">
 module: ietf-ospf-bfd
-augment /rt:routing/rt:routing-protocols
-        /rt:routing-protocol/ospf:ospf/ospf:instance
+augment /rt:routing/rt:control-plane-protocols
+        /rt:control-plane-protocol/ospf:ospf/ospf:instance
         /ospf:areas/ospf:area/ospf:interfaces/ospf:interface:
    +--rw bfd
       +--rw enabled?                    boolean
-augment /rt:routing-state/rt:routing-protocols
-        /rt:routing-protocol/ospf:ospf/ospf:instance
+augment /rt:routing-state/rt:control-plane-protocols
+        /rt:control-plane-protocol/ospf:ospf/ospf:instance
         /ospf:areas/ospf:area/ospf:interfaces/ospf:interface:
    +--ro bfd
       +--ro enabled?                    boolean
@@ -5495,7 +5507,7 @@ module ietf-ospf-bfd {
     <references title="Informative References">
       <!-- Here we use entities that we defined at the beginning. -->
       &I-D.ietf-netmod-routing-cfg;
-      &I-D.acee-rtg-yang-key-chain;
+      &I-D.ietf-rtgwg-yang-key-chain;
       &I-D.ietf-spring-sr-yang;
       &I-D.ietf-bfd-yang;
     </references>
