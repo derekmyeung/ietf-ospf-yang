@@ -75,7 +75,7 @@ module ietf-ospf {
      MTU (mtu) Maximum Transmission Unit
     ";
 
-  revision 2016-06-30 {
+  revision 2016-07-07 {
     description
       "* Add ospfv3 AF bit.
        * Add ospfv2 MT, L, O, DN bit.
@@ -88,6 +88,7 @@ module ietf-ospf {
        * Move if-feature multi-area-adj statement.
        * Add type checksum16-type.
        * Change LSA header checksum to use checksum16-type.
+       * Change routing-protocol to control-plane-protocol.
        * Change import module name to ietf-key-chain."; 
     reference
       "RFC XXXX: A YANG Data Model for OSPF.";
@@ -2736,8 +2737,8 @@ module ietf-ospf {
     }
   }
 
-  augment "/rt:routing/rt:routing-protocols/"
-        + "rt:routing-protocol" {
+  augment "/rt:routing/rt:control-plane-protocols/"
+        + "rt:control-plane-protocol" {
      when "rt:type = 'ospf:ospfv2' or rt:type = 'ospf:ospfv3'" {
       description
         "This augmentation is only valid for a routing protocol
@@ -2795,6 +2796,12 @@ module ietf-ospf {
                   type leafref {
                     path "../../../area-id";
                   }
+                  must ".!='0.0.0.0'" {
+                    error-message "Virtual link transit area must "
+                                + "be non-zero.";
+                    description
+                      "Virtual-link trasit area must be non-zero area.";
+                  }
                   description
                     "Virtual link tranist area ID.";
                 }
@@ -2846,8 +2853,8 @@ module ietf-ospf {
     } // container ospf
   }
 
-  augment "/rt:routing/rt:routing-protocols/"
-        + "rt:routing-protocol/ospf:ospf/ospf:instance" {
+  augment "/rt:routing/rt:control-plane-protocols/"
+        + "rt:control-plane-protocol/ospf:ospf/ospf:instance" {
     when "../../rt:type = 'ospf:ospfv2' or
           ../../rt:type = 'ospf:ospfv3'" {
       description
@@ -2892,8 +2899,8 @@ module ietf-ospf {
     }
   }
 
-  augment "/rt:routing/rt:routing-protocols/"
-        + "rt:routing-protocol/ospf:ospf/ospf:instance/"
+  augment "/rt:routing/rt:control-plane-protocols/"
+        + "rt:control-plane-protocol/ospf:ospf/ospf:instance/"
         + "ospf:areas/ospf:area/ospf:interfaces/ospf:interface" {
     when "../../../../../../rt:type = 'ospf:ospfv2'" {
       description
@@ -2922,8 +2929,8 @@ module ietf-ospf {
     }
   }
   
-  augment "/rt:routing/rt:routing-protocols/"
-        + "rt:routing-protocol/ospf:ospf/ospf:instance/"
+  augment "/rt:routing/rt:control-plane-protocols/"
+        + "rt:control-plane-protocol/ospf:ospf/ospf:instance/"
         + "ospf:areas/ospf:area/ospf:interfaces/ospf:interface" {
     when "../../../../../../rt:type = 'ospf:ospfv3'" {
       description
@@ -2936,7 +2943,7 @@ module ietf-ospf {
   }
 
   augment "/rt:routing-state/"
-        + "rt:routing-protocols/rt:routing-protocol" {
+        + "rt:control-plane-protocols/rt:control-plane-protocol" {
     when "rt:type = 'ospf:ospfv2' or "
        + "rt:type = 'ospf:ospfv3'"  {
       description
@@ -3045,7 +3052,7 @@ module ietf-ospf {
   }
 
   augment "/rt:routing-state/"
-        + "rt:routing-protocols/rt:routing-protocol/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
         + "ospf:ospf/ospf:instance" {
     when "../../rt:type = 'ospf:ospfv2'" {
       description
@@ -3093,7 +3100,7 @@ module ietf-ospf {
   }
 
   augment "/rt:routing-state/"
-        + "rt:routing-protocols/rt:routing-protocol/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
         + "ospf:ospf/ospf:instance/ospf:areas/ospf:area/"
         + "ospf:interfaces/ospf:interface" {
     when "../../../../../../rt:type = 'ospf:ospfv2'" {
@@ -3124,7 +3131,7 @@ module ietf-ospf {
   }
 
   augment "/rt:routing-state/"
-        + "rt:routing-protocols/rt:routing-protocol/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
         + "ospf:ospf/ospf:instance/ospf:areas/ospf:area/"
         + "ospf:interfaces/ospf:interface" {
     when "../../../../../../rt:type = 'ospf:ospfv3'" {
@@ -3186,8 +3193,8 @@ module ietf-ospf {
 
     leaf routing-protocol-type {
       type leafref {
-        path "/rt:routing/rt:routing-protocols/"
-           + "rt:routing-protocol/rt:type";
+        path "/rt:routing/rt:control-plane-protocols/"
+           + "rt:control-plane-protocol/rt:type";
       }
       must ". = 'ospf:ospfv2' or . = 'ospf:ospfv3'" {
         description "Only applies to the OSPF routing protocol.";
@@ -3199,7 +3206,7 @@ module ietf-ospf {
     leaf routing-protocol-name {
       type leafref {
         path "/rt:routing/"
-           + "rt:routing-protocols/rt:routing-protocol"
+           + "rt:control-plane-protocols/rt:control-plane-protocol"
            + "[rt:type=current()/../routing-protocol-type]/"
            + "rt:name";
       }
@@ -3210,7 +3217,7 @@ module ietf-ospf {
     leaf af {
       type leafref {
         path "/rt:routing/"
-           + "rt:routing-protocols/rt:routing-protocol"
+           + "rt:control-plane-protocols/rt:control-plane-protocol"
            + "[rt:name=current()/../routing-protocol-name]"
            + "[rt:type=current()/../routing-protocol-type]/"
            + "ospf:ospf/ospf:instance/af";
