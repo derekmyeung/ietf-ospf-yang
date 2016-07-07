@@ -2796,7 +2796,7 @@ module ietf-ospf {
                   type leafref {
                     path "../../../area-id";
                   }
-                  must ".!=0" {
+                  must ".!='0.0.0.0'" {
                     error-message "Virtual link transit area must "
                                 + "be non-zero.";
                     description
