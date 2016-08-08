@@ -147,59 +147,23 @@
       </address>
     </author>
     
-    <author fullname="Dean Bogdanovic" initials="D" surname="Bogdanovic">
-
-      <organization></organization>
-
+    <author fullname="Ing-Wher Chen" initials="I." surname="Chen">
+      <organization>Ericsson</organization>
       <address>
-        <postal>
-          <street></street>
-
-          <!-- Reorder these if your country does things differently -->
-
-          <city></city>
-
-          <region></region>
-
-          <code></code>
-
-          <country></country>
-        </postal>
-        <phone></phone>
-
-        <email>ivandean@gmail.com</email>
-
-        <!-- uri and facsimile elements may also be added -->
+        <email>ichen@kuatrotech.com</email>
       </address>
     </author>
 
-    <author fullname="Kiran Koushik Agrahara Sreenivasa" initials="K" surname="Sreenivasa">
-
+    <author fullname="Acee Lindem" initials="A." surname="Lindem">
       <organization>Cisco Systems</organization>
-
       <address>
         <postal>
-          <street>12515 Research Blvd, Bldg 4</street>
-
-          <!-- Reorder these if your country does things differently -->
-
-          <city>Austin</city>
-
-          <region>TX</region>
-
-          <code>78681</code>
-
-          <country>USA</country>
+          <street>301 Midenhall Way</street>
+          <city>Cary, NC 27513</city>
         </postal>
-
-        <phone></phone>
-
-        <email>kkoushik@cisco.com</email>
-
-        <!-- uri and facsimile elements may also be added -->
+        <email>acee@cisco.com</email>
       </address>
     </author>
-    
     <date/>
 
     <!-- If the month and year are both specified and are the current ones, xml2rfc will fill 
@@ -5614,6 +5578,28 @@ module ietf-ospf-bfd {
       &I-D.ietf-spring-sr-yang;
       &I-D.ietf-bfd-yang;
     </references>
+   <section title="Contributors' Addreses">
+   <figure>
+   <artwork>  
+
+Dean Bogdanovic
+Volta Networks, Inc. 
+ 
+EMail: dean@voltanet.io
+
+
+Kiran Koushik Agrahara Sreenivasa
+Cisco Systems
+12515 Research Blvd, Bldg 4
+Austin, TX  78681
+USA
+
+EMail: kkoushik@cisco.com
+
+   </artwork> 
+   </figure>
+  </section>
+
     <!-- Change Log
 
 v00 2006-03-15  EBD   Initial version
