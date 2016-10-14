@@ -50,7 +50,7 @@
 <?rfc rfcedstyle="yes" ?>
 <?rfc subcompact="no" ?>
 
-<rfc category="info" docName="draft-ietf-ospf-yang-06" ipr="trust200902">
+<rfc category="info" docName="draft-ietf-ospf-yang-05" ipr="trust200902">
   <!-- category values: std, bcp, info, exp, and historic
      ipr values: full3667, noModification3667, noDerivatives3667
      you can add the attributes updates="NNNN" and obsoletes="NNNN" 
@@ -70,12 +70,26 @@
     <!-- Another author who claims to be an editor -->
 
     <author fullname="Derek Yeung" initials="D" surname="Yeung">
-      <organization>Arrcus</organization>
+      <organization>Cisco Systems</organization>
 
       <address>
+        <postal>
+          <street>170 West Tasman Drive</street>
+
+          <!-- Reorder these if your country does things differently -->
+
+          <city>San Jose</city>
+
+          <region>CA</region>
+
+          <code>95134</code>
+
+          <country>USA</country>
+        </postal>
+
         <phone></phone>
 
-        <email>derek@arrcus.com</email>
+        <email>myeung@cisco.com</email>
 
         <!-- uri and facsimile elements may also be added -->
       </address>
