@@ -1761,9 +1761,7 @@ module ietf-ospf {
     }
 
     leaf transmit-delay {
-      type uint16 {
-        range "1..65535";
-      }
+      type uint16;
       units seconds;
       description
         "Estimated time needed to transmit Link State Update
