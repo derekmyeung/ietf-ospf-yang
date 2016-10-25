@@ -1,0 +1,11 @@
+# Ignore everything.
+*
+
+# Except this .gitignore.
+!.gitignore
+
+# Except md, txt, xml and yang files.
+!*md
+!*txt
+!*xml
+!*yang
