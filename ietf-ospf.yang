@@ -602,6 +602,11 @@ module ietf-ospf {
       "Support interface inheritance";
   }
 
+  feature pe-ce-protocol {
+    description
+      "Support PE-CE protocol";
+  }
+
   grouping tlv {
     description
       "TLV";
@@ -1732,7 +1737,9 @@ module ietf-ospf {
        including virtual links and sham links.";
 
     leaf hello-interval {
-      type uint16;
+      type uint16 {
+        range "1..65535";
+      }
       units seconds;
       description
         "Interval between hello packets in seconds.";
@@ -2815,6 +2822,7 @@ module ietf-ospf {
               }
             }
             container sham-links {
+              if-feature pe-ce-protocol;
               description "All sham links.";
               list sham-link {
                 key "local-id remote-id";
