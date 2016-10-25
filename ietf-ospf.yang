@@ -1667,21 +1667,24 @@ module ietf-ospf {
       if-feature fast-reroute;
       container lfa {
         if-feature lfa;
-        leaf candidate-disabled {
+        leaf candidate-enable {
           type boolean;
+          default true;
           description
-            "Prevent the interface to be used as backup.";
+            "Enable the interface to be used as backup.";
         }
-        leaf enabled {
+        leaf enable {
           type boolean;
+          default false;
           description
             "Activates LFA - Per-prefix LFA computation
              is assumed.";
         }
         container remote-lfa {
           if-feature remote-lfa;
-          leaf enabled {
+          leaf enable {
             type boolean;
+            default false;
             description
             "Activates Remote LFA (R-LFA).";
           }
@@ -1696,7 +1699,7 @@ module ietf-ospf {
     }
   }
 
-  grouping interface-cost-config {
+  grouping interface-physical-link-config {
     description
       "Interface cost configuration that only applies to
        physical interfaces and sham links.";
@@ -1707,6 +1710,20 @@ module ietf-ospf {
       description
         "Interface cost.";
     }
+    leaf mtu-ignore {
+      if-feature mtu-ignore;
+      type boolean;
+      description
+        "Enable/Disable bypassing the MTU mismatch check in
+         Database Description packets.";
+    }
+    leaf prefix-suppression {
+      if-feature prefix-suppression;
+      type boolean;
+      description
+        "Suppress advertisement of the prefixes associated
+         with the interface.";
+    }
   }
 
   grouping interface-common-config {
@@ -1715,18 +1732,14 @@ module ietf-ospf {
        including virtual links and sham links.";
 
     leaf hello-interval {
-      type uint16 {
-        range "1..65535";
-      }
+      type uint16;
       units seconds;
       description
         "Interval between hello packets in seconds.";
     }
 
     leaf dead-interval {
-      type uint16 {
-        range "1..65535";
-      }
+      type uint32;
       units seconds;
       must "../dead-interval > ../hello-interval" {
         error-message "The dead interval must be "
@@ -1740,9 +1753,7 @@ module ietf-ospf {
     }
 
     leaf retransmit-interval {
-      type uint16 {
-        range "1..65535";
-      }
+      type uint16;
       units seconds;
       description
         "Interval between retransmitting unacknowledged Link
@@ -1759,27 +1770,11 @@ module ietf-ospf {
          packets on the interface in seconds.";
     }
 
-    leaf mtu-ignore {
-      if-feature mtu-ignore;
-      type boolean;
-      description
-        "Enable/Disable bypassing the MTU mismatch check in
-         Database Description packets.";
-    }
-
     leaf lls {
       if-feature lls;
       type boolean;
       description
         "Enable/Disable link-local signaling (LLS) support.";
-    }
-
-    leaf prefix-suppression {
-      if-feature prefix-suppression;
-      type boolean;
-      description
-        "Suppress advertisement of the prefixes associated
-         with the interface.";
     }
 
     container ttl-security {
@@ -1918,13 +1913,13 @@ module ietf-ospf {
       description "Statically configured neighbors.";
 
       list neighbor {
-        key "address";
+        key "identifier";
         description
           "Specify a static OSPF neighbor.";
 
-        leaf address {
+        leaf identifier {
           type inet:ip-address;
-          description "Neighbor IP address.";
+          description "Neighbor IPv4 address or router ID.";
         }
 
         leaf cost {
@@ -1958,7 +1953,7 @@ module ietf-ospf {
     }
     uses interface-fast-reroute-config;
     uses interface-common-config;
-    uses interface-cost-config;
+    uses interface-physical-link-config;
   } // grouping interface-config
 
   grouping neighbor-operation {
@@ -1996,6 +1991,12 @@ module ietf-ospf {
       description
         "OSPF neighbor state.";
     }
+    leaf dead-timer {
+      type uint32;
+      units "seconds";
+      description "Dead timer that tracks the time since the last
+                   Hello packet was received from the neighbor";
+    }
     container statistics {
       description "Per neighbor statistics";
       uses neighbor-stat;
@@ -2015,7 +2016,8 @@ module ietf-ospf {
     leaf hello-timer {
       type uint32;
       units "milliseconds";
-      description "Hello timer.";
+      description "Hello timer that tracks the time since the
+                   time since the last Hello packet was sent.";
     }
 
     leaf wait-timer {
@@ -2135,7 +2137,7 @@ module ietf-ospf {
       "OSPF sham link configuration state.";
 
     uses interface-common-config;
-    uses interface-cost-config;
+    uses interface-physical-link-config;
   }
 
   grouping sham-link-operation {
