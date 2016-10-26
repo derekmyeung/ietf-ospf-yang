@@ -48,7 +48,7 @@ module ietf-ospf {
       Author:   Jeffrey Zhang
                 <mailto:zzhang@juniper.net>
       Author:   Ing-Wher Chen
-                <mailto:ing-wher.chen@ericsson.com>
+                <mailto:ichen@kuatrotech.com>
       Author:   Dean Bogdanovic
                 <mailto:ivandean@gmail.com>
       Author:   Kiran Agrahara Sreenivasa
@@ -74,6 +74,40 @@ module ietf-ospf {
 
      MTU (mtu) Maximum Transmission Unit
     ";
+
+  revision 2016-10-26 {
+    description
+      "* Rename candidate-disabled to candidiate-enable
+         and set the default value to TRUE.
+       * Rename node identifiers that end with
+         'enabled' to 'enable'.
+       * Set the default value of
+         ospf/instance/areas/area/interfaces/interface/
+         fast-reroute/lfa/enable (previously named 'enabled')
+         to FALSE.
+       * Set the default value of
+         ospf/instance/areas/area/interfaces/interface/
+         fast-reroute/remove-lfa/enable (previously named 'enabled')
+         to FALSE.
+       * Rename
+         ospf/instance/areas/area/interfaces/interface/
+         static-neighbors/neighbor/address to 'identifier'
+         with type inet:ip-address
+       * Add 'dead-timer' to
+         ospf-state/instance/areas/area/interfaces/interface/
+         neighbors/neighbor.
+       * Remove 'mtu-ignore' and 'prefix-suppression' from
+         virtual-link configuration.
+       * Remove range specifications from 'transmit-delay', 
+         'dead-interval', and 'retransmit-interval' in
+         ospf/instance/areas/area/interfaces/interface.
+       * Change the type of
+         ospf/instance/areas/area/interface/interface/dead-interval
+         to uint32 to match RFC2328 Appendix A.3.2.
+      ";
+    reference
+      "RFC XXXX: A YANG Data Model for OSPF.";
+  }
 
   revision 2016-07-07 {
     description
