@@ -35,13 +35,13 @@
     <!ENTITY RFC6565 PUBLIC '' 
       'http://xml.resource.org/public/rfc/bibxml/reference.RFC.6565.xml'>
     <!ENTITY I-D.ietf-rtgwg-yang-key-chain PUBLIC '' 
-      'http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.draft-ietf-rtgwg-yang-key-chain-06.xml'>
+      'http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.draft-ietf-rtgwg-yang-key-chain-10.xml'>
     <!ENTITY I-D.ietf-spring-sr-yang PUBLIC '' 
-      'http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.draft-ietf-spring-sr-yang-03.xml'>
+      'http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.draft-ietf-spring-sr-yang-05.xml'>
     <!ENTITY I-D.ietf-bfd-yang PUBLIC '' 
-      'http://xml2rfc.ietf.org/public/rfc/bibxml-ids/reference.I-D.draft-ietf-bfd-yang-01.xml'>
+      'http://xml2rfc.ietf.org/public/rfc/bibxml-ids/reference.I-D.draft-ietf-bfd-yang-03.xml'>
     <!ENTITY I-D.ietf-netmod-routing-cfg PUBLIC '' 
-      'http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.draft-ietf-netmod-routing-cfg-22.xml'>
+      'http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.draft-ietf-netmod-routing-cfg-24.xml'>
     ]>
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 <?rfc strict="no" ?>

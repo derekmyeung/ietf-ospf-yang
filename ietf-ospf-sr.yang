@@ -14,6 +14,9 @@ module ietf-ospf-sr {
   import ietf-routing {
     prefix "rt";
   }
+  import ietf-segment-routing-common {
+    prefix "sr-cmn";
+  }
   import ietf-segment-routing {
     prefix "sr";
   }
@@ -38,9 +41,9 @@ module ietf-ospf-sr {
                 <mailto:akr@cisco.com>
 
       Editor:   Derek Yeung
-                <mailto:myeung@cisco.com>
+                <mailto:derek@arrcus.com>
       Author:   Derek Yeung
-                <mailto:myeung@cisco.com>
+                <mailto:derek@arrcus.com>
       Author:   Yingzhen Qu
                 <mailto:yiqu@cisco.com>
       Author:   Acee Lindem
@@ -129,7 +132,7 @@ module ietf-ospf-sr {
     uses sr:controlplane-cfg;
     container protocol-srgb {
       if-feature sr:protocol-srgb;
-      uses sr:srgb-cfg;
+      uses sr-cmn:srgb-cfg;
       description
         "Per-protocol SRGB.";
     }
@@ -193,7 +196,7 @@ module ietf-ospf-sr {
     uses sr:controlplane-cfg;
     container protocol-srgb {
       if-feature sr:protocol-srgb;
-      uses sr:srgb-cfg;
+      uses sr-cmn:srgb-cfg;
       description
         "Per-protocol SRGB.";
     }
@@ -561,9 +564,9 @@ module ietf-ospf-sr {
               description
                 "Local/Global flag.";
             }
-            bit S {
+            bit G {
               description
-                "Set flag.";
+                "Group flag.";
             }
           }
           description "Flags.";
@@ -601,9 +604,9 @@ module ietf-ospf-sr {
               description
                 "Local/Global flag.";
             }
-            bit S {
+            bit G {
               description
-                "Set flag.";
+                "Group flag.";
             }
           }
           description "Flags.";
