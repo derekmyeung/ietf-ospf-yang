@@ -40,9 +40,9 @@ module ietf-ospf {
                 <mailto:akr@cisco.com>
 
       Editor:   Derek Yeung
-                <mailto:myeung@cisco.com>
+                <mailto:derek@arrcus.com>
       Author:   Derek Yeung
-                <mailto:myeung@cisco.com>
+                <mailto:derek@arrcus.com>
       Author:   Yingzhen Qu
                 <mailto:yiqu@cisco.com>
       Author:   Jeffrey Zhang
@@ -98,12 +98,14 @@ module ietf-ospf {
          neighbors/neighbor.
        * Remove 'mtu-ignore' and 'prefix-suppression' from
          virtual-link configuration.
-       * Remove range specifications from 'transmit-delay', 
+       * Adjust range specifications from 'transmit-delay', 
          'dead-interval', and 'retransmit-interval' in
          ospf/instance/areas/area/interfaces/interface.
        * Change the type of
          ospf/instance/areas/area/interface/interface/dead-interval
          to uint32 to match RFC2328 Appendix A.3.2.
+       * Change hello-timer and wait-timer unit to seconds.
+       * Update hello-timer, dead-timer and wait-timer descriptions.
       ";
     reference
       "RFC XXXX: A YANG Data Model for OSPF.";
@@ -1780,7 +1782,9 @@ module ietf-ospf {
     }
 
     leaf dead-interval {
-      type uint32;
+      type uint32 {
+        range "1..2147483647";
+      }
       units seconds;
       must "../dead-interval > ../hello-interval" {
         error-message "The dead interval must be "
@@ -1794,7 +1798,9 @@ module ietf-ospf {
     }
 
     leaf retransmit-interval {
-      type uint16;
+      type uint16 {
+        range "1..3600";
+      }
       units seconds;
       description
         "Interval between retransmitting unacknowledged Link
@@ -1802,7 +1808,9 @@ module ietf-ospf {
     }
 
     leaf transmit-delay {
-      type uint16;
+      type uint16 {
+        range "1..3600";
+      }
       units seconds;
       description
         "Estimated time needed to transmit Link State Update
@@ -2033,8 +2041,8 @@ module ietf-ospf {
     leaf dead-timer {
       type uint32;
       units "seconds";
-      description "Dead timer that tracks the time since the last
-                   Hello packet was received from the neighbor";
+      description "This timer tracks the remaining time before 
+                   the neighbor is declared dead.";
     }
     container statistics {
       description "Per neighbor statistics";
@@ -2054,15 +2062,16 @@ module ietf-ospf {
 
     leaf hello-timer {
       type uint32;
-      units "milliseconds";
-      description "Hello timer that tracks the time since the
-                   time since the last Hello packet was sent.";
+      units "seconds";
+      description "This timer tracks the remaining time before
+                   the next hello packet is sent.";
     }
 
     leaf wait-timer {
       type uint32;
-      units "milliseconds";
-      description "Wait timer.";
+      units "seconds";
+      description "This timer tracks the remaining time before
+                   the interface exits the Waiting state.";
     }
 
     leaf dr-router-id {
