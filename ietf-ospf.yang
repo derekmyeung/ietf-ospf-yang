@@ -48,7 +48,7 @@ module ietf-ospf {
       Author:   Jeffrey Zhang
                 <mailto:zzhang@juniper.net>
       Author:   Ing-Wher Chen
-                <mailto:ing-wher.chen@ericsson.com>
+                <mailto:ichen@kuatrotech.com>
       Author:   Dean Bogdanovic
                 <mailto:ivandean@gmail.com>
       Author:   Kiran Agrahara Sreenivasa
@@ -74,6 +74,40 @@ module ietf-ospf {
 
      MTU (mtu) Maximum Transmission Unit
     ";
+
+  revision 2016-10-26 {
+    description
+      "* Rename candidate-disabled to candidiate-enable
+         and set the default value to TRUE.
+       * Rename node identifiers that end with
+         'enabled' to 'enable'.
+       * Set the default value of
+         ospf/instance/areas/area/interfaces/interface/
+         fast-reroute/lfa/enable (previously named 'enabled')
+         to FALSE.
+       * Set the default value of
+         ospf/instance/areas/area/interfaces/interface/
+         fast-reroute/remove-lfa/enable (previously named 'enabled')
+         to FALSE.
+       * Rename
+         ospf/instance/areas/area/interfaces/interface/
+         static-neighbors/neighbor/address to 'identifier'
+         with type inet:ip-address
+       * Add 'dead-timer' to
+         ospf-state/instance/areas/area/interfaces/interface/
+         neighbors/neighbor.
+       * Remove 'mtu-ignore' and 'prefix-suppression' from
+         virtual-link configuration.
+       * Remove range specifications from 'transmit-delay', 
+         'dead-interval', and 'retransmit-interval' in
+         ospf/instance/areas/area/interfaces/interface.
+       * Change the type of
+         ospf/instance/areas/area/interface/interface/dead-interval
+         to uint32 to match RFC2328 Appendix A.3.2.
+      ";
+    reference
+      "RFC XXXX: A YANG Data Model for OSPF.";
+  }
 
   revision 2016-07-07 {
     description
@@ -600,6 +634,11 @@ module ietf-ospf {
   feature interface-inheritance {
     description
       "Support interface inheritance";
+  }
+
+  feature pe-ce-protocol {
+    description
+      "Support PE-CE protocol";
   }
 
   grouping tlv {
@@ -1667,21 +1706,24 @@ module ietf-ospf {
       if-feature fast-reroute;
       container lfa {
         if-feature lfa;
-        leaf candidate-disabled {
+        leaf candidate-enable {
           type boolean;
+          default true;
           description
-            "Prevent the interface to be used as backup.";
+            "Enable the interface to be used as backup.";
         }
-        leaf enabled {
+        leaf enable {
           type boolean;
+          default false;
           description
             "Activates LFA - Per-prefix LFA computation
              is assumed.";
         }
         container remote-lfa {
           if-feature remote-lfa;
-          leaf enabled {
+          leaf enable {
             type boolean;
+            default false;
             description
             "Activates Remote LFA (R-LFA).";
           }
@@ -1696,7 +1738,7 @@ module ietf-ospf {
     }
   }
 
-  grouping interface-cost-config {
+  grouping interface-physical-link-config {
     description
       "Interface cost configuration that only applies to
        physical interfaces and sham links.";
@@ -1706,6 +1748,20 @@ module ietf-ospf {
       }
       description
         "Interface cost.";
+    }
+    leaf mtu-ignore {
+      if-feature mtu-ignore;
+      type boolean;
+      description
+        "Enable/Disable bypassing the MTU mismatch check in
+         Database Description packets.";
+    }
+    leaf prefix-suppression {
+      if-feature prefix-suppression;
+      type boolean;
+      description
+        "Suppress advertisement of the prefixes associated
+         with the interface.";
     }
   }
 
@@ -1724,9 +1780,7 @@ module ietf-ospf {
     }
 
     leaf dead-interval {
-      type uint16 {
-        range "1..65535";
-      }
+      type uint32;
       units seconds;
       must "../dead-interval > ../hello-interval" {
         error-message "The dead interval must be "
@@ -1740,9 +1794,7 @@ module ietf-ospf {
     }
 
     leaf retransmit-interval {
-      type uint16 {
-        range "1..65535";
-      }
+      type uint16;
       units seconds;
       description
         "Interval between retransmitting unacknowledged Link
@@ -1750,21 +1802,11 @@ module ietf-ospf {
     }
 
     leaf transmit-delay {
-      type uint16 {
-        range "1..65535";
-      }
+      type uint16;
       units seconds;
       description
         "Estimated time needed to transmit Link State Update
          packets on the interface in seconds.";
-    }
-
-    leaf mtu-ignore {
-      if-feature mtu-ignore;
-      type boolean;
-      description
-        "Enable/Disable bypassing the MTU mismatch check in
-         Database Description packets.";
     }
 
     leaf lls {
@@ -1772,14 +1814,6 @@ module ietf-ospf {
       type boolean;
       description
         "Enable/Disable link-local signaling (LLS) support.";
-    }
-
-    leaf prefix-suppression {
-      if-feature prefix-suppression;
-      type boolean;
-      description
-        "Suppress advertisement of the prefixes associated
-         with the interface.";
     }
 
     container ttl-security {
@@ -1918,13 +1952,13 @@ module ietf-ospf {
       description "Statically configured neighbors.";
 
       list neighbor {
-        key "address";
+        key "identifier";
         description
           "Specify a static OSPF neighbor.";
 
-        leaf address {
+        leaf identifier {
           type inet:ip-address;
-          description "Neighbor IP address.";
+          description "Neighbor IPv4 address or router ID.";
         }
 
         leaf cost {
@@ -1958,7 +1992,7 @@ module ietf-ospf {
     }
     uses interface-fast-reroute-config;
     uses interface-common-config;
-    uses interface-cost-config;
+    uses interface-physical-link-config;
   } // grouping interface-config
 
   grouping neighbor-operation {
@@ -1996,6 +2030,12 @@ module ietf-ospf {
       description
         "OSPF neighbor state.";
     }
+    leaf dead-timer {
+      type uint32;
+      units "seconds";
+      description "Dead timer that tracks the time since the last
+                   Hello packet was received from the neighbor";
+    }
     container statistics {
       description "Per neighbor statistics";
       uses neighbor-stat;
@@ -2015,7 +2055,8 @@ module ietf-ospf {
     leaf hello-timer {
       type uint32;
       units "milliseconds";
-      description "Hello timer.";
+      description "Hello timer that tracks the time since the
+                   time since the last Hello packet was sent.";
     }
 
     leaf wait-timer {
@@ -2135,7 +2176,7 @@ module ietf-ospf {
       "OSPF sham link configuration state.";
 
     uses interface-common-config;
-    uses interface-cost-config;
+    uses interface-physical-link-config;
   }
 
   grouping sham-link-operation {
@@ -2815,6 +2856,7 @@ module ietf-ospf {
               }
             }
             container sham-links {
+              if-feature pe-ce-protocol;
               description "All sham links.";
               list sham-link {
                 key "local-id remote-id";
