@@ -106,6 +106,7 @@ module ietf-ospf {
          to uint32 to match RFC2328 Appendix A.3.2.
        * Change hello-timer and wait-timer unit to seconds.
        * Update hello-timer, dead-timer and wait-timer descriptions.
+       * Add IEEE bandwidth type and update all TE bandwidth fields to use it.
       ";
     reference
       "RFC XXXX: A YANG Data Model for OSPF.";
@@ -506,6 +507,34 @@ module ietf-ospf {
       "16-bit checksum in hex-string format 0xXXXX.";
   }
 
+  typedef ieee-bandwidth {
+    type string {
+      pattern
+        '0[xX](0((\.0?)?[pP](\+)?0?|(\.0?))|'
+      + '1(\.([\da-fA-F]{0,5}[02468aAcCeE]?)?)?[pP](\+)?(12[0-7]|'
+      + '1[01]\d|0?\d?\d)?)|0[xX][\da-fA-F]{1,8}';
+    }
+    description
+      "Bandwidth in IEEE 754 floating point 32-bit binary format:
+       (-1)**(S) * 2**(Exponent-127) * (1 + Fraction),
+       where Exponent uses 8 bits, and Fraction uses 23 bits.
+       The units are bytes per second.
+       The encoding format is the external hexadecimal-significand
+       character sequences specified in IEEE 754 and C99,
+       restricted to be normalized, non-negative, and non-fraction:
+       0x1.hhhhhhp{+}d or 0X1.HHHHHHP{+}D
+       where 'h' and 'H' are hexadecimal digits, 'd' and 'D' are
+       integers in the range of [0..127].
+       When six hexadecimal digits are used for 'hhhhhh' or 'HHHHHH',
+       the least significant digit must be an even number.
+       'x' and 'X' indicate hexadecimal; 'p' and 'P' indicate power
+       of two.
+       Some examples are: 0x0p0, 0x1p10, and 0x1.abcde2p+20";
+    reference
+      "IEEE Std 754-2008: IEEE Standard for Floating-Point
+       Arithmetic.";
+  }
+  
   feature multi-topology {
     description
       "Support Multiple-Topolgy Routing (MTR).";
@@ -916,15 +945,11 @@ module ietf-ospf {
             description "TE metric.";
           }
           leaf max-bandwidth {
-            type decimal64 {
-              fraction-digits 2;
-            }
+            type ieee-bandwidth;
             description "Maximum bandwidth.";
           }
           leaf max-reservable-bandwidth {
-            type decimal64 {
-              fraction-digits 2;
-            }
+            type ieee-bandwidth;
             description "Maximum reservable bandwidth.";
           }
           container unreserved-bandwidths {
@@ -937,9 +962,7 @@ module ietf-ospf {
                 description "Priority from 0 to 7.";
               }
               leaf unreserved-bandwidth {
-                type decimal64 {
-                  fraction-digits 2;
-                }
+                type ieee-bandwidth;
                 description "Unreserved bandwidth.";
               }
               description
