@@ -449,7 +449,7 @@ module: ospf
   |    |     +--rw transit-area-id      -> ../../../area-id
   |    |     +--rw router-id            yang:dotted-quad
   |    |     +--rw hello-interval?      uint16
-  |    |     +--rw dead-interval?       uint16
+  |    |     +--rw dead-interval?       uint32
   |    |     +--rw retransmit-interval? uint16
   |    |     +--rw transmit-delay?      uint16
   |    |     +--rw mtu-ignore?          boolean {mtu-ignore}?

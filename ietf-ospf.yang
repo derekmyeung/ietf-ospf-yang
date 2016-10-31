@@ -2313,7 +2313,7 @@ module ietf-ospf {
     uses area-common-config;
 
     uses af-area-config {
-      when "../../operation-mode = "
+      when "../../../operation-mode = "
          + "'ospf:ships-in-the-night'" {
         description
           "Ships in the night configuration.";
@@ -2742,14 +2742,48 @@ module ietf-ospf {
       "OSPF top operation state.";
   }
 
+  grouping multi-topology-area-common-config {
+    description
+      "OSPF multi-topology area common configuration state.";
+    leaf summary {
+      when "../../../../../areas/area[area-id=current()/../area-id]/"
+         + "area-type = 'ospf:stub' or " 
+         + "../../../../../areas/area[area-id=current()/../area-id]/"
+         + "area-type = 'ospf:nssa'" {
+        description
+          "Summary advertisement into the stub/NSSA area.";
+      }
+      type boolean;
+      description
+        "Enable/Disable summary advertisement into the 
+         topology in the stub or NSSA area.";
+    }
+    leaf default-cost {
+      when "../../../../../areas/area[area-id=current()/../area-id]/"
+         + "area-type = 'ospf:stub' or " 
+         + "../../../../../areas/area[area-id=current()/../area-id]/"
+         + "area-type = 'ospf:nssa'" {
+        description
+          "Cost for LSA default route advertised into the
+           topology into the stub or NSSA area.";
+      }
+      type uint32 {
+        range "1..16777215";
+      }
+      description
+        "Set the summary default route cost for a
+         stub or NSSA area.";
+    }
+  }
+
   grouping multi-topology-area-config {
     description
       "OSPF multi-topology area configuration state.";
 
-    uses area-common-config;
+    uses multi-topology-area-common-config;
 
     uses af-area-config {
-      when "../../../../operation-mode = "
+      when "../../../../../operation-mode = "
          + "'ospf:ships-in-the-night'" {
         description
           "Ships in the night configuration.";
