@@ -549,7 +549,7 @@ augment /rt:routing-state/rt:control-plane-protocols
   <t>
     <figure>
       <artwork><![CDATA[
-<CODE BEGINS> file "ietf-ospf-sr@2016-10-28.yang"
+<CODE BEGINS> file "ietf-ospf-sr@2016-10-31.yang"
 module ietf-ospf-sr {
   namespace "urn:ietf:params:xml:ns:yang:ietf-ospf-sr";
 
@@ -603,7 +603,7 @@ module ietf-ospf-sr {
       Author:   Jeffrey Zhang
                 <mailto:zzhang@juniper.net>
       Author:   Ing-Wher Chen
-                <mailto:ing-wher.chen@ericsson.com>
+                <mailto:ichen@kuatrotech.com>
       Author:   Greg Hankins
                 <mailto:greg.hankins@alcatel-lucent.com>";
 
@@ -626,9 +626,10 @@ module ietf-ospf-sr {
      IPv6 (ipv6): Internet Protocol Version 6
     ";
 
-  revision 2016-10-28 {
+  revision 2016-10-31 {
     description
-      "* Add import of ietf-segment-routing-common module.";
+      "* Update authors information.
+       * Add import of ietf-segment-routing-common module.";
     reference
       "RFC XXXX: A YANG Data Model for OSPF Segment Routing.";
   }
