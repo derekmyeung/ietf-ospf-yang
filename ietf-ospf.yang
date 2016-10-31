@@ -107,6 +107,8 @@ module ietf-ospf {
        * Change hello-timer and wait-timer unit to seconds.
        * Update hello-timer, dead-timer and wait-timer descriptions.
        * Add IEEE bandwidth type and update all TE bandwidth fields to use it.
+       * Add Nt-bit to OSPFv2 router LSA.
+       * Remove L-bit from OSPFv2 router LSA.
       ";
     reference
       "RFC XXXX: A YANG Data Model for OSPF.";
@@ -749,6 +751,12 @@ module ietf-ospf {
             description
               "When set, the router is an Area Border
                Router (ABR).";
+          }
+          bit Nt {
+            description
+              "When set, the router is an NSSA border router
+               that is unconditionally translating NSSA LSAs
+               into AS-external LSAs.";
           }
         }
         description "Flags.";
@@ -1446,11 +1454,6 @@ module ietf-ospf {
             description
               "This bit describes the way AS-external LSAs
                are flooded.";
-          }
-          bit L {
-            description
-              "L-bit is set in Hello and DD packets to indicate that
-               the packet contains an LLS data block as in RFC 5613.";
           }
           bit O {
             description
