@@ -75,9 +75,10 @@ module ietf-ospf {
      MTU (mtu) Maximum Transmission Unit
     ";
 
-  revision 2016-10-26 {
+  revision 2016-10-31 {
     description
-      "* Rename candidate-disabled to candidiate-enable
+      "* Update authors information.
+       * Rename candidate-disabled to candidiate-enable
          and set the default value to TRUE.
        * Rename node identifiers that end with
          'enabled' to 'enable'.
@@ -87,7 +88,7 @@ module ietf-ospf {
          to FALSE.
        * Set the default value of
          ospf/instance/areas/area/interfaces/interface/
-         fast-reroute/remove-lfa/enable (previously named 'enabled')
+         fast-reroute/remote-lfa/enable (previously named 'enabled')
          to FALSE.
        * Rename
          ospf/instance/areas/area/interfaces/interface/

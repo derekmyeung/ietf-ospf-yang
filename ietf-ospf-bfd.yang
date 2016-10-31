@@ -37,7 +37,7 @@ module ietf-ospf-bfd {
       Author:   Jeffrey Zhang
                 <mailto:zzhang@juniper.net>
       Author:   Ing-Wher Chen
-                <mailto:ing-wher.chen@ericsson.com>
+                <mailto:ichen@kuatrotech.com>
       Author:   Greg Hankins
                 <mailto:greg.hankins@alcatel-lucent.com>";
 
@@ -59,6 +59,14 @@ module ietf-ospf-bfd {
 
      IPv6 (ipv6): Internet Protocol Version 6
     ";
+
+  revision 2016-10-31 {
+    description
+      "* Update authors information.
+       * Rename bfd/enabled to bfd/enable";
+    reference
+      "RFC XXXX: A YANG Data Model for OSPF BFD.";
+  }
 
   revision 2016-07-07 {
     description
@@ -99,7 +107,7 @@ module ietf-ospf-bfd {
 
     container bfd {
       description "BFD configuration.";
-      leaf enabled {
+      leaf enable {
         type boolean;
         default false;
         description
@@ -125,7 +133,7 @@ module ietf-ospf-bfd {
 
     container bfd {
       description "BFD operation.";
-      leaf enabled {
+      leaf enable {
         type boolean;
         description
           "True if BFD is enabled for the OSPF interface.";

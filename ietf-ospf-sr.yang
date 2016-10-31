@@ -51,7 +51,7 @@ module ietf-ospf-sr {
       Author:   Jeffrey Zhang
                 <mailto:zzhang@juniper.net>
       Author:   Ing-Wher Chen
-                <mailto:ing-wher.chen@ericsson.com>
+                <mailto:ichen@kuatrotech.com>
       Author:   Greg Hankins
                 <mailto:greg.hankins@alcatel-lucent.com>";
 
@@ -73,6 +73,14 @@ module ietf-ospf-sr {
 
      IPv6 (ipv6): Internet Protocol Version 6
     ";
+
+  revision 2016-10-31 {
+    description
+      "* Update authors information.
+       * Add import of ietf-segment-routing-common module.";
+    reference
+      "RFC XXXX: A YANG Data Model for OSPF Segment Routing.";
+  }
 
   revision 2016-07-07 {
     description
