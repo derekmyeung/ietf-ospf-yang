@@ -45,7 +45,7 @@
     <!ENTITY I-D.ietf-netmod-routing-cfg PUBLIC '' 
       'http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.draft-ietf-netmod-routing-cfg-24.xml'>
     <!ENTITY I-D.ietf-ospf-yang PUBLIC '' 
-      'http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.draft-ietf-ospf-yang-06.xml'>
+      'http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.draft-ietf-ospf-yang-05.xml'>
     ]>
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 <?rfc strict="no" ?>
