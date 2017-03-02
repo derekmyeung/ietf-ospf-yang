@@ -44,11 +44,11 @@ module ietf-ospf {
       Author:   Derek Yeung
                 <mailto:derek@arrcus.com>
       Author:   Yingzhen Qu
-                <mailto:yiqu@cisco.com>
+                <mailto:yingzhen.qu@huawei.com>
       Author:   Jeffrey Zhang
                 <mailto:zzhang@juniper.net>
       Author:   Ing-Wher Chen
-                <mailto:ichen@kuatrotech.com>
+                <mailto:ing-wher_chen@jabil.com>
       Author:   Dean Bogdanovic
                 <mailto:ivandean@gmail.com>
       Author:   Kiran Agrahara Sreenivasa
@@ -74,6 +74,21 @@ module ietf-ospf {
 
      MTU (mtu) Maximum Transmission Unit
     ";
+
+  revision 2017-02-02 {
+    description
+      "* Update authors information.
+       * Rename admin distance to preference.
+       * Rename network type to interface type.
+       * Add ietf-spf-delay as a feature.
+       * Add node-tag as a feature.
+       * Remove LDP IGP autoconfig.
+       * Add BFD as a feature instead of a separate module.
+       * Change TE router ID to support IPv4 and IPv6 router ID.
+      ";
+    reference
+      "RFC XXXX: A YANG Data Model for OSPF.";
+  }
 
   revision 2016-10-31 {
     description
@@ -621,11 +636,6 @@ module ietf-ospf {
       "LDP IGP synchronization.";
   }
 
-  feature ldp-igp-autoconfig {
-    description
-      "LDP IGP auto-config.";
-  }
-
   feature ospfv3-authentication-ipsec {
     description
       "Use IPsec for OSPFv3 authentication.";
@@ -640,6 +650,12 @@ module ietf-ospf {
    description
      "Support of node flag.";
   }
+
+  feature node-tag {
+    description
+      "Support of node tag.";
+  }
+
   feature lfa {
    description
      "Support of Loop Free Alternates (LFAs).";
@@ -675,6 +691,16 @@ module ietf-ospf {
       "Support PE-CE protocol";
   }
 
+  feature ietf-spf-delay {
+    description
+      "Support of IETF SPF delay algorithm.";
+  }
+
+  feature bfd {
+    description
+      "Support of BFD.";
+  }
+
   grouping tlv {
     description
       "TLV";
@@ -703,6 +729,89 @@ module ietf-ospf {
         uses tlv;
       }
     }
+  }
+
+  grouping ietf-spf-delay-config {
+    leaf initial-delay {
+      type uint16;
+      units msec;
+      description
+        "Delay used while in QUIET state.";
+    }
+    leaf short-delay {
+      type uint16;
+      units msec;
+      description
+        "Delay used while in SHORT_WAIT state.";
+    }
+    leaf long-delay {
+      type uint16;
+      units msec;
+      description
+        "Delay used while in LONG_WAIT state.";
+    }
+    leaf hold-down {
+      type uint16;
+      units msec;
+      description
+        "Timer used to consider an IGP stability period.";
+    }
+    leaf time-to-learn {
+      type uint16;
+      units msec;
+      description
+        "Duration used to learn all the IGP events 
+         related to a single component failure.";
+    }
+    description
+      "Grouping for IETF SPF delay configuration.";
+  }
+
+  grouping ietf-spf-delay-operation {
+    leaf current-state {
+      type enumeration {
+        enum "QUIET" {
+          description "QUIET state";
+        }
+        enum "SHORT_WAIT" {
+          description "SHORT_WAIT state";
+        }
+        enum "LONG_WAIT" {
+          description "LONG_WAIT state";
+        }
+    }
+    description
+      "Current state of the algorithm.";
+    }
+    leaf remaining-time-to-learn {
+      type uint16;
+      units "seconds";
+      description
+        "Remaining time until time-to-learn timer fires.";
+    }
+    leaf remaining-hold-down {
+      type uint16;
+      units "seconds";
+      description
+        "Remaining time until hold-down timer fires.";
+    }
+    leaf last-event-received {
+      type yang:timestamp;
+      description
+        "Time of last IGP event received";
+    }
+    leaf next-spf-time {
+      type yang:timestamp;
+      description
+        "Time when next SPF has been scheduled.";
+    }
+    leaf last-spf-time {
+      type yang:timestamp;
+      description
+        "Time of last SPF computation.";
+      }
+    description
+      "Grouping for IETF SPF delay operational states.";
   }
 
   grouping ospfv2-router-link {
@@ -1918,7 +2027,7 @@ module ietf-ospf {
   grouping interface-config {
     description "Configuration for real interfaces.";
 
-    leaf network-type {
+    leaf interface-type {
       type enumeration {
         enum "broadcast" {
           description
@@ -1939,7 +2048,7 @@ module ietf-ospf {
         }
       }
       description
-        "Network type.";
+        "Interface type.";
     }
 
     leaf passive {
@@ -2025,6 +2134,18 @@ module ietf-ospf {
       description
         "Set prefix as a node representative prefix.";
     }
+
+    container bfd {
+      if-feature bfd;
+      description "BFD configuration.";
+      leaf enable {
+        type boolean;
+        default false;
+        description
+          "True if BFD is enabled for the OSPF interface.";
+      }
+    }
+
     uses interface-fast-reroute-config;
     uses interface-common-config;
     uses interface-physical-link-config;
@@ -2410,6 +2531,26 @@ module ietf-ospf {
     }
   }
 
+  grouping node-tag-config {
+    description
+      "OSPF node tag config state.";
+    container node-tags {
+      if-feature node-tag;
+      list node-tag {
+        key tag;
+        leaf tag {
+          type uint32;
+            description
+              "Node tag value.";
+          }
+          description
+            "List of tags.";
+        }
+        description
+          "Container for node tags.";
+        }
+  }
+
   grouping instance-config {
     description
       "OSPF instance config state.";
@@ -2437,42 +2578,42 @@ module ietf-ospf {
          that uniquely identifies the router.";
     }
 
-    container admin-distance {
-      description "Admin distance config state.";
+    container preference {
+      description "Route preference config state.";
       choice scope {
         description
-          "Options for expressing admin distance
+          "Options for expressing preference
            as single or multiple values.";
         case single-value {
           leaf all {
             type uint8;
             description
-              "Admin distance for intra-area, inter-area and
+              "Preference for intra-area, inter-area and
                external routes.";
           }
         }
         case multi-values {
           choice granularity {
             description
-              "Options for expressing admin distance
+              "Options for expressing preference
                for intra-area and inter-area routes.";
             case detail {
               leaf intra-area {
                 type uint8;
                 description
-                  "Admin distance for intra-area routes.";
+                  "Preference for intra-area routes.";
               }
               leaf inter-area {
                 type uint8;
                 description
-                  "Admin distance for inter-area routes.";
+                  "Preference for inter-area routes.";
               }
             }
             case coarse {
               leaf internal {
                 type uint8;
                 description
-                  "Admin distance for both intra-area and
+                  "Preference for both intra-area and
                    inter-area routes.";
               }
             }
@@ -2480,7 +2621,7 @@ module ietf-ospf {
           leaf external {
             type uint8;
             description
-              "Admin distance for external routes.";
+              "Preference for external routes.";
           }
         }
       }
@@ -2573,6 +2714,12 @@ module ietf-ospf {
         description
           "Maximum number of Equal-Cost Multi-Path (ECMP) paths.";
       }
+      container ietf-spf-delay {
+        if-feature ietf-spf-delay;
+        uses ietf-spf-delay-config;
+        description
+          "IETF spf delay algorithm configuration.";
+      }
       description "SPF calculation control.";
     }
 
@@ -2614,24 +2761,15 @@ module ietf-ospf {
         description
           "Stable OSPF Router IP Address used for Traffic
            Engineering (TE)";
-        choice source {
+        leaf ipv4-router-id {
+          type inet:ipv4-address;
           description
-            "Different options for specifying TE router ID.";
-          case interface {
-            leaf interface {
-              type if:interface-ref;
-              description
-                "Use the interface's IPv4 address as TE
-                 router ID.";
-            }
-          }
-          case explicit {
-            leaf router-id {
-              type inet:ipv4-address;
-              description
-                "Explicitly configure the TE router ID.";
-            }
-          }
+            "Explicitly configure the TE IPv4 router ID.";
+        }
+        leaf ipv6-router-id {
+          type inet:ipv6-address;
+          description
+            "Explicitly configure the TE IPv6 router ID.";
         }
       }
       container ldp {
@@ -2643,15 +2781,10 @@ module ietf-ospf {
           description
             "Enable LDP IGP synchronization.";
         }
-        leaf autoconfig {
-          if-feature ldp-igp-autoconfig;
-          type boolean;
-          description
-            "Enable LDP IGP interface auto-configuration.";
-        }
       }
     }
     uses instance-fast-reroute-config;
+    uses node-tag-config;
   }
 
   grouping instance-operation {
@@ -2670,6 +2803,14 @@ module ietf-ospf {
     container statistics {
       description "Per instance statistics";
       uses instance-stat;
+    }
+
+    container ietf-spf-delay {
+      if-feature ietf-spf-delay;
+      uses ietf-spf-delay-config;
+      uses ietf-spf-delay-operation;
+      description
+        "IETF SPF delay operational states.";
     }
 
     container database {
