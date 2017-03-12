@@ -79,7 +79,7 @@ module ietf-ospf {
      MTU (mtu) Maximum Transmission Unit
     ";
 
-  revision 2017-03-11 {
+  revision 2017-03-12 {
     description
       "* Update authors information.
        * Rename admin distance to preference.
@@ -96,6 +96,8 @@ module ietf-ospf {
        * Import ietf-routing-types and make use of
          router-id, address-family and bandwidth-ieee-float32
          type definitions.
+       * Simplify notification header.
+       * Fix compilation issue in multiple must statements. 
       ";
     reference
       "RFC XXXX: A YANG Data Model for OSPF.";
@@ -3075,7 +3077,7 @@ module ietf-ospf {
                   type leafref {
                     path "../../../area-id";
                   }
-                  must ".!='0.0.0.0'" {
+                  must "current() != '0.0.0.0'" {
                     error-message "Virtual link transit area must "
                                 + "be non-zero.";
                     description
@@ -3464,16 +3466,21 @@ module ietf-ospf {
     description
       "This RPC request clears a particular
        set of OSPF neighbors. If the operation
-       fails for ISIS internal reason, then
+       fails for OSPF internal reason, then
        error-tag and error-app-tag should be set
        to a meaningful value.";
     input {
-      leaf routing-protocol-instance-name {
+      leaf routing-protocol-name {
         type leafref {
-          path "/rt:routing-state/"
-             + "rt:control-plane-protocols/rt:control-plane-protocol/"
-             + "rt:name";
+          path "/rt:routing/rt:control-plane-protocols"
+             + "/rt:control-plane-protocol/rt:name";
         }
+        must "/rt:routing/rt:control-plane-protocols/"
+           + "rt:control-plane-protocol[rt:name=current()]/"
+           + "rt:type = 'ospf:ospfv2' or"
+           + "/rt:routing/rt:control-plane-protocols/"
+           + "rt:control-plane-protocol[rt:name=current()]/"
+           + "rt:type = 'ospf:ospfv3'";
         mandatory "true";
         description
           "Name of the OSPF protocol instance which information 
@@ -3485,8 +3492,9 @@ module ietf-ospf {
            and error-app-tag
            'routing-protocol-instance-not-found'.";
       }
+
       leaf interface {
-        type string;
+        type if:interface-ref;
           description
             "Name of the OSPF interface.
             
@@ -3507,12 +3515,17 @@ module ietf-ospf {
        error-tag and error-app-tag should be set
        to a meaningful value.";
     input {
-      leaf routing-protocol-instance-name {
+      leaf routing-protocol-name {
         type leafref {
-          path "/rt:routing-state/"
-             + "rt:control-plane-protocols/rt:control-plane-protocol/"
-             + "rt:name";
+          path "/rt:routing/rt:control-plane-protocols"
+             + "/rt:control-plane-protocol/rt:name";
         }
+        must "/rt:routing/rt:control-plane-protocols/"
+           + "rt:control-plane-protocol[rt:name=current()]/"
+           + "rt:type = 'ospf:ospfv2' or"
+           + "/rt:routing/rt:control-plane-protocols/"
+           + "rt:control-plane-protocol[rt:name=current()]/"
+           + "rt:type = 'ospf:ospfv3'";
         mandatory "true";
         description
           "Name of the OSPF protocol instance whose
@@ -3536,35 +3549,17 @@ module ietf-ospf {
      "This group describes common instance specific
       data for notifications.";
 
-    /*
-     * TBD:
-     * Need to define a way to reference routing-instance.
-     */
-    leaf routing-instance {
-      type string;
-      description
-        "Describe the routing instance.";
-    }
-
-    leaf routing-protocol-type {
-      type leafref {
-        path "/rt:routing/rt:control-plane-protocols/"
-           + "rt:control-plane-protocol/rt:type";
-      }
-      must ". = 'ospf:ospfv2' or . = 'ospf:ospfv3'" {
-        description "Only applies to the OSPF routing protocol.";
-      }
-      description
-       "OSPF routing protocol type (OSPFv2 or OSPFv3).";
-    }
-
     leaf routing-protocol-name {
       type leafref {
-        path "/rt:routing/"
-           + "rt:control-plane-protocols/rt:control-plane-protocol"
-           + "[rt:type=current()/../routing-protocol-type]/"
-           + "rt:name";
+        path "/rt:routing/rt:control-plane-protocols"
+           + "/rt:control-plane-protocol/rt:name";
       }
+      must "/rt:routing/rt:control-plane-protocols/"
+         + "rt:control-plane-protocol[rt:name=current()]/"
+         + "rt:type = 'ospf:ospfv2' or"
+         + "/rt:routing/rt:control-plane-protocols/"
+         + "rt:control-plane-protocol[rt:name=current()]/"
+         + "rt:type = 'ospf:ospfv3'";
       description
        "OSPF routing protocol instance name.";
     }
@@ -3573,8 +3568,7 @@ module ietf-ospf {
       type leafref {
         path "/rt:routing/"
            + "rt:control-plane-protocols/rt:control-plane-protocol"
-           + "[rt:name=current()/../routing-protocol-name]"
-           + "[rt:type=current()/../routing-protocol-type]/"
+           + "[rt:name=current()/../routing-protocol-name]/"
            + "ospf:ospf/ospf:instance/af";
       }
       description
