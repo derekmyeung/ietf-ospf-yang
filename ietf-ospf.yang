@@ -15,6 +15,10 @@ module ietf-ospf {
     prefix "if";
   }
 
+  import ietf-routing-types {
+    prefix "rt-types";
+  }
+
   import ietf-routing {
     prefix "rt";
   }
@@ -75,7 +79,7 @@ module ietf-ospf {
      MTU (mtu) Maximum Transmission Unit
     ";
 
-  revision 2017-02-02 {
+  revision 2017-03-11 {
     description
       "* Update authors information.
        * Rename admin distance to preference.
@@ -88,6 +92,10 @@ module ietf-ospf {
        * Change TE router ID to support IPv4 and IPv6 router ID.
        * Replace key-chain:crypto-algorithm-types with 
          key-chain:crypto-algorithm.
+       * Remove type ieee-bandwidth.
+       * Import ietf-routing-types and make use of
+         router-id, address-family and bandwidth-ieee-float32
+         type definitions.
       ";
     reference
       "RFC XXXX: A YANG Data Model for OSPF.";
@@ -526,34 +534,6 @@ module ietf-ospf {
     }
     description
       "16-bit checksum in hex-string format 0xXXXX.";
-  }
-
-  typedef ieee-bandwidth {
-    type string {
-      pattern
-        '0[xX](0((\.0?)?[pP](\+)?0?|(\.0?))|'
-      + '1(\.([\da-fA-F]{0,5}[02468aAcCeE]?)?)?[pP](\+)?(12[0-7]|'
-      + '1[01]\d|0?\d?\d)?)|0[xX][\da-fA-F]{1,8}';
-    }
-    description
-      "Bandwidth in IEEE 754 floating point 32-bit binary format:
-       (-1)**(S) * 2**(Exponent-127) * (1 + Fraction),
-       where Exponent uses 8 bits, and Fraction uses 23 bits.
-       The units are bytes per second.
-       The encoding format is the external hexadecimal-significand
-       character sequences specified in IEEE 754 and C99,
-       restricted to be normalized, non-negative, and non-fraction:
-       0x1.hhhhhhp{+}d or 0X1.HHHHHHP{+}D
-       where 'h' and 'H' are hexadecimal digits, 'd' and 'D' are
-       integers in the range of [0..127].
-       When six hexadecimal digits are used for 'hhhhhh' or 'HHHHHH',
-       the least significant digit must be an even number.
-       'x' and 'X' indicate hexadecimal; 'p' and 'P' indicate power
-       of two.
-       Some examples are: 0x0p0, 0x1p10, and 0x1.abcde2p+20";
-    reference
-      "IEEE Std 754-2008: IEEE Standard for Floating-Point
-       Arithmetic.";
   }
   
   feature multi-topology {
@@ -1006,11 +986,11 @@ module ietf-ospf {
             description "TE metric.";
           }
           leaf max-bandwidth {
-            type ieee-bandwidth;
+            type rt-types:bandwidth-ieee-float32;
             description "Maximum bandwidth.";
           }
           leaf max-reservable-bandwidth {
-            type ieee-bandwidth;
+            type rt-types:bandwidth-ieee-float32;
             description "Maximum reservable bandwidth.";
           }
           container unreserved-bandwidths {
@@ -1023,7 +1003,7 @@ module ietf-ospf {
                 description "Priority from 0 to 7.";
               }
               leaf unreserved-bandwidth {
-                type ieee-bandwidth;
+                type rt-types:bandwidth-ieee-float32;
                 description "Unreserved bandwidth.";
               }
               description
@@ -1281,7 +1261,7 @@ module ietf-ospf {
             description "Neighbor Interface ID.";
           }
           leaf neighbor-router-id {
-            type yang:dotted-quad;
+            type rt-types:router-id;
             description "Neighbor Router ID.";
           }
           leaf type {
@@ -1336,7 +1316,7 @@ module ietf-ospf {
         description "Metric.";
       }
       leaf destination-router-id {
-        type yang:dotted-quad;
+        type rt-types:router-id;
         description
           "The Router ID of the router being described by the LSA.";
       }
@@ -2125,7 +2105,7 @@ module ietf-ospf {
         "Neighbor address.";
     }
     leaf dr-router-id {
-      type yang:dotted-quad;
+      type rt-types:router-id;
       description "Neighbor's Designated Router (DR) router ID.";
     }
 
@@ -2135,7 +2115,7 @@ module ietf-ospf {
     }
 
     leaf bdr-router-id {
-      type yang:dotted-quad;
+      type rt-types:router-id;
       description
         "Neighbor's Backup Designated Router (BDR) router ID.";
     }
@@ -2187,7 +2167,7 @@ module ietf-ospf {
     }
 
     leaf dr-router-id {
-      type yang:dotted-quad;
+      type rt-types:router-id;
       description "Designated Router (DR) router ID.";
     }
 
@@ -2197,7 +2177,7 @@ module ietf-ospf {
     }
 
     leaf bdr-router-id {
-      type yang:dotted-quad;
+      type rt-types:router-id;
       description "Backup Designated Router (BDR) router ID.";
     }
 
@@ -2218,7 +2198,7 @@ module ietf-ospf {
         description
           "List of OSPF neighbors.";
         leaf neighbor-router-id {
-          type yang:dotted-quad;
+          type rt-types:router-id;
           description
             "Neighbor router ID.";
         }
@@ -2619,7 +2599,7 @@ module ietf-ospf {
 
     leaf explicit-router-id {
       if-feature explicit-router-id;
-      type yang:dotted-quad;
+      type rt-types:router-id;
       description
         "Defined in RFC 2328. A 32-bit number
          that uniquely identifies the router.";
@@ -2839,7 +2819,7 @@ module ietf-ospf {
       "OSPF Address Family operation state.";
 
     leaf router-id {
-      type yang:dotted-quad;
+      type rt-types:router-id;
       description
         "Defined in RFC 2328. A 32-bit number
          that uniquely identifies the router.";
@@ -3058,7 +3038,7 @@ module ietf-ospf {
 
         leaf af {
           type identityref {
-            base rt:address-family;
+            base rt-types:address-family;
           }
           description
             "Address-family of the instance.";
@@ -3105,7 +3085,7 @@ module ietf-ospf {
                     "Virtual link tranist area ID.";
                 }
                 leaf router-id {
-                  type yang:dotted-quad;
+                  type rt-types:router-id;
                   description
                     "Virtual Link remote endpoint router ID.";
                 }
@@ -3265,7 +3245,7 @@ module ietf-ospf {
 
         leaf af {
           type identityref {
-            base rt:address-family;
+            base rt-types:address-family;
           }
           description
             "Address-family of the instance.";
@@ -3300,7 +3280,7 @@ module ietf-ospf {
                     "Virutal link transit area ID.";
                 }
                 leaf router-id {
-                  type yang:dotted-quad;
+                  type rt-types:router-id;
                   description
                     "Virtual link router ID.";
                 }
@@ -3624,7 +3604,7 @@ module ietf-ospf {
           description "Area ID.";
         }
         leaf neighbor-router-id {
-          type yang:dotted-quad;
+          type rt-types:router-id;
           description "Neighbor Router ID.";
         }
       }
@@ -3652,7 +3632,7 @@ module ietf-ospf {
        for the notifications.";
 
     leaf neighbor-router-id {
-      type yang:dotted-quad;
+      type rt-types:router-id;
       description "Neighbor Router ID.";
     }
 
