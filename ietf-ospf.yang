@@ -81,10 +81,13 @@ module ietf-ospf {
        * Rename admin distance to preference.
        * Rename network type to interface type.
        * Add ietf-spf-delay as a feature.
-       * Add node-tag as a feature.
+       * Add node-tag as a feature and update LSA 
+         definition accordingly.
        * Remove LDP IGP autoconfig.
        * Add BFD as a feature instead of a separate module.
        * Change TE router ID to support IPv4 and IPv6 router ID.
+       * Replace key-chain:crypto-algorithm-types with 
+         key-chain:crypto-algorithm.
       ";
     reference
       "RFC XXXX: A YANG Data Model for OSPF.";
@@ -731,87 +734,17 @@ module ietf-ospf {
     }
   }
 
-  grouping ietf-spf-delay-config {
-    leaf initial-delay {
-      type uint16;
-      units msec;
-      description
-        "Delay used while in QUIET state.";
-    }
-    leaf short-delay {
-      type uint16;
-      units msec;
-      description
-        "Delay used while in SHORT_WAIT state.";
-    }
-    leaf long-delay {
-      type uint16;
-      units msec;
-      description
-        "Delay used while in LONG_WAIT state.";
-    }
-    leaf hold-down {
-      type uint16;
-      units msec;
-      description
-        "Timer used to consider an IGP stability period.";
-    }
-    leaf time-to-learn {
-      type uint16;
-      units msec;
-      description
-        "Duration used to learn all the IGP events 
-         related to a single component failure.";
-    }
-    description
-      "Grouping for IETF SPF delay configuration.";
-  }
-
-  grouping ietf-spf-delay-operation {
-    leaf current-state {
-      type enumeration {
-        enum "QUIET" {
-          description "QUIET state";
-        }
-        enum "SHORT_WAIT" {
-          description "SHORT_WAIT state";
-        }
-        enum "LONG_WAIT" {
-          description "LONG_WAIT state";
-        }
-    }
-    description
-      "Current state of the algorithm.";
-    }
-    leaf remaining-time-to-learn {
-      type uint16;
-      units "seconds";
-      description
-        "Remaining time until time-to-learn timer fires.";
-    }
-    leaf remaining-hold-down {
-      type uint16;
-      units "seconds";
-      description
-        "Remaining time until hold-down timer fires.";
-    }
-    leaf last-event-received {
-      type yang:timestamp;
-      description
-        "Time of last IGP event received";
-    }
-    leaf next-spf-time {
-      type yang:timestamp;
-      description
-        "Time when next SPF has been scheduled.";
-    }
-    leaf last-spf-time {
-      type yang:timestamp;
-      description
-        "Time of last SPF computation.";
+  grouping node-tag-tlv {
+    description "OSPF Node Admin Tag TLV grouping.";
+    list node-tag {
+      leaf tag {
+        type uint32;
+        description
+          "Node tag value.";
       }
-    description
-      "Grouping for IETF SPF delay operational states.";
+      description
+        "List of tags.";
+    }
   }
 
   grouping ospfv2-router-link {
@@ -1015,6 +948,16 @@ module ietf-ospf {
 
       uses unknown-tlvs;
 
+      container node-tag-tlvs {
+        description
+          "All node tag tlvs.";
+        list node-tag-tlv {
+          description
+            "Node tag tlv.";
+          uses node-tag-tlv;
+        }
+      }
+
       container router-address-tlv {
         description
           "Router address TLV.";
@@ -1027,7 +970,7 @@ module ietf-ospf {
 
       container link-tlvs {
         description "All link TLVs in the LSA.";
-        container link-tlv {
+        list link-tlv {
           description "Link TLV.";
           leaf link-type {
             type uint8;
@@ -1488,6 +1431,25 @@ module ietf-ospf {
           }
         }
       }
+    }
+    container router-information {
+      when "../../header/type = 32780 or " 
+         + "../../header/type = 40972 or "
+         + "../../header/type = 49164 or "           
+         + "../../header/type = 57356" { // 0x800C/0xA00C/0xC00C/0xE00C
+        description
+          "Only applies to Router Information LSAs (RFC7770).";
+      }
+      container node-tag-tlvs {
+        description
+          "All node tag tlvs.";
+        list node-tag-tlv {
+          description
+            "Node tag tlv.";
+          uses node-tag-tlv;
+        }
+      }
+      description "Router Information LSA.";
     }
   }
 
@@ -2014,8 +1976,10 @@ module ietf-ospf {
             description
               "Key string in ASCII format.";
           }
-          container crypto-algorithm {
-            uses key-chain:crypto-algorithm-types;
+          leaf crypto-algorithm {
+            type identityref {
+              base key-chain:crypto-algorithm;
+            }
             description
               "Cryptographic algorithm associated with key.";
           }
@@ -2531,6 +2495,89 @@ module ietf-ospf {
     }
   }
 
+  grouping ietf-spf-delay-config {
+    leaf initial-delay {
+      type uint16;
+      units msec;
+      description
+        "Delay used while in QUIET state.";
+    }
+    leaf short-delay {
+      type uint16;
+      units msec;
+      description
+        "Delay used while in SHORT_WAIT state.";
+    }
+    leaf long-delay {
+      type uint16;
+      units msec;
+      description
+        "Delay used while in LONG_WAIT state.";
+    }
+    leaf hold-down {
+      type uint16;
+      units msec;
+      description
+        "Timer used to consider an IGP stability period.";
+    }
+    leaf time-to-learn {
+      type uint16;
+      units msec;
+      description
+        "Duration used to learn all the IGP events 
+         related to a single component failure.";
+    }
+    description
+      "Grouping for IETF SPF delay configuration.";
+  }
+
+  grouping ietf-spf-delay-operation {
+    leaf current-state {
+      type enumeration {
+        enum "QUIET" {
+          description "QUIET state";
+        }
+        enum "SHORT_WAIT" {
+          description "SHORT_WAIT state";
+        }
+        enum "LONG_WAIT" {
+          description "LONG_WAIT state";
+        }
+    }
+    description
+      "Current state of the algorithm.";
+    }
+    leaf remaining-time-to-learn {
+      type uint16;
+      units "seconds";
+      description
+        "Remaining time until time-to-learn timer fires.";
+    }
+    leaf remaining-hold-down {
+      type uint16;
+      units "seconds";
+      description
+        "Remaining time until hold-down timer fires.";
+    }
+    leaf last-event-received {
+      type yang:timestamp;
+      description
+        "Time of last IGP event received";
+    }
+    leaf next-spf-time {
+      type yang:timestamp;
+      description
+        "Time when next SPF has been scheduled.";
+    }
+    leaf last-spf-time {
+      type yang:timestamp;
+      description
+        "Time of last SPF computation.";
+      }
+    description
+      "Grouping for IETF SPF delay operational states.";
+  }
+
   grouping node-tag-config {
     description
       "OSPF node tag config state.";
@@ -2542,13 +2589,13 @@ module ietf-ospf {
           type uint32;
             description
               "Node tag value.";
-          }
-          description
-            "List of tags.";
         }
         description
-          "Container for node tags.";
-        }
+          "List of tags.";
+      }
+      description
+        "Container for node tags.";
+    }
   }
 
   grouping instance-config {
@@ -3034,7 +3081,7 @@ module ietf-ospf {
             uses area-config;
 
             container virtual-links {
-              when "../area-id = '0' and "
+              when "../area-id = '0.0.0.0' and "
                  + "../area-type = 'ospf:normal'" {
                 description
                   "Virutal links must be in backbone area.";
@@ -3428,6 +3475,81 @@ module ietf-ospf {
       "OSPF-specific route attributes.";
     uses route-content;
   }
+
+  /* 
+   * RPCs
+   */
+
+  rpc clear-neighbor {
+    description
+      "This RPC request clears a particular
+       set of OSPF neighbors. If the operation
+       fails for ISIS internal reason, then
+       error-tag and error-app-tag should be set
+       to a meaningful value.";
+    input {
+      leaf routing-protocol-instance-name {
+        type leafref {
+          path "/rt:routing-state/"
+             + "rt:control-plane-protocols/rt:control-plane-protocol/"
+             + "rt:name";
+        }
+        mandatory "true";
+        description
+          "Name of the OSPF protocol instance which information 
+           is being queried.
+
+           If the OSPF instance with name equal to the
+           value of this parameter doesn't exist, then this
+           operation SHALL fail with error-tag 'data-missing'
+           and error-app-tag
+           'routing-protocol-instance-not-found'.";
+      }
+      leaf interface {
+        type string;
+          description
+            "Name of the OSPF interface.
+            
+             If the OSPF interface with name equal to the
+             value of this parameter doesn't exist, then this
+             operation SHALL fail with error-tag 'data-missing'
+             and error-app-tag
+             'ospf-interface-not-found'.";
+      }
+    }
+  }
+
+  rpc clear-database {
+    description
+      "This RPC request clears a particular
+       OSPF database. If the operation
+       fails for OSPF internal reason, then
+       error-tag and error-app-tag should be set
+       to a meaningful value.";
+    input {
+      leaf routing-protocol-instance-name {
+        type leafref {
+          path "/rt:routing-state/"
+             + "rt:control-plane-protocols/rt:control-plane-protocol/"
+             + "rt:name";
+        }
+        mandatory "true";
+        description
+          "Name of the OSPF protocol instance whose
+           information is being queried.
+
+           If the OSPF instance with name equal to the
+           value of this parameter doesn't exist, then this
+           operation SHALL fail with error-tag 'data-missing'
+           and error-app-tag
+           'routing-protocol-instance-not-found'.";
+      }
+    }
+  }
+
+  /* 
+   * Notifications
+   */
 
   grouping notification-instance-hdr {
     description
