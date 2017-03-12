@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+    <!ENTITY RFC2119 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml'>
+    <!ENTITY RFC6020 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.6020.xml'>
+    <!ENTITY RFC6241 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.6241.xml'>
+    <!ENTITY RFC7223 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.7223.xml'>
+    <!ENTITY RFC2328 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.2328.xml'>
+    <!ENTITY RFC5340 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.5340.xml'>
+    <!ENTITY RFC1793 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.1793.xml'>
+    <!ENTITY RFC3630 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.3630.xml'>
+    <!ENTITY RFC5838 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.5838.xml'>
+    <!ENTITY RFC3623 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.3623.xml'>
+    <!ENTITY RFC5187 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.5187.xml'>
+    <!ENTITY RFC3101 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.3101.xml'>
+    <!ENTITY RFC4577 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.4577.xml'>
+    <!ENTITY RFC4750 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.4750.xml'>
+    <!ENTITY RFC5643 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.5643.xml'>
+    <!ENTITY RFC5880 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.5880.xml'>
+    <!ENTITY RFC6565 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.6565.xml'>
+    <!ENTITY RFC8022 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.8022.xml'>
+    <!ENTITY I-D.ietf-rtgwg-yang-key-chain PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.draft-ietf-rtgwg-yang-key-chain-15.xml'>
+    <!ENTITY I-D.ietf-bfd-yang PUBLIC '' 
+      'http://xml2rfc.ietf.org/public/rfc/bibxml-ids/reference.I-D.draft-ietf-bfd-yang-05.xml'>
+    ]>
+<?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
+<?rfc strict="no" ?>
+<?rfc toc="yes" ?>
+<?rfc symrefs="yes" ?>
+<?rfc sortrefs="yes"?>
+
+<?rfc rfcedstyle="yes" ?>
+<?rfc subcompact="no" ?>
+
+<rfc category="info" docName="draft-ietf-ospf-yang-07" ipr="trust200902">
+  <!-- category values: std, bcp, info, exp, and historic
+     ipr values: full3667, noModification3667, noDerivatives3667
+     you can add the attributes updates="NNNN" and obsoletes="NNNN" 
+     they will automatically be output with "(if approved)" -->
+
+  <!-- ***** FRONT MATTER ***** -->
+
+  <front>
+    <!-- The abbreviated title is used in the page header - it is only necessary if the 
+         full title is longer than 39 characters -->
+
+  <title abbrev="OSPF Yang Data Model">Yang Data Model for OSPF Protocol
+    </title>
+
+    <!-- add 'role="editor"' below for the editors if appropriate -->
+
+    <!-- Another author who claims to be an editor -->
+
+    <author fullname="Derek Yeung" initials="D" surname="Yeung">
+      <organization>Arrcus</organization>
+
+      <address>
+        <phone></phone>
+
+        <email>derek@arrcus.com</email>
+
+        <!-- uri and facsimile elements may also be added -->
+      </address>
+    </author>
+
+    <author fullname="Yingzhen Qu" initials="Y" surname="Qu">
+      <organization>Huawei</organization>
+
+      <address>
+        <postal>
+          <street>2330 Central Expressway</street>
+
+          <!-- Reorder these if your country does things differently -->
+
+          <city>Santa Clara</city>
+
+          <region>CA</region>
+
+          <code>95050</code>
+
+          <country>USA</country>
+        </postal>
+
+        <phone></phone>
+
+        <email>yingzhen.qu@huawei.com</email>
+
+        <!-- uri and facsimile elements may also be added -->
+      </address>
+    </author>
+
+    <author fullname="Jeffrey Zhang" initials="J" surname="Zhang">
+
+      <organization>Juniper Networks</organization>
+
+      <address>
+        <postal>
+          <street>10 Technology Park Drive</street>
+
+          <!-- Reorder these if your country does things differently -->
+
+          <city>Westford</city>
+
+          <region>MA</region>
+
+          <code>01886</code>
+
+          <country>USA</country>
+        </postal>
+        <phone></phone>
+
+        <email>zzhang@juniper.net</email>
+
+        <!-- uri and facsimile elements may also be added -->
+      </address>
+    </author>
+    
+    <author fullname="Ing-Wher Chen" initials="I." surname="Chen">
+      <organization>Jabil</organization>
+      <address>
+        <email>ing-wher_chen@jabil.com</email>
+      </address>
+    </author>
+
+    <author fullname="Acee Lindem" initials="A." surname="Lindem">
+      <organization>Cisco Systems</organization>
+      <address>
+        <postal>
+          <street>301 Midenhall Way</street>
+          <city>Cary, NC 27513</city>
+        </postal>
+        <email>acee@cisco.com</email>
+      </address>
+    </author>
+    <date/>
+
+    <!-- If the month and year are both specified and are the current ones, xml2rfc will fill 
+         in the current day for you. If only the current year is specified, xml2rfc will fill 
+   in the current day and month for you. If the year is not the current one, it is 
+   necessary to specify at least a month (xml2rfc assumes day="1" if not specified for the 
+   purpose of calculating the expiry date).  With drafts it is normally sufficient to 
+   specify just the year. -->
+
+    <!-- Meta-data Declarations -->
+
+    <area>General</area>
+
+    <workgroup>Internet</workgroup>
+
+    <!-- WG name at the upperleft corner of the doc,
+         IETF is fine for individual submissions.  
+   If this element is not present, the default is "Network Working Group",
+         which is used by the RFC Editor as a nod to the history of the IETF. -->
+
+    <!-- Keywords will be incorporated into HTML output
+         files in a meta tag but they have no effect on text or nroff
+         output. If you submit your draft to the RFC Editor, the
+         keywords will be used for the search engine. -->
+
+    <abstract>
+      <t>This document defines a YANG data model that can be 
+      used to configure and manage OSPF.</t>
+    </abstract>
+  </front>
+
+  <middle>
+    <section title="Overview">
+      <t>YANG <xref target="RFC6020"></xref> is a data definition language 
+      used to define the contents of a conceptual data store 
+      that allows networked devices to be managed using NETCONF 
+      <xref target="RFC6241"></xref>.  YANG is proving relevant beyond its 
+      initial confines, as bindings to other interfaces (e.g., ReST) and 
+      encodings other than XML (e.g., JSON) are being defined.  Furthermore, 
+      YANG data models can be used as the basis for implementation of other 
+      interfaces, such as CLI and programmatic APIs.</t>
+
+    <t>This document defines a YANG data model that can be used to configure 
+    and manage OSPF and it is an augmentation to the core routing data model.  
+    A core routing data model is defined in 
+    <xref target="RFC8022"></xref>, 
+    and it provides the basis for the development of data models for routing 
+    protocols.  The interface data model is defined in 
+    <xref target="RFC7223"></xref> and is used for referencing 
+    interfaces from the routing protocol. The key-chain data model used for
+    OSPF authentication is defined in <xref target="I-D.ietf-rtgwg-yang-key-chain"></xref> 
+    and provides both a reference to configured key-chains and an 
+    enumeration of cryptographic algorithms.</t>
+     
+    <t>Both OSPFv2 <xref target="RFC2328"></xref> and OSPFv3 
+    <xref target="RFC5340"></xref> are supported.  In addition to 
+    the core OSPF protocol, features described in other 
+    OSPF RFCs are also supported. These includes demand circuit 
+    <xref target="RFC1793"></xref>, traffic engineering <xref target="RFC3630"></xref>,
+    multiple address family <xref target="RFC5838"></xref>, graceful restart 
+    <xref target="RFC3623"></xref> <xref target="RFC5187"></xref>, 
+    NSSA <xref target="RFC3101"></xref>, and OSPF(v3) as a PE-CE Protocol 
+    <xref target="RFC4577"></xref>, <xref target="RFC6565"></xref>.
+    These non-core features are optional in the OSPF data model.</t>      
+             
+      <section title="Requirements Language">
+        <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+        "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+        document are to be interpreted as described in <xref target="RFC2119"></xref>.</t>
+      </section>
+    </section>
+  
+    <section title="Design of Data Model">
+    <t>Although the basis of OSPF configuration elements like routers, 
+    areas, and interfaces remains the same, the detailed configuration
+    model varies among router vendors.  Differences are observed in terms
+    of how the protocol engine is tied to the routing domain, how multiple
+    protocol engines are be instantiated, and configuration inheritance,
+    among others.</t>
+    <t>The goal of this document is to define a data model that provides a common user 
+    interface to the OSPFv2 and OSPFv3 protocols. There is very little information that is 
+    designated as "mandatory", providing freedom for vendors to adapt this data model to their 
+    respective product implementations.</t>
+    
+    <section title="Overview">
+    <t>The OSPF YANG module defined in this document has all the common building
+   blocks for the OSPF protocol.</t>
+    <t>The OSPF YANG module augments the routing/routing-instance/routing-protocols/routing-protocol 
+    path defined in the ietf-routing module.</t>
+
+    <figure align="center">
+      <artwork align="left">
+//@@@@
+      </artwork>
+    </figure>
+    <t>The ospf module is intended to match to the vendor specific 
+    OSPF configuration construct that is identified by the local identifier 'name'. 
+    The field 'version' allows support for OSPFv2 and OSPFv3.</t>
+
+    <t>The ospf container includes one or more OSPF protocol engines, each 
+    enclosed in a separate instance entity.  Each instance includes information 
+    for the routing domain based on the [routing-instance af] specification.
+    There is no default routing domain assumed by the data model. For example,
+    to enable OSPF on a vendor's default IPv4 routing domain, an explicit instance 
+    entity with a specification like ["default" "ipv4-unicast"] is required. 
+    The instance also contains OSPF router level configuration</t>
+    
+    <t>The instance/area and instance/area/interface containers respectively
+    define the OSPF configuration for OSPF areas and interfaces.</t>
+
+    <t>The instance/topology container defines the OSPF 
+    configuration for OSPF topologies when the multi-topology feature is supported.</t>
+        
+    </section>
+
+    <section title="OSPFv2 and OSPFv3">
+      <t>The data model defined herein supports both OSPFv2 and OSPFv3.</t>
+      <t>The field 'version' is used to indicate the OSPF version and is
+      mandatory.  Based on the configured version, the data model varies
+      to accommodate the differences between OSPFv2 and OSPFv3.</t>
+    </section>
+    <section title="Optional Features">
+      <t>Optional features are beyond the basic OSPF configuration and
+      it is the responsibility of each vendor to decide whether to 
+      support a given feature on a particular device.</t>
+      <t>This model defines a number of features, such as NSR, max-LSA,
+      etc.  It is expected that vendors will support additional 
+      features through vendor specific augmentations.</t>
+    </section>
+    <section title="Inheritance">
+      <t>This data model supports configuration inheritance at different levels 
+      including instance-level, area-level, and interface-level inheritance.</t>
+      <t>The all-instances-inherit, all-areas-inherit, and all-interfaces-inherit 
+      containers are defined to provide a consistent way to configure inheritable 
+      configuration parameters. For example, parameters defined in the 
+      all-instances-inherit container apply to all OSPF instances. However, a 
+      particular instance configuration can include leaves that 
+      override this inheritance.</t>
+      <t>Inheritance is defined as an optional feature, and vendors are 
+      permitted to augment the inheritance containers with their own
+      vendor specific parameters.</t>
+    </section>
+    <section title="OSPF Router Configuration">
+    <t>The ospf container is the top level container in this data model. It contains 
+    shared information among the OSPF instances configured within the container.
+    </t>
+        <figure align="center">
+      <artwork align="left">
+//@@@@
+      </artwork>
+    </figure>
+      </section>
+    <section title="OSPF Instance Configuration">
+    <t>The instance container represents an OSPF protocol engine and contains
+    the router level configuration.  The routing domain for each instance
+    is dictated through the specification of [routing-instance af].</t>
+    <t>The all-areas-inherit container contains area configuration that 
+    may be inherited by configured OSPF areas in the OSPF instance.</t>
+    
+    
+    <figure align="center">
+      <artwork align="left">
+//@@@@
+      </artwork>
+    </figure>
+    </section>
+    <section title="OSPF Area Configuration">
+    <t>The area container contains OSPF area configuration and the list 
+    of interface containers representing all the OSPF interfaces 
+    in the area.</t>
+    <t>The all-interfaces-inherit contains interface configuration that 
+    may be inherited by all OSPF area interfaces.</t>
+    <figure align="center">
+      <artwork align="left">
+//@@@@
+
+      </artwork>
+    </figure>
+    </section>
+    <section title="OSPF Interface Configuration">
+    <t>The interface container contains OSPF interface configuration.</t>
+    <figure align="left">
+      <artwork align="left">
+//@@@@
+      </artwork>
+    </figure>
+    </section>
+    <section title="OSPF notification">
+    <t>This YANG model defines a list of notifications that inform YANG 
+    clients of important events detected during protocol operation.  The 
+    defined notifications cover the common set of traps from the OSPFv2 MIB 
+    <xref target="RFC4750"></xref> and OSPFv3 MIB <xref target="RFC5643"></xref>.</t>
+    <figure align="left">
+      <artwork align="left">
+//@@@@
+      </artwork>
+    </figure>         
+    </section>
+    <section title="OSPF RPC Operations">
+    <t>The "ietf-ospf" module defines two RPC operations:
+    <list style="symbols">
+      <t>clear-database: reset the content of a particular OSPF database.</t>
+      <t>clear-neighbor: restart a particular set of OSPF neighbor.</t>
+      </list></t>
+    <figure align="left">
+      <artwork align="left">
+//@@@@
+      </artwork>
+    </figure>
+    </section>
+  </section>
+  
+  <section title="OSPF Yang Module">
+  <t>
+    <figure>
+      <artwork><![CDATA[
+<CODE BEGINS> file "ietf-ospf@2016-10-31.yang"
+//@@@@@@
+<CODE ENDS>
+      ]]></artwork>
+    </figure>
+  </t>      
+  </section>
+
+    <!-- Possibly a 'Contributors' section ... -->
+
+    <section anchor="Security" title="Security Considerations">
+      <t>The data model defined does not create any security implications.</t>
+      <t>This draft does not change any underlying security issues inherent in <xref target="RFC8022"></xref>.</t>
+       </section>
+    <section anchor="Acknowledgements" title="Acknowledgements">
+      <t>The authors wish to thank Yi Yang, Alexander Clemm, 
+      Gaurav Gupta, Ladislav Lhotka, Stephane Litkowski, 
+      Greg Hankins, Manish Gupta and Alan Davey for their thorough reviews 
+      and helpful comments.</t>
+      <t>This document was produced using Marshall Rose's xml2rfc tool.</t>
+    </section>   
+  </middle>
+
+  <!--  *****BACK MATTER ***** -->
+
+  <back>
+    <!-- References split into informative and normative -->
+
+    <!-- There are 2 ways to insert reference entries from the citation libraries:
+     1. define an ENTITY at the top, and use "ampersand character"RFC2629; here (as shown)
+     2. simply use a PI "less than character"?rfc include="reference.RFC.2119.xml"?> here
+        (for I-Ds: include="reference.I-D.narten-iana-considerations-rfc2434bis.xml")
+
+     Both are cited textually in the same manner: by using xref elements.
+     If you use the PI option, xml2rfc will, by default, try to find included files in the same
+     directory as the including file. You can also define the XML_LIBRARY environment variable
+     with a value containing a set of directories to search.  These can be either in the local
+     filing system or remote ones accessed by http (http://domain/dir/... ).-->
+
+    <references title="Normative References">
+      <!--?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml"?-->
+      &RFC6020;
+      &RFC6241;
+      &RFC2119;
+      &RFC7223;
+      &RFC2328;
+      &RFC5340;
+      &RFC1793;
+      &RFC3630;
+      &RFC5838;
+      &RFC3623;
+      &RFC5187;
+      &RFC3101;
+      &RFC4577;
+      &RFC4750;
+      &RFC5643;
+      &RFC5880;
+      &RFC6565;
+      &RFC8022;
+    </references>
+    <references title="Informative References">
+      <!-- Here we use entities that we defined at the beginning. -->
+      &I-D.ietf-rtgwg-yang-key-chain;
+      &I-D.ietf-bfd-yang;
+    </references>
+   <section title="Contributors' Addreses">
+   <figure>
+   <artwork>  
+
+Dean Bogdanovic
+Volta Networks, Inc. 
+ 
+EMail: dean@voltanet.io
+
+
+Kiran Koushik Agrahara Sreenivasa
+Cisco Systems
+12515 Research Blvd, Bldg 4
+Austin, TX  78681
+USA
+
+EMail: kkoushik@cisco.com
+
+   </artwork> 
+   </figure>
+  </section>
+
+    <!-- Change Log
+
+v00 2006-03-15  EBD   Initial version
+
+v01 2006-04-03  EBD   Moved PI location back to position 1 -
+                      v3.1 of XMLmind is better with them at this location.
+v02 2007-03-07  AH    removed extraneous nested_list attribute,
+                      other minor corrections
+v03 2007-03-09  EBD   Added comments on null IANA sections and fixed heading capitalization.
+                      Modified comments around figure to reflect non-implementation of
+                      figure indent control.  Put in reference using anchor="DOMINATION".
+                      Fixed up the date specification comments to reflect current truth.
+v04 2007-03-09 AH     Major changes: shortened discussion of PIs,
+                      added discussion of rfc include.
+v05 2007-03-10 EBD    Added preamble to C program example to tell about ABNF and alternative 
+                      images. Removed meta-characters from comments (causes problems).  -->
+  </back>
+</rfc>
