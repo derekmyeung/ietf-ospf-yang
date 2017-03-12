@@ -45,13 +45,13 @@ module ietf-ospf-sr {
       Author:   Derek Yeung
                 <mailto:derek@arrcus.com>
       Author:   Yingzhen Qu
-                <mailto:yiqu@cisco.com>
+                <mailto:yingzhen.qu@huawei.com>
       Author:   Acee Lindem
                 <mailto:acee@cisco.com>
       Author:   Jeffrey Zhang
                 <mailto:zzhang@juniper.net>
       Author:   Ing-Wher Chen
-                <mailto:ichen@kuatrotech.com>
+                <mailto:ing-wher_chen@jabil.com>
       Author:   Greg Hankins
                 <mailto:greg.hankins@alcatel-lucent.com>";
 
@@ -74,6 +74,13 @@ module ietf-ospf-sr {
      IPv6 (ipv6): Internet Protocol Version 6
     ";
 
+  revision 2017-03-11 {
+    description
+      "* Add p-flag in adj-sid sub-tlv.";
+    reference
+      "RFC XXXX: A YANG Data Model for OSPF Segment Routing.";
+  }
+
   revision 2016-10-31 {
     description
       "* Update authors information.
@@ -88,7 +95,7 @@ module ietf-ospf-sr {
     reference
       "RFC XXXX: A YANG Data Model for OSPF Segment Routing.";
   }
- 
+
   revision 2016-03-20 {
     description
       "* Remove routing-instance.";
@@ -200,7 +207,6 @@ module ietf-ospf-sr {
     description
      "This augments the OSPF protocol operational state
       with segment routing.";
-
     uses sr:controlplane-cfg;
     container protocol-srgb {
       if-feature sr:protocol-srgb;
@@ -576,6 +582,10 @@ module ietf-ospf-sr {
               description
                 "Group flag.";
             }
+            bit P {
+              description
+                "Persistent flag.";
+            }
           }
           description "Flags.";
         }
@@ -615,6 +625,10 @@ module ietf-ospf-sr {
             bit G {
               description
                 "Group flag.";
+            }
+            bit P {
+              description
+                "Persistent flag.";
             }
           }
           description "Flags.";
