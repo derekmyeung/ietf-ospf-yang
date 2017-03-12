@@ -74,7 +74,7 @@ module ietf-ospf-sr {
      IPv6 (ipv6): Internet Protocol Version 6
     ";
 
-  revision 2017-03-11 {
+  revision 2017-03-12 {
     description
       "* Add p-flag in adj-sid sub-tlv.";
     reference
