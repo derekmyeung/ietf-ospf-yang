@@ -233,12 +233,44 @@
     <section title="Overview">
     <t>The OSPF YANG module defined in this document has all the common building
    blocks for the OSPF protocol.</t>
-    <t>The OSPF YANG module augments the routing/routing-instance/routing-protocols/routing-protocol 
+    <t>The OSPF YANG module augments the /routing/control-plane-protocols/control-plane-protocol
     path defined in the ietf-routing module.</t>
 
     <figure align="center">
       <artwork align="left">
-//@@@@
+module: ietf-ospf
+  augment /rt:routing/rt:control-plane-protocols/
+           rt:control-plane-protocol:
+    +--rw ospf
+       +--rw all-instances-inherit {instance-inheritance}?
+          .
+          .
+       +--rw operation-mode?          identityref
+       +--rw instance* [af]
+          .
+          .
+          +--rw areas
+          |  +--rw area* [area-id]
+          |     +--rw area-id                   area-id-type
+          |     +--rw all-interfaces-inherit {interface-inheritance}?
+          |        .
+          |        .
+          |     +--rw virtual-links
+          |     |  +--rw virtual-link* [transit-area-id router-id]
+          |     |     .
+          |     |     .
+          |     +--rw sham-links {pe-ce-protocol}?
+          |     |  +--rw sham-link* [local-id remote-id]
+          |     |     .
+          |     |     .
+          |     +--rw interfaces
+          |        +--rw interface* [name]
+          |           .
+          |           .
+          +--rw topologies {multi-topology}?
+             +--rw topology* [name]
+                .
+                .
       </artwork>
     </figure>
     <t>The ospf module is intended to match to the vendor specific 
@@ -294,7 +326,17 @@
     </t>
         <figure align="center">
       <artwork align="left">
-//@@@@
+module: ietf-ospf
+  augment /rt:routing/rt:control-plane-protocols/
+           rt:control-plane-protocol:
+    +--rw ospf
+       +--rw all-instances-inherit {instance-inheritance}?
+       |  +--rw area
+       |  +--rw interface
+       +--rw operation-mode?          identityref
+       +--rw instance* [af]
+          .
+          .
       </artwork>
     </figure>
       </section>
