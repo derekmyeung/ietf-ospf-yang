@@ -350,7 +350,69 @@ module: ietf-ospf
     
     <figure align="center">
       <artwork align="left">
-//@@@@
+module: ietf-ospf
+  augment /rt:routing/rt:control-plane-protocols/
+           rt:control-plane-protocol:
+    +--rw ospf
+       .
+       .
+       +--rw instance* [af]
+          +--rw af                    identityref
+          +--rw all-areas-inherit {area-inheritance}?
+          |  +--rw area
+          |  +--rw interface
+          +--rw explicit-router-id?   rt-types:router-id
+          |                           {explicit-router-id}?
+          +--rw preference
+          |  +--rw (scope)?
+          |     +--:(single-value)
+          |     |  +--rw all?          uint8
+          |     +--:(multi-values)
+          |        +--rw (granularity)?
+          |        |  +--:(detail)
+          |        |  |  +--rw intra-area?   uint8
+          |        |  |  +--rw inter-area?   uint8
+          |        |  +--:(coarse)
+          |        |     +--rw internal?     uint8
+          |        +--rw external?     uint8
+          +--rw nsr {nsr}?
+          |  +--rw enable?   boolean
+          +--rw graceful-restart {graceful-restart}?
+          |  +--rw enable?                       boolean
+          |  +--rw helper-enable?                boolean
+          |  +--rw restart-interval?             uint16
+          |  +--rw helper-strict-lsa-checking?   boolean
+          +--rw enable?               boolean {admin-control}?
+          +--rw auto-cost {auto-cost}?
+          |  +--rw enable?                boolean
+          |  +--rw reference-bandwidth?   uint32
+          +--rw spf-control
+          |  +--rw paths?            uint16 {max-ecmp}?
+          |  +--rw ietf-spf-delay {ietf-spf-delay}?
+          |     +--rw initial-delay?   uint16
+          |     +--rw short-delay?     uint16
+          |     +--rw long-delay?      uint16
+          |     +--rw hold-down?       uint16
+          |     +--rw time-to-learn?   uint16
+          +--rw database-control
+          |  +--rw max-lsa?   uint32 {max-lsa}?
+          +--rw stub-router {stub-router}?
+          |  +--rw (trigger)?
+          |     +--:(always)
+          |        +--rw always!
+          +--rw mpls
+          |  +--rw te-rid {te-rid}?
+          |  |  +--rw ipv4-router-id?   inet:ipv4-address
+          |  |  +--rw ipv6-router-id?   inet:ipv6-address
+          |  +--rw ldp
+          |     +--rw igp-sync?   boolean {ldp-igp-sync}?
+          +--rw fast-reroute {fast-reroute}?
+          |  +--rw lfa {lfa}?
+          +--rw node-tags {node-tag}?
+          |  +--rw node-tag* [tag]
+          |     +--rw tag    uint32
+          .
+          .
       </artwork>
     </figure>
     </section>
@@ -362,8 +424,83 @@ module: ietf-ospf
     may be inherited by all OSPF area interfaces.</t>
     <figure align="center">
       <artwork align="left">
-//@@@@
-
+module: ietf-ospf
+  augment /rt:routing/rt:control-plane-protocols/
+           rt:control-plane-protocol:
+    +--rw ospf
+       .
+       .
+       +--rw instance* [af]
+          +--rw areas
+          |  +--rw area* [area-id]
+          |     +--rw area-id                   area-id-type
+          |     +--rw all-interfaces-inherit {interface-inheritance}?
+          |     |  +--rw interface
+          |     +--rw area-type?                identityref
+          |     +--rw summary?                  boolean
+          |     +--rw default-cost?             uint32
+          |     +--rw ranges
+          |     |  +--rw range* [prefix]
+          |     |     +--rw prefix       inet:ip-prefix
+          |     |     +--rw advertise?   boolean
+          |     |     +--rw cost?        uint24
+          |     +--rw virtual-links
+          |     |  +--rw virtual-link* [transit-area-id router-id]
+          |     |     +--rw transit-area-id       -> ../../../area-id
+          |     |     +--rw router-id             rt-types:router-id
+          |     |     +--rw hello-interval?       uint16
+          |     |     +--rw dead-interval?        uint32
+          |     |     +--rw retransmit-interval?  uint16
+          |     |     +--rw transmit-delay?       uint16
+          |     |     +--rw lls?                  boolean {lls}?
+          |     |     +--rw ttl-security {ttl-security}?
+          |     |     |  +--rw enable?   boolean
+          |     |     |  +--rw hops?     uint8
+          |     |     +--rw enable?               boolean
+          |     |                                 {admin-control}?
+          |     |     +--rw authentication
+          |     |        +--rw (auth-type-selection)?
+          |     |           +--:(auth-ipsec)
+          |     |               {ospfv3-authentication-ipsec}?
+          |     |           |  +--rw sa?                 string
+          |     |           +--:(auth-trailer-key-chain)
+          |     |           |  +--rw key-chain?
+          |     |                    key-chain:key-chain-ref
+          |     |           +--:(auth-trailer-key)
+          |     |              +--rw key?                string
+          |     |              +--rw crypto-algorithm?   identityref
+          |     +--rw sham-links {pe-ce-protocol}?
+          |     |  +--rw sham-link* [local-id remote-id]
+          |     |     +--rw local-id               inet:ip-address
+          |     |     +--rw remote-id              inet:ip-address
+          |     |     +--rw hello-interval?        uint16
+          |     |     +--rw dead-interval?         uint32
+          |     |     +--rw retransmit-interval?   uint16
+          |     |     +--rw transmit-delay?        uint16
+          |     |     +--rw lls?                   boolean {lls}?
+          |     |     +--rw ttl-security {ttl-security}?
+          |     |     |  +--rw enable?   boolean
+          |     |     |  +--rw hops?     uint8
+          |     |     +--rw enable?             boolean
+          |     |                               {admin-control}?
+          |     |     +--rw authentication
+          |     |     |  +--rw (auth-type-selection)?
+          |     |     |     +--:(auth-ipsec)
+          |     |     |         {ospfv3-authentication-ipsec}?
+          |     |     |     |  +--rw sa?                 string
+          |     |     |     +--:(auth-trailer-key-chain)
+          |     |     |     |  +--rw key-chain?
+          |     |     |              key-chain:key-chain-ref
+          |     |     |     +--:(auth-trailer-key)
+          |     |     |        +--rw key?                string
+          |     |     |        +--rw crypto-algorithm?   identityref
+          |     |     +--rw cost?               uint16
+          |     |     +--rw mtu-ignore?         boolean
+          |     |                               {mtu-ignore}?
+          |     |     +--rw prefix-suppression? boolean
+          |     |                               {prefix-suppression}?
+          .     .
+          .     .
       </artwork>
     </figure>
     </section>
