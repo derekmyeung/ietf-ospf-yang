@@ -508,7 +508,81 @@ module: ietf-ospf
     <t>The interface container contains OSPF interface configuration.</t>
     <figure align="left">
       <artwork align="left">
-//@@@@
+module: ietf-ospf
+  augment /rt:routing/rt:control-plane-protocols/
+           rt:control-plane-protocol:
+    +--rw ospf
+       .
+       .
+       +--rw instance* [af]
+          .
+          .
+          +--rw areas
+          |  +--rw area* [area-id]
+          |     .
+          |     .
+          |     +--rw interfaces
+          |        +--rw interface* [name]
+          |           +--rw name                   if:interface-ref
+          |           +--rw interface-type?        enumeration
+          |           +--rw passive?               boolean
+          |           +--rw demand-circuit?        boolean
+          |                                        {demand-circuit}?
+          |           +--rw priority?              uint8
+          |           +--rw multi-areas {multi-area-adj}?
+          |           |  +--rw multi-area* [multi-area-id]
+          |           |     +--rw multi-area-id    area-id-type
+          |           |     +--rw cost?            uint16
+          |           +--rw static-neighbors
+          |           |  +--rw neighbor* [identifier]
+          |           |     +--rw identifier       inet:ip-address
+          |           |     +--rw cost?            uint16
+          |           |     +--rw poll-interval?   uint16
+          |           |     +--rw priority?        uint8
+          |           +--rw node-flag?             boolean
+          |                                        {node-flag}?
+          |           +--rw bfd {bfd}?
+          |           |  +--rw enable?   boolean
+          |           +--rw fast-reroute {fast-reroute}?
+          |           |  +--rw lfa {lfa}?
+          |           |     +--rw candidate-enable?   boolean
+          |           |     +--rw enable?             boolean
+          |           |     +--rw remote-lfa {remote-lfa}?
+          |           |        +--rw enable?   boolean
+          |           +--rw hello-interval?        uint16
+          |           +--rw dead-interval?         uint32
+          |           +--rw retransmit-interval?   uint16
+          |           +--rw transmit-delay?        uint16
+          |           +--rw lls?                   boolean {lls}?
+          |           +--rw ttl-security {ttl-security}?
+          |           |  +--rw enable?   boolean
+          |           |  +--rw hops?     uint8
+          |           +--rw enable?                boolean
+          |                                        {admin-control}?
+          |           +--rw authentication
+          |           |  +--rw (auth-type-selection)?
+          |           |     +--:(auth-ipsec)
+          |           |     |   {ospfv3-authentication-ipsec}?
+          |           |     |  +--rw sa?                 string
+          |           |     +--:(auth-trailer-key-chain)
+          |           |     |  +--rw key-chain?
+          |           |     |        key-chain:key-chain-ref
+          |           |     +--:(auth-trailer-key)
+          |           |        +--rw key?                string
+          |           |        +--rw crypto-algorithm?   identityref
+          |           +--rw cost?               uint16
+          |           +--rw mtu-ignore?         boolean
+          |           |                         {mtu-ignore}?
+          |           +--rw prefix-suppression? boolean
+          |           |                         {prefix-suppression}?
+          |           +--rw topologies {ospf:multi-topology}?
+          |           |  +--rw topology* [name]
+          |           |     +--rw name  -> ../../../../../../../../
+          |           |                    ../../../rt:ribs/rib/name
+          |           |     +--rw cost? uint32
+          |           +--rw instance-id?           uint8
+          .
+          .
       </artwork>
     </figure>
     </section>
@@ -531,7 +605,18 @@ module: ietf-ospf
       </list></t>
     <figure align="left">
       <artwork align="left">
-//@@@@
+  rpcs:
+    +---x clear-neighbor
+    |  +---w input
+    |     +---w routing-protocol-name    
+    |     +     -> /rt:routing/control-plane-protocols/
+    |     +         control-plane-protocol/name
+    |     +---w interface?               if:interface-ref
+    +---x clear-database
+       +---w input
+          +---w routing-protocol-name    
+                -> /rt:routing/control-plane-protocols/
+                    control-plane-protocol/name
       </artwork>
     </figure>
     </section>
