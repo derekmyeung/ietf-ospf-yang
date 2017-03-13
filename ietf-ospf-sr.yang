@@ -492,7 +492,7 @@ module ietf-ospf-sr {
         + "ospf:link-scope-lsa/ospf:version/ospf:ospfv2/"
         + "ospf:ospfv2/ospf:body/ospf:opaque/"
         + "ospf:extended-prefix-tlvs/ospf:extended-prefix-tlv" {
-    when "../../../../../../../../../../../../../../../../../"
+    when "../../../../../../../../../../../../../../../"
        + "rt:type = 'ospf:ospfv2'" {
       description
         "This augmentation is only valid for OSPFv2.";
@@ -512,7 +512,7 @@ module ietf-ospf-sr {
         + "ospf:area-scope-lsa/ospf:version/ospf:ospfv2/"
         + "ospf:ospfv2/ospf:body/ospf:opaque/"
         + "ospf:extended-prefix-tlvs/ospf:extended-prefix-tlv" {
-    when "../../../../../../../../../../../../../../../"
+    when "../../../../../../../../../../../../../"
        + "rt:type = 'ospf:ospfv2'" {
       description
         "This augmentation is only valid for OSPFv2.";
@@ -531,7 +531,7 @@ module ietf-ospf-sr {
         + "ospf:as-scope-lsa/ospf:version/ospf:ospfv2/"
         + "ospf:ospfv2/ospf:body/ospf:opaque/"
         + "ospf:extended-prefix-tlvs/ospf:extended-prefix-tlv" {
-    when "../../../../../../../../../../../../../"
+    when "../../../../../../../../../../../"
        + "rt:type = 'ospf:ospfv2'" {
       description
         "This augmentation is only valid for OSPFv2.";
@@ -551,7 +551,7 @@ module ietf-ospf-sr {
         + "ospf:area-scope-lsa/ospf:version/ospf:ospfv2/"
         + "ospf:ospfv2/ospf:body/ospf:opaque/"
         + "ospf:extended-link-tlvs/ospf:extended-link-tlv" {
-    when "../../../../../../../../../../../../../../../"
+    when "../../../../../../../../../../../../../"
        + "rt:type = 'ospf:ospfv2'" {
       description
         "This augmentation is only valid for OSPFv2.";
@@ -660,7 +660,7 @@ module ietf-ospf-sr {
         + "ospf:link-scope-lsa-type/ospf:link-scope-lsas/"
         + "ospf:link-scope-lsa/ospf:version/ospf:ospfv2/"
         + "ospf:ospfv2/ospf:body/ospf:opaque" {
-    when "../../../../../../../../../../../../../../../"
+    when "../../../../../../../../../../../../../"
        + "rt:type = 'ospf:ospfv2'" {
       description
         "This augmentation is only valid for OSPFv2.";
@@ -681,7 +681,7 @@ module ietf-ospf-sr {
         + "ospf:area-scope-lsa-type/ospf:area-scope-lsas/"
         + "ospf:area-scope-lsa/ospf:version/ospf:ospfv2/"
         + "ospf:ospfv2/ospf:body/ospf:opaque" {
-    when "../../../../../../../../../../../../../"
+    when "../../../../../../../../../../../"
        + "rt:type = 'ospf:ospfv2'" {
       description
         "This augmentation is only valid for OSPFv2.";
@@ -701,7 +701,7 @@ module ietf-ospf-sr {
         + "ospf:as-scope-lsa-type/ospf:as-scope-lsas/"
         + "ospf:as-scope-lsa/ospf:version/ospf:ospfv2/"
         + "ospf:ospfv2/ospf:body/ospf:opaque" {
-    when "../../../../../../../../../../../"
+    when "../../../../../../../../../"
        + "rt:type = 'ospf:ospfv2'" {
       description
         "This augmentation is only valid for OSPFv2.";

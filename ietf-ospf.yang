@@ -3472,15 +3472,9 @@ module ietf-ospf {
     input {
       leaf routing-protocol-name {
         type leafref {
-          path "/rt:routing/rt:control-plane-protocols"
-             + "/rt:control-plane-protocol/rt:name";
+          path "/rt:routing/rt:control-plane-protocols/"
+             + "rt:control-plane-protocol/rt:name";
         }
-        must "/rt:routing/rt:control-plane-protocols/"
-           + "rt:control-plane-protocol[rt:name=current()]/"
-           + "rt:type = 'ospf:ospfv2' or"
-           + "/rt:routing/rt:control-plane-protocols/"
-           + "rt:control-plane-protocol[rt:name=current()]/"
-           + "rt:type = 'ospf:ospfv3'";
         mandatory "true";
         description
           "Name of the OSPF protocol instance which information 
@@ -3517,15 +3511,9 @@ module ietf-ospf {
     input {
       leaf routing-protocol-name {
         type leafref {
-          path "/rt:routing/rt:control-plane-protocols"
-             + "/rt:control-plane-protocol/rt:name";
+          path "/rt:routing/rt:control-plane-protocols/"
+             + "rt:control-plane-protocol/rt:name";
         }
-        must "/rt:routing/rt:control-plane-protocols/"
-           + "rt:control-plane-protocol[rt:name=current()]/"
-           + "rt:type = 'ospf:ospfv2' or"
-           + "/rt:routing/rt:control-plane-protocols/"
-           + "rt:control-plane-protocol[rt:name=current()]/"
-           + "rt:type = 'ospf:ospfv3'";
         mandatory "true";
         description
           "Name of the OSPF protocol instance whose
@@ -3551,12 +3539,12 @@ module ietf-ospf {
 
     leaf routing-protocol-name {
       type leafref {
-        path "/rt:routing/rt:control-plane-protocols"
-           + "/rt:control-plane-protocol/rt:name";
+        path "/rt:routing/rt:control-plane-protocols/"
+           + "rt:control-plane-protocol/rt:name";
       }
       must "/rt:routing/rt:control-plane-protocols/"
          + "rt:control-plane-protocol[rt:name=current()]/"
-         + "rt:type = 'ospf:ospfv2' or"
+         + "rt:type = 'ospf:ospfv2' or "
          + "/rt:routing/rt:control-plane-protocols/"
          + "rt:control-plane-protocol[rt:name=current()]/"
          + "rt:type = 'ospf:ospfv3'";
