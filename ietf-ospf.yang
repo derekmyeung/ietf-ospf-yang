@@ -1090,7 +1090,7 @@ module ietf-ospf {
       type bits {
         bit AF {
           description
-            "When set, the router supprts OSPFv3 AFs as in RFC5838. ";
+            "When set, the router supprts OSPFv3 AFs as in RFC5838.";
         }
         bit DC {
           description
@@ -1416,10 +1416,10 @@ module ietf-ospf {
       }
     }
     container router-information {
-      when "../../header/type = 32780 or " 
-         + "../../header/type = 40972 or "
-         + "../../header/type = 49164 or "           
-         + "../../header/type = 57356" { // 0x800C/0xA00C/0xC00C/0xE00C
+      when "../../header/type = 32780 or " // 0x800C
+         + "../../header/type = 40972 or " // 0xA00C
+         + "../../header/type = 49164 or " // 0xC00C           
+         + "../../header/type = 57356" {   // 0xE00C
         description
           "Only applies to Router Information LSAs (RFC7770).";
       }
@@ -1513,7 +1513,8 @@ module ietf-ospf {
           }
           bit O {
             description
-              "When set, the router is opaque-capable as in RFC 5250.";
+              "When set, the router is opaque-capable as in
+               RFC 5250.";
           }
           bit DN {
             description
@@ -3083,7 +3084,8 @@ module ietf-ospf {
                     error-message "Virtual link transit area must "
                                 + "be non-zero.";
                     description
-                      "Virtual-link trasit area must be non-zero area.";
+                      "Virtual-link trasit area must be
+                       non-zero area.";
                   }
                   description
                     "Virtual link tranist area ID.";
