@@ -135,7 +135,8 @@ module ietf-ospf {
          to uint32 to match RFC2328 Appendix A.3.2.
        * Change hello-timer and wait-timer unit to seconds.
        * Update hello-timer, dead-timer and wait-timer descriptions.
-       * Add IEEE bandwidth type and update all TE bandwidth fields to use it.
+       * Add IEEE bandwidth type and update all TE bandwidth fields
+         to use it.
        * Add Nt-bit to OSPFv2 router LSA.
        * Remove L-bit from OSPFv2 router LSA.
       ";
@@ -1488,7 +1489,8 @@ module ietf-ospf {
         type bits {
           bit MT {
             description
-              "When set, the router supports multi-topology as in RFC 4915.";
+              "When set, the router supports multi-topology as 
+               in RFC 4915.";
           }
           bit DC {
             description
@@ -1515,8 +1517,8 @@ module ietf-ospf {
           }
           bit DN {
             description
-              "When a type 3, 5 or 7 LSA is sent from a PE to a CE, the DN
-              bit must be set. See RFC 4576.";
+              "When a type 3, 5 or 7 LSA is sent from a PE to a CE,
+               the DN bit must be set. See RFC 4576.";
           }
         }
         mandatory true;
