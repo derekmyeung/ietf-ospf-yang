@@ -2292,7 +2292,7 @@ module ietf-ospf {
   grouping sham-link-state {
     config false;
     description
-      "OSPF sham link operation state.";
+      "OSPF sham link operational state.";
 
     uses interface-common-state;
   }
