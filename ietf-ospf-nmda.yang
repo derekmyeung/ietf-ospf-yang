@@ -19,6 +19,10 @@ module ietf-ospf {
     prefix "rt-types";
   }
 
+  import iana-routing-types {
+    prefix "iana-rt-types";
+  }
+
   import ietf-routing {
     prefix "rt";
   }
@@ -2101,173 +2105,176 @@ module ietf-ospf {
   } // grouping interface-config
 
   grouping neighbor-state {
+    description
+      "OSPF neighbor operational state.";
+
+    leaf address {
+      type inet:ip-address;
+      config false;
       description
-        "OSPF neighbor operational state grouping.";
-    container neighbor-state {
-      config "false";
+        "Neighbor address.";
+    }
+    leaf dr-router-id {
+      type rt-types:router-id;
+      config false;
+      description "Neighbor's Designated Router (DR) router ID.";
+    }
+
+    leaf dr-ip-addr {
+      type inet:ip-address;
+      config false;
+      description "Neighbor's Designated Router (DR) IP address.";
+    }
+
+    leaf bdr-router-id {
+      type rt-types:router-id;
+      config false;
       description
-        "OSPF neighbor operational state.";
+        "Neighbor's Backup Designated Router (BDR) router ID.";
+    }
 
-      leaf address {
-        type inet:ip-address;
-        description
-          "Neighbor address.";
-      }
-      leaf dr-router-id {
-        type rt-types:router-id;
-        description "Neighbor's Designated Router (DR) router ID.";
-      }
-
-      leaf dr-ip-addr {
-        type inet:ip-address;
-        description "Neighbor's Designated Router (DR) IP address.";
-      }
-
-      leaf bdr-router-id {
-        type rt-types:router-id;
-        description
-          "Neighbor's Backup Designated Router (BDR) router ID.";
-      }
-
-      leaf bdr-ip-addr {
-        type inet:ip-address;
-        description
-          "Neighbor's Backup Designated Router (BDR) IP Address.";
-      }
-      leaf state {
-        type nbr-state-type;
-        description
-          "OSPF neighbor state.";
-      }
-      leaf dead-timer {
-        type uint32;
-        units "seconds";
-        description "This timer tracks the remaining time before 
-                     the neighbor is declared dead.";
-      }
-      container statistics {
-        description "Per neighbor statistics";
-        uses neighbor-stat;
-      }
+    leaf bdr-ip-addr {
+      type inet:ip-address;
+      config false;
+      description
+        "Neighbor's Backup Designated Router (BDR) IP Address.";
+    }
+    leaf state {
+      type nbr-state-type;
+      config false;
+      description
+        "OSPF neighbor state.";
+    }
+    leaf dead-timer {
+      type uint32;
+      units "seconds";
+      config false;
+      description "This timer tracks the remaining time before 
+                   the neighbor is declared dead.";
+    }
+    container statistics {
+      config false;
+      description "Per neighbor statistics";
+      uses neighbor-stat;
     }
   }
 
   grouping interface-common-state {
     description
-      "OSPF interface common operational state grouping.";
-    container interface-common-state {
-      config "false";
-      description
-        "OSPF interface common operational state.";
-      reference "RFC2328 Section 9";
+      "OSPF interface common operational state.";
+    reference "RFC2328 Section 9";
 
-      leaf state {
-        type if-state-type;
-        description "Interface state.";
-      }
+    leaf state {
+      type if-state-type;
+      config false;
+      description "Interface state.";
+    }
 
-      leaf hello-timer {
-        type uint32;
-        units "seconds";
-        description "This timer tracks the remaining time before
-                     the next hello packet is sent.";
-      }
+    leaf hello-timer {
+      type uint32;
+      units "seconds";
+      config false;
+      description "This timer tracks the remaining time before
+                   the next hello packet is sent.";
+    }
 
-      leaf wait-timer {
-        type uint32;
-        units "seconds";
-        description "This timer tracks the remaining time before
-                     the interface exits the Waiting state.";
-      }
+    leaf wait-timer {
+      type uint32;
+      units "seconds";
+      config false;
+      description "This timer tracks the remaining time before
+                   the interface exits the Waiting state.";
+    }
 
-      leaf dr-router-id {
-        type rt-types:router-id;
-        description "Designated Router (DR) router ID.";
-      }
+    leaf dr-router-id {
+      type rt-types:router-id;
+      config false;
+      description "Designated Router (DR) router ID.";
+    }
 
-      leaf dr-ip-addr {
-        type inet:ip-address;
-        description "Designated Router (DR) IP address.";
-      }
+    leaf dr-ip-addr {
+      type inet:ip-address;
+      config false;
+      description "Designated Router (DR) IP address.";
+    }
 
-      leaf bdr-router-id {
-        type rt-types:router-id;
-        description "Backup Designated Router (BDR) router ID.";
-      }
+    leaf bdr-router-id {
+      type rt-types:router-id;
+      config false;
+      description "Backup Designated Router (BDR) router ID.";
+    }
 
-      leaf bdr-ip-addr {
-        type inet:ip-address;
-        description "Backup Designated Router (BDR) IP Address.";
-      }
+    leaf bdr-ip-addr {
+      type inet:ip-address;
+      config false;
+      description "Backup Designated Router (BDR) IP Address.";
+    }
 
-      container statistics {
-        description "Per interface statistics";
-        uses interface-stat;
-      }
+    container statistics {
+      config false;
+      description "Per interface statistics";
+      uses interface-stat;
+    }
 
-      container neighbors {
-        description "All neighbors for the interface.";
-        list neighbor {
-          key "neighbor-router-id";
+    container neighbors {
+      config false;
+      description "All neighbors for the interface.";
+      list neighbor {
+        key "neighbor-router-id";
+        description
+          "List of OSPF neighbors.";
+        leaf neighbor-router-id {
+          type rt-types:router-id;
           description
-            "List of OSPF neighbors.";
-          leaf neighbor-router-id {
-            type rt-types:router-id;
-            description
-              "Neighbor router ID.";
-          }
-          uses neighbor-state;
-        } // list of OSPF neighbors
-      }
+            "Neighbor router ID.";
+        }
+        uses neighbor-state;
+      } // list of OSPF neighbors
     }
   } // interface-common-state
 
   grouping interface-state {
     description
-      "OSPF interface operational state grouping.";
-    container interface-state {
-      config "false";
-      description
-        "OSPF interface operational state.";
-      reference "RFC2328 Section 9";
+      "OSPF interface operational state.";
+    reference "RFC2328 Section 9";
 
-      uses interface-common-state;
+    uses interface-common-state;
 
-      container database {
-        description "Link scope LSA database.";
-        list link-scope-lsa-type {
-          key "lsa-type";
+    container database {
+      config false;
+      description "Link scope LSA database.";
+      list link-scope-lsa-type {
+        key "lsa-type";
+        description
+          "List OSPF link scope LSA databases.";
+        leaf lsa-type {
+          type uint16;
+          description "OSPF link scope LSA type.";
+        }
+        container link-scope-lsas {
           description
-            "List OSPF link scope LSA databases.";
-          leaf lsa-type {
-            type uint16;
-            description "OSPF link scope LSA type.";
-          }
-          container link-scope-lsas {
-            description
-              "All link scope LSAs of this LSA type.";
-            list link-scope-lsa {
-              key "lsa-id adv-router";
-              description "List of OSPF link scope LSAs";
-              uses lsa-key;
-              uses lsa {
-                refine "version/ospfv2/ospfv2" {
-                  must "../../../../../../../../../../../"
-                     + "rt:type = 'ospf:ospfv2'" {
-                    description "OSPFv2 LSA.";
-                  }
+            "All link scope LSAs of this LSA type.";
+          list link-scope-lsa {
+            key "lsa-id adv-router";
+            description "List of OSPF link scope LSAs";
+            uses lsa-key;
+            uses lsa {
+              refine "version/ospfv2/ospfv2" {
+                must "../../../../../../../../../../../"
+                   + "rt:type = 'ospf:ospfv2'" {
+                  description "OSPFv2 LSA.";
                 }
-                refine "version/ospfv3/ospfv3" {
-                  must "../../../../../../../../../../../"
-                     + "rt:type = 'ospf:ospfv3'" {
-                    description "OSPFv3 LSA.";
-                  }
+              }
+              refine "version/ospfv3/ospfv3" {
+                must "../../../../../../../../../../../"
+                   + "rt:type = 'ospf:ospfv3'" {
+                  description "OSPFv3 LSA.";
                 }
               }
             }
           }
-        } // list link-scope-lsas
-      }
+        }
+      } // list link-scope-lsas
     }
   }
 
@@ -2280,21 +2287,17 @@ module ietf-ospf {
 
   grouping virtual-link-state {
     description
-      "OSPF virtual link operational state grouping.";
-    container virtual-link-state {
-      config "false";
-      description
-        "OSPF virtual link operational state.";
+      "OSPF virtual link operational state.";
 
-      leaf cost {
-        type uint16 {
-          range "1..65535";
-        }
-        description
-          "Virtual link interface cost.";
+    leaf cost {
+      type uint16 {
+        range "1..65535";
       }
-      uses interface-common-state;
+      config false;
+      description
+        "Virtual link interface cost.";
     }
+    uses interface-common-state;
   }
 
   grouping sham-link-config {
@@ -2307,14 +2310,9 @@ module ietf-ospf {
 
   grouping sham-link-state {
     description
-      "OSPF sham link operational state grouping.";
-    container sham-link-state {
-      config "false";
-      description
-        "OSPF sham link operational state.";
-  
-      uses interface-common-state;
-    }
+      "OSPF sham link operational state.";
+    /* All container/leaf should be config false. */
+    uses interface-common-state;
   }
 
   grouping af-area-config {
@@ -2418,58 +2416,56 @@ module ietf-ospf {
 
   grouping area-state {
     description
-      "OSPF area operational state grouping.";
-    container  area-state {
-      config "false";
-      description
-        "OSPF area operational state.";
+      "OSPF area operational state.";
 
-      container statistics {
-        description "Per area statistics";
-        uses area-stat;
-      }
+    container statistics {
+      config false;
+      description "Per area statistics";
+      uses area-stat;
+    }
 
-      container database {
-        description "Area scope LSA database.";
-        list area-scope-lsa-type {
-          key "lsa-type";
-          description "List OSPF area scope LSA databases.";
-          leaf lsa-type {
-            type uint16;
-            description "OSPF area scope LSA type.";
-          }
-          container area-scope-lsas {
-            description
-              "All area scope LSAs of an area scope
-               LSA type.";
-            list area-scope-lsa {
-              key "lsa-id adv-router";
-              description "List of OSPF area scope LSAs";
-              uses lsa-key;
-              uses lsa {
-                refine "version/ospfv2/ospfv2" {
-                  must "../../../../../../../../../"
-                     + "rt:type = 'ospf:ospfv2'" {
-                    description "OSPFv2 LSA.";
-                  }
+    container database {
+      config false;
+      description "Area scope LSA database.";
+      list area-scope-lsa-type {
+        key "lsa-type";
+        description "List OSPF area scope LSA databases.";
+        leaf lsa-type {
+          type uint16;
+          description "OSPF area scope LSA type.";
+        }
+        container area-scope-lsas {
+          description
+            "All area scope LSAs of an area scope
+             LSA type.";
+          list area-scope-lsa {
+            key "lsa-id adv-router";
+            description "List of OSPF area scope LSAs";
+            uses lsa-key;
+            uses lsa {
+              refine "version/ospfv2/ospfv2" {
+                must "../../../../../../../../../"
+                   + "rt:type = 'ospf:ospfv2'" {
+                  description "OSPFv2 LSA.";
                 }
-                refine "version/ospfv3/ospfv3" {
-                  must "../../../../../../../../../"
-                     + "rt:type = 'ospf:ospfv3'" {
-                    description "OSPFv3 LSA.";
-                  }
+              }
+              refine "version/ospfv3/ospfv3" {
+                must "../../../../../../../../../"
+                   + "rt:type = 'ospf:ospfv3'" {
+                  description "OSPFv3 LSA.";
                 }
               }
             }
           }
-        } // list area-scope-lsas
-      }
+        }
+      } // list area-scope-lsas
     }
   }
 
   grouping local-rib {
     description "Local-rib grouping.";
     container local-rib {
+      config false;
       description "Local-rib.";
       list route {
         key "prefix";
@@ -2547,55 +2543,56 @@ module ietf-ospf {
   }
 
   grouping ietf-spf-delay-state {
-    description
-      "Grouping for IETF SPF delay operational state.";
-    container ietf-spf-delay-state {
-      config "false";
-      description
-        "IETF SPF Delay operational state.";
-      leaf current-state {
-        type enumeration {
-          enum "QUIET" {
-            description "QUIET state";
-          }
-          enum "SHORT_WAIT" {
-            description "SHORT_WAIT state";
-          }
-          enum "LONG_WAIT" {
-            description "LONG_WAIT state";
-          }
+    leaf current-state {
+      type enumeration {
+        enum "QUIET" {
+          description "QUIET state";
         }
-        description
-          "Current state of the algorithm.";
+        enum "SHORT_WAIT" {
+          description "SHORT_WAIT state";
+        }
+        enum "LONG_WAIT" {
+          description "LONG_WAIT state";
+        }
       }
-      leaf remaining-time-to-learn {
-        type uint16;
-        units "seconds";
-        description
-          "Remaining time until time-to-learn timer fires.";
-      }
-      leaf remaining-hold-down {
-        type uint16;
-        units "seconds";
-        description
-          "Remaining time until hold-down timer fires.";
-      }
-      leaf last-event-received {
-        type yang:timestamp;
-        description
-          "Time of last IGP event received";
-      }
-      leaf next-spf-time {
-        type yang:timestamp;
-        description
-          "Time when next SPF has been scheduled.";
-      }
-      leaf last-spf-time {
-        type yang:timestamp;
-        description
-          "Time of last SPF computation.";
-       }
+      config false;
+      description
+        "Current state of the algorithm.";
     }
+    leaf remaining-time-to-learn {
+      type uint16;
+      units "seconds";
+      config false;
+      description
+        "Remaining time until time-to-learn timer fires.";
+    }
+    leaf remaining-hold-down {
+      type uint16;
+      units "seconds";
+      config false;
+      description
+        "Remaining time until hold-down timer fires.";
+    }
+    leaf last-event-received {
+      type yang:timestamp;
+      config false;
+      description
+        "Time of last IGP event received";
+    }
+    leaf next-spf-time {
+      type yang:timestamp;
+      config false;
+      description
+        "Time when next SPF has been scheduled.";
+    }
+    leaf last-spf-time {
+      type yang:timestamp;
+      config false;
+      description
+        "Time of last SPF computation.";
+      }
+    description
+      "Grouping for IETF SPF delay operational states.";
   }
 
   grouping node-tag-config {
@@ -2856,67 +2853,66 @@ module ietf-ospf {
 
   grouping instance-state {
     description
-      "OSPF instance operational state grouping.";
-    container instance-state {
-      config "false";
+      "OSPF instance operational state.";
+
+    leaf router-id {
+      type rt-types:router-id;
+      config false;
       description
-        "OSPF instance operational state.";
+        "Defined in RFC 2328. A 32-bit number
+         that uniquely identifies the router.";
+    }
 
-      leaf router-id {
-        type rt-types:router-id;
-        description
-          "Defined in RFC 2328. A 32-bit number
-           that uniquely identifies the router.";
-      }
+    uses local-rib;
 
-      uses local-rib;
+    container statistics {
+      config false;
+      description "Per instance statistics";
+      uses instance-stat;
+    }
 
-      container statistics {
-        description "Per instance statistics";
-        uses instance-stat;
-      }
+    container ietf-spf-delay {
+      if-feature ietf-spf-delay;
+      config false;
+      uses ietf-spf-delay-config;
+      uses ietf-spf-delay-state;
+      description
+        "IETF SPF delay operational states.";
+    }
 
-      container ietf-spf-delay {
-        if-feature ietf-spf-delay;
-        uses ietf-spf-delay-config;
-        uses ietf-spf-delay-state;
-        description
-          "IETF SPF delay operational states.";
-      }
-
-      container database {
-        description "AS scope LSA database.";
-        list as-scope-lsa-type {
-          key "lsa-type";
-          description "List OSPF AS scope LSA databases.";
-          leaf lsa-type {
-            type uint16;
-            description "OSPF AS scope LSA type.";
-          }
-          container as-scope-lsas {
-            description "All AS scope of LSA of this LSA type.";
-            list as-scope-lsa {
-              key "lsa-id adv-router";
-              description "List of OSPF area scope LSAs";
-              uses lsa-key;
-              uses lsa {
-                refine "version/ospfv2/ospfv2" {
-                  must "../../../../../../../rt:type = "
-                     + "'ospf:ospfv2'" {
-                    description "OSPFv2 LSA.";
-                  }
+    container database {
+      config false;
+      description "AS scope LSA database.";
+      list as-scope-lsa-type {
+        key "lsa-type";
+        description "List OSPF AS scope LSA databases.";
+        leaf lsa-type {
+          type uint16;
+          description "OSPF AS scope LSA type.";
+        }
+        container as-scope-lsas {
+          description "All AS scope of LSA of this LSA type.";
+          list as-scope-lsa {
+            key "lsa-id adv-router";
+            description "List of OSPF area scope LSAs";
+            uses lsa-key;
+            uses lsa {
+              refine "version/ospfv2/ospfv2" {
+                must "../../../../../../../rt:type = "
+                   + "'ospf:ospfv2'" {
+                  description "OSPFv2 LSA.";
                 }
-                refine "version/ospfv3/ospfv3" {
-                  must "../../../../../../../rt:type = "
-                     + "'ospf:ospfv3'" {
-                    description "OSPFv3 LSA.";
-                  }
+              }
+              refine "version/ospfv3/ospfv3" {
+                must "../../../../../../../rt:type = "
+                   + "'ospf:ospfv3'" {
+                  description "OSPFv3 LSA.";
                 }
               }
             }
           }
-        } // list as-scope-lsas
-      }
+        }
+      } // list as-scope-lsas
     }
   }
 
@@ -2951,13 +2947,9 @@ module ietf-ospf {
   }
 
   grouping ospf-state {
+    /* All leaf/container must be config false. */
     description
-      "OSPF top-level operational state.";
-    container ospf-state {
-      config "false";
-      description
-        "OSPF top-level operational state.";
-    }
+      "OSPF top operational state.";
   }
 
   grouping multi-topology-area-common-config {
@@ -3010,13 +3002,9 @@ module ietf-ospf {
   }
 
   grouping multi-topology-area-state {
+    /* All leaf/container must be config false. */
     description
-      "OSPF multi-topology area operational state grouping.";
-    container multi-topology-area-state {
-      config "false";
-      description
-        "OSPF multi-topology area operational state.";
-    }
+      "OSPF multi-topology area operational state.";
   }
 
   grouping multi-topology-config {
@@ -3025,14 +3013,11 @@ module ietf-ospf {
   }
 
   grouping multi-topology-state {
+    /* All leaf/container must be config false. */
     description
-      "OSPF multi-topology operational state groupting.";
-    container multi-topology-state {
-      config "false";
-      description
-        "OSPF multi-topology operational state.";
-      uses local-rib;
-    }
+      "OSPF multi-topology operational state.";
+
+    uses local-rib;
   }
 
   grouping multi-topology-interface-config {
@@ -3047,13 +3032,9 @@ module ietf-ospf {
   }
 
   grouping multi-topology-interface-state {
+    /* All leaf/container must be config false. */
     description
-      "OSPF multi-topology operational state grouping.";
-    container multi-topology-interface-state {
-      config "false";
-      description
-        "OSPF multi-topology operational state.";
-    }
+      "OSPF multi-topology operational state.";
   }
 
   grouping ospfv3-interface-config {
@@ -3071,17 +3052,13 @@ module ietf-ospf {
 
   grouping ospfv3-interface-state {
     description
-      "OSPFv3 interface specific operational state grouping.";
-    container ospfv3-interface-state {
-      config "false";
-      description
-        "OSPFv3 interface specific operational state.";
+      "OSPFv3 interface specific operational state.";
 
-      leaf interface-id {
-        type uint16;
-        description
-          "OSPFv3 interface ID.";
-      }
+    leaf interface-id {
+      type uint16;
+      config false;
+      description
+        "OSPFv3 interface ID.";
     }
   }
 
@@ -3108,7 +3085,7 @@ module ietf-ospf {
 
         leaf af {
           type identityref {
-            base rt-types:address-family;
+            base iana-rt-types:address-family;
           }
           description
             "Address-family of the instance.";
