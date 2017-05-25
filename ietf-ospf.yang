@@ -79,6 +79,16 @@ module ietf-ospf {
      MTU (mtu) Maximum Transmission Unit
     ";
 
+  revision 2017-05-25 {
+    description
+      "* Update static neighbor identifier type to a union
+         that allows for router-id, ipv4-address, and
+         ipv6-address.
+      ";
+    reference
+      "RFC XXXX: A YANG Data Model for OSPF.";
+  }
+
   revision 2017-03-12 {
     description
       "* Update authors information.
@@ -2050,8 +2060,12 @@ module ietf-ospf {
           "Specify a static OSPF neighbor.";
 
         leaf identifier {
-          type inet:ip-address;
-          description "Neighbor IPv4 address or router ID.";
+          type union {
+            type rt-types:router-id;
+            type inet:ip-address;
+          }
+          description
+            "Neighbor router ID, IPv4 address, or IPv6 address.";
         }
 
         leaf cost {
