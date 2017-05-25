@@ -81,9 +81,8 @@ module ietf-ospf {
 
   revision 2017-05-25 {
     description
-      "* Update static neighbor identifier type to a union
-         that allows for router-id, ipv4-address, and
-         ipv6-address.
+      "* Update static neighbor identifier description to
+         allow for router-id, ipv4-address, and ipv6-address.
       ";
     reference
       "RFC XXXX: A YANG Data Model for OSPF.";
@@ -2060,10 +2059,7 @@ module ietf-ospf {
           "Specify a static OSPF neighbor.";
 
         leaf identifier {
-          type union {
-            type rt-types:router-id;
-            type inet:ip-address;
-          }
+          type inet:ip-address;
           description
             "Neighbor router ID, IPv4 address, or IPv6 address.";
         }
