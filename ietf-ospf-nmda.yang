@@ -83,9 +83,10 @@ module ietf-ospf {
      MTU (mtu) Maximum Transmission Unit
     ";
 
-  revision 2017-05-25 {
+  revision 2017-06-22 {
     description
-      "* Update static neighbor identifier description to
+      "* Implement NMDA model.
+       * Update static neighbor identifier description to
          allow for router-id, ipv4-address, and ipv6-address.
       ";
     reference

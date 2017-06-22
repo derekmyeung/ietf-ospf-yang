@@ -19,6 +19,10 @@ module ietf-ospf {
     prefix "rt-types";
   }
 
+  import iana-routing-types {
+    prefix "iana-rt-types";
+  }
+
   import ietf-routing {
     prefix "rt";
   }
@@ -79,9 +83,10 @@ module ietf-ospf {
      MTU (mtu) Maximum Transmission Unit
     ";
 
-  revision 2017-05-25 {
+  revision 2017-06-22 {
     description
-      "* Update static neighbor identifier description to
+      "* Implement NMDA model.
+       * Update static neighbor identifier description to
          allow for router-id, ipv4-address, and ipv6-address.
       ";
     reference
@@ -2110,66 +2115,76 @@ module ietf-ospf {
     uses interface-physical-link-config;
   } // grouping interface-config
 
-  grouping neighbor-operation {
+  grouping neighbor-state {
     description
-      "OSPF neighbor operation data.";
+      "OSPF neighbor operational state.";
 
     leaf address {
       type inet:ip-address;
+      config false;
       description
         "Neighbor address.";
     }
     leaf dr-router-id {
       type rt-types:router-id;
+      config false;
       description "Neighbor's Designated Router (DR) router ID.";
     }
 
     leaf dr-ip-addr {
       type inet:ip-address;
+      config false;
       description "Neighbor's Designated Router (DR) IP address.";
     }
 
     leaf bdr-router-id {
       type rt-types:router-id;
+      config false;
       description
         "Neighbor's Backup Designated Router (BDR) router ID.";
     }
 
     leaf bdr-ip-addr {
       type inet:ip-address;
+      config false;
       description
         "Neighbor's Backup Designated Router (BDR) IP Address.";
     }
     leaf state {
       type nbr-state-type;
+      config false;
       description
         "OSPF neighbor state.";
     }
     leaf dead-timer {
       type uint32;
       units "seconds";
+      config false;
       description "This timer tracks the remaining time before 
                    the neighbor is declared dead.";
     }
     container statistics {
+      config false;
       description "Per neighbor statistics";
       uses neighbor-stat;
     }
   }
 
-  grouping interface-common-operation {
+  grouping interface-common-state {
     description
-      "OSPF interface common operation state.";
+      "OSPF interface common operational state.";
     reference "RFC2328 Section 9";
 
     leaf state {
       type if-state-type;
+      config false;
       description "Interface state.";
     }
 
     leaf hello-timer {
       type uint32;
       units "seconds";
+      config false;
       description "This timer tracks the remaining time before
                    the next hello packet is sent.";
     }
@@ -2177,36 +2192,43 @@ module ietf-ospf {
     leaf wait-timer {
       type uint32;
       units "seconds";
+      config false;
       description "This timer tracks the remaining time before
                    the interface exits the Waiting state.";
     }
 
     leaf dr-router-id {
       type rt-types:router-id;
+      config false;
       description "Designated Router (DR) router ID.";
     }
 
     leaf dr-ip-addr {
       type inet:ip-address;
+      config false;
       description "Designated Router (DR) IP address.";
     }
 
     leaf bdr-router-id {
       type rt-types:router-id;
+      config false;
       description "Backup Designated Router (BDR) router ID.";
     }
 
     leaf bdr-ip-addr {
       type inet:ip-address;
+      config false;
       description "Backup Designated Router (BDR) IP Address.";
     }
 
     container statistics {
+      config false;
       description "Per interface statistics";
       uses interface-stat;
     }
 
     container neighbors {
+      config false;
       description "All neighbors for the interface.";
       list neighbor {
         key "neighbor-router-id";
@@ -2217,19 +2239,20 @@ module ietf-ospf {
           description
             "Neighbor router ID.";
         }
-        uses neighbor-operation;
+        uses neighbor-state;
       } // list of OSPF neighbors
     }
-  } // interface-common-operation
+  } // interface-common-state
 
-  grouping interface-operation {
+  grouping interface-state {
     description
-      "OSPF interface operation state.";
+      "OSPF interface operational state.";
     reference "RFC2328 Section 9";
 
-    uses interface-common-operation;
+    uses interface-common-state;
 
     container database {
+      config false;
       description "Link scope LSA database.";
       list link-scope-lsa-type {
         key "lsa-type";
@@ -2273,18 +2296,19 @@ module ietf-ospf {
     uses interface-common-config;
   }
 
-  grouping virtual-link-operation {
+  grouping virtual-link-state {
     description
-      "OSPF virtual link operation state.";
+      "OSPF virtual link operational state.";
 
     leaf cost {
       type uint16 {
         range "1..65535";
       }
+      config false;
       description
         "Virtual link interface cost.";
     }
-    uses interface-common-operation;
+    uses interface-common-state;
   }
 
   grouping sham-link-config {
@@ -2295,11 +2319,11 @@ module ietf-ospf {
     uses interface-physical-link-config;
   }
 
-  grouping sham-link-operation {
+  grouping sham-link-state {
     description
-      "OSPF sham link operation state.";
-
-    uses interface-common-operation;
+      "OSPF sham link operational state.";
+    /* All container/leaf should be config false. */
+    uses interface-common-state;
   }
 
   grouping af-area-config {
@@ -2401,16 +2425,18 @@ module ietf-ospf {
     }
   }
 
-  grouping area-operation {
+  grouping area-state {
     description
-      "OSPF area operation state.";
+      "OSPF area operational state.";
 
     container statistics {
+      config false;
       description "Per area statistics";
       uses area-stat;
     }
 
     container database {
+      config false;
       description "Area scope LSA database.";
       list area-scope-lsa-type {
         key "lsa-type";
@@ -2450,6 +2476,7 @@ module ietf-ospf {
   grouping local-rib {
     description "Local-rib grouping.";
     container local-rib {
+      config false;
       description "Local-rib.";
       list route {
         key "prefix";
@@ -2526,7 +2553,7 @@ module ietf-ospf {
       "Grouping for IETF SPF delay configuration.";
   }
 
-  grouping ietf-spf-delay-operation {
+  grouping ietf-spf-delay-state {
     leaf current-state {
       type enumeration {
         enum "QUIET" {
@@ -2538,34 +2565,40 @@ module ietf-ospf {
         enum "LONG_WAIT" {
           description "LONG_WAIT state";
         }
-    }
-    description
-      "Current state of the algorithm.";
+      }
+      config false;
+      description
+        "Current state of the algorithm.";
     }
     leaf remaining-time-to-learn {
       type uint16;
       units "seconds";
+      config false;
       description
         "Remaining time until time-to-learn timer fires.";
     }
     leaf remaining-hold-down {
       type uint16;
       units "seconds";
+      config false;
       description
         "Remaining time until hold-down timer fires.";
     }
     leaf last-event-received {
       type yang:timestamp;
+      config false;
       description
         "Time of last IGP event received";
     }
     leaf next-spf-time {
       type yang:timestamp;
+      config false;
       description
         "Time when next SPF has been scheduled.";
     }
     leaf last-spf-time {
       type yang:timestamp;
+      config false;
       description
         "Time of last SPF computation.";
       }
@@ -2829,12 +2862,13 @@ module ietf-ospf {
     uses node-tag-config;
   }
 
-  grouping instance-operation {
+  grouping instance-state {
     description
-      "OSPF Address Family operation state.";
+      "OSPF instance operational state.";
 
     leaf router-id {
       type rt-types:router-id;
+      config false;
       description
         "Defined in RFC 2328. A 32-bit number
          that uniquely identifies the router.";
@@ -2843,19 +2877,22 @@ module ietf-ospf {
     uses local-rib;
 
     container statistics {
+      config false;
       description "Per instance statistics";
       uses instance-stat;
     }
 
     container ietf-spf-delay {
       if-feature ietf-spf-delay;
+      config false;
       uses ietf-spf-delay-config;
-      uses ietf-spf-delay-operation;
+      uses ietf-spf-delay-state;
       description
         "IETF SPF delay operational states.";
     }
 
     container database {
+      config false;
       description "AS scope LSA database.";
       list as-scope-lsa-type {
         key "lsa-type";
@@ -2920,9 +2957,10 @@ module ietf-ospf {
     }
   }
 
-  grouping ospf-operation {
+  grouping ospf-state {
+    /* All leaf/container must be config false. */
     description
-      "OSPF top operation state.";
+      "OSPF top operational state.";
   }
 
   grouping multi-topology-area-common-config {
@@ -2974,9 +3012,10 @@ module ietf-ospf {
     }
   }
 
-  grouping multi-topology-area-operation {
+  grouping multi-topology-area-state {
+    /* All leaf/container must be config false. */
     description
-      "OSPF multi-topology area operation state.";
+      "OSPF multi-topology area operational state.";
   }
 
   grouping multi-topology-config {
@@ -2984,9 +3023,10 @@ module ietf-ospf {
       "OSPF multi-topology configuration state.";
   }
 
-  grouping multi-topology-operation {
+  grouping multi-topology-state {
+    /* All leaf/container must be config false. */
     description
-      "OSPF multi-topology operation state.";
+      "OSPF multi-topology operational state.";
 
     uses local-rib;
   }
@@ -3002,9 +3042,10 @@ module ietf-ospf {
     }
   }
 
-  grouping multi-topology-interface-operation {
+  grouping multi-topology-interface-state {
+    /* All leaf/container must be config false. */
     description
-      "OSPF multi-topology operation state.";
+      "OSPF multi-topology operational state.";
   }
 
   grouping ospfv3-interface-config {
@@ -3020,12 +3061,13 @@ module ietf-ospf {
     }
   }
 
-  grouping ospfv3-interface-operation {
+  grouping ospfv3-interface-state {
     description
-      "OSPFv3 interface specific operation state.";
+      "OSPFv3 interface specific operational state.";
 
     leaf interface-id {
       type uint16;
+      config false;
       description
         "OSPFv3 interface ID.";
     }
@@ -3045,6 +3087,7 @@ module ietf-ospf {
         "OSPF.";
 
       uses ospf-config;
+      uses ospf-state;
 
       list instance {
         key "af";
@@ -3053,13 +3096,14 @@ module ietf-ospf {
 
         leaf af {
           type identityref {
-            base rt-types:address-family;
+            base iana-rt-types:address-family;
           }
           description
             "Address-family of the instance.";
         }
 
         uses instance-config;
+        uses instance-state;
 
         container areas {
           description "All areas.";
@@ -3074,12 +3118,13 @@ module ietf-ospf {
             }
 
             uses area-config;
+            uses area-state;
 
             container virtual-links {
               when "../area-id = '0.0.0.0' and "
                  + "../area-type = 'ospf:normal'" {
                 description
-                  "Virutal links must be in backbone area.";
+                  "Virtual links must be in backbone area.";
                 }
               description "All virtual links.";
               list virtual-link {
@@ -3107,6 +3152,7 @@ module ietf-ospf {
                 }
 
                 uses virtual-link-config;
+                uses virtual-link-state;
               }
             }
             container sham-links {
@@ -3127,6 +3173,7 @@ module ietf-ospf {
                     "Address of the remote Sham Link endpoint.";
                 }
                 uses sham-link-config;
+                uses sham-link-state;
               }
             }
             container interfaces {
@@ -3141,6 +3188,7 @@ module ietf-ospf {
                     "Interface name.";
                 }
                 uses interface-config;
+                uses interface-state;
               } // list of interfaces
             }
           } // list of areas
@@ -3176,6 +3224,7 @@ module ietf-ospf {
         }
 
         uses multi-topology-config;
+        uses multi-topology-state;
 
         container areas {
           description "All areas in the topology.";
@@ -3189,6 +3238,7 @@ module ietf-ospf {
                 "Area ID.";
             }
             uses multi-topology-area-config;
+            uses multi-topology-area-state;
           }
         }
       }
@@ -3221,6 +3271,7 @@ module ietf-ospf {
         }
 
         uses multi-topology-interface-config;
+        uses multi-topology-interface-state;
       }
     }
   }
@@ -3236,209 +3287,7 @@ module ietf-ospf {
       "OSPFv3 interface specific configuration state
        augmentation.";
     uses ospfv3-interface-config;
-  }
-
-  augment "/rt:routing-state/"
-        + "rt:control-plane-protocols/rt:control-plane-protocol" {
-    when "rt:type = 'ospf:ospfv2' or "
-       + "rt:type = 'ospf:ospfv3'"  {
-      description
-        "This augmentation is only valid for a routing protocol
-         instance of type 'ospfv2' or 'ospfv3'.";
-    }
-    description
-         "OSPF operational state.";
-    container ospf {
-      description "OSPF";
-
-      uses ospf-config;
-      uses ospf-operation;
-
-      list instance {
-        key "af";
-        description
-          "An OSPF routing protocol instance.";
-
-        leaf af {
-          type identityref {
-            base rt-types:address-family;
-          }
-          description
-            "Address-family of the instance.";
-        }
-
-        uses instance-config;
-        uses instance-operation;
-
-        container areas {
-          description "All areas";
-          list area {
-            key "area-id";
-            description "List of OSPF areas";
-            leaf area-id {
-              type area-id-type;
-              description "Area ID.";
-            }
-
-            uses area-config;
-            uses area-operation;
-
-            container virtual-links {
-              description "All virtual links.";
-              list virtual-link {
-                description
-                  "OSPF virtual link";
-                leaf transit-area-id {
-                  type leafref {
-                    path "../../../area-id";
-                  }
-                  description
-                    "Virutal link transit area ID.";
-                }
-                leaf router-id {
-                  type rt-types:router-id;
-                  description
-                    "Virtual link router ID.";
-                }
-
-                uses virtual-link-config;
-                uses virtual-link-operation;
-              }
-            }
-            container sham-links {
-              description "All sham links.";
-              list sham-link {
-                description
-                  "OSPF sham link";
-                leaf local-id {
-                  type inet:ip-address;
-                  description
-                    "Address of the local Sham Link endpoint.";
-                }
-                leaf remote-id {
-                  type inet:ip-address;
-                  description
-                    "Address of the remote Sham Link endpoint.";
-                }
-                uses sham-link-config;
-                uses sham-link-operation;
-              }
-            }
-
-            container interfaces {
-              description "All interfaces in the area.";
-              list interface {
-                key "name";
-                description
-                  "List of OSPF interfaces.";
-                leaf name {
-                  // Should it refer to config state leaf?
-                  type if:interface-ref;
-                  description "Interface name.";
-                }
-
-                uses interface-config;
-                uses interface-operation;
-              } // list of OSPF interfaces
-            }
-          } // list of OSPF areas
-        }
-      } // list of instances
-    } // container ospf
-  }
-
-  augment "/rt:routing-state/"
-        + "rt:control-plane-protocols/rt:control-plane-protocol/"
-        + "ospf:ospf/ospf:instance" {
-    when "../../rt:type = 'ospf:ospfv2'" {
-      description
-        "This augmentation is only valid for OSPFv2.";
-    }
-    if-feature multi-topology;
-    description
-      "OSPF multi-topology instance operation state
-       augmentation.";
-    container topologies {
-      description "All topologies.";
-      list topology {
-        // Topology must be in the same routing-instance
-        // and of same AF as the container.
-        key "name";
-        description "OSPF topology.";
-        leaf name {
-          type leafref {
-            path "../../../../../../../"
-               + "rt:ribs/rt:rib/rt:name";
-          }
-          description "RIB";
-        }
-
-        uses multi-topology-config;
-        uses multi-topology-operation;
-
-        container areas {
-          description "All areas in the topology.";
-          list area {
-            key "area-id";
-            description
-              "List of OSPF areas";
-            leaf area-id {
-              type area-id-type;
-              description
-                "Area ID.";
-            }
-            uses multi-topology-area-config;
-            uses multi-topology-area-operation;
-          }
-        }
-      }
-    }
-  }
-
-  augment "/rt:routing-state/"
-        + "rt:control-plane-protocols/rt:control-plane-protocol/"
-        + "ospf:ospf/ospf:instance/ospf:areas/ospf:area/"
-        + "ospf:interfaces/ospf:interface" {
-    when "../../../../../../rt:type = 'ospf:ospfv2'" {
-      description
-        "This augmentation is only valid for OSPFv2.";
-    }
-    if-feature ospf:multi-topology;
-    description
-      "OSPF multi-topology interface operation state
-       augmentation.";
-    container topologies {
-      description "All topologies.";
-      list topology {
-        key "name";
-        description "OSPF interface topology.";
-        leaf name {
-          type leafref {
-            path "../../../../../../../../../../../"
-               + "rt:ribs/rt:rib/rt:name";
-          }
-          description
-            "One of the topologies enabled on this interface.";
-        }
-        uses multi-topology-interface-config;
-        uses multi-topology-interface-operation;
-      }
-    }
-  }
-
-  augment "/rt:routing-state/"
-        + "rt:control-plane-protocols/rt:control-plane-protocol/"
-        + "ospf:ospf/ospf:instance/ospf:areas/ospf:area/"
-        + "ospf:interfaces/ospf:interface" {
-    when "../../../../../../rt:type = 'ospf:ospfv3'" {
-      description
-        "This augmentation is only valid for OSPFv3.";
-    }
-    description
-      "OSPFv3 interface specific operation state
-       augmentation.";
-    uses ospfv3-interface-config;
-    uses ospfv3-interface-operation;
+    uses ospfv3-interface-state;
   }
 
   grouping route-content {
