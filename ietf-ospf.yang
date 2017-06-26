@@ -2257,15 +2257,6 @@ module ietf-ospf {
         uses neighbor-state;
       } // list of OSPF neighbors
     }
-  } // interface-common-state
-
-  grouping interface-state {
-    description
-      "OSPF interface operational state.";
-    reference "RFC2328 Section 9";
-
-    uses interface-common-state;
-
     container database {
       config false;
       description "Link scope LSA database.";
@@ -2302,6 +2293,14 @@ module ietf-ospf {
         }
       } // list link-scope-lsas
     }
+  } // interface-common-state
+
+  grouping interface-state {
+    description
+      "OSPF interface operational state.";
+    reference "RFC2328 Section 9";
+
+    uses interface-common-state;
   }
 
   grouping virtual-link-config {
