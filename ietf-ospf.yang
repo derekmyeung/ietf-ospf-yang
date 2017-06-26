@@ -86,8 +86,11 @@ module ietf-ospf {
   revision 2017-06-22 {
     description
       "* Implement NMDA model.
+       * Remove features for instance, area and interface
+         inheritance.
        * Update static neighbor identifier description to
          allow for router-id, ipv4-address, and ipv6-address.
+       * Added spf-log and lsa-log.
       ";
     reference
       "RFC XXXX: A YANG Data Model for OSPF.";
@@ -292,6 +295,33 @@ module ietf-ospf {
   identity nssa {
     base area-type;
     description "OSPF NSSA area.";
+  }
+
+  identity lsa-log-reason {
+    description
+      "Base identity for an LSA log reason.";
+  }
+
+  identity lsa-refresh {
+    base lsa-log-reason;
+    description
+      "Identity used when the LSA is logged
+       as a result of receiving a refresh LSA.";
+  }
+
+  identity lsa-content-change {
+    base lsa-log-reason;
+    description
+      "Identity used when the LSA is logged
+       as a result of a change in the content
+       of the LSA.";
+  }
+
+  identity lsa-purge {
+    base lsa-log-reason;
+    description
+      "Identity used when the LSA is logged
+       as a result of being purged.";
   }
 
   typedef uint24 {
@@ -669,21 +699,6 @@ module ietf-ospf {
   feature stub-router {
     description
       "Support of RFC 6987 OSPF Stub Router Advertisement.";
-  }
-
-  feature instance-inheritance {
-    description
-      "Support instance inheritance";
-  }
-
-  feature area-inheritance {
-    description
-      "Support area inheritance";
-  }
-
-  feature interface-inheritance {
-    description
-      "Support interface inheritance";
   }
 
   feature pe-ce-protocol {
@@ -2394,17 +2409,6 @@ module ietf-ospf {
     description
       "OSPF area configuration state.";
 
-    container all-interfaces-inherit {
-      if-feature interface-inheritance;
-      description
-        "Inheritance for all interfaces";
-      container interface {
-        description
-          "Interface config to be inherited by all
-           interfaces in the area.";
-      }
-    }
-
     leaf area-type {
       type identityref {
         base area-type;
@@ -2629,21 +2633,6 @@ module ietf-ospf {
   grouping instance-config {
     description
       "OSPF instance config state.";
-
-    container all-areas-inherit {
-      if-feature area-inheritance;
-      description
-        "Inheritance for all areas.";
-      container area {
-        description
-          "Area config to be inherited by all areas.";
-      }
-      container interface {
-        description
-          "Interface config to be inherited by all interfaces
-           in all areas.";
-      }
-    }
 
     leaf explicit-router-id {
       if-feature explicit-router-id;
@@ -2931,22 +2920,6 @@ module ietf-ospf {
     description
       "OSPF top configuration state.";
 
-    container all-instances-inherit {
-      if-feature instance-inheritance;
-      description
-        "Inheritance support to all instances.";
-      container area {
-        description
-          "Area config to be inherited by all areas
-           in all instances.";
-      }
-      container interface {
-        description
-          "Interface config to be inherited by all
-           interfaces in all instances.";
-      }
-    }
-
     leaf operation-mode {
       type identityref {
         base operation-mode;
@@ -2961,6 +2934,8 @@ module ietf-ospf {
     /* All leaf/container must be config false. */
     description
       "OSPF top operational state.";
+    uses spf-log;
+    uses lsa-log;
   }
 
   grouping multi-topology-area-common-config {
@@ -3070,6 +3045,163 @@ module ietf-ospf {
       config false;
       description
         "OSPFv3 interface ID.";
+    }
+  }
+
+  grouping lsa-identifiers {
+    description
+      "The parameters that uniquely identify an LSA.";
+    leaf type {
+      type uint16;
+      description
+        "LSA type.";
+    }
+    leaf lsa-id {
+      type yang:dotted-quad;
+      description "LSA ID.";
+    }
+    leaf adv-router {
+      type yang:dotted-quad;
+      description
+        "LSA advertising router.";
+    }
+    leaf seq-num {
+      type uint32;
+      description
+        "LSA sequence number.";
+    }
+  }
+  
+  grouping spf-log {
+    description
+      "Grouping for SPF log.";
+    container spf-log {
+      config false;
+      description
+        "This container lists the SPF log.";
+      list event {
+        key id;
+        description
+          "List of SPF logs.
+           It is used as a wrapping buffer.";
+        leaf id {
+          type uint32;
+          description
+            "This leaf defines the event identifier.
+             This is a purely internal value.";
+        }
+        leaf af {
+          type identityref {
+            base iana-rt-types:address-family;
+          }
+          description
+            "Address-family of the instance.";
+        }
+        leaf spf-type {
+          type enumeration {
+            enum full {
+              description
+                "Computation done is a Full SPF.";
+            }
+            enum intra {
+              description
+                "Computation done is only for intra-area routes.";
+            }
+            enum inter {
+              description
+                "Computation done is only for inter-area
+                 summary routes.";
+            }
+            enum external {
+              description
+                "Computation done is only for AS external routes.";
+            }
+          }
+          description
+            "The SPF computation type.";
+        }
+        leaf schedule-timestamp {
+          type yang:timestamp;
+          description
+            "This leaf describes the timestamp
+             when the computation was scheduled.";
+        }
+        leaf start-timestamp {
+          type yang:timestamp;
+          description
+            "This leaf describes the timestamp
+             when the computation was started.";
+        }
+        leaf end-timestamp {
+          type yang:timestamp;
+          description
+            "This leaf describes the timestamp
+             when the computation was completed.";
+        }
+        list trigger-lsa {
+          key "type lsa-id adv-router seq-num";
+          description
+            "The list of LSAs that triggered the computation.";
+          uses lsa-identifiers;
+        }
+      }
+    }
+  }
+
+  grouping lsa-log {
+    description
+      "Grouping for LSA log.";
+    container lsa-log {
+      config false;
+      description
+        "This conatiner lists the LSA log.
+         Local LSA modifications are also included
+         in the list.";
+      list event {
+        key id;
+        description
+          "List of LSA logs.
+           It is used as a wrapping buffer.";
+        leaf id {
+          type uint32;
+          description
+            "This leaf defines the event identifier.
+             This is a purely internal value.";
+        }
+        leaf af {
+          type identityref {
+            base iana-rt-types:address-family;
+          }
+          description
+            "Address-family of the instance.";
+        }
+        leaf area-id {
+          type area-id-type;
+          description
+            "Area ID";
+        }
+        container lsa {
+          description
+            "This container describes the logged LSA.";
+          uses lsa-identifiers;
+        }
+        leaf received-timestamp {
+          type yang:timestamp;
+          description
+            "This leaf describes the timestamp
+             when the LSA was received.  In case of
+             local LSA update, the timestamp refers
+             to the local LSA update time.";
+        }
+        leaf reason {
+          type identityref {
+            base lsa-log-reason;
+          }
+          description
+            "This leaf describes the reason 
+             that resulted in this LSA log.";
+        }
+      }
     }
   }
 
