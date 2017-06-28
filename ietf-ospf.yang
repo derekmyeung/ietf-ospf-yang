@@ -2913,6 +2913,8 @@ module ietf-ospf {
         }
       } // list as-scope-lsas
     }
+    uses spf-log;
+    uses lsa-log;
   }
 
   grouping ospf-config {
@@ -2933,8 +2935,6 @@ module ietf-ospf {
     /* All leaf/container must be config false. */
     description
       "OSPF top operational state.";
-    uses spf-log;
-    uses lsa-log;
   }
 
   grouping multi-topology-area-common-config {
@@ -3050,6 +3050,18 @@ module ietf-ospf {
   grouping lsa-identifiers {
     description
       "The parameters that uniquely identify an LSA.";
+    leaf area-id {
+      type area-id-type;
+      description
+        "Area ID";
+    }
+    leaf link-id {
+      type union {
+        type inet:ipv4-address;
+        type yang:dotted-quad;
+      }
+      description "Link ID.";
+    }
     leaf type {
       type uint16;
       description
@@ -3088,13 +3100,6 @@ module ietf-ospf {
           description
             "This leaf defines the event identifier.
              This is a purely internal value.";
-        }
-        leaf af {
-          type identityref {
-            base iana-rt-types:address-family;
-          }
-          description
-            "Address-family of the instance.";
         }
         leaf spf-type {
           type enumeration {
@@ -3138,7 +3143,6 @@ module ietf-ospf {
              when the computation was completed.";
         }
         list trigger-lsa {
-          key "type lsa-id adv-router seq-num";
           description
             "The list of LSAs that triggered the computation.";
           uses lsa-identifiers;
@@ -3166,18 +3170,6 @@ module ietf-ospf {
           description
             "This leaf defines the event identifier.
              This is a purely internal value.";
-        }
-        leaf af {
-          type identityref {
-            base iana-rt-types:address-family;
-          }
-          description
-            "Address-family of the instance.";
-        }
-        leaf area-id {
-          type area-id-type;
-          description
-            "Area ID";
         }
         container lsa {
           description
