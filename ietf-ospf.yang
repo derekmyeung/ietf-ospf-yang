@@ -84,6 +84,7 @@ module ietf-ospf {
        * Update static neighbor identifier description to
          allow for router-id, ipv4-address, and ipv6-address.
        * Added spf-log and lsa-log.
+       * Use dotted-quad for OSPFv2 LSA ID.
       ";
     reference
       "RFC XXXX: A YANG Data Model for OSPF.";
@@ -1549,7 +1550,7 @@ module ietf-ospf {
         description "LSA options.";
       }
       leaf lsa-id {
-        type inet:ipv4-address;
+        type yang:dotted-quad;
         mandatory true;
         description "LSA ID.";
       }
@@ -1631,7 +1632,7 @@ module ietf-ospf {
       "OSPF LSA key.";
     leaf lsa-id {
       type union {
-        type inet:ipv4-address;
+        type yang:dotted-quad;
         type uint32;
       }
       description
