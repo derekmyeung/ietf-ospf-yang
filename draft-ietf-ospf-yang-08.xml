@@ -10,6 +10,8 @@
       'http://xml.resource.org/public/rfc/bibxml/reference.RFC.7223.xml'>
     <!ENTITY RFC2328 PUBLIC '' 
       'http://xml.resource.org/public/rfc/bibxml/reference.RFC.2328.xml'>
+    <!ENTITY RFC5246 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.5246.xml'>
     <!ENTITY RFC5340 PUBLIC '' 
       'http://xml.resource.org/public/rfc/bibxml/reference.RFC.5340.xml'>
     <!ENTITY RFC1793 PUBLIC '' 
@@ -30,10 +32,16 @@
       'http://xml.resource.org/public/rfc/bibxml/reference.RFC.4750.xml'>
     <!ENTITY RFC5643 PUBLIC '' 
       'http://xml.resource.org/public/rfc/bibxml/reference.RFC.5643.xml'>
+    <!ENTITY RFC6242 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.6242.xml'>
+    <!ENTITY RFC6536 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.6536.xml'>
     <!ENTITY RFC6565 PUBLIC '' 
       'http://xml.resource.org/public/rfc/bibxml/reference.RFC.6565.xml'>
     <!ENTITY RFC8022 PUBLIC '' 
       'http://xml.resource.org/public/rfc/bibxml/reference.RFC.8022.xml'>
+    <!ENTITY RFC8040 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.8040.xml'>
     <!ENTITY RFC8177 PUBLIC '' 
       'http://xml.resource.org/public/rfc/bibxml/reference.RFC.8177.xml'>
     <!ENTITY I-D.ietf-netmod-revised-datastores PUBLIC '' 
@@ -48,7 +56,7 @@
 <?rfc rfcedstyle="yes" ?>
 <?rfc subcompact="no" ?>
 
-<rfc category="info" docName="draft-ietf-ospf-yang-08" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-ospf-yang-08" ipr="trust200902">
   <!-- category values: std, bcp, info, exp, and historic
      ipr values: full3667, noModification3667, noDerivatives3667
      you can add the attributes updates="NNNN" and obsoletes="NNNN" 
@@ -808,11 +816,54 @@ module: ietf-ospf
 
     <!-- Possibly a 'Contributors' section ... -->
 
-    <section anchor="Security" title="Security Considerations">
-      <t>The data model defined does not create any security implications.</t>
-      <t>This draft does not change any underlying security issues 
-         inherent in <xref target="RFC8022"></xref>.</t>
-       </section>
+   <section anchor="Security" title="Security Considerations">
+
+   <t>The YANG module defined in this document is designed to be accessed 
+      via network management protocols such as NETCONF <xref target="RFC6241"/> 
+      or RESTCONF <xref target="RFC8040"/>. The lowest NETCONF layer is the 
+      secure transport layer, and the mandatory-to-implement secure transport
+      is Secure Shell (SSH) <xref target="RFC6242"/>. The lowest RESTCONF layer
+      is HTTPS, and the mandatory-to-implement secure transport is TLS 
+      <xref target="RFC5246"/>.</t>
+
+   <t>The NETCONF access control model <xref target="RFC6536"/> provides the 
+      means to restrict access for particular NETCONF or RESTCONF users to a
+      pre-configured subset of all available NETCONF or RESTCONF protocol 
+      operations and content.</t>
+
+   <t>There are a number of data nodes defined in this YANG module that are 
+      writable/creatable/deletable (i.e., config true, which is the default). 
+      These data nodes may be considered sensitive or vulnerable in some network 
+      environments. Write operations (e.g., edit-config) to these data nodes without 
+      proper protection can have a negative effect on network operations. For OSPF, 
+      the ability to modify OSPF configuration will allow the entire OSPF domain
+      to be compromised including peering with unauthorized routers to 
+      misroute traffic or mount a massive Denial-of-Service (DoS) attack. The
+      security considerations of OSPFv2 <xref target="RFC2328"/> and 
+      <xref target="RFC5340"/>.</t>
+
+   <t>Some of the readable data nodes in this YANG module may be considered 
+      sensitive or vulnerable in some network environments. It is thus 
+      important to control read access (e.g., via get, get-config, or notification)
+      to these data nodes. The exposure of the Link State Database (LSDB) will
+      expose the detailed topology of the network. This may be undesirable since
+      both due to the fact that exposure may facilitate other attacks. Additionally, 
+      network operators may consider their topologies to be propritary.</t>
+
+    <t>For OSPF authentication, configuration is supported via the specification
+       of key-chains <xref target="RFC8177"/> or the direct specification of
+       key and authentication algorithm. Hence, authentification configuration
+       using the "auth-table-trailer" case in the "authentication" container 
+       inherits the security considerations of <xref target="RFC8177"/>. This 
+       includes the considerations with respect to the local storage and
+       handling of authentication keys.</t>
+
+   <t>Some of the RPC operations in this YANG module may be considered sensitive or
+      vulnerable in some network environments. It is thus important to control
+      access to these operations. The OSPF Yang module support the "clear-neighbor" 
+      and "clear-database" RPCs. If access too either of these is compromised, they
+      can result in temporary network outages be employed to mount DoS attacks.</t>
+   </section>
     <section anchor="Acknowledgements" title="Acknowledgements">
       <t>The authors wish to thank Yi Yang, Alexander Clemm, 
       Gaurav Gupta, Ladislav Lhotka, Stephane Litkowski, 
@@ -851,12 +902,16 @@ module: ietf-ospf
       &RFC5838;
       &RFC3623;
       &RFC5187;
+      &RFC5246;
       &RFC3101;
       &RFC4577;
       &RFC4750;
       &RFC5643;
+      &RFC6242;
+      &RFC6536;
       &RFC6565;
       &RFC8022;
+      &RFC8040;
       &RFC8177;
     </references>
     <references title="Informative References">
