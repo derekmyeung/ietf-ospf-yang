@@ -32,56 +32,49 @@ module ietf-ospf {
   }
 
   organization
-    "Cisco Systems
-     170 West Tasman Drive
-     San Jose, CA 95134-1706
-     USA";
+      "IETF OSPF - OSPF Working Group";
 
   contact
-     "WG Web:   <http://tools.ietf.org/wg/ospf/>
-      WG List:  <mailto:ospf@ietf.org>
+    "WG Web:   <http://datatracker.ietf.org/group/ospf/>
+     WG List:  <mailto:ospf@ietf.org>
 
-      WG Chair: Acee Lindem
-                <mailto:acee@cisco.com>
-
-      WG Chair: Abhay Roy
-                <mailto:akr@cisco.com>
-
-      Editor:   Derek Yeung
-                <mailto:derek@arrcus.com>
-      Author:   Derek Yeung
-                <mailto:derek@arrcus.com>
-      Author:   Yingzhen Qu
-                <mailto:yingzhen.qu@huawei.com>
-      Author:   Jeffrey Zhang
-                <mailto:zzhang@juniper.net>
-      Author:   Ing-Wher Chen
-                <mailto:ing-wher_chen@jabil.com>
-      Author:   Dean Bogdanovic
-                <mailto:ivandean@gmail.com>
-      Author:   Kiran Agrahara Sreenivasa
-                <mailto:kkoushik@cisco.com>";
+     Editor:   Derek Yeung
+               <mailto:derek@arrcus.com>
+     Author:   Acee Lindem
+               <mailto:acee@cisco.com>
+     Author:   Yingzhen Qu
+               <mailto:yingzhen.qu@huawei.com>
+     Author:   Jeffrey Zhang
+               <mailto:zzhang@juniper.net>
+     Author:   Ing-Wher Chen
+               <mailto:ing-wher_chen@jabil.com>
+     Author:   Dean Bogdanovic
+               <mailto:ivandean@gmail.com>
+     Author:   Kiran Agrahara Sreenivasa
+               <mailto:kkoushik@cisco.com>";
 
   description
-    "This YANG module defines the generic configuration and
-     operational state for the OSPF protocol common to all
-     vendor implementations. It is intended that the module
-     will be extended by vendors to define vendor-specific
-     OSPF configuration parameters and policies,
-     for example route maps or route policies.
+     "This YANG module defines the generic configuration and
+      operational state for the OSPF protocol common to all
+      vendor implementations. It is intended that the module
+      will be extended by vendors to define vendor-specific
+      OSPF configuration parameters and policies,
+      for example route maps or route policies.
 
-     Terms and Acronyms
+      Copyright (c) 2017 IETF Trust and the persons identified as
+      authors of the code.  All rights reserved.
 
-     OSPF (ospf): Open Shortest Path First
+       Redistribution and use in source and binary forms, with or
+       without modification, is permitted pursuant to, and subject
+       to the license terms contained in, the Simplified BSD License
+       set forth in Section 4.c of the IETF Trust's Legal Provisions
+       Relating to IETF Documents
+       (http://trustee.ietf.org/license-info).
 
-     IP (ip): Internet Protocol
+       This version of this YANG module is part of RFC XXXX;
+       see the RFC itself for full legal notices.";
 
-     IPv4 (ipv4):Internet Protocol Version 4
-
-     IPv6 (ipv6): Internet Protocol Version 6
-
-     MTU (mtu) Maximum Transmission Unit
-    ";
+  reference "RFC XXXX";
 
   revision 2017-06-22 {
     description
@@ -254,6 +247,139 @@ module ietf-ospf {
       "Initial revision.";
     reference
       "RFC XXXX: A YANG Data Model for OSPF.";
+  }
+
+  feature multi-topology {
+    description
+      "Support Multiple-Topolgy Routing (MTR).";
+  }
+
+  feature multi-area-adj {
+    description
+      "OSPF multi-area adjacency support as in RFC 5185.";
+  }
+  feature explicit-router-id {
+    description
+      "Set Router-ID per instance explicitly.";
+  }
+
+  feature demand-circuit {
+    description
+      "OSPF demand circuit support as in RFC 1793.";
+  }
+
+  feature mtu-ignore {
+    description
+      "Disable OSPF Database Description packet MTU
+       mismatch checking.";
+  }
+
+  feature lls {
+    description
+      "OSPF link-local signaling (LLS) as in RFC 5613.";
+  }
+
+  feature prefix-suppression {
+    description
+      "OSPF prefix suppression support as in RFC 6860.";
+  }
+
+  feature ttl-security {
+    description
+      "OSPF TTL security check.";
+  }
+
+  feature nsr {
+    description
+      "Non-Stop-Routing (NSR).";
+  }
+
+  feature graceful-restart {
+    description
+      "Graceful OSPF Restart as defined in RFC 3623 and
+       RFC 5187.";
+  }
+
+  feature admin-control {
+    description
+      "Administrative control of the protocol state.";
+  }
+
+  feature auto-cost {
+    description
+      "Calculate OSPF interface cost according to
+       reference bandwidth.";
+  }
+
+  feature max-ecmp {
+    description
+      "Setting maximum number of ECMP paths.";
+  }
+
+  feature max-lsa {
+    description
+      "Setting maximum number of LSAs the OSPF instance
+       will accept.";
+  }
+
+  feature te-rid {
+    description
+      "TE Router-ID.";
+  }
+
+  feature ldp-igp-sync {
+    description
+      "LDP IGP synchronization.";
+  }
+
+  feature ospfv3-authentication-ipsec {
+    description
+      "Use IPsec for OSPFv3 authentication.";
+  }
+
+  feature fast-reroute {
+   description
+     "Support of IP Fast Reroute (IP-FRR).";
+  }
+
+  feature node-flag {
+   description
+     "Support of node flag.";
+  }
+
+  feature node-tag {
+    description
+      "Support of node tag.";
+  }
+
+  feature lfa {
+   description
+     "Support of Loop Free Alternates (LFAs).";
+  }
+
+  feature remote-lfa {
+   description
+     "Support of Remote Loop Free Alternates (R-LFA).";
+  }
+
+  feature stub-router {
+    description
+      "Support of RFC 6987 OSPF Stub Router Advertisement.";
+  }
+
+  feature pe-ce-protocol {
+    description
+      "Support PE-CE protocol";
+  }
+
+  feature ietf-spf-delay {
+    description
+      "Support of IETF SPF delay algorithm.";
+  }
+
+  feature bfd {
+    description
+      "Support of BFD.";
   }
 
   identity ospfv2 {
@@ -501,6 +627,7 @@ module ietf-ospf {
       graceful restart, either by itself or acting
       as a helper.";
   }
+
   typedef packet-type {
     type enumeration {
       enum Hello {
@@ -583,139 +710,6 @@ module ietf-ospf {
       "16-bit checksum in hex-string format 0xXXXX.";
   }
   
-  feature multi-topology {
-    description
-      "Support Multiple-Topolgy Routing (MTR).";
-  }
-
-  feature multi-area-adj {
-    description
-      "OSPF multi-area adjacency support as in RFC 5185.";
-  }
-  feature explicit-router-id {
-    description
-      "Set Router-ID per instance explicitly.";
-  }
-
-  feature demand-circuit {
-    description
-      "OSPF demand circuit support as in RFC 1793.";
-  }
-
-  feature mtu-ignore {
-    description
-      "Disable OSPF Database Description packet MTU
-       mismatch checking.";
-  }
-
-  feature lls {
-    description
-      "OSPF link-local signaling (LLS) as in RFC 5613.";
-  }
-
-  feature prefix-suppression {
-    description
-      "OSPF prefix suppression support as in RFC 6860.";
-  }
-
-  feature ttl-security {
-    description
-      "OSPF TTL security check.";
-  }
-
-  feature nsr {
-    description
-      "Non-Stop-Routing (NSR).";
-  }
-
-  feature graceful-restart {
-    description
-      "Graceful OSPF Restart as defined in RFC 3623 and
-       RFC 5187.";
-  }
-
-  feature admin-control {
-    description
-      "Administrative control of the protocol state.";
-  }
-
-  feature auto-cost {
-    description
-      "Calculate OSPF interface cost according to
-       reference bandwidth.";
-  }
-
-  feature max-ecmp {
-    description
-      "Setting maximum number of ECMP paths.";
-  }
-
-  feature max-lsa {
-    description
-      "Setting maximum number of LSAs the OSPF instance
-       will accept.";
-  }
-
-  feature te-rid {
-    description
-      "TE Router-ID.";
-  }
-
-  feature ldp-igp-sync {
-    description
-      "LDP IGP synchronization.";
-  }
-
-  feature ospfv3-authentication-ipsec {
-    description
-      "Use IPsec for OSPFv3 authentication.";
-  }
-
-  feature fast-reroute {
-   description
-     "Support of IP Fast Reroute (IP-FRR).";
-  }
-
-  feature node-flag {
-   description
-     "Support of node flag.";
-  }
-
-  feature node-tag {
-    description
-      "Support of node tag.";
-  }
-
-  feature lfa {
-   description
-     "Support of Loop Free Alternates (LFAs).";
-  }
-
-  feature remote-lfa {
-   description
-     "Support of Remote Loop Free Alternates (R-LFA).";
-  }
-
-  feature stub-router {
-    description
-      "Support of RFC 6987 OSPF Stub Router Advertisement.";
-  }
-
-  feature pe-ce-protocol {
-    description
-      "Support PE-CE protocol";
-  }
-
-  feature ietf-spf-delay {
-    description
-      "Support of IETF SPF delay algorithm.";
-  }
-
-  feature bfd {
-    description
-      "Support of BFD.";
-  }
-
   grouping tlv {
     description
       "TLV";
