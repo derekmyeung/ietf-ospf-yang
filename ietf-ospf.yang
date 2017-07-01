@@ -78,13 +78,14 @@ module ietf-ospf {
 
   revision 2017-06-22 {
     description
-      "* Implement NMDA model.
+      "* Restructure model to conform to NMDA.
        * Remove features for instance, area and interface
          inheritance.
        * Update static neighbor identifier description to
          allow for router-id, ipv4-address, and ipv6-address.
        * Added spf-log and lsa-log.
        * Use dotted-quad for OSPFv2 LSA ID.
+       * Fix virtual-link transit-area-id must statement.
       ";
     reference
       "RFC XXXX: A YANG Data Model for OSPF.";
@@ -3253,7 +3254,7 @@ module ietf-ospf {
                   type leafref {
                     path "../../../area-id";
                   }
-                  must "current() != '0.0.0.0'" {
+                  must "../../../../area[area-id=current()]/area-id != '0.0.0.0'" {
                     error-message "Virtual link transit area must "
                                 + "be non-zero.";
                     description
