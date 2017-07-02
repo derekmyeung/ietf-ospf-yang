@@ -807,7 +807,7 @@ module: ietf-ospf
   <t>
     <figure>
       <artwork><![CDATA[
-<CODE BEGINS> file "ietf-ospf@2017-03-12.yang"
+<CODE BEGINS> file "ietf-ospf@2017-07-01.yang"
 <CODE ENDS>
       ]]></artwork>
     </figure>
