@@ -76,7 +76,7 @@ module ietf-ospf {
 
   reference "RFC XXXX";
 
-  revision 2017-06-22 {
+  revision 2017-07-01 {
     description
       "* Restructure model to conform to NMDA.
        * Remove features for instance, area and interface
