@@ -5,14 +5,14 @@
 Internet                                                        D. Yeung
 Internet-Draft                                                    Arrcus
 Intended status: Standards Track                                   Y. Qu
-Expires: January 2, 2018                                          Huawei
+Expires: January 3, 2018                                          Huawei
                                                                 J. Zhang
                                                         Juniper Networks
                                                                  I. Chen
                                                                    Jabil
                                                                A. Lindem
                                                            Cisco Systems
-                                                            July 1, 2017
+                                                            July 2, 2017
 
 
                    Yang Data Model for OSPF Protocol
@@ -38,7 +38,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on January 2, 2018.
+   This Internet-Draft will expire on January 3, 2018.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Yeung, et al.            Expires January 2, 2018                [Page 1]
+Yeung, et al.            Expires January 3, 2018                [Page 1]
 
 Internet-Draft            OSPF Yang Data Model                 July 2017
 
@@ -73,19 +73,19 @@ Table of Contents
      2.3.  OSPFv2 and OSPFv3 . . . . . . . . . . . . . . . . . . . .   5
      2.4.  Optional Features . . . . . . . . . . . . . . . . . . . .   5
      2.5.  OSPF Router Configuration/Operational State . . . . . . .   5
-     2.6.  OSPF Instance Configuration/Operatiomal State . . . . . .   5
-     2.7.  OSPF Area Configuration/Operational State . . . . . . . .   7
-     2.8.  OSPF Interface Configuration/Operational State  . . . . .   9
-     2.9.  OSPF notification . . . . . . . . . . . . . . . . . . . .  11
-     2.10. OSPF RPC Operations . . . . . . . . . . . . . . . . . . .  14
-   3.  OSPF Yang Module  . . . . . . . . . . . . . . . . . . . . . .  15
-   4.  Security Considerations . . . . . . . . . . . . . . . . . . .  95
-   5.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  96
-   6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  96
-     6.1.  Normative References  . . . . . . . . . . . . . . . . . .  96
-     6.2.  Informative References  . . . . . . . . . . . . . . . . .  98
-   Appendix A.  Contributors' Addreses . . . . . . . . . . . . . . .  99
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  99
+     2.6.  OSPF Instance Configuration/Operational State . . . . . .   5
+     2.7.  OSPF Area Configuration/Operational State . . . . . . . .   8
+     2.8.  OSPF Interface Configuration/Operational State  . . . . .  13
+     2.9.  OSPF notification . . . . . . . . . . . . . . . . . . . .  16
+     2.10. OSPF RPC Operations . . . . . . . . . . . . . . . . . . .  20
+   3.  OSPF Yang Module  . . . . . . . . . . . . . . . . . . . . . .  20
+   4.  Security Considerations . . . . . . . . . . . . . . . . . . . 100
+   5.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . 101
+   6.  References  . . . . . . . . . . . . . . . . . . . . . . . . . 101
+     6.1.  Normative References  . . . . . . . . . . . . . . . . . . 101
+     6.2.  Informative References  . . . . . . . . . . . . . . . . . 103
+   Appendix A.  Contributors' Addreses . . . . . . . . . . . . . . . 104
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . 104
 
 1.  Overview
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Yeung, et al.            Expires January 2, 2018                [Page 2]
+Yeung, et al.            Expires January 3, 2018                [Page 2]
 
 Internet-Draft            OSPF Yang Data Model                 July 2017
 
@@ -165,7 +165,7 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
 
 
 
-Yeung, et al.            Expires January 2, 2018                [Page 3]
+Yeung, et al.            Expires January 3, 2018                [Page 3]
 
 Internet-Draft            OSPF Yang Data Model                 July 2017
 
@@ -221,7 +221,7 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
 
 
 
-Yeung, et al.            Expires January 2, 2018                [Page 4]
+Yeung, et al.            Expires January 3, 2018                [Page 4]
 
 Internet-Draft            OSPF Yang Data Model                 July 2017
 
@@ -263,7 +263,7 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
              .
              .
 
-2.6.  OSPF Instance Configuration/Operatiomal State
+2.6.  OSPF Instance Configuration/Operational State
 
    The instance container represents an OSPF protocol engine and
    contains the router level configuration and operational state.  The
@@ -277,7 +277,7 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
 
 
 
-Yeung, et al.            Expires January 2, 2018                [Page 5]
+Yeung, et al.            Expires January 3, 2018                [Page 5]
 
 Internet-Draft            OSPF Yang Data Model                 July 2017
 
@@ -333,7 +333,7 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
 
 
 
-Yeung, et al.            Expires January 2, 2018                [Page 6]
+Yeung, et al.            Expires January 3, 2018                [Page 6]
 
 Internet-Draft            OSPF Yang Data Model                 July 2017
 
@@ -347,19 +347,90 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
              +--rw node-tags {node-tag}?
              |  +--rw node-tag* [tag]
              |     +--rw tag    uint32
-             .
-             .
              +--ro router-id?
              +--ro local-rib
-             .
-             .
+             |  +--ro route* [prefix]
+             |     +--ro prefix        inet:ip-prefix
+             |     +--ro next-hops
+             |     |  +--ro next-hop* [next-hop]
+             |     |     +--ro outgoing-interface?   if:interface-ref
+             |     |     +--ro next-hop              inet:ip-address
+             |     +--ro metric?       uint32
+             |     +--ro route-type?   route-type
+             |     +--ro route-tag?    uint32
              +--ro statistics
-             .
-             .
+             |  +--ro originate-new-lsa-count?   yang:counter32
+             |  +--ro rx-new-lsas-count?         yang:counter32
+             |  +--ro as-scope-lsa-count?        yang:gauge32
+             |  +--ro as-scope-lsa-chksum-sum?   uint32
+             |  +--ro database
+             |     +--ro as-scope-lsa-type*
+             |        +--ro lsa-type?        uint16
+             |        +--ro lsa-count?       yang:gauge32
+             |        +--ro lsa-cksum-sum?   int32
              +--ro ietf-spf-delay
+             |  +--ro initial-delay?             uint16
+             |  +--ro short-delay?               uint16
+             |  +--ro long-delay?                uint16
+             |  +--ro hold-down?                 uint16
+             |  +--ro time-to-learn?             uint16
+             |  +--ro current-state?             enumeration
+             |  +--ro remaining-time-to-learn?   uint16
+             |  +--ro remaining-hold-down?       uint16
+             |  +--ro last-event-received?       yang:timestamp
+             |  +--ro next-spf-time?             yang:timestamp
+             |  +--ro last-spf-time?             yang:timestamp
+             +--ro database
+             |  +--ro as-scope-lsa-type* [lsa-type]
+             |     +--ro as-scope-lsas
+             |        +--ro as-scope-lsa* [lsa-id adv-router]
+             |           +--ro lsa-id               union
+             |           +--ro adv-router           inet:ipv4-address
+
+
+
+Yeung, et al.            Expires January 3, 2018                [Page 7]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
+             |           +--ro decoded-completed?   boolean
+             |           +--ro raw-data?            yang:hex-string
+             |           +--ro (version)?
+             |              +--:(ospfv2)
+             |              |  +--ro ospfv2
+             .              .
+             .              .
+             |              +--:(ospfv3)
+             |                 +--ro ospfv3
              .
              .
-             +--ro as-scope-lsa
+             +--ro spf-log
+             |  +--ro event* [id]
+             |     +--ro id                    uint32
+             |     +--ro spf-type?             enumeration
+             |     +--ro schedule-timestamp?   yang:timestamp
+             |     +--ro start-timestamp?      yang:timestamp
+             |     +--ro end-timestamp?        yang:timestamp
+             |     +--ro trigger-lsa*
+             |        +--ro area-id?      area-id-type
+             |        +--ro link-id?      union
+             |        +--ro type?         uint16
+             |        +--ro lsa-id?       yang:dotted-quad
+             |        +--ro adv-router?   yang:dotted-quad
+             |        +--ro seq-num?      uint32
+             +--ro lsa-log
+             |  +--ro event* [id]
+             |     +--ro id                    uint32
+             |     +--ro lsa
+             |     |  +--ro area-id?      area-id-type
+             |     |  +--ro link-id?      union
+             |     |  +--ro type?         uint16
+             |     |  +--ro lsa-id?       yang:dotted-quad
+             |     |  +--ro adv-router?   yang:dotted-quad
+             |     |  +--ro seq-num?      uint32
+             |     +--ro received-timestamp?   yang:timestamp
+             |     +--ro reason?               identityref
              .
              .
 
@@ -371,6 +442,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
    the area Link State Database (LSDB).
 
    module: ietf-ospf
+
+
+
+Yeung, et al.            Expires January 3, 2018                [Page 8]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
      augment /rt:routing/rt:control-plane-protocols/
               rt:control-plane-protocol:
        +--rw ospf
@@ -386,19 +465,104 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
              |     +--rw ranges
              |     |  +--rw range* [prefix]
              |     |     +--rw prefix       inet:ip-prefix
+             |     |     +--rw advertise?   boolean
+             |     |     +--rw cost?        uint24
+             |     +--ro statistics
+             |     |  +--ro spf-runs-count?              yang:counter32
+             |     |  +--ro abr-count?                   yang:gauge32
+             |     |  +--ro asbr-count?                  yang:gauge32
+             |     |  +--ro ar-nssa-translator-event-count?
+             |     |                                     yang:counter32
+             |     |  +--ro area-scope-lsa-count?        yang:gauge32
+             |     |  +--ro area-scope-lsa-cksum-sum?    int32
+             |     |  +--ro database
+             |     |     +--ro area-scope-lsa-type*
+             |     |        +--ro lsa-type?        uint16
+             |     |        +--ro lsa-count?       yang:gauge32
+             |     |        +--ro lsa-cksum-sum?   int32
+             |     +--ro database
+             |     |  +--ro area-scope-lsa-type* [lsa-type]
+             |     |     +--ro lsa-type           uint16
+             |     |     +--ro area-scope-lsas
+             |     |        +--ro area-scope-lsa* [lsa-id adv-router]
+             |     |           +--ro lsa-id               union
+             .     .           .
+             .     .           .
+             |     |           +--ro (version)?
+             |     |              +--:(ospfv2)
+             |     |              |  +--ro ospfv2
+             |     |              |     +--ro header
+             .     .              .     .
+             .     .              .     .
+             |     |              |     +--ro body
+             |     |              |        +--ro router
+             .     .              .        .
+             .     .              .        .
 
 
 
-Yeung, et al.            Expires January 2, 2018                [Page 7]
+Yeung, et al.            Expires January 3, 2018                [Page 9]
 
 Internet-Draft            OSPF Yang Data Model                 July 2017
 
 
-             |     |     +--rw advertise?   boolean
-             |     |     +--rw cost?        uint24
+             |     |              |        +--ro network
+             .     .              .        .
+             .     .              .        .
+             |     |              |        +--ro summary
+             .     .              .        .
+             .     .              .        .
+             |     |              |        +--ro external
+             .     .              .        .
+             .     .              .        .
+             |     |              |        +--ro opaque
+             .     .              .        .
+             .     .              .        .
+             |     |              +--:(ospfv3)
+             |     |                 +--ro ospfv3
+             |     |                    +--ro header
+             .     .                    .
+             .     .                    .
+             |     |                    +--ro body
+             |     |                       +--ro router
+             .     .                       .
+             .     .                       .
+             |     |                       +--ro network
+             .     .                       .
+             .     .                       .
+             |     |                       +--ro inter-area-prefix
+             .     .                       .
+             .     .                       .
+             |     |                       +--ro inter-area-router
+             .     .                       .
+             .     .                       .
+             |     |                       +--ro as-external
+             .     .                       .
+             .     .                       .
+             |     |                       +--ro nssa
+             .     .                       .
+             .     .                       .
+             |     |                       +--ro link
+             .     .                       .
+             .     .                       .
+             |     |                       +--ro intra-area-prefix
+             .     .                       .
+             .     .                       .
+             |     |                       +--ro router-information
+             .     .                       .
+             .     .                       .
              |     +--rw virtual-links
              |     |  +--rw virtual-link* [transit-area-id router-id]
-             |     |     +--rw transit-area-id       -> ../../../area-id
+             |     |     +--rw transit-area-id       -> ../../../../
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 10]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
+             |     |                                    area/area-id
              |     |     +--rw router-id             rt-types:router-id
              |     |     +--rw hello-interval?       uint16
              |     |     +--rw dead-interval?        uint32
@@ -421,6 +585,54 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
              |     |           +--:(auth-trailer-key)
              |     |              +--rw key?                string
              |     |              +--rw crypto-algorithm?   identityref
+             |     |     +--ro cost?                 uint16
+             |     |     +--ro state?                if-state-type
+             |     |     +--ro hello-timer?          uint32
+             |     |     +--ro wait-timer?           uint32
+             |     |     +--ro dr-router-id?         rt-types:router-id
+             |     |     +--ro dr-ip-addr?           inet:ip-address
+             |     |     +--ro bdr-router-id?        rt-types:router-id
+             |     |     +--ro bdr-ip-addr?          inet:ip-address
+             |     |     +--ro statistics
+             |     |     |  +--ro if-event-count?        yang:counter32
+             |     |     |  +--ro link-scope-lsa-count?  yang:gauge32
+             |     |     |  +--ro link-scope-lsa-cksum-sum?
+             |     |     |                               uint32
+             |     |     |  +--ro database
+             |     |     |     +--ro link-scope-lsa-type*
+             |     |     |        +--ro lsa-type?        uint16
+             |     |     |        +--ro lsa-count?       yang:gauge32
+             |     |     |        +--ro lsa-cksum-sum?   int32
+             |     |     +--ro neighbors
+             |     |     |  +--ro neighbor* [neighbor-router-id]
+             |     |     |     +--ro neighbor-router-id
+             |     |     |                           rt-types:router-id
+             |     |     |     +--ro address?        inet:ip-address
+             |     |     |     +--ro dr-router-id?   rt-types:router-id
+             |     |     |     +--ro dr-ip-addr?     inet:ip-address
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 11]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
+             |     |     |     +--ro bdr-router-id?  rt-types:router-id
+             |     |     |     +--ro bdr-ip-addr?    inet:ip-address
+             |     |     |     +--ro state?          nbr-state-type
+             |     |     |     +--ro dead-timer?     uint32
+             |     |     |     +--ro statistics
+             |     |     |        +--ro nbr-event-count?
+             |     |     |                           yang:counter32
+             |     |     |        +--ro nbr-retrans-qlen?
+             |     |     |                           yang:gauge32
+             |     |     +--ro database
+             |     |        +--ro link-scope-lsa-type* [lsa-type]
+             |     |           +--ro lsa-type           uint16
+             |     |           +--ro link-scope-lsas
+             .     .
+             .     .
              |     +--rw sham-links {pe-ce-protocol}?
              |     |  +--rw sham-link* [local-id remote-id]
              |     |     +--rw local-id               inet:ip-address
@@ -442,14 +654,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
              |     |     |     |  +--rw sa?                 string
              |     |     |     +--:(auth-trailer-key-chain)
              |     |     |     |  +--rw key-chain?
-
-
-
-Yeung, et al.            Expires January 2, 2018                [Page 8]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
              |     |     |              key-chain:key-chain-ref
              |     |     |     +--:(auth-trailer-key)
              |     |     |        +--rw key?                string
@@ -459,6 +663,51 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
              |     |                               {mtu-ignore}?
              |     |     +--rw prefix-suppression? boolean
              |     |                               {prefix-suppression}?
+             |     |     +--ro state?              if-state-type
+             |     |     +--ro hello-timer?        uint32
+             |     |     +--ro wait-timer?         uint32
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 12]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
+             |     |     +--ro dr-router-id?       rt-types:router-id
+             |     |     +--ro dr-ip-addr?         inet:ip-address
+             |     |     +--ro bdr-router-id?      rt-types:router-id
+             |     |     +--ro bdr-ip-addr?        inet:ip-address
+             |     |     +--ro statistics
+             |     |     |  +--ro if-event-count?        yang:counter32
+             |     |     |  +--ro link-scope-lsa-count?  yang:gauge32
+             |     |     |  +--ro link-scope-lsa-cksum-sum?
+             |     |     |                               uint32
+             |     |     |  +--ro database
+             |     |     |     +--ro link-scope-lsa-type*
+             |     |     |        +--ro lsa-type?        uint16
+             |     |     |        +--ro lsa-count?       yang:gauge32
+             |     |     |        +--ro lsa-cksum-sum?   int32
+             |     |     +--ro neighbors
+             |     |     |  +--ro neighbor* [neighbor-router-id]
+             |     |     |     +--ro neighbor-router-id
+             |     |     |                           rt-types:router-id
+             |     |     |     +--ro address?        inet:ip-address
+             |     |     |     +--ro dr-router-id?   rt-types:router-id
+             |     |     |     +--ro dr-ip-addr?     inet:ip-address
+             |     |     |     +--ro bdr-router-id?  rt-types:router-id
+             |     |     |     +--ro bdr-ip-addr?    inet:ip-address
+             |     |     |     +--ro state?          nbr-state-type
+             |     |     |     +--ro dead-timer?     uint32
+             |     |     |     +--ro statistics
+             |     |     |        +--ro nbr-event-count?
+             |     |     |                           yang:counter32
+             |     |     |        +--ro nbr-retrans-qlen?
+             |     |     |                           yang:gauge32
+             |     |     +--ro database
+             |     |        +--ro link-scope-lsa-type* [lsa-type]
+             |     |           +--ro lsa-type           uint16
+             |     |           +--ro link-scope-lsas
              .     .
              .     .
 
@@ -473,6 +722,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
      augment /rt:routing/rt:control-plane-protocols/
               rt:control-plane-protocol:
        +--rw ospf
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 13]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
           .
           .
           +--rw instance* [af]
@@ -498,14 +755,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
              |           |  +--rw neighbor* [identifier]
              |           |     +--rw identifier       inet:ip-address
              |           |     +--rw cost?            uint16
-
-
-
-Yeung, et al.            Expires January 2, 2018                [Page 9]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
              |           |     +--rw poll-interval?   uint16
              |           |     +--rw priority?        uint8
              |           +--rw node-flag?             boolean
@@ -529,6 +778,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
              |           +--rw enable?                boolean
              |                                        {admin-control}?
              |           +--rw authentication
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 14]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
              |           |  +--rw (auth-type-selection)?
              |           |     +--:(auth-ipsec)
              |           |     |   {ospfv3-authentication-ipsec}?
@@ -544,6 +801,53 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
              |           |                         {mtu-ignore}?
              |           +--rw prefix-suppression? boolean
              |           |                         {prefix-suppression}?
+             |           +--ro state?                 if-state-type
+             |           +--ro hello-timer?        uint32
+             |           +--ro wait-timer?         uint32
+             |           +--ro dr-router-id?       rt-types:router-id
+             |           +--ro dr-ip-addr?         inet:ip-address
+             |           +--ro bdr-router-id?      rt-types:router-id
+             |           +--ro bdr-ip-addr?        inet:ip-address
+             |           +--ro statistics
+             |           |  +--ro if-event-count?        yang:counter32
+             |           |  +--ro link-scope-lsa-count?  yang:gauge32
+             |           |  +--ro link-scope-lsa-cksum-sum?
+             |           |                               uint32
+             |           |  +--ro database
+             |           |     +--ro link-scope-lsa-type*
+             |           |        +--ro lsa-type?        uint16
+             |           |        +--ro lsa-count?       yang:gauge32
+             |           |        +--ro lsa-cksum-sum?   int32
+             |           +--ro neighbors
+             |           |  +--ro neighbor* [neighbor-router-id]
+             |           |     +--ro neighbor-router-id
+             |           |                           rt-types:router-id
+             |           |     +--ro address?        inet:ip-address
+             |           |     +--ro dr-router-id?   rt-types:router-id
+             |           |     +--ro dr-ip-addr?     inet:ip-address
+             |           |     +--ro bdr-router-id?  rt-types:router-id
+             |           |     +--ro bdr-ip-addr?    inet:ip-address
+             |           |     +--ro state?          nbr-state-type
+             |           |     +--ro dead-timer?     uint32
+             |           |     +--ro statistics
+             |           |        +--ro nbr-event-count?
+             |           |                           yang:counter32
+             |           |        +--ro nbr-retrans-qlen?
+             |           |                           yang:gauge32
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 15]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
+             |           +--ro database
+             |           .  +--ro link-scope-lsa-type* [lsa-type]
+             |           .     +--ro lsa-type           uint16
+             |           .     +--ro link-scope-lsas
+             .           .
+             .           .
              |           +--rw topologies {ospf:multi-topology}?
              |           |  +--rw topology* [name]
              |           |     +--rw name  -> ../../../../../../../../
@@ -552,15 +856,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
              |           +--rw instance-id?           uint8
              .
              .
-
-
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 10]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
 
 2.9.  OSPF notification
 
@@ -595,6 +890,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
        |  +--ro state?                   if-state-type
        +---n if-config-error
        |  +--ro routing-protocol-name?
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 16]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
        |  +     -> /rt:routing/control-plane-protocols/
        |  +         control-plane-protocol/name
        |  +--ro af?
@@ -610,14 +913,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
        |  |  |  +--ro virtual-link
        |  |  |     +--ro transit-area-id?      area-id-type
        |  |  |     +--ro neighbor-router-id?   rt-types:router-id
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 11]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
        |  |  +--:(sham-link)
        |  |     +--ro sham-link
        |  |        +--ro area-id?          area-id-type
@@ -651,6 +946,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
        |  +--ro neighbor-router-id?      rt-types:router-id
        |  +--ro neighbor-ip-addr?        yang:dotted-quad
        |  +--ro state?                   nbr-state-type
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 17]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
        +---n nbr-restart-helper-status-change
        |  +--ro routing-protocol-name?
        |  +     -> /rt:routing/control-plane-protocols/
@@ -666,14 +969,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
        |  |  |     +--ro interface?   if:interface-ref
        |  |  +--:(virtual-link)
        |  |  |  +--ro virtual-link
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 12]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
        |  |  |     +--ro transit-area-id?      area-id-type
        |  |  |     +--ro neighbor-router-id?   rt-types:router-id
        |  |  +--:(sham-link)
@@ -707,6 +1002,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
        |  |     +--ro sham-link
        |  |        +--ro area-id?          area-id-type
        |  |        +--ro local-ip-addr?    inet:ip-address
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 18]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
        |  |        +--ro remote-ip-addr?   inet:ip-address
        |  +--ro packet-source?           yang:dotted-quad
        |  +--ro packet-type?             packet-type
@@ -722,14 +1025,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
        |  +--ro ext-lsdb-limit?          uint32
        +---n lsdb-overflow
        |  +--ro routing-protocol-name?
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 13]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
        |  +     -> /rt:routing/control-plane-protocols/
        |  +         control-plane-protocol/name
        |  +--ro af?
@@ -762,6 +1057,15 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
           +--ro restart-interval?        uint16
           +--ro exit-reason?             restart-exit-reason-type
 
+
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 19]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
 2.10.  OSPF RPC Operations
 
    The "ietf-ospf" module defines two RPC operations:
@@ -769,22 +1073,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
    o  clear-database: reset the content of a particular OSPF database.
 
    o  clear-neighbor: restart a particular set of OSPF neighbor.
-
-
-
-
-
-
-
-
-
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 14]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
 
      rpcs:
        +---x clear-neighbor
@@ -827,6 +1115,13 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
        prefix "iana-rt-types";
      }
 
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 20]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
      import ietf-routing {
        prefix "rt";
      }
@@ -834,13 +1129,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
      import ietf-key-chain {
        prefix "key-chain";
      }
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 15]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
 
      organization
          "IETF OSPF - OSPF Working Group";
@@ -882,6 +1170,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
           Relating to IETF Documents
           (http://trustee.ietf.org/license-info).
 
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 21]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
           This version of this YANG module is part of RFC XXXX;
           see the RFC itself for full legal notices.";
 
@@ -890,14 +1186,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
      revision 2017-07-01 {
        description
          "* Restructure model to conform to NMDA.
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 16]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
           * Remove features for instance, area and interface
             inheritance.
           * Update static neighbor identifier description to
@@ -938,6 +1226,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
      revision 2016-10-31 {
        description
          "* Update authors information.
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 22]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
           * Rename candidate-disabled to candidiate-enable
             and set the default value to TRUE.
           * Rename node identifiers that end with
@@ -946,14 +1242,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
             ospf/instance/areas/area/interfaces/interface/
             fast-reroute/lfa/enable (previously named 'enabled')
             to FALSE.
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 17]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
           * Set the default value of
             ospf/instance/areas/area/interfaces/interface/
             fast-reroute/remote-lfa/enable (previously named 'enabled')
@@ -994,6 +1282,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
           * Rename rx-bad-packet to if-rx-bad-packet.
           * Move virtual link placement to backbone area.
           * Remove cost configuration from virtual link.
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 23]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
           * Move if-feature multi-area-adj statement.
           * Add type checksum16-type.
           * Change LSA header checksum to use checksum16-type.
@@ -1002,13 +1298,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
        reference
          "RFC XXXX: A YANG Data Model for OSPF.";
      }
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 18]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
 
      revision 2016-03-20 {
        description
@@ -1049,6 +1338,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
      revision 2015-07-06 {
        description
          "* Remove support for protocol-centric config.
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 24]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
           * Enclose list in container, except for instance.
           * Replace protocol-shutdown with admin-control.
           * Add IP-FRR per-interface config.
@@ -1058,14 +1355,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
           * Use relative path for reference to rib.
           * Add ability to set single admin distance.
           * Make unreserved bandwidth into list.
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 19]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
           * Add F and T bit to OSPFv3 external LSA.
           * Remove key statement inside LSA body.
           * Add stub router support.
@@ -1105,6 +1394,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
      }
      feature explicit-router-id {
        description
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 25]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
          "Set Router-ID per instance explicitly.";
      }
 
@@ -1114,14 +1411,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
      }
 
      feature mtu-ignore {
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 20]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
        description
          "Disable OSPF Database Description packet MTU
           mismatch checking.";
@@ -1161,6 +1450,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
      feature auto-cost {
        description
          "Calculate OSPF interface cost according to
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 26]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
           reference bandwidth.";
      }
 
@@ -1170,14 +1467,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
      }
 
      feature max-lsa {
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 21]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
        description
          "Setting maximum number of LSAs the OSPF instance
           will accept.";
@@ -1218,6 +1507,13 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
         "Support of Loop Free Alternates (LFAs).";
      }
 
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 27]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
      feature remote-lfa {
       description
         "Support of Remote Loop Free Alternates (R-LFA).";
@@ -1226,14 +1522,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
      feature stub-router {
        description
          "Support of RFC 6987 OSPF Stub Router Advertisement.";
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 22]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
      }
 
      feature pe-ce-protocol {
@@ -1274,6 +1562,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
      }
 
      identity area-type {
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 28]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
        description "Base identity for OSPF area type.";
      }
 
@@ -1281,14 +1577,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
        base area-type;
        description "OSPF normal area.";
      }
-
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 23]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
 
      identity stub {
        base area-type;
@@ -1330,6 +1618,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
      typedef uint24 {
        type uint32 {
          range "0 .. 16777215";
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 29]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
        }
        description
          "24-bit unsigned integer.";
@@ -1338,14 +1634,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
      typedef area-id-type {
        type yang:dotted-quad;
        description
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 24]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
          "Area ID type.";
      }
 
@@ -1386,6 +1674,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
              "Interface loopback state.";
          }
          enum Waiting {
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 30]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
            value "3";
            description
              "Interface waiting state.";
@@ -1394,14 +1690,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
            value "4";
            description
              "Interface point-to-point state.";
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 25]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
          }
          enum DR {
            value "5";
@@ -1442,6 +1730,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          }
          enum 2-Way {
            value "4";
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 31]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
            description
              "Neighbor 2-Way state.";
          }
@@ -1450,14 +1746,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
            description
              "Neighbor exchange start state.";
          }
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 26]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
          enum Exchange {
            value "6";
            description
@@ -1498,6 +1786,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
      typedef restart-exit-reason-type {
        type enumeration {
          enum None {
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 32]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
            value "1";
            description
              "Not attempted.";
@@ -1506,14 +1802,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
            value "2";
            description
              "Restart in progress.";
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 27]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
          }
          enum Completed {
            value "3";
@@ -1554,6 +1842,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
            description
              "OSPF link state request packet.";
          }
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 33]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
          enum Link-State-Update {
            value "4";
            description
@@ -1562,14 +1858,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          enum Link-State-Ack {
            value "5";
            description
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 28]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
              "OSPF link state acknowlegement packet.";
          }
        }
@@ -1610,6 +1898,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
              "Router is going through planned restart.";
          }
          enum Unplanned-Restart {
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 34]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
            value "3";
            description
              "Router is going through unplanned restart.";
@@ -1618,13 +1914,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
        description
          "OSPF graceful restart status type.";
      }
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 29]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
 
      typedef checksum16-type {
        type string {
@@ -1665,6 +1954,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
      }
 
      grouping node-tag-tlv {
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 35]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
        description "OSPF Node Admin Tag TLV grouping.";
        list node-tag {
          leaf tag {
@@ -1674,14 +1971,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          }
          description
            "List of tags.";
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 30]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
        }
      }
 
@@ -1721,6 +2010,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
              bit V {
                description
                  "When set, the router is an endpoint of one or
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 36]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
                   more virtual links.";
              }
              bit E {
@@ -1730,14 +2027,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
              }
              bit B {
                description
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 31]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
                  "When set, the router is an Area Border
                   Router (ABR).";
              }
@@ -1777,6 +2066,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
                }
              }
            }
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 37]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
          }
        }
        container network {
@@ -1786,14 +2083,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          }
          description
            "Network LSA.";
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 32]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
          leaf network-mask {
            type inet:ipv4-address;
            description
@@ -1833,6 +2122,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
                   the summary.";
              }
              leaf metric {
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 38]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
                type uint24;
                description "Metric for the topology.";
              }
@@ -1842,14 +2139,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
        container external {
          when "../../header/type = 5 or "
             + "../../header/type = 7" {
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 33]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
            description
              "Only applies to AS-external LSAs and NSSA LSAs.";
          }
@@ -1889,6 +2178,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
                type inet:ipv4-address;
                description
                  "Forwarding address.";
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 39]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
              }
              leaf external-route-tag {
                type uint32;
@@ -1898,14 +2195,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
            }
          }
        }
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 34]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
        container opaque {
          when "../../header/type = 9 or "
             + "../../header/type = 10 or "
@@ -1945,6 +2234,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
              leaf link-type {
                type uint8;
                mandatory true;
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 40]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
                description "Link type.";
              }
              leaf link-id {
@@ -1954,14 +2251,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
                }
                mandatory true;
                description "Link ID.";
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 35]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
              }
              container local-if-ipv4-addrs {
                description "All local interface IPv4 addresses.";
@@ -2001,6 +2290,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
                    description "Priority from 0 to 7.";
                  }
                  leaf unreserved-bandwidth {
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 41]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
                    type rt-types:bandwidth-ieee-float32;
                    description "Unreserved bandwidth.";
                  }
@@ -2010,14 +2307,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
                }
              }
              leaf admin-group {
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 36]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
                type uint32;
                description
                  "Administrative group/Resource Class/Color.";
@@ -2057,6 +2346,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
              }
              leaf flags {
                type bits {
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 42]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
                  bit A {
                    description
                      "Attach flag.";
@@ -2066,14 +2363,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
                      "Node flag.";
                  }
                }
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 37]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
                description "Flags.";
              }
              leaf prefix {
@@ -2113,6 +2402,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
            }
            bit N {
              description
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 43]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
                "If set, the router is attached to an NSSA";
            }
            bit E {
@@ -2122,14 +2419,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
            }
            bit V6 {
              description
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 38]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
                "If clear, the router/link should be excluded
                 from IPv6 routing calculaton";
            }
@@ -2169,6 +2458,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
            bit DN {
              description
                "When set, the inter-area-prefix LSA or
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 44]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
                 AS-external LSA prefix has been advertised as an
                 L3VPN prefix.";
            }
@@ -2177,14 +2474,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          description "Prefix options.";
        }
      }
-
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 39]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
 
      grouping ospfv3-lsa-external {
        description
@@ -2225,6 +2514,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
        leaf forwarding-address {
          type inet:ipv6-address;
          description
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 45]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
            "Forwarding address.";
        }
 
@@ -2234,14 +2531,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
            "Route tag.";
        }
        leaf referenced-link-state-id {
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 40]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
          type uint32;
          description
            "Referenced Link State ID.";
@@ -2281,6 +2570,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
              }
            }
            mandatory true;
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 46]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
            description "Router LSA flags.";
          }
 
@@ -2290,14 +2587,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
            description "All router link.";
            list link {
              description "Router LSA link.";
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 41]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
              leaf interface-id {
                type uint32;
                description "Interface ID.";
@@ -2337,6 +2626,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
              description
                "List of the routers attached to the network.";
            }
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 47]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
          }
        }
        container inter-area-prefix {
@@ -2346,14 +2643,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          }
          leaf metric {
            type uint24;
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 42]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
            description "Metric";
          }
          uses ospfv3-lsa-prefix;
@@ -2393,6 +2682,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          }
          uses ospfv3-lsa-external;
 
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 48]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
          description "NSSA LSA.";
        }
        container link {
@@ -2402,14 +2699,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          }
          leaf rtr-priority {
            type uint8;
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 43]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
            description "Router Priority for the interface.";
          }
          uses ospfv3-lsa-options;
@@ -2449,6 +2738,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          }
          leaf referenced-link-state-id {
            type uint32;
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 49]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
            description
              "Referenced Link State ID.";
          }
@@ -2457,14 +2754,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
            description
              "Referenced Advertising Router.";
          }
-
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 44]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
 
          leaf num-of-prefixes {
            type uint16;
@@ -2505,6 +2794,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
 
      grouping lsa-header {
        description
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 50]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
            "Common LSA for OSPFv2 and OSPFv3";
        leaf age {
          type uint16;
@@ -2514,14 +2811,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
        leaf type {
          type uint16;
          mandatory true;
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 45]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
          description "LSA type.";
        }
        leaf adv-router {
@@ -2561,6 +2850,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          description
            "Decoded OSPFv2 LSA header data.";
          leaf option {
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 51]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
            type bits {
              bit MT {
                description
@@ -2570,14 +2867,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
              bit DC {
                description
                  "When set, the router supports demand circuits.";
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 46]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
              }
              bit P {
                description
@@ -2617,6 +2906,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          leaf opaque-type {
            type uint8;
            description "Opaque type.";
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 52]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
          }
 
          leaf opaque-id {
@@ -2626,14 +2923,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
 
          uses lsa-header;
        }
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 47]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
        container body {
          description
            "Decoded OSPFv2 LSA body data.";
@@ -2673,6 +2962,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          description
            "The complete LSA in network byte
             order hexadecimal as received or originated.";
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 53]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
        }
      }
 
@@ -2682,14 +2979,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
        uses lsa-common;
        choice version {
          description
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 48]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
            "OSPFv2 or OSPFv3 LSA body.";
          container ospfv2 {
            description "OSPFv2 LSA";
@@ -2729,6 +3018,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
        leaf rx-new-lsas-count {
          type yang:counter32;
          description "The number of LSAs received.";
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 54]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
        }
        leaf as-scope-lsa-count {
          type yang:gauge32;
@@ -2738,14 +3035,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          type uint32;
          description
            "The sum of the LSA checksums for AS Scope LSAs.";
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 49]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
        }
        container database {
          description "Container for per AS-scope LSA statistics.";
@@ -2785,6 +3074,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          type yang:gauge32;
          description
            "The total number of AS Border Routers (ASBRs).";
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 55]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
        }
        leaf ar-nssa-translator-event-count {
          type yang:counter32;
@@ -2794,14 +3091,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
        leaf area-scope-lsa-count {
          type yang:gauge32;
          description
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 50]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
            "The number of area scope LSAs in the area.";
        }
        leaf area-scope-lsa-cksum-sum {
@@ -2841,6 +3130,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          type yang:gauge32;
          description "The number of link scope LSAs.";
        }
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 56]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
        leaf link-scope-lsa-cksum-sum {
          type uint32;
          description "The sum of link scope LSA checksums.";
@@ -2850,14 +3147,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          list link-scope-lsa-type {
            description "List of link scope LSA statistics";
            leaf lsa-type {
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 51]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
              type uint16;
              description "Link scope LSA type.";
            }
@@ -2897,6 +3186,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          description
            "This container may be augmented with global
             parameters for IP-FRR.";
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 57]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
          container lfa {
            if-feature lfa;
            description
@@ -2906,13 +3203,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          }
        }
      }
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 52]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
 
      grouping interface-fast-reroute-config {
        description
@@ -2953,6 +3243,13 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
        }
      }
 
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 58]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
      grouping interface-physical-link-config {
        description
          "Interface cost configuration that only applies to
@@ -2962,14 +3259,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
            range "1..65535";
          }
          description
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 53]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
            "Interface cost.";
        }
        leaf mtu-ignore {
@@ -3009,6 +3298,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          units seconds;
          must "../dead-interval > ../hello-interval" {
            error-message "The dead interval must be "
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 59]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
                        + "larger than the hello interval";
            description
              "The value MUST be greater than 'hello-internval'.";
@@ -3017,14 +3314,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
            "Interval after which a neighbor is
             declared down in seconds.";
        }
-
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 54]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
 
        leaf retransmit-interval {
          type uint16 {
@@ -3065,6 +3354,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
            type uint8 {
              range "1..254";
            }
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 60]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
            description
              "Maximum number of hops that an OSPF packet may
               have traversed before reception.";
@@ -3074,14 +3371,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          if-feature admin-control;
          type boolean;
          default true;
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 55]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
          description
            "Enable/disable protocol on the interface.";
        }
@@ -3121,6 +3410,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
                }
                description
                  "Cryptographic algorithm associated with key.";
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 61]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
              }
            }
          }
@@ -3129,14 +3426,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
 
      grouping interface-config {
        description "Configuration for real interfaces.";
-
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 56]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
 
        leaf interface-type {
          type enumeration {
@@ -3177,6 +3466,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
            "Enable/Disable demand circuit.";
        }
 
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 62]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
        leaf priority {
          type uint8;
          description
@@ -3186,14 +3483,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
        container multi-areas {
          if-feature multi-area-adj;
          description "Container for multi-area config.";
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 57]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
          list multi-area {
            key multi-area-id;
            description
@@ -3233,6 +3522,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
            }
            leaf poll-interval {
              type uint16 {
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 63]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
                range "1..65535";
              }
              units seconds;
@@ -3242,14 +3539,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
              type uint8 {
                range "1..255";
              }
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 58]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
              description "Neighbor priority for DR election.";
            }
          }
@@ -3289,6 +3578,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          description
            "Neighbor address.";
        }
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 64]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
        leaf dr-router-id {
          type rt-types:router-id;
          config false;
@@ -3298,14 +3595,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
        leaf dr-ip-addr {
          type inet:ip-address;
          config false;
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 59]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
          description "Neighbor's Designated Router (DR) IP address.";
        }
 
@@ -3345,6 +3634,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
      grouping interface-common-state {
        description
          "OSPF interface common operational state.";
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 65]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
        reference "RFC2328 Section 9";
 
        leaf state {
@@ -3354,14 +3651,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
        }
 
        leaf hello-timer {
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 60]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
          type uint32;
          units "seconds";
          config false;
@@ -3401,6 +3690,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          description "Backup Designated Router (BDR) IP Address.";
        }
 
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 66]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
        container statistics {
          config false;
          description "Per interface statistics";
@@ -3410,14 +3707,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
        container neighbors {
          config false;
          description "All neighbors for the interface.";
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 61]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
          list neighbor {
            key "neighbor-router-id";
            description
@@ -3457,6 +3746,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
                  }
                  refine "version/ospfv3/ospfv3" {
                    must "../../../../../../../../../../../"
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 67]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
                       + "rt:type = 'ospf:ospfv3'" {
                      description "OSPFv3 LSA.";
                    }
@@ -3466,14 +3763,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
            }
          } // list link-scope-lsas
        }
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 62]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
      } // interface-common-state
 
      grouping interface-state {
@@ -3514,6 +3803,13 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
        uses interface-physical-link-config;
      }
 
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 68]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
      grouping sham-link-state {
        description
          "OSPF sham link operational state.";
@@ -3522,14 +3818,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
      }
 
      grouping af-area-config {
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 63]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
        description
          "OSPF address-family specific area config state.";
 
@@ -3570,6 +3858,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          when "../area-type = 'ospf:stub' or "
             + "../area-type = 'ospf:nssa'" {
            description
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 69]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
              "Summary advertisement into the stub/NSSA area.";
          }
          type boolean;
@@ -3578,14 +3874,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
             NSSA area.";
        }
        leaf default-cost {
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 64]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
          when "../area-type = 'ospf:stub' or "
             + "../area-type = 'ospf:nssa'" {
              description
@@ -3626,6 +3914,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
      }
 
      grouping area-state {
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 70]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
        description
          "OSPF area operational state.";
 
@@ -3634,13 +3930,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          description "Per area statistics";
          uses area-stat;
        }
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 65]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
 
        container database {
          config false;
@@ -3681,6 +3970,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
      }
 
      grouping local-rib {
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 71]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
        description "Local-rib grouping.";
        container local-rib {
          config false;
@@ -3690,14 +3987,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
            description "Routes";
            leaf prefix {
              type inet:ip-prefix;
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 66]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
              description "Destination prefix.";
            }
            container next-hops {
@@ -3737,6 +4026,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          type uint16;
          units msec;
          description
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 72]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
            "Delay used while in QUIET state.";
        }
        leaf short-delay {
@@ -3746,14 +4043,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
            "Delay used while in SHORT_WAIT state.";
        }
        leaf long-delay {
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 67]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
          type uint16;
          units msec;
          description
@@ -3793,6 +4082,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          description
            "Current state of the algorithm.";
        }
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 73]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
        leaf remaining-time-to-learn {
          type uint16;
          units "seconds";
@@ -3802,14 +4099,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
        }
        leaf remaining-hold-down {
          type uint16;
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 68]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
          units "seconds";
          config false;
          description
@@ -3849,6 +4138,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
                description
                  "Node tag value.";
            }
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 74]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
            description
              "List of tags.";
          }
@@ -3858,14 +4155,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
      }
 
      grouping instance-config {
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 69]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
        description
          "OSPF instance config state.";
 
@@ -3905,6 +4194,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
                  leaf inter-area {
                    type uint8;
                    description
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 75]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
                      "Preference for inter-area routes.";
                  }
                }
@@ -3914,14 +4211,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
                    description
                      "Preference for both intra-area and
                       inter-area routes.";
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 70]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
                  }
                }
              }
@@ -3961,6 +4250,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
              "Enable graceful restart helper support for restarting
               routers (RFC 3623 Section 3).";
          }
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 76]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
          leaf restart-interval {
            type uint16 {
              range "1..1800";  // Range is defined in RFC 3623.
@@ -3970,14 +4267,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
            description
              "Interval in seconds to attempt graceful restart prior
               to failing (RFC 3623 Section B.1)";
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 71]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
          }
          leaf helper-strict-lsa-checking {
            type boolean;
@@ -4017,6 +4306,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
               determine interface cost (Mbits). The cost is the
               reference bandwidth divided by the interface speed
               with 1 being the minimum cost.";
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 77]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
          }
        }
 
@@ -4026,14 +4323,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
            type uint16 {
              range "1..32";
            }
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 72]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
            description
              "Maximum number of Equal-Cost Multi-Path (ECMP) paths.";
          }
@@ -4073,6 +4362,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
                "Unconditional stub router state (advertise
                 transit links with max metric";
            }
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 78]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
          }
        }
 
@@ -4082,14 +4379,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          container te-rid {
            if-feature te-rid;
            description
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 73]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
              "Stable OSPF Router IP Address used for Traffic
               Engineering (TE)";
            leaf ipv4-router-id {
@@ -4130,6 +4419,13 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
             that uniquely identifies the router.";
        }
 
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 79]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
        uses local-rib;
 
        container statistics {
@@ -4137,14 +4433,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          description "Per instance statistics";
          uses instance-stat;
        }
-
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 74]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
 
        container ietf-spf-delay {
          if-feature ietf-spf-delay;
@@ -4186,6 +4474,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
                  }
                }
              }
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 80]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
            }
          } // list as-scope-lsas
        }
@@ -4194,14 +4490,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
      }
 
      grouping ospf-config {
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 75]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
        description
          "OSPF top configuration state.";
 
@@ -4242,6 +4530,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
             + "area-type = 'ospf:stub' or "
             + "../../../../../areas/area[area-id=current()/../area-id]/"
             + "area-type = 'ospf:nssa'" {
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 81]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
            description
              "Cost for LSA default route advertised into the
               topology into the stub or NSSA area.";
@@ -4250,14 +4546,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
            range "1..16777215";
          }
          description
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 76]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
            "Set the summary default route cost for a
             stub or NSSA area.";
        }
@@ -4298,6 +4586,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
      }
 
      grouping multi-topology-interface-config {
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 82]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
        description
          "OSPF multi-topology configuration state.";
 
@@ -4306,14 +4602,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
           description
             "Interface cost for this topology.";
        }
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 77]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
      }
 
      grouping multi-topology-interface-state {
@@ -4354,6 +4642,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          type area-id-type;
          description
            "Area ID";
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 83]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
        }
        leaf link-id {
          type union {
@@ -4362,14 +4658,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          }
          description "Link ID.";
        }
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 78]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
        leaf type {
          type uint16;
          description
@@ -4410,6 +4698,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
                 This is a purely internal value.";
            }
            leaf spf-type {
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 84]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
              type enumeration {
                enum full {
                  description
@@ -4418,14 +4714,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
                enum intra {
                  description
                    "Computation done is only for intra-area routes.";
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 79]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
                }
                enum inter {
                  description
@@ -4467,6 +4755,13 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
        }
      }
 
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 85]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
      grouping lsa-log {
        description
          "Grouping for LSA log.";
@@ -4474,14 +4769,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          config false;
          description
            "This conatiner lists the LSA log.
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 80]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
             Local LSA modifications are also included
             in the list.";
          list event {
@@ -4523,6 +4810,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
      augment "/rt:routing/rt:control-plane-protocols/"
            + "rt:control-plane-protocol" {
         when "rt:type = 'ospf:ospfv2' or rt:type = 'ospf:ospfv3'" {
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 86]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
          description
            "This augmentation is only valid for a routing protocol
             instance of OSPF (type 'ospfv2' or 'ospfv3').";
@@ -4530,14 +4825,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
        description "OSPF augmentation.";
 
        container ospf {
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 81]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
          description
            "OSPF.";
 
@@ -4579,6 +4866,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
                  when "../area-id = '0.0.0.0' and "
                     + "../area-type = 'ospf:normal'" {
                    description
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 87]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
                      "Virtual links must be in backbone area.";
                    }
                  description "All virtual links.";
@@ -4586,14 +4881,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
                    key "transit-area-id router-id";
                    description
                      "OSPF virtual link";
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 82]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
                    leaf transit-area-id {
                      type leafref {
                        path "../../../../area/area-id";
@@ -4635,6 +4922,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
                    }
                    leaf remote-id {
                      type inet:ip-address;
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 88]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
                      description
                        "Address of the remote Sham Link endpoint.";
                    }
@@ -4642,14 +4937,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
                    uses sham-link-state;
                  }
                }
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 83]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
                container interfaces {
                  description "All interfaces.";
                  list interface {
@@ -4691,6 +4978,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
            key "name";
            description "OSPF topology.";
            leaf name {
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 89]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
              type leafref {
                path "../../../../../../../rt:ribs/rt:rib/rt:name";
              }
@@ -4698,14 +4993,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
            }
 
            uses multi-topology-config;
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 84]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
            uses multi-topology-state;
 
            container areas {
@@ -4747,6 +5034,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
              type leafref {
                path "../../../../../../../../../../../"
                   + "rt:ribs/rt:rib/rt:name";
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 90]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
              }
              description
                "One of the topologies enabled on this interface.";
@@ -4754,14 +5049,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
 
            uses multi-topology-interface-config;
            uses multi-topology-interface-state;
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 85]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
          }
        }
      }
@@ -4803,6 +5090,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
        when "rt:source-protocol = 'ospf:ospfv2' or "
           + "rt:source-protocol = 'ospf:ospfv3'" {
          description
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 91]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
            "This augmentation is only valid for a routes whose
             source protocol is OSPF.";
        }
@@ -4810,13 +5105,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          "OSPF-specific route attributes.";
        uses route-content;
      }
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 86]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
 
      /*
       * RPCs
@@ -4858,6 +5146,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
                 and error-app-tag
                 'ospf-interface-not-found'.";
          }
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 92]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
        }
      }
 
@@ -4866,14 +5162,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          "This RPC request clears a particular
           OSPF database. If the operation
           fails for OSPF internal reason, then
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 87]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
           error-tag and error-app-tag should be set
           to a meaningful value.";
        input {
@@ -4914,6 +5202,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
             + "rt:control-plane-protocol[rt:name=current()]/"
             + "rt:type = 'ospf:ospfv2' or "
             + "/rt:routing/rt:control-plane-protocols/"
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 93]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
             + "rt:control-plane-protocol[rt:name=current()]/"
             + "rt:type = 'ospf:ospfv3'";
          description
@@ -4922,14 +5218,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
 
        leaf af {
          type leafref {
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 88]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
            path "/rt:routing/"
               + "rt:control-plane-protocols/rt:control-plane-protocol"
               + "[rt:name=current()/../routing-protocol-name]/"
@@ -4970,6 +5258,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
            description "sham-link.";
            leaf area-id {
              type area-id-type;
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 94]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
              description "Area ID.";
            }
            leaf local-ip-addr {
@@ -4978,14 +5274,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
            }
            leaf remote-ip-addr {
              type inet:ip-address;
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 89]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
              description "Sham link remote address.";
            }
          }
@@ -5026,6 +5314,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
        uses notification-interface;
 
        leaf packet-source {
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 95]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
          type yang:dotted-quad;
          description "Source address.";
        }
@@ -5034,13 +5330,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          type packet-type;
          description "OSPF packet type.";
        }
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 90]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
 
        leaf error {
          type enumeration {
@@ -5081,6 +5370,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
              description "Duplicate router ID.";
            }
            enum "noError" {
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 96]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
              description "No error.";
            }
          }
@@ -5090,13 +5387,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          "This notification is sent when interface
           config error is detected.";
      }
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 91]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
 
      notification nbr-state-change {
        uses notification-instance-hdr;
@@ -5136,6 +5426,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          type restart-exit-reason-type;
          description
            "Restart helper exit reason.";
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 97]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
        }
        description
          "This notification is sent when a neighbor restart
@@ -5145,14 +5443,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
      notification if-rx-bad-packet {
        uses notification-instance-hdr;
        uses notification-interface;
-
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 92]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
 
        leaf packet-source {
          type yang:dotted-quad;
@@ -5192,6 +5482,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          type uint32;
          description
            "The maximum number of non-default AS-external LSAs
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 98]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
             entries that can be stored in the link state database.";
        }
 
@@ -5202,14 +5500,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
      }
 
      notification nssa-translator-status-change {
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 93]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
        uses notification-instance-hdr;
 
        leaf area-id {
@@ -5248,6 +5538,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
            "Restart interval.";
        }
 
+
+
+
+Yeung, et al.            Expires January 3, 2018               [Page 99]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
        leaf exit-reason {
          type restart-exit-reason-type;
          description
@@ -5258,14 +5556,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
          "This notification is sent when the graceful restart
           state for the router has changed.";
      }
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 94]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
    }
    <CODE ENDS>
 
@@ -5303,6 +5593,15 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
    facilitate other attacks.  Additionally, network operators may
    consider their topologies to be propritary.
 
+
+
+
+
+Yeung, et al.            Expires January 3, 2018              [Page 100]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
    For OSPF authentication, configuration is supported via the
    specification of key-chains [RFC8177] or the direct specification of
    key and authentication algorithm.  Hence, authentification
@@ -5314,14 +5613,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
    Some of the RPC operations in this YANG module may be considered
    sensitive or vulnerable in some network environments.  It is thus
    important to control access to these operations.  The OSPF Yang
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 95]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
-
    module support the "clear-neighbor" and "clear-database" RPCs.  If
    access too either of these is compromised, they can result in
    temporary network outages be employed to mount DoS attacks.
@@ -5359,6 +5650,14 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
               Restart", RFC 3623, DOI 10.17487/RFC3623, November 2003,
               <http://www.rfc-editor.org/info/rfc3623>.
 
+
+
+
+Yeung, et al.            Expires January 3, 2018              [Page 101]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
    [RFC3630]  Katz, D., Kompella, K., and D. Yeung, "Traffic Engineering
               (TE) Extensions to OSPF Version 2", RFC 3630,
               DOI 10.17487/RFC3630, September 2003,
@@ -5368,15 +5667,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
               Provider/Customer Edge Protocol for BGP/MPLS IP Virtual
               Private Networks (VPNs)", RFC 4577, DOI 10.17487/RFC4577,
               June 2006, <http://www.rfc-editor.org/info/rfc4577>.
-
-
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 96]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
 
    [RFC4750]  Joyal, D., Ed., Galecki, P., Ed., Giacalone, S., Ed.,
               Coltun, R., and F. Baker, "OSPF Version 2 Management
@@ -5415,6 +5705,15 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
               (NETCONF)", RFC 6241, DOI 10.17487/RFC6241, June 2011,
               <http://www.rfc-editor.org/info/rfc6241>.
 
+
+
+
+
+Yeung, et al.            Expires January 3, 2018              [Page 102]
+
+Internet-Draft            OSPF Yang Data Model                 July 2017
+
+
    [RFC6242]  Wasserman, M., "Using the NETCONF Protocol over Secure
               Shell (SSH)", RFC 6242, DOI 10.17487/RFC6242, June 2011,
               <http://www.rfc-editor.org/info/rfc6242>.
@@ -5423,16 +5722,6 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
               Protocol (NETCONF) Access Control Model", RFC 6536,
               DOI 10.17487/RFC6536, March 2012,
               <http://www.rfc-editor.org/info/rfc6536>.
-
-
-
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 97]
-
-Internet-Draft            OSPF Yang Data Model                 July 2017
-
 
    [RFC6565]  Pillay-Esnault, P., Moyer, P., Doyle, J., Ertekin, E., and
               M. Lundberg, "OSPFv3 as a Provider Edge to Customer Edge
@@ -5476,16 +5765,7 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
 
 
 
-
-
-
-
-
-
-
-
-
-Yeung, et al.            Expires January 2, 2018               [Page 98]
+Yeung, et al.            Expires January 3, 2018              [Page 103]
 
 Internet-Draft            OSPF Yang Data Model                 July 2017
 
@@ -5541,7 +5821,7 @@ Authors' Addresses
 
 
 
-Yeung, et al.            Expires January 2, 2018               [Page 99]
+Yeung, et al.            Expires January 3, 2018              [Page 104]
 
 Internet-Draft            OSPF Yang Data Model                 July 2017
 
@@ -5597,4 +5877,4 @@ Internet-Draft            OSPF Yang Data Model                 July 2017
 
 
 
-Yeung, et al.            Expires January 2, 2018              [Page 100]
+Yeung, et al.            Expires January 3, 2018              [Page 105]
