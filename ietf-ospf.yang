@@ -85,7 +85,8 @@ module ietf-ospf {
          allow for router-id, ipv4-address, and ipv6-address.
        * Added spf-log and lsa-log.
        * Use dotted-quad for OSPFv2 LSA ID.
-       * Fix virtual-link transit-area-id must statement.
+       * Fix virtual-link transit-area-id leafref path and
+         must statement.
       ";
     reference
       "RFC XXXX: A YANG Data Model for OSPF.";
@@ -3252,9 +3253,12 @@ module ietf-ospf {
                   "OSPF virtual link";
                 leaf transit-area-id {
                   type leafref {
-                    path "../../../area-id";
+                    path "../../../../area/area-id";
                   }
-                  must "../../../../area[area-id=current()]/area-id != '0.0.0.0'" {
+                  must "../../../../area[area-id=current()]/area-id "
+                     + "!= '0.0.0.0' and "
+                     + "../../../../area[area-id=current()]/area-type "
+                     + "= 'ospf:normal'" {
                     error-message "Virtual link transit area must "
                                 + "be non-zero.";
                     description
