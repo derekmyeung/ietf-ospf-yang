@@ -341,7 +341,7 @@ module: ietf-ospf
       </artwork>
     </figure>
       </section>
-    <section title="OSPF Instance Configuration/Operatiomal State">
+    <section title="OSPF Instance Configuration/Operational State">
     <t>The instance container represents an OSPF protocol engine and contains
     the router level configuration and operational state.  The routing domain
     for each instance is dictated through the specification of 
@@ -410,19 +410,82 @@ module: ietf-ospf
           +--rw node-tags {node-tag}?
           |  +--rw node-tag* [tag]
           |     +--rw tag    uint32
-          .
-          .
           +--ro router-id?
           +--ro local-rib
-          .
-          .
+          |  +--ro route* [prefix]
+          |     +--ro prefix        inet:ip-prefix
+          |     +--ro next-hops
+          |     |  +--ro next-hop* [next-hop]
+          |     |     +--ro outgoing-interface?   if:interface-ref
+          |     |     +--ro next-hop              inet:ip-address
+          |     +--ro metric?       uint32
+          |     +--ro route-type?   route-type
+          |     +--ro route-tag?    uint32
           +--ro statistics
-          .
-          .
+          |  +--ro originate-new-lsa-count?   yang:counter32
+          |  +--ro rx-new-lsas-count?         yang:counter32
+          |  +--ro as-scope-lsa-count?        yang:gauge32
+          |  +--ro as-scope-lsa-chksum-sum?   uint32
+          |  +--ro database
+          |     +--ro as-scope-lsa-type*
+          |        +--ro lsa-type?        uint16
+          |        +--ro lsa-count?       yang:gauge32
+          |        +--ro lsa-cksum-sum?   int32
           +--ro ietf-spf-delay
+          |  +--ro initial-delay?             uint16
+          |  +--ro short-delay?               uint16
+          |  +--ro long-delay?                uint16
+          |  +--ro hold-down?                 uint16
+          |  +--ro time-to-learn?             uint16
+          |  +--ro current-state?             enumeration
+          |  +--ro remaining-time-to-learn?   uint16
+          |  +--ro remaining-hold-down?       uint16
+          |  +--ro last-event-received?       yang:timestamp
+          |  +--ro next-spf-time?             yang:timestamp
+          |  +--ro last-spf-time?             yang:timestamp
+          +--ro database
+          |  +--ro as-scope-lsa-type* [lsa-type]
+          |     +--ro as-scope-lsas
+          |        +--ro as-scope-lsa* [lsa-id adv-router]
+          |           +--ro lsa-id               union
+          |           +--ro adv-router           inet:ipv4-address
+          |           +--ro decoded-completed?   boolean
+          |           +--ro raw-data?            yang:hex-string
+          |           +--ro (version)?
+          |              +--:(ospfv2)
+          |              |  +--ro ospfv2
+          .              . 
+          .              .
+          |              +--:(ospfv3)
+          |                 +--ro ospfv3
           .
           .
-          +--ro as-scope-lsa   
+          +--ro spf-log
+          |  +--ro event* [id]
+          |     +--ro id                    uint32
+          |     +--ro spf-type?             enumeration
+          |     +--ro schedule-timestamp?   yang:timestamp
+          |     +--ro start-timestamp?      yang:timestamp
+          |     +--ro end-timestamp?        yang:timestamp
+          |     +--ro trigger-lsa*
+          |        +--ro area-id?      area-id-type
+          |        +--ro link-id?      union
+          |        +--ro type?         uint16
+          |        +--ro lsa-id?       yang:dotted-quad
+          |        +--ro adv-router?   yang:dotted-quad
+          |        +--ro seq-num?      uint32
+          +--ro lsa-log
+          |  +--ro event* [id]
+          |     +--ro id                    uint32
+          |     +--ro lsa
+          |     |  +--ro area-id?      area-id-type
+          |     |  +--ro link-id?      union
+          |     |  +--ro type?         uint16
+          |     |  +--ro lsa-id?       yang:dotted-quad
+          |     |  +--ro adv-router?   yang:dotted-quad
+          |     |  +--ro seq-num?      uint32
+          |     +--ro received-timestamp?   yang:timestamp
+          |     +--ro reason?               identityref
           .
           .
       </artwork>
@@ -455,9 +518,86 @@ module: ietf-ospf
           |     |     +--rw prefix       inet:ip-prefix
           |     |     +--rw advertise?   boolean
           |     |     +--rw cost?        uint24
+          |     +--ro statistics
+          |     |  +--ro spf-runs-count?              yang:counter32
+          |     |  +--ro abr-count?                   yang:gauge32
+          |     |  +--ro asbr-count?                  yang:gauge32
+          |     |  +--ro ar-nssa-translator-event-count?
+          |     |                                     yang:counter32
+          |     |  +--ro area-scope-lsa-count?        yang:gauge32
+          |     |  +--ro area-scope-lsa-cksum-sum?    int32
+          |     |  +--ro database
+          |     |     +--ro area-scope-lsa-type*
+          |     |        +--ro lsa-type?        uint16
+          |     |        +--ro lsa-count?       yang:gauge32
+          |     |        +--ro lsa-cksum-sum?   int32
+          |     +--ro database
+          |     |  +--ro area-scope-lsa-type* [lsa-type]
+          |     |     +--ro lsa-type           uint16
+          |     |     +--ro area-scope-lsas
+          |     |        +--ro area-scope-lsa* [lsa-id adv-router]
+          |     |           +--ro lsa-id               union
+          .     .           .
+          .     .           .
+          |     |           +--ro (version)?
+          |     |              +--:(ospfv2)
+          |     |              |  +--ro ospfv2
+          |     |              |     +--ro header
+          .     .              .     .
+          .     .              .     .
+          |     |              |     +--ro body
+          |     |              |        +--ro router
+          .     .              .        . 
+          .     .              .        .   
+          |     |              |        +--ro network
+          .     .              .        .
+          .     .              .        .
+          |     |              |        +--ro summary
+          .     .              .        .
+          .     .              .        .
+          |     |              |        +--ro external
+          .     .              .        .
+          .     .              .        .
+          |     |              |        +--ro opaque
+          .     .              .        .
+          .     .              .        .
+          |     |              +--:(ospfv3)
+          |     |                 +--ro ospfv3
+          |     |                    +--ro header
+          .     .                    .
+          .     .                    .
+          |     |                    +--ro body
+          |     |                       +--ro router
+          .     .                       .
+          .     .                       .
+          |     |                       +--ro network
+          .     .                       .
+          .     .                       .
+          |     |                       +--ro inter-area-prefix
+          .     .                       .
+          .     .                       .
+          |     |                       +--ro inter-area-router
+          .     .                       .
+          .     .                       .
+          |     |                       +--ro as-external
+          .     .                       .
+          .     .                       .
+          |     |                       +--ro nssa
+          .     .                       .
+          .     .                       .
+          |     |                       +--ro link
+          .     .                       .
+          .     .                       .
+          |     |                       +--ro intra-area-prefix
+          .     .                       .
+          .     .                       .
+          |     |                       +--ro router-information
+          .     .                       .
+          .     .                       .
           |     +--rw virtual-links
           |     |  +--rw virtual-link* [transit-area-id router-id]
-          |     |     +--rw transit-area-id       -> ../../../area-id
+          |     |     +--rw transit-area-id       -> ../../../../
+          |     |                                    area/area-id
           |     |     +--rw router-id             rt-types:router-id
           |     |     +--rw hello-interval?       uint16
           |     |     +--rw dead-interval?        uint32
@@ -480,6 +620,46 @@ module: ietf-ospf
           |     |           +--:(auth-trailer-key)
           |     |              +--rw key?                string
           |     |              +--rw crypto-algorithm?   identityref
+          |     |     +--ro cost?                 uint16
+          |     |     +--ro state?                if-state-type
+          |     |     +--ro hello-timer?          uint32
+          |     |     +--ro wait-timer?           uint32
+          |     |     +--ro dr-router-id?         rt-types:router-id
+          |     |     +--ro dr-ip-addr?           inet:ip-address
+          |     |     +--ro bdr-router-id?        rt-types:router-id
+          |     |     +--ro bdr-ip-addr?          inet:ip-address
+          |     |     +--ro statistics
+          |     |     |  +--ro if-event-count?        yang:counter32
+          |     |     |  +--ro link-scope-lsa-count?  yang:gauge32
+          |     |     |  +--ro link-scope-lsa-cksum-sum?
+          |     |     |                               uint32
+          |     |     |  +--ro database
+          |     |     |     +--ro link-scope-lsa-type*
+          |     |     |        +--ro lsa-type?        uint16
+          |     |     |        +--ro lsa-count?       yang:gauge32
+          |     |     |        +--ro lsa-cksum-sum?   int32
+          |     |     +--ro neighbors
+          |     |     |  +--ro neighbor* [neighbor-router-id]
+          |     |     |     +--ro neighbor-router-id
+          |     |     |                           rt-types:router-id
+          |     |     |     +--ro address?        inet:ip-address
+          |     |     |     +--ro dr-router-id?   rt-types:router-id
+          |     |     |     +--ro dr-ip-addr?     inet:ip-address
+          |     |     |     +--ro bdr-router-id?  rt-types:router-id
+          |     |     |     +--ro bdr-ip-addr?    inet:ip-address
+          |     |     |     +--ro state?          nbr-state-type
+          |     |     |     +--ro dead-timer?     uint32
+          |     |     |     +--ro statistics
+          |     |     |        +--ro nbr-event-count?
+          |     |     |                           yang:counter32
+          |     |     |        +--ro nbr-retrans-qlen?   
+          |     |     |                           yang:gauge32
+          |     |     +--ro database
+          |     |        +--ro link-scope-lsa-type* [lsa-type]
+          |     |           +--ro lsa-type           uint16
+          |     |           +--ro link-scope-lsas
+          .     .
+          .     .
           |     +--rw sham-links {pe-ce-protocol}?
           |     |  +--rw sham-link* [local-id remote-id]
           |     |     +--rw local-id               inet:ip-address
@@ -510,6 +690,43 @@ module: ietf-ospf
           |     |                               {mtu-ignore}?
           |     |     +--rw prefix-suppression? boolean
           |     |                               {prefix-suppression}?
+          |     |     +--ro state?              if-state-type
+          |     |     +--ro hello-timer?        uint32
+          |     |     +--ro wait-timer?         uint32
+          |     |     +--ro dr-router-id?       rt-types:router-id
+          |     |     +--ro dr-ip-addr?         inet:ip-address
+          |     |     +--ro bdr-router-id?      rt-types:router-id
+          |     |     +--ro bdr-ip-addr?        inet:ip-address
+          |     |     +--ro statistics
+          |     |     |  +--ro if-event-count?        yang:counter32
+          |     |     |  +--ro link-scope-lsa-count?  yang:gauge32
+          |     |     |  +--ro link-scope-lsa-cksum-sum?
+          |     |     |                               uint32
+          |     |     |  +--ro database
+          |     |     |     +--ro link-scope-lsa-type*
+          |     |     |        +--ro lsa-type?        uint16
+          |     |     |        +--ro lsa-count?       yang:gauge32
+          |     |     |        +--ro lsa-cksum-sum?   int32
+          |     |     +--ro neighbors
+          |     |     |  +--ro neighbor* [neighbor-router-id]
+          |     |     |     +--ro neighbor-router-id
+          |     |     |                           rt-types:router-id
+          |     |     |     +--ro address?        inet:ip-address
+          |     |     |     +--ro dr-router-id?   rt-types:router-id
+          |     |     |     +--ro dr-ip-addr?     inet:ip-address
+          |     |     |     +--ro bdr-router-id?  rt-types:router-id
+          |     |     |     +--ro bdr-ip-addr?    inet:ip-address
+          |     |     |     +--ro state?          nbr-state-type
+          |     |     |     +--ro dead-timer?     uint32
+          |     |     |     +--ro statistics
+          |     |     |        +--ro nbr-event-count?
+          |     |     |                           yang:counter32
+          |     |     |        +--ro nbr-retrans-qlen?   
+          |     |     |                           yang:gauge32
+          |     |     +--ro database
+          |     |        +--ro link-scope-lsa-type* [lsa-type]
+          |     |           +--ro lsa-type           uint16
+          |     |           +--ro link-scope-lsas
           .     .
           .     .
       </artwork>
@@ -589,6 +806,45 @@ module: ietf-ospf
           |           |                         {mtu-ignore}?
           |           +--rw prefix-suppression? boolean
           |           |                         {prefix-suppression}?
+          |           +--ro state?                 if-state-type
+          |           +--ro hello-timer?        uint32
+          |           +--ro wait-timer?         uint32
+          |           +--ro dr-router-id?       rt-types:router-id
+          |           +--ro dr-ip-addr?         inet:ip-address
+          |           +--ro bdr-router-id?      rt-types:router-id
+          |           +--ro bdr-ip-addr?        inet:ip-address
+          |           +--ro statistics
+          |           |  +--ro if-event-count?        yang:counter32
+          |           |  +--ro link-scope-lsa-count?  yang:gauge32
+          |           |  +--ro link-scope-lsa-cksum-sum?
+          |           |                               uint32
+          |           |  +--ro database
+          |           |     +--ro link-scope-lsa-type*
+          |           |        +--ro lsa-type?        uint16
+          |           |        +--ro lsa-count?       yang:gauge32
+          |           |        +--ro lsa-cksum-sum?   int32
+          |           +--ro neighbors
+          |           |  +--ro neighbor* [neighbor-router-id]
+          |           |     +--ro neighbor-router-id
+          |           |                           rt-types:router-id
+          |           |     +--ro address?        inet:ip-address
+          |           |     +--ro dr-router-id?   rt-types:router-id
+          |           |     +--ro dr-ip-addr?     inet:ip-address
+          |           |     +--ro bdr-router-id?  rt-types:router-id
+          |           |     +--ro bdr-ip-addr?    inet:ip-address
+          |           |     +--ro state?          nbr-state-type
+          |           |     +--ro dead-timer?     uint32
+          |           |     +--ro statistics
+          |           |        +--ro nbr-event-count?
+          |           |                           yang:counter32
+          |           |        +--ro nbr-retrans-qlen?   
+          |           |                           yang:gauge32
+          |           +--ro database
+          |           .  +--ro link-scope-lsa-type* [lsa-type]
+          |           .     +--ro lsa-type           uint16
+          |           .     +--ro link-scope-lsas
+          .           .
+          .           .
           |           +--rw topologies {ospf:multi-topology}?
           |           |  +--rw topology* [name]
           |           |     +--rw name  -> ../../../../../../../../
