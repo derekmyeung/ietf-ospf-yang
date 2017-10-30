@@ -76,6 +76,15 @@ module ietf-ospf {
 
   reference "RFC XXXX";
 
+  revision 2017-10-30 {
+    description
+      "* Address iana-routing-types address-family type change.
+       * Complete NMDA change for routing-state augmentation.
+      ";
+    reference
+      "RFC XXXX: A YANG Data Model for OSPF.";
+  }
+
   revision 2017-07-01 {
     description
       "* Restructure model to conform to NMDA.
@@ -3215,9 +3224,7 @@ module ietf-ospf {
           "An OSPF routing protocol instance.";
 
         leaf af {
-          type identityref {
-            base iana-rt-types:address-family;
-          }
+          type iana-rt-types:address-family;
           description
             "Address-family of the instance.";
         }
@@ -3431,8 +3438,7 @@ module ietf-ospf {
     }
   }
 
-  augment "/rt:routing-state/"
-        + "rt:ribs/rt:rib/rt:routes/rt:route" {
+  augment "/rt:routing/rt:ribs/rt:rib/rt:routes/rt:route" {
     when "rt:source-protocol = 'ospf:ospfv2' or "
        + "rt:source-protocol = 'ospf:ospfv3'" {
       description
