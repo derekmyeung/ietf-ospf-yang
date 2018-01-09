@@ -31,6 +31,10 @@ module ietf-ospf {
     prefix "key-chain";
   }
 
+  import ietf-bfd-types {
+    prefix "bfd-types";
+  }
+
   organization
       "IETF OSPF - OSPF Working Group";
 
@@ -2122,13 +2126,11 @@ module ietf-ospf {
 
     container bfd {
       if-feature bfd;
-      description "BFD configuration.";
-      leaf enable {
-        type boolean;
-        default false;
-        description
-          "True if BFD is enabled for the OSPF interface.";
-      }
+      description "BFD Client Configuration.";
+      uses bfd-types:client-cfg-parms;
+      reference "draft-ietf-bfd-yang-xx.txt:       
+                 YANG Data Model for Bidirectional Forwarding
+                 Detection (BFD)";
     }
 
     uses interface-fast-reroute-config;
