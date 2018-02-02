@@ -1,4 +1,5 @@
 module ietf-ospf {
+  yang-version 1.1;
   namespace "urn:ietf:params:xml:ns:yang:ietf-ospf";
 
   prefix ospf;
@@ -398,13 +399,18 @@ module ietf-ospf {
       "Support of BFD.";
   }
 
-  identity ospfv2 {
+  identity ospf-protocol {
     base "rt:routing-protocol";
+    description "Any version the OSPF protocol";
+  }
+
+  identity ospfv2 {
+    base "ospf-protocol";
     description "OSPFv2";
   }
 
   identity ospfv3 {
-    base "rt:routing-protocol";
+    base "ospf-protocol";
     description "OSPFv3";
   }
 
@@ -424,19 +430,180 @@ module ietf-ospf {
     description "Base identity for OSPF area type.";
   }
 
-  identity normal {
+  identity normal-area {
     base area-type;
     description "OSPF normal area.";
   }
 
-  identity stub {
+  identity stub-nssa-area {
     base area-type;
+    description "OSPF stub or NSSA area.";
+  }
+
+  identity stub-area {
+    base stub-nssa-area;
     description "OSPF stub area.";
   }
 
-  identity nssa {
-    base area-type;
+  identity nssa-area {
+    base stub-nssa-area;
     description "OSPF NSSA area.";
+  }
+
+  identity ospf-lsa-type {
+    description
+      "Base identity for OSPFv3 and OSPFv3 LSA types";
+  }
+
+  identity ospfv2-lsa-type {
+    base ospf-lsa-type;
+    description
+      "OSPFv2 LSA types";
+  }
+
+  identity ospfv2-router-lsa {
+    base ospfv2-lsa-type;
+    description
+      "OSPFv2 Router LSA - Type 1";
+  }
+
+  identity ospfv2-network-lsa {
+    base ospfv2-lsa-type;
+    description
+      "OSPFv2 Network LSA - Type 2";
+  }
+
+  identity ospfv2-summary-lsa-type {
+    base ospfv2-lsa-type;
+    description
+      "OSPFv2 Summary LSA types";
+  }
+
+  identity ospfv2-network-summary-lsa {
+    base ospfv2-summary-lsa-type;
+    description
+      "OSPFv2 Network Summary LSA - Type 3";
+  }
+
+  identity ospfv2-asbr-summary-lsa {
+    base ospfv2-summary-lsa-type;
+    description
+      "OSPFv2 AS Boundary Router (ASBR) Summary LSA - Type 4";
+  }
+
+  identity ospfv2-external-lsa-type {
+    base ospfv2-lsa-type;
+    description
+      "OSPFv2 External LSA types";
+  }
+
+  identity ospfv2-as-external-lsa {
+    base ospfv2-external-lsa-type;
+    description
+      "OSPFv2 AS External LSA - Type 5";
+  }
+
+  identity ospfv2-nssa-lsa {
+    base ospfv2-external-lsa-type;
+    description
+      "OSPFv2 Not-So-Stubby-Area (NSSA) LSA - Type 7";
+  }
+
+  identity ospfv2-opaque-lsa-type {
+    base ospfv2-lsa-type;
+    description
+      "OSPFv2 Opaque LSA types";
+  }
+
+  identity ospfv2-link-scope-opaque-lsa {
+    base ospfv2-opaque-lsa-type;
+    description
+      "OSPFv2 Link-Scoped Opaque LSA - Type 9";
+  }
+
+  identity ospfv2-area-scope-opaque-lsa {
+    base ospfv2-opaque-lsa-type;
+    description
+      "OSPFv2 Area-Scoped Opaque LSA - Type 10";
+  }
+
+  identity ospfv2-as-scope-opaque-lsa {
+    base ospfv2-opaque-lsa-type;
+    description
+      "OSPFv2 AS-Scoped Opaque LSA - Type 11";
+  }
+
+  identity ospfv3-lsa-type {
+    base ospf-lsa-type;
+    description
+      "OSPFv3 LSA types.";
+  }
+
+  identity ospfv3-router-lsa {
+    base ospfv3-lsa-type;
+    description
+      "OSPFv3 Router LSA - Type 0x2001";
+  }
+
+  identity ospfv3-network-lsa {
+    base ospfv3-lsa-type;
+    description
+      "OSPFv3 Network LSA - Type 0x2002";
+  }
+
+  identity ospfv3-summary-lsa-type {
+    base ospfv3-lsa-type;
+    description
+      "OSPFv3 Summary LSA types";
+  }
+
+  identity ospfv3-inter-area-prefix-lsa {
+    base ospfv3-summary-lsa-type;
+    description
+      "OSPFv3 Inter-area Prefix LSA - Type 0x2003";
+  }
+
+  identity ospfv3-inter-area-router-lsa {
+    base ospfv3-summary-lsa-type;
+    description
+      "OSPFv3 Inter-area Router LSA - Type 0x2004";
+  }
+
+  identity ospfv3-external-lsa-type {
+    base ospfv3-lsa-type;
+    description
+      "OSPFv3 External LSA types";
+  }
+
+  identity ospfv3-as-external-lsa {
+    base ospfv3-external-lsa-type;
+    description
+      "OSPFv3 AS-External LSA - Type 0x4005";
+  }
+
+  identity ospfv3-nssa-lsa {
+    base ospfv3-external-lsa-type;
+    description
+      "OSPFv3 Not-So-Stubby-Area (NSSA) LSA - Type 0x2007";
+  }
+
+  identity ospfv3-link-lsa {
+    base ospfv3-lsa-type;
+    description
+      "OSPFv3 Link LSA - Type 0x0008";
+  }
+
+  identity ospfv3-intra-area-prefix-lsa {
+    base ospfv3-lsa-type;
+    description
+      "OSPFv3 Intra-area Prefix LSA - Type 0x2009";
+  }
+
+  identity ospfv3-router-information-lsa {
+    base ospfv3-lsa-type;
+    description
+      "OSPFv3 Router Information LSA - Types 0x800C, 
+       0xA00C, and 0xC00C";
   }
 
   identity lsa-log-reason {
@@ -794,7 +961,8 @@ module ietf-ospf {
   grouping ospfv2-lsa-body {
     description "OSPFv2 LSA body.";
     container router {
-      when "../../header/type = 1" {
+      when "derived-from-or-self(../../header/type, "
+          + "'ospf:ospfv2-router-lsa')" {
         description
           "Only applies to Router LSAs.";
       }
@@ -856,7 +1024,8 @@ module ietf-ospf {
       }
     }
     container network {
-      when "../../header/type = 2" {
+      when "derived-from-or-self(../../header/type, "
+          + "'ospfv2-network-lsa')" {
         description
           "Only applies to Network LSAs.";
       }
@@ -877,8 +1046,8 @@ module ietf-ospf {
       }
     }
     container summary {
-      when "../../header/type = 3 or "
-         + "../../header/type = 4" {
+      when "derived-from(../../header/type, "
+         + "'ospfv2-summary-lsa-type')" {
         description
           "Only applies to Summary LSAs.";
       }
@@ -908,8 +1077,8 @@ module ietf-ospf {
       }
     }
     container external {
-      when "../../header/type = 5 or "
-         + "../../header/type = 7" {
+      when "derived-from(../../header/type, "
+         + "'ospfv2-external-lsa-type')" {
         description
           "Only applies to AS-external LSAs and NSSA LSAs.";
       }
@@ -959,9 +1128,8 @@ module ietf-ospf {
       }
     }
     container opaque {
-      when "../../header/type = 9 or "
-         + "../../header/type = 10 or "
-         + "../../header/type = 11" {
+      when "derived-from(../../header/type, "
+         + "'ospfv2-opaque-lsa-type')" {
         description
           "Only applies to Opaque LSAs.";
       }
@@ -1255,7 +1423,8 @@ module ietf-ospf {
   grouping ospfv3-lsa-body {
     description "OSPFv3 LSA body.";
     container router {
-      when "../../header/type = 8193" { // 0x2001
+      when "derived-from-or-self(../../header/type, "
+         + "'ospfv3-router-lsa')" {
         description
           "Only applies to Router LSAs.";
       }
@@ -1318,7 +1487,8 @@ module ietf-ospf {
       }
     }
     container network {
-      when "../../header/type = 8194" { // 0x2002
+      when "derived-from-or-self(../../header/type, "
+         + "'ospfv3-network-lsa')" {
         description
           "Only applies to Network LSA.";
       }
@@ -1336,7 +1506,8 @@ module ietf-ospf {
       }
     }
     container inter-area-prefix {
-      when "../../header/type = 8195" { // 0x2003
+      when "derived-from-or-self(../../header/type, "
+         + "'ospfv3-inter-area-prefix-lsa')" {
         description
           "Only applies to Inter-Area-Prefix LSAs.";
       }
@@ -1348,7 +1519,8 @@ module ietf-ospf {
       description "Inter-Area-Prefix LSA.";
     }
     container inter-area-router {
-      when "../../header/type = 8196" { // 0x2004
+      when "derived-from-or-self(../../header/type, "
+         + "'ospfv3-inter-area-router-lsa')" {
         description
           "Only applies to Inter-Area-Router LSAs.";
       }
@@ -1365,7 +1537,8 @@ module ietf-ospf {
       description "Inter-Area-Router LSA.";
     }
     container as-external {
-      when "../../header/type = 16389" { // 0x4005
+      when "derived-from-or-self(../../header/type, "
+         + "'ospfv3-as-external-lsa')" {
         description
           "Only applies to AS-external LSAs.";
       }
@@ -1375,7 +1548,8 @@ module ietf-ospf {
       description "AS-External LSA.";
     }
     container nssa {
-      when "../../header/type = 8199" { // 0x2007
+      when "derived-from-or-self(../../header/type, "
+         + "'ospfv3-nssa-lsa')" {
         description
           "Only applies to NSSA LSAs.";
       }
@@ -1384,7 +1558,8 @@ module ietf-ospf {
       description "NSSA LSA.";
     }
     container link {
-      when "../../header/type = 8" { // 0x0008
+      when "derived-from-or-self(../../header/type, "
+         + "'ospfv3-link-lsa')" {
         description
           "Only applies to Link LSAs.";
       }
@@ -1417,7 +1592,8 @@ module ietf-ospf {
       description "Link LSA.";
     }
     container intra-area-prefix {
-      when "../../header/type = 8201" { // 0x2009
+      when "derived-from-or-self(../../header/type, "
+         + "'ospfv3-intra-area-prefix-lsa')" {
         description
           "Only applies to Intra-Area-Prefix LSA.";
       }
@@ -1455,10 +1631,8 @@ module ietf-ospf {
       }
     }
     container router-information {
-      when "../../header/type = 32780 or " // 0x800C
-         + "../../header/type = 40972 or " // 0xA00C
-         + "../../header/type = 49164 or " // 0xC00C           
-         + "../../header/type = 57356" {   // 0xE00C
+      when "derived-from-or-self(../../header/type, "
+         + "'ospfv3-router-information-lsa')" {
         description
           "Only applies to Router Information LSAs (RFC7770).";
       }
@@ -1484,7 +1658,9 @@ module ietf-ospf {
       description "LSA age.";
     }
     leaf type {
-      type uint16;
+      type identityref {
+        base ospf-lsa-type;
+      }
       mandatory true;
       description "LSA type.";
     }
@@ -1514,11 +1690,10 @@ module ietf-ospf {
     description
         "OSPFv2 LSA.";
     container header {
-      must "(type = 9 or type = 10 or type = 11) and "
-         + "opaque-id and opaque-type "
-         + "or (type != 9 and type != 10 and type != 11) "
-         + "and not(opaque-id) and "
-         + "not(opaque-type)" {
+      must "(derived-from-or-self(type, 'ospfv2-opaque-lsa-type') and "
+         + "opaque-id and opaque-type) or "
+         + "(not(derived-from-or-self(type, 'ospfv2-opaque-lsa-type')) "
+         + "and not(opaque-id) and not(opaque-type))" {
         description
           "Opaque type and ID only apply to Opaque LSAs.";
       }
@@ -1977,7 +2152,8 @@ module ietf-ospf {
         description
           "Options for expressing authentication setting.";
         case auth-ipsec {
-          when "../../../../../../../rt:type = 'ospf:ospfv3'" {
+          when "derived-from-or-self(../../../../../../../rt:type, "
+            +  "'ospf:ospfv3')" {
             description "Applied to OSPFv3 only.";
           }
           if-feature ospfv3-authentication-ipsec;
@@ -2285,14 +2461,16 @@ module ietf-ospf {
             uses lsa-key;
             uses lsa {
               refine "version/ospfv2/ospfv2" {
-                must "../../../../../../../../../../../"
-                   + "rt:type = 'ospf:ospfv2'" {
+                must "derived-from-or-self( "
+                   + "../../../../../../../../../../../"
+                   + "rt:type, 'ospf:ospfv2')" {
                   description "OSPFv2 LSA.";
                 }
               }
               refine "version/ospfv3/ospfv3" {
-                must "../../../../../../../../../../../"
-                   + "rt:type = 'ospf:ospfv3'" {
+                must "derived-from-or-self( "
+                   + "../../../../../../../../../../../"
+                   + "rt:type, 'ospf:ospfv3')" {
                   description "OSPFv3 LSA.";
                 }
               }
@@ -2386,8 +2564,7 @@ module ietf-ospf {
       "OSPF area common configuration state.";
 
     leaf summary {
-      when "../area-type = 'ospf:stub' or "
-         + "../area-type = 'ospf:nssa'" {
+      when "derived-from(../area-type,'ospf:stub-nssa-area')" {
         description
           "Summary advertisement into the stub/NSSA area.";
       }
@@ -2397,8 +2574,7 @@ module ietf-ospf {
          NSSA area.";
     }
     leaf default-cost {
-      when "../area-type = 'ospf:stub' or "
-         + "../area-type = 'ospf:nssa'" {
+      when "derived-from(../area-type,'ospf:stub-nssa-area')" {
           description
             "Cost for LSA default route advertised into the
              stub or NSSA area.";
@@ -2420,7 +2596,7 @@ module ietf-ospf {
       type identityref {
         base area-type;
       }
-      default normal;
+      default normal-area;
       description
         "Area type.";
     }
@@ -2428,8 +2604,8 @@ module ietf-ospf {
     uses area-common-config;
 
     uses af-area-config {
-      when "../../../operation-mode = "
-         + "'ospf:ships-in-the-night'" {
+      when "derived-from-or-self(../../../operation-mode, "
+         + "'ospf:ships-in-the-night')" {
         description
           "Ships in the night configuration.";
       }
@@ -2466,14 +2642,16 @@ module ietf-ospf {
             uses lsa-key;
             uses lsa {
               refine "version/ospfv2/ospfv2" {
-                must "../../../../../../../../../"
-                   + "rt:type = 'ospf:ospfv2'" {
+                must "derived-from-or-self( "
+                   + "../../../../../../../../../"
+                   + "rt:type, 'ospf:ospfv2')" {
                   description "OSPFv2 LSA.";
                 }
               }
               refine "version/ospfv3/ospfv3" {
-                must "../../../../../../../../../"
-                   + "rt:type = 'ospf:ospfv3'" {
+                must "derived-from-or-self( "
+                   + "../../../../../../../../../"
+                   + "rt:type, 'ospf:ospfv3')" {
                   description "OSPFv3 LSA.";
                 }
               }
@@ -2905,14 +3083,16 @@ module ietf-ospf {
             uses lsa-key;
             uses lsa {
               refine "version/ospfv2/ospfv2" {
-                must "../../../../../../../rt:type = "
-                   + "'ospf:ospfv2'" {
+                must "derived-from-or-self( "
+                   + "../../../../../../../"
+                   + "rt:type, 'ospf:ospfv2')" {
                   description "OSPFv2 LSA.";
                 }
               }
               refine "version/ospfv3/ospfv3" {
-                must "../../../../../../../rt:type = "
-                   + "'ospf:ospfv3'" {
+                must "derived-from-or-self( "
+                   + "../../../../../../../"
+                   + "rt:type, 'ospf:ospfv3')" {
                   description "OSPFv3 LSA.";
                 }
               }
@@ -2949,10 +3129,9 @@ module ietf-ospf {
     description
       "OSPF multi-topology area common configuration state.";
     leaf summary {
-      when "../../../../../areas/area[area-id=current()/../area-id]/"
-         + "area-type = 'ospf:stub' or " 
+      when "derived-from(" 
          + "../../../../../areas/area[area-id=current()/../area-id]/"
-         + "area-type = 'ospf:nssa'" {
+         + "area-type, 'stub-nssa-area')" {
         description
           "Summary advertisement into the stub/NSSA area.";
       }
@@ -2962,10 +3141,9 @@ module ietf-ospf {
          topology in the stub or NSSA area.";
     }
     leaf default-cost {
-      when "../../../../../areas/area[area-id=current()/../area-id]/"
-         + "area-type = 'ospf:stub' or " 
+      when "derived-from(" 
          + "../../../../../areas/area[area-id=current()/../area-id]/"
-         + "area-type = 'ospf:nssa'" {
+         + "area-type, 'stub-nssa-area')" {
         description
           "Cost for LSA default route advertised into the
            topology into the stub or NSSA area.";
@@ -2986,8 +3164,8 @@ module ietf-ospf {
     uses multi-topology-area-common-config;
 
     uses af-area-config {
-      when "../../../../../operation-mode = "
-         + "'ospf:ships-in-the-night'" {
+      when "derived-from-or-self(../../../../../operation-mode, "
+         + "'ospf:ships-in-the-night')" {
         description
           "Ships in the night configuration.";
       }
@@ -3206,7 +3384,7 @@ module ietf-ospf {
 
   augment "/rt:routing/rt:control-plane-protocols/"
         + "rt:control-plane-protocol" {
-     when "rt:type = 'ospf:ospfv2' or rt:type = 'ospf:ospfv3'" {
+     when "derived-from(rt:type, 'ospf:ospf-protocol')" {
       description
         "This augmentation is only valid for a routing protocol
          instance of OSPF (type 'ospfv2' or 'ospfv3').";
@@ -3220,8 +3398,7 @@ module ietf-ospf {
       uses ospf-config;
       uses ospf-state;
 
-      list instance {
-        key "af";
+      container instance {
         description
           "An OSPF routing protocol instance.";
 
@@ -3250,8 +3427,8 @@ module ietf-ospf {
             uses area-state;
 
             container virtual-links {
-              when "../area-id = '0.0.0.0' and "
-                 + "../area-type = 'ospf:normal'" {
+              when "derived-from-or-self(../area-type, 'normal-area') "
+                 + "and ../area-id = '0.0.0.0'" {
                 description
                   "Virtual links must be in backbone area.";
                 }
@@ -3264,10 +3441,11 @@ module ietf-ospf {
                   type leafref {
                     path "../../../../area/area-id";
                   }
-                  must "../../../../area[area-id=current()]/"
-                     + "area-id != '0.0.0.0' and "
-                     + "../../../../area[area-id=current()]/"
-                     + "area-type = 'ospf:normal'" {
+                  must "derived-from-or-self("
+                    + "../../../../area[area-id=current()]/area-type, "
+                    + "'normal-area') and "
+                    + "../../../../area[area-id=current()]/area-id != "
+                    + "'0.0.0.0'" {
                     error-message "Virtual link transit area must "
                                 + "be non-zero.";
                     description
@@ -3331,8 +3509,7 @@ module ietf-ospf {
 
   augment "/rt:routing/rt:control-plane-protocols/"
         + "rt:control-plane-protocol/ospf:ospf/ospf:instance" {
-    when "../../rt:type = 'ospf:ospfv2' or
-          ../../rt:type = 'ospf:ospfv3'" {
+    when "derived-from(../../rt:type, 'ospf:ospf-protocol')" {
       description
         "This augmentation is only valid for OSPF
         (type 'ospfv2' or 'ospfv3').";
@@ -3380,7 +3557,8 @@ module ietf-ospf {
   augment "/rt:routing/rt:control-plane-protocols/"
         + "rt:control-plane-protocol/ospf:ospf/ospf:instance/"
         + "ospf:areas/ospf:area/ospf:interfaces/ospf:interface" {
-    when "../../../../../../rt:type = 'ospf:ospfv2'" {
+    when "derived-from-or-self(../../../../../../rt:type, "
+       + "'ospf:ospfv2')" {
       description
         "This augmentation is only valid for OSPFv2.";
     }
@@ -3411,7 +3589,8 @@ module ietf-ospf {
   augment "/rt:routing/rt:control-plane-protocols/"
         + "rt:control-plane-protocol/ospf:ospf/ospf:instance/"
         + "ospf:areas/ospf:area/ospf:interfaces/ospf:interface" {
-    when "../../../../../../rt:type = 'ospf:ospfv3'" {
+    when "derived-from-or-self(../../../../../../rt:type, "
+       + "'ospf:ospfv3')" {
       description
         "This augmentation is only valid for OSPFv3.";
     }
@@ -3441,8 +3620,7 @@ module ietf-ospf {
   }
 
   augment "/rt:routing/rt:ribs/rt:rib/rt:routes/rt:route" {
-    when "rt:source-protocol = 'ospf:ospfv2' or "
-       + "rt:source-protocol = 'ospf:ospfv3'" {
+    when "derived-from(rt:source-protocol, 'ospf:ospf-protocol')" {
       description
         "This augmentation is only valid for a routes whose
          source protocol is OSPF.";
@@ -3536,12 +3714,10 @@ module ietf-ospf {
         path "/rt:routing/rt:control-plane-protocols/"
            + "rt:control-plane-protocol/rt:name";
       }
-      must "/rt:routing/rt:control-plane-protocols/"
-         + "rt:control-plane-protocol[rt:name=current()]/"
-         + "rt:type = 'ospf:ospfv2' or "
-         + "/rt:routing/rt:control-plane-protocols/"
-         + "rt:control-plane-protocol[rt:name=current()]/"
-         + "rt:type = 'ospf:ospfv3'";
+      must "derived-from( " 
+        + "/rt:routing/rt:control-plane-protocols/"
+        + "rt:control-plane-protocol[rt:name=current()]/"
+        + "rt:type, 'ospf:ospf-protocol')";
       description
        "OSPF routing protocol instance name.";
     }
