@@ -2161,7 +2161,7 @@ module ietf-ospf {
         description
           "Options for expressing authentication setting.";
         case auth-ipsec {
-          when "derived-from-or-self(../../../../../../../rt:type, "
+          when "derived-from-or-self(../../../../../../rt:type, "
             +  "'ospf:ospfv3')" {
             description "Applied to OSPFv3 only.";
           }
@@ -2471,14 +2471,14 @@ module ietf-ospf {
             uses lsa {
               refine "version/ospfv2/ospfv2" {
                 must "derived-from-or-self( "
-                   + "../../../../../../../../../../../"
+                   + "../../../../../../../../../../"
                    + "rt:type, 'ospf:ospfv2')" {
                   description "OSPFv2 LSA.";
                 }
               }
               refine "version/ospfv3/ospfv3" {
                 must "derived-from-or-self( "
-                   + "../../../../../../../../../../../"
+                   + "../../../../../../../../../../"
                    + "rt:type, 'ospf:ospfv3')" {
                   description "OSPFv3 LSA.";
                 }
@@ -2613,7 +2613,7 @@ module ietf-ospf {
     uses area-common-config;
 
     uses af-area-config {
-      when "derived-from-or-self(../../../operation-mode, "
+      when "derived-from-or-self(../../operation-mode, "
          + "'ospf:ships-in-the-night')" {
         description
           "Ships in the night configuration.";
@@ -2652,14 +2652,14 @@ module ietf-ospf {
             uses lsa {
               refine "version/ospfv2/ospfv2" {
                 must "derived-from-or-self( "
-                   + "../../../../../../../../../"
+                   + "../../../../../../../../"
                    + "rt:type, 'ospf:ospfv2')" {
                   description "OSPFv2 LSA.";
                 }
               }
               refine "version/ospfv3/ospfv3" {
                 must "derived-from-or-self( "
-                   + "../../../../../../../../../"
+                   + "../../../../../../../../"
                    + "rt:type, 'ospf:ospfv3')" {
                   description "OSPFv3 LSA.";
                 }
@@ -3093,14 +3093,14 @@ module ietf-ospf {
             uses lsa {
               refine "version/ospfv2/ospfv2" {
                 must "derived-from-or-self( "
-                   + "../../../../../../../"
+                   + "../../../../../../"
                    + "rt:type, 'ospf:ospfv2')" {
                   description "OSPFv2 LSA.";
                 }
               }
               refine "version/ospfv3/ospfv3" {
                 must "derived-from-or-self( "
-                   + "../../../../../../../"
+                   + "../../../../../../"
                    + "rt:type, 'ospf:ospfv3')" {
                   description "OSPFv3 LSA.";
                 }
@@ -3173,7 +3173,7 @@ module ietf-ospf {
     uses multi-topology-area-common-config;
 
     uses af-area-config {
-      when "derived-from-or-self(../../../../../operation-mode, "
+      when "derived-from-or-self(../../../../operation-mode, "
          + "'ospf:ships-in-the-night')" {
         description
           "Ships in the night configuration.";
@@ -3399,126 +3399,121 @@ module ietf-ospf {
          instance of OSPF (type 'ospfv2' or 'ospfv3').";
     }
     description "OSPF augmentation.";
-
+  
     container ospf {
       description
-        "OSPF.";
+        "OSPF protocol Instance";
 
       uses ospf-config;
       uses ospf-state;
 
-      container instance {
+      leaf af {
+        type iana-rt-types:address-family;
         description
-          "An OSPF routing protocol instance.";
+          "Address-family of the instance.";
+      }
 
-        leaf af {
-          type iana-rt-types:address-family;
+      uses instance-config;
+      uses instance-state;
+
+      container areas {
+        description "All areas.";
+        list area {
+          key "area-id";
           description
-            "Address-family of the instance.";
-        }
-
-        uses instance-config;
-        uses instance-state;
-
-        container areas {
-          description "All areas.";
-          list area {
-            key "area-id";
+            "List of OSPF areas";
+          leaf area-id {
+            type area-id-type;
             description
-              "List of OSPF areas";
-            leaf area-id {
-              type area-id-type;
+              "Area ID.";
+          }
+
+          uses area-config;
+          uses area-state;
+
+          container virtual-links {
+            when "derived-from-or-self(../area-type, 'normal-area') "
+               + "and ../area-id = '0.0.0.0'" {
               description
-                "Area ID.";
-            }
-
-            uses area-config;
-            uses area-state;
-
-            container virtual-links {
-              when "derived-from-or-self(../area-type, 'normal-area') "
-                 + "and ../area-id = '0.0.0.0'" {
-                description
-                  "Virtual links must be in backbone area.";
-                }
-              description "All virtual links.";
-              list virtual-link {
-                key "transit-area-id router-id";
-                description
-                  "OSPF virtual link";
-                leaf transit-area-id {
-                  type leafref {
-                    path "../../../../area/area-id";
-                  }
-                  must "derived-from-or-self("
-                    + "../../../../area[area-id=current()]/area-type, "
-                    + "'normal-area') and "
-                    + "../../../../area[area-id=current()]/area-id != "
-                    + "'0.0.0.0'" {
-                    error-message "Virtual link transit area must "
-                                + "be non-zero.";
-                    description
-                      "Virtual-link trasit area must be
-                       non-zero area.";
-                  }
-                  description
-                    "Virtual link tranist area ID.";
-                }
-                leaf router-id {
-                  type rt-types:router-id;
-                  description
-                    "Virtual Link remote endpoint router ID.";
-                }
-
-                uses virtual-link-config;
-                uses virtual-link-state;
+                "Virtual links must be in backbone area.";
               }
-            }
-            container sham-links {
-              if-feature pe-ce-protocol;
-              description "All sham links.";
-              list sham-link {
-                key "local-id remote-id";
+            description "All virtual links.";
+            list virtual-link {
+              key "transit-area-id router-id";
+              description
+                "OSPF virtual link";
+              leaf transit-area-id {
+                type leafref {
+                  path "../../../../area/area-id";
+                }
+                must "derived-from-or-self("
+                  + "../../../../area[area-id=current()]/area-type, "
+                  + "'normal-area') and "
+                  + "../../../../area[area-id=current()]/area-id != "
+                  + "'0.0.0.0'" {
+                  error-message "Virtual link transit area must "
+                              + "be non-zero.";
+                  description
+                    "Virtual-link trasit area must be
+                     non-zero area.";
+                }
                 description
-                  "OSPF sham link";
-                leaf local-id {
-                  type inet:ip-address;
-                  description
-                    "Address of the local Sham Link endpoint.";
-                }
-                leaf remote-id {
-                  type inet:ip-address;
-                  description
-                    "Address of the remote Sham Link endpoint.";
-                }
-                uses sham-link-config;
-                uses sham-link-state;
+                  "Virtual link tranist area ID.";
               }
-            }
-            container interfaces {
-              description "All interfaces.";
-              list interface {
-                key "name";
+              leaf router-id {
+                type rt-types:router-id;
                 description
-                  "List of OSPF interfaces.";
-                leaf name {
-                  type if:interface-ref;
-                  description
-                    "Interface name.";
-                }
-                uses interface-config;
-                uses interface-state;
-              } // list of interfaces
+                  "Virtual Link remote endpoint router ID.";
+              }
+
+              uses virtual-link-config;
+              uses virtual-link-state;
             }
-          } // list of areas
-        }
-      } // list of instance
-    } // container ospf
+          }
+          container sham-links {
+            if-feature pe-ce-protocol;
+            description "All sham links.";
+            list sham-link {
+              key "local-id remote-id";
+              description
+                "OSPF sham link";
+              leaf local-id {
+                type inet:ip-address;
+                description
+                  "Address of the local Sham Link endpoint.";
+              }
+              leaf remote-id {
+                type inet:ip-address;
+                description
+                  "Address of the remote Sham Link endpoint.";
+              }
+              uses sham-link-config;
+              uses sham-link-state;
+            }
+          }
+          container interfaces {
+            description "All interfaces.";
+            list interface {
+              key "name";
+              description
+                "List of OSPF interfaces.";
+              leaf name {
+                type if:interface-ref;
+                description
+                  "Interface name.";
+              }
+              uses interface-config;
+              uses interface-state;
+            } // list of interfaces
+          }
+        } // list of areas
+      }
+    } // OSPF instance
   }
 
   augment "/rt:routing/rt:control-plane-protocols/"
-        + "rt:control-plane-protocol/ospf:ospf/ospf:instance" {
-    when "derived-from(../../rt:type, 'ospf:ospf-protocol')" {
+        + "rt:control-plane-protocol/ospf:ospf" {
+    when "derived-from(../rt:type, 'ospf:ospf-protocol')" {
       description
         "This augmentation is only valid for OSPF
         (type 'ospfv2' or 'ospfv3').";
@@ -3536,7 +3531,7 @@ module ietf-ospf {
         description "OSPF topology.";
         leaf name {
           type leafref {
-            path "../../../../../../../rt:ribs/rt:rib/rt:name";
+            path "../../../../../../rt:ribs/rt:rib/rt:name";
           }
           description "RIB";
         }
@@ -3564,9 +3559,9 @@ module ietf-ospf {
   }
 
   augment "/rt:routing/rt:control-plane-protocols/"
-        + "rt:control-plane-protocol/ospf:ospf/ospf:instance/"
+        + "rt:control-plane-protocol/ospf:ospf/"
         + "ospf:areas/ospf:area/ospf:interfaces/ospf:interface" {
-    when "derived-from-or-self(../../../../../../rt:type, "
+    when "derived-from-or-self(../../../../../rt:type, "
        + "'ospf:ospfv2')" {
       description
         "This augmentation is only valid for OSPFv2.";
@@ -3582,7 +3577,7 @@ module ietf-ospf {
         description "OSPF interface topology.";
         leaf name {
           type leafref {
-            path "../../../../../../../../../../../"
+            path "../../../../../../../../../../"
                + "rt:ribs/rt:rib/rt:name";
           }
           description
@@ -3596,9 +3591,9 @@ module ietf-ospf {
   }
   
   augment "/rt:routing/rt:control-plane-protocols/"
-        + "rt:control-plane-protocol/ospf:ospf/ospf:instance/"
+        + "rt:control-plane-protocol/ospf:ospf/"
         + "ospf:areas/ospf:area/ospf:interfaces/ospf:interface" {
-    when "derived-from-or-self(../../../../../../rt:type, "
+    when "derived-from-or-self(../../../../../rt:type, "
        + "'ospf:ospfv3')" {
       description
         "This augmentation is only valid for OSPFv3.";
@@ -3736,7 +3731,7 @@ module ietf-ospf {
         path "/rt:routing/"
            + "rt:control-plane-protocols/rt:control-plane-protocol"
            + "[rt:name=current()/../routing-protocol-name]/"
-           + "ospf:ospf/ospf:instance/af";
+           + "ospf:ospf/af";
       }
       description
         "Address family of the OSPF instance.";
