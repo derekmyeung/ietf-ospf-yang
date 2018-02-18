@@ -6,34 +6,47 @@ module ietf-ospf {
 
   import ietf-inet-types {
     prefix "inet";
+    reference "RFC 6021 - Common YANG Data Types";
   }
 
   import ietf-yang-types {
     prefix "yang";
+    reference "RFC 6021 - Common YANG Data Types";
   }
 
   import ietf-interfaces {
     prefix "if";
+    reference "RFC XXXX - A YANG Data Model for Interface
+               Management (NDMA Version)";
   }
 
   import ietf-routing-types {
     prefix "rt-types";
+    reference "RFC 8291 - Common YANG Data Types for the
+               Routing Area";
   }
 
   import iana-routing-types {
     prefix "iana-rt-types";
+    reference "RFC 8291 - Common YANG Data Types for the
+               Routing Area";
   }
 
   import ietf-routing {
     prefix "rt";
+    reference "RFC XXXX - A YANG Data Model for Routing
+               Management (NMDA Version)";
   }
 
   import ietf-key-chain {
     prefix "key-chain";
+    reference "RFC 8177 - YANG Data Model for Key Chains";
   }
 
   import ietf-bfd-types {
     prefix "bfd-types";
+    reference "RFC XXXX - YANG Data Model for Bidirectional
+      Forwarding Detection (BFD)";
   }
 
   organization
@@ -66,6 +79,9 @@ module ietf-ospf {
       OSPF configuration parameters and policies,
       for example route maps or route policies.
 
+      This YANG model conforms to the Network Management
+      Datastore Architecture (NDMA) as described in RFC XXXX.
+
       Copyright (c) 2017 IETF Trust and the persons identified as
       authors of the code.  All rights reserved.
 
@@ -81,194 +97,7 @@ module ietf-ospf {
 
   reference "RFC XXXX";
 
-  revision 2018-02-04 {
-    description
-      "* Convert all enumeration identifiers to format
-         consistent with RFC6087bis recommendation.
-      ";
-    reference
-      "RFC XXXX: A YANG Data Model for OSPF.";
-  }
-
-  revision 2017-10-30 {
-    description
-      "* Address iana-routing-types address-family type change.
-       * Complete NMDA change for routing-state augmentation.
-      ";
-    reference
-      "RFC XXXX: A YANG Data Model for OSPF.";
-  }
-
-  revision 2017-07-01 {
-    description
-      "* Restructure model to conform to NMDA.
-       * Remove features for instance, area and interface
-         inheritance.
-       * Update static neighbor identifier description to
-         allow for router-id, ipv4-address, and ipv6-address.
-       * Added spf-log and lsa-log.
-       * Use dotted-quad for OSPFv2 LSA ID.
-       * Fix virtual-link transit-area-id leafref path and
-         must statement.
-      ";
-    reference
-      "RFC XXXX: A YANG Data Model for OSPF.";
-  }
-
-  revision 2017-03-12 {
-    description
-      "* Update authors information.
-       * Rename admin distance to preference.
-       * Rename network type to interface type.
-       * Add ietf-spf-delay as a feature.
-       * Add node-tag as a feature and update LSA 
-         definition accordingly.
-       * Remove LDP IGP autoconfig.
-       * Add BFD as a feature instead of a separate module.
-       * Change TE router ID to support IPv4 and IPv6 router ID.
-       * Replace key-chain:crypto-algorithm-types with 
-         key-chain:crypto-algorithm.
-       * Remove type ieee-bandwidth.
-       * Import ietf-routing-types and make use of
-         router-id, address-family and bandwidth-ieee-float32
-         type definitions.
-       * Simplify notification header.
-       * Fix compilation issue in multiple must statements. 
-      ";
-    reference
-      "RFC XXXX: A YANG Data Model for OSPF.";
-  }
-
-  revision 2016-10-31 {
-    description
-      "* Update authors information.
-       * Rename candidate-disabled to candidiate-enable
-         and set the default value to TRUE.
-       * Rename node identifiers that end with
-         'enabled' to 'enable'.
-       * Set the default value of
-         ospf/instance/areas/area/interfaces/interface/
-         fast-reroute/lfa/enable (previously named 'enabled')
-         to FALSE.
-       * Set the default value of
-         ospf/instance/areas/area/interfaces/interface/
-         fast-reroute/remote-lfa/enable (previously named 'enabled')
-         to FALSE.
-       * Rename
-         ospf/instance/areas/area/interfaces/interface/
-         static-neighbors/neighbor/address to 'identifier'
-         with type inet:ip-address
-       * Add 'dead-timer' to
-         ospf-state/instance/areas/area/interfaces/interface/
-         neighbors/neighbor.
-       * Remove 'mtu-ignore' and 'prefix-suppression' from
-         virtual-link configuration.
-       * Adjust range specifications from 'transmit-delay', 
-         'dead-interval', and 'retransmit-interval' in
-         ospf/instance/areas/area/interfaces/interface.
-       * Change the type of
-         ospf/instance/areas/area/interface/interface/dead-interval
-         to uint32 to match RFC2328 Appendix A.3.2.
-       * Change hello-timer and wait-timer unit to seconds.
-       * Update hello-timer, dead-timer and wait-timer descriptions.
-       * Add IEEE bandwidth type and update all TE bandwidth fields
-         to use it.
-       * Add Nt-bit to OSPFv2 router LSA.
-       * Remove L-bit from OSPFv2 router LSA.
-      ";
-    reference
-      "RFC XXXX: A YANG Data Model for OSPF.";
-  }
-
-  revision 2016-07-07 {
-    description
-      "* Add ospfv3 AF bit.
-       * Add ospfv2 MT, L, O, DN bit.
-       * Add interface priority config.
-       * Change bdr-ip-address to type ip-address.
-       * Rename leaf interface to name.
-       * Rename rx-bad-packet to if-rx-bad-packet.
-       * Move virtual link placement to backbone area.
-       * Remove cost configuration from virtual link.
-       * Move if-feature multi-area-adj statement.
-       * Add type checksum16-type.
-       * Change LSA header checksum to use checksum16-type.
-       * Change routing-protocol to control-plane-protocol.
-       * Change import module name to ietf-key-chain."; 
-    reference
-      "RFC XXXX: A YANG Data Model for OSPF.";
-  }
-
-  revision 2016-03-20 {
-    description
-      "* Reorganize *-config and *-operation groupings.
-       * Use *-config under state tree for applied config.
-       * Rename config router-id to explicit-router-id.
-       * Rename feature router-id to explicit-router-id.
-       * Add OSPFv3 instance ID.
-       * Add OSPFv3 interface ID.
-       * Add ip-address for DR and BDR.
-       * Remove routing-instance.
-       * Change import module name to ietf-routing-key-chain.";
-    reference
-      "RFC XXXX: A YANG Data Model for OSPF.";
-  }
-
-  revision 2015-10-19 {
-    description
-      "* Remove the abstract identity ospf.
-       * Make area-id-type dotted-quad only.
-       * Use area-id-type for all area-id leafs.
-       * Restructure notifications.
-       * Move BFD support to the new ietf-ospf-bfd module.
-       * Update author information.
-       * Editorial changes.";
-    reference
-      "RFC XXXX: A YANG Data Model for OSPF.";
-  }
-
-  revision 2015-09-02 {
-    description
-      "* Author information update.
-       * Editorial changes";
-    reference
-      "RFC XXXX: A YANG Data Model for OSPF.";
-  }
-
-  revision 2015-07-06 {
-    description
-      "* Remove support for protocol-centric config.
-       * Enclose list in container, except for instance.
-       * Replace protocol-shutdown with admin-control.
-       * Add IP-FRR per-interface config.
-       * Reorganize max-path etc node.
-       * Add node-flag.
-       * Align config/operation hierarchy.
-       * Use relative path for reference to rib.
-       * Add ability to set single admin distance.
-       * Make unreserved bandwidth into list.
-       * Add F and T bit to OSPFv3 external LSA.
-       * Remove key statement inside LSA body.
-       * Add stub router support.
-       * Fix usage of af-area-config.
-       * Add statistics to operation data.
-       * Add local rib.
-       * Use dotted-quad for all router-id fields.
-       * Support more than one multi-area per interface.
-       * Use uint16 for LSA type.
-       * Update grouping notification-instance-hdr.
-       * Rework condition for opaque type and id in OSPFv2 LSA.
-       * Rename local-remote-ipv4-addr with remote-if-ipv4-addr.
-       * Add virtual-link/sham-link to operation state.
-       * Allow multiple link TLVs in one LSA.
-       * Fix bug in as-scope-lsas.
-       * Remove OSPFv3 restriction in link-scope-lsas.
-       * Editorial changes.";
-    reference
-      "RFC XXXX: A YANG Data Model for OSPF.";
-  }
-
-  revision 2015-03-09 {
+  revision 2018-02-20 {
     description
       "Initial revision.";
     reference
@@ -278,11 +107,13 @@ module ietf-ospf {
   feature multi-topology {
     description
       "Support Multiple-Topolgy Routing (MTR).";
+    reference "RFC 4915 - Multi-Topology Routing";
   }
 
   feature multi-area-adj {
     description
       "OSPF multi-area adjacency support as in RFC 5185.";
+    reference "RFC 5185 - Multi-Area Adjacency";
   }
   feature explicit-router-id {
     description
@@ -292,6 +123,7 @@ module ietf-ospf {
   feature demand-circuit {
     description
       "OSPF demand circuit support as in RFC 1793.";
+    reference "RFC 1793 - OSPF Demand Circuits";
   }
 
   feature mtu-ignore {
@@ -303,16 +135,20 @@ module ietf-ospf {
   feature lls {
     description
       "OSPF link-local signaling (LLS) as in RFC 5613.";
+    reference "RFC 5613 - OSPF Link-Local Signaling";
   }
 
   feature prefix-suppression {
     description
       "OSPF prefix suppression support as in RFC 6860.";
+    reference "RFC 6860 - Hide Transit-Only Networks in OSPF";
   }
 
   feature ttl-security {
     description
       "OSPF TTL security check.";
+    reference "RFC 5082 - The Generalized TTL Security
+               Mechanism (GTSM)";
   }
 
   feature nsr {
@@ -324,6 +160,8 @@ module ietf-ospf {
     description
       "Graceful OSPF Restart as defined in RFC 3623 and
        RFC 5187.";
+    reference "RFC 3630 - Graceful OSPF Restart
+               RFC 5187 - OSPFv3 Graceful Restart";
   }
 
   feature admin-control {
@@ -335,6 +173,7 @@ module ietf-ospf {
     description
       "Calculate OSPF interface cost according to
        reference bandwidth.";
+     reference "RFC 2328 - OSPF Version 2";
   }
 
   feature max-ecmp {
@@ -346,66 +185,94 @@ module ietf-ospf {
     description
       "Setting maximum number of LSAs the OSPF instance
        will accept.";
+    reference "RFC 1765 - OSPF Database Overload";
   }
 
   feature te-rid {
     description
       "TE Router-ID.";
+    reference "RFC 3630 - Traffic Engineering (TE) Extensions
+               to OSPF Version 2
+               RFC 5329 - Traffic Engineering (TE) Extensions
+               to OSPF Version 3";
   }
 
   feature ldp-igp-sync {
     description
       "LDP IGP synchronization.";
+    reference "RFC 5443 - LDP IGP Synchronization";
   }
 
   feature ospfv3-authentication-ipsec {
     description
       "Use IPsec for OSPFv3 authentication.";
+    reference "RFC 4552 - Authentication/Confidentiality
+              for OSPFv3";
   }
 
   feature fast-reroute {
    description
      "Support of IP Fast Reroute (IP-FRR).";
+   reference "RFC 5714 - IP Fast Rereoute Framework";
   }
 
   feature node-flag {
    description
      "Support of node flag.";
+   reference "RFC 7684 - OSPFv2 Prefix/Link Advertisement";
   }
 
   feature node-tag {
     description
       "Support of node tag.";
+    reference "RFC 7777 - Advertising Node Administrative
+               Tags in OSPF";
   }
 
   feature lfa {
    description
      "Support of Loop Free Alternates (LFAs).";
+   reference "RFC 5286 - Basic Specification for IP Fast
+              Reroute: Loop-Free Alternates";
   }
 
   feature remote-lfa {
    description
      "Support of Remote Loop Free Alternates (R-LFA).";
+   reference "RFC 7490 - Remote Loop-Free Alternate (LFA)
+              Fast Reroute (FRR)";
   }
 
   feature stub-router {
     description
       "Support of RFC 6987 OSPF Stub Router Advertisement.";
+    reference "RFC 6987 - OSPF Stub Router Advertisement";
   }
 
   feature pe-ce-protocol {
     description
       "Support PE-CE protocol";
+    reference "RFC 4577 - OSPF as the Provider/Customer Edge
+               Protocol for BGP/MPLS IP Virtual Private
+               Networks (VPNs)
+               RFC 6565 - OSPFv3 as a Provider Edge to Customer
+               Edge (PE-CE) Routing Protocol";
   }
 
   feature ietf-spf-delay {
     description
       "Support of IETF SPF delay algorithm.";
+    reference "RFC XXXX - SPF Back-off algorithm for link
+               state IGPs";
   }
 
   feature bfd {
     description
       "Support of BFD.";
+    reference "RFC 5880 - Bidirectional Forwarding Detection
+              (BFD)
+               RFC 5881 - Bidirectional Forwarding Detection
+               (BFD) for IPv4 and IPv6 (Single Hop)";
   }
 
   identity ospf-protocol {
@@ -415,12 +282,12 @@ module ietf-ospf {
 
   identity ospfv2 {
     base "ospf-protocol";
-    description "OSPFv2";
+    description "OSPFv2 protocol";
   }
 
   identity ospfv3 {
     base "ospf-protocol";
-    description "OSPFv3";
+    description "OSPFv3 protocol";
   }
 
   identity operation-mode {
@@ -457,6 +324,8 @@ module ietf-ospf {
   identity nssa-area {
     base stub-nssa-area;
     description "OSPF NSSA area.";
+    reference "RFC 3101 - The OSPF Not-So-Stubby Area
+               (NSSA) Option";
   }
 
   identity ospf-lsa-type {
@@ -611,7 +480,7 @@ module ietf-ospf {
   identity ospfv3-router-information-lsa {
     base ospfv3-lsa-type;
     description
-      "OSPFv3 Router Information LSA - Types 0x800C, 
+      "OSPFv3 Router Information LSA - Types 0x800C,
        0xA00C, and 0xC00C";
   }
 
@@ -791,7 +660,7 @@ module ietf-ospf {
       enum none {
         value "1";
         description
-          "Not attempted.";
+          "Restart not attempted.";
       }
       enum in-progress {
         value "2";
@@ -801,17 +670,17 @@ module ietf-ospf {
       enum completed {
         value "3";
         description
-          "Successfully completed.";
+          "Restart successfully completed.";
       }
       enum timed-out {
         value "4";
         description
-          "Timed out.";
+          "Restart timed out.";
       }
       enum topology-changed {
         value "5";
         description
-          "Aborted due to topology change.";
+          "Restart aorted due to topology change.";
       }
     }
     description
@@ -894,14 +763,16 @@ module ietf-ospf {
       "OSPF graceful restart status type.";
   }
 
-  typedef checksum16-type {
+  typedef fletcher-checksum16-type {
     type string {
        pattern '(0x)?[0-9a-fA-F]{4}';
     }
-    description
-      "16-bit checksum in hex-string format 0xXXXX.";
+     description
+      "Fletcher 16-bit checksum in hex-string format 0xXXXX.";
+     reference "RFC 905 - ISO Transport Protocol specification
+                ISO DP 8073";
   }
-  
+
   grouping tlv {
     description
       "TLV";
@@ -911,7 +782,7 @@ module ietf-ospf {
     }
     leaf length {
       type uint16;
-      description "TLV length.";
+      description "TLV length (octets).";
     }
     leaf value {
       type yang:hex-string;
@@ -952,18 +823,18 @@ module ietf-ospf {
         type inet:ipv4-address;
         type yang:dotted-quad;
       }
-      description "Link ID.";
+      description "Router-LSA Link ID";
     }
     leaf link-data {
       type union {
         type inet:ipv4-address;
         type uint32;
       }
-      description "Link data.";
+      description "Router-LSA Link data.";
     }
     leaf type {
       type uint8;
-      description "Link type.";
+      description "Router-LSA Link type.";
     }
   }
 
@@ -1684,7 +1555,7 @@ module ietf-ospf {
       description "LSA sequence number.";
     }
     leaf checksum {
-      type checksum16-type;
+      type fletcher-checksum16-type;
       mandatory true;
       description "LSA checksum.";
     }
@@ -1712,7 +1583,7 @@ module ietf-ospf {
         type bits {
           bit MT {
             description
-              "When set, the router supports multi-topology as 
+              "When set, the router supports multi-topology as
                in RFC 4915.";
           }
           bit DC {
@@ -1782,7 +1653,7 @@ module ietf-ospf {
       leaf lsa-id {
         type uint32;
         mandatory true;
-        description "LSA ID.";
+        description "OSPFv3 LSA ID.";
       }
       uses lsa-header;
     }
@@ -1794,7 +1665,7 @@ module ietf-ospf {
   }
   grouping lsa-common {
     description
-        "Common field for OSPF LSA represenation.";
+        "Common fields for OSPF LSA represenation.";
     leaf decoded-completed {
       type boolean;
       description
@@ -2084,7 +1955,7 @@ module ietf-ospf {
       }
       units seconds;
       description
-        "Interval between hello packets in seconds.";
+        "Interval between hello packets (seconds).";
     }
 
     leaf dead-interval {
@@ -2100,7 +1971,7 @@ module ietf-ospf {
       }
       description
         "Interval after which a neighbor is
-         declared down in seconds.";
+         declared down (seconds).";
     }
 
     leaf retransmit-interval {
@@ -2110,7 +1981,7 @@ module ietf-ospf {
       units seconds;
       description
         "Interval between retransmitting unacknowledged Link
-         State Advertisements (LSAs) in seconds.";
+         State Advertisements (LSAs) (seconds).";
     }
 
     leaf transmit-delay {
@@ -2120,7 +1991,7 @@ module ietf-ospf {
       units seconds;
       description
         "Estimated time needed to transmit Link State Update
-         packets on the interface in seconds.";
+         packets on the interface (seconds).";
     }
 
     leaf lls {
@@ -2290,7 +2161,7 @@ module ietf-ospf {
             range "1..65535";
           }
           units seconds;
-          description "Neighbor poll interval in seconds.";
+          description "Neighbor poll interval (seconds).";
         }
         leaf priority {
           type uint8 {
@@ -2368,7 +2239,7 @@ module ietf-ospf {
       type uint32;
       units "seconds";
       config false;
-      description "This timer tracks the remaining time before 
+      description "This timer tracks the remaining time before
                    the neighbor is declared dead.";
     }
     container statistics {
@@ -2720,32 +2591,33 @@ module ietf-ospf {
       type uint16;
       units msec;
       description
-        "Delay used while in QUIET state.";
+        "Delay used while in QUIET state (milliseconds).";
     }
     leaf short-delay {
       type uint16;
       units msec;
       description
-        "Delay used while in SHORT_WAIT state.";
+        "Delay used while in SHORT_WAIT state (milliseconds).";
     }
     leaf long-delay {
       type uint16;
       units msec;
       description
-        "Delay used while in LONG_WAIT state.";
+        "Delay used while in LONG_WAIT state (milliseconds).";
     }
     leaf hold-down {
       type uint16;
       units msec;
       description
-        "Timer used to consider an IGP stability period.";
+        "Timer used to consider an IGP stability period
+         (milliseconds).";
     }
     leaf time-to-learn {
       type uint16;
       units msec;
       description
-        "Duration used to learn all the IGP events 
-         related to a single component failure.";
+        "Duration used to learn all the IGP events
+         related to a single component failure (milliseconds).";
     }
     description
       "Grouping for IETF SPF delay configuration.";
@@ -2846,7 +2718,7 @@ module ietf-ospf {
           leaf all {
             type uint8;
             description
-              "Preference for intra-area, inter-area and
+              "Preference for intra-area, inter-area, and
                external routes.";
           }
         }
@@ -2900,6 +2772,7 @@ module ietf-ospf {
       if-feature graceful-restart;
       description
         "Graceful restart config state.";
+      reference "RFC3623 - OSPF Graceful Restart";
       leaf enable {
         type boolean;
         description
@@ -2919,8 +2792,8 @@ module ietf-ospf {
         units seconds;
         default "120";  // Default is defined in RFC 3623.
         description
-          "Interval in seconds to attempt graceful restart prior
-           to failing (RFC 3623 Section B.1)";
+          "Interval to attempt graceful restart prior
+           to failing (RFC 3623 Section B.1) (seconds)";
       }
       leaf helper-strict-lsa-checking {
         type boolean;
@@ -3138,7 +3011,7 @@ module ietf-ospf {
     description
       "OSPF multi-topology area common configuration state.";
     leaf summary {
-      when "derived-from(" 
+      when "derived-from("
          + "../../../../../areas/area[area-id=current()/../area-id]/"
          + "area-type, 'stub-nssa-area')" {
         description
@@ -3146,11 +3019,11 @@ module ietf-ospf {
       }
       type boolean;
       description
-        "Enable/Disable summary advertisement into the 
+        "Enable/Disable summary advertisement into the
          topology in the stub or NSSA area.";
     }
     leaf default-cost {
-      when "derived-from(" 
+      when "derived-from("
          + "../../../../../areas/area[area-id=current()/../area-id]/"
          + "area-type, 'stub-nssa-area')" {
         description
@@ -3277,7 +3150,7 @@ module ietf-ospf {
         "LSA sequence number.";
     }
   }
-  
+
   grouping spf-log {
     description
       "Grouping for SPF log.";
@@ -3384,7 +3257,7 @@ module ietf-ospf {
             base lsa-log-reason;
           }
           description
-            "This leaf describes the reason 
+            "This leaf describes the reason
              that resulted in this LSA log.";
         }
       }
@@ -3399,7 +3272,7 @@ module ietf-ospf {
          instance of OSPF (type 'ospfv2' or 'ospfv3').";
     }
     description "OSPF augmentation.";
-  
+
     container ospf {
       description
         "OSPF protocol Instance";
@@ -3425,7 +3298,7 @@ module ietf-ospf {
           leaf area-id {
             type area-id-type;
             description
-              "Area ID.";
+              "Area ID";
           }
 
           uses area-config;
@@ -3589,7 +3462,7 @@ module ietf-ospf {
       }
     }
   }
-  
+
   augment "/rt:routing/rt:control-plane-protocols/"
         + "rt:control-plane-protocol/ospf:ospf/"
         + "ospf:areas/ospf:area/ospf:interfaces/ospf:interface" {
@@ -3634,7 +3507,7 @@ module ietf-ospf {
     uses route-content;
   }
 
-  /* 
+  /*
    * RPCs
    */
 
@@ -3653,7 +3526,7 @@ module ietf-ospf {
         }
         mandatory "true";
         description
-          "Name of the OSPF protocol instance which information 
+          "Name of the OSPF protocol instance which information
            is being queried.
 
            If the OSPF instance with name equal to the
@@ -3667,7 +3540,7 @@ module ietf-ospf {
         type if:interface-ref;
           description
             "Name of the OSPF interface.
-            
+
              If the OSPF interface with name equal to the
              value of this parameter doesn't exist, then this
              operation SHALL fail with error-tag 'data-missing'
@@ -3704,7 +3577,7 @@ module ietf-ospf {
     }
   }
 
-  /* 
+  /*
    * Notifications
    */
 
@@ -3718,7 +3591,7 @@ module ietf-ospf {
         path "/rt:routing/rt:control-plane-protocols/"
            + "rt:control-plane-protocol/rt:name";
       }
-      must "derived-from( " 
+      must "derived-from( "
         + "/rt:routing/rt:control-plane-protocols/"
         + "rt:control-plane-protocol[rt:name=current()]/"
         + "rt:type, 'ospf:ospf-protocol')";
