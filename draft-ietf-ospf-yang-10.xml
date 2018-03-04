@@ -567,141 +567,141 @@ module: ietf-ospf
        |     |                       +--ro router-information
        .     .                       .
        .     .                       .
-	   |     +--rw virtual-links
-	   |     |  +--rw virtual-link* [transit-area-id router-id]
-	   |     |     +--rw transit-area-id       -> ../../../../
-	   |     |                                    area/area-id
-	   |     |     +--rw router-id             rt-types:router-id
-	   |     |     +--rw hello-interval?       uint16
-	   |     |     +--rw dead-interval?        uint32
-	   |     |     +--rw retransmit-interval?  uint16
-	   |     |     +--rw transmit-delay?       uint16
-	   |     |     +--rw lls?                  boolean {lls}?
-	   |     |     +--rw ttl-security {ttl-security}?
-	   |     |     |  +--rw enable?   boolean
-	   |     |     |  +--rw hops?     uint8
-	   |     |     +--rw enable?               boolean
-	   |     |                                 {admin-control}?
-	   |     |     +--rw authentication
-	   |     |        +--rw (auth-type-selection)?
-	   |     |           +--:(auth-ipsec)
-	   |     |               {ospfv3-authentication-ipsec}?
-	   |     |           |  +--rw sa?                 string
-	   |     |           +--:(auth-trailer-key-chain)
-	   |     |           |  +--rw key-chain?
-	   |     |                    key-chain:key-chain-ref
-	   |     |           +--:(auth-trailer-key)
-	   |     |              +--rw key?                string
-	   |     |              +--rw crypto-algorithm?   identityref
-	   |     |     +--ro cost?                 uint16
-	   |     |     +--ro state?                if-state-type
-	   |     |     +--ro hello-timer?          uint32
-	   |     |     +--ro wait-timer?           uint32
-	   |     |     +--ro dr-router-id?         rt-types:router-id
-	   |     |     +--ro dr-ip-addr?           inet:ip-address
-	   |     |     +--ro bdr-router-id?        rt-types:router-id
-	   |     |     +--ro bdr-ip-addr?          inet:ip-address
-	   |     |     +--ro statistics
-	   |     |     |  +--ro if-event-count?        yang:counter32
-	   |     |     |  +--ro link-scope-lsa-count?  yang:gauge32
-	   |     |     |  +--ro link-scope-lsa-cksum-sum?
-	   |     |     |                               uint32
-	   |     |     |  +--ro database
-	   |     |     |     +--ro link-scope-lsa-type*
-	   |     |     |        +--ro lsa-type?        uint16
-	   |     |     |        +--ro lsa-count?       yang:gauge32
-	   |     |     |        +--ro lsa-cksum-sum?   int32
-	   |     |     +--ro neighbors
-	   |     |     |  +--ro neighbor* [neighbor-router-id]
-	   |     |     |     +--ro neighbor-router-id
-	   |     |     |                           rt-types:router-id
-	   |     |     |     +--ro address?        inet:ip-address
-	   |     |     |     +--ro dr-router-id?   rt-types:router-id
-	   |     |     |     +--ro dr-ip-addr?     inet:ip-address
-	   |     |     |     +--ro bdr-router-id?  rt-types:router-id
-	   |     |     |     +--ro bdr-ip-addr?    inet:ip-address
-	   |     |     |     +--ro state?          nbr-state-type
-	   |     |     |     +--ro dead-timer?     uint32
-	   |     |     |     +--ro statistics
-	   |     |     |        +--ro nbr-event-count?
-	   |     |     |                           yang:counter32
-	   |     |     |        +--ro nbr-retrans-qlen?   
-	   |     |     |                           yang:gauge32
-	   |     |     +--ro database
-	   |     |        +--ro link-scope-lsa-type* [lsa-type]
-	   |     |           +--ro lsa-type           uint16
-	   |     |           +--ro link-scope-lsas
-	   .     .
-	   .     .
-	   |     +--rw sham-links {pe-ce-protocol}?
-	   |     |  +--rw sham-link* [local-id remote-id]
-	   |     |     +--rw local-id               inet:ip-address
-	   |     |     +--rw remote-id              inet:ip-address
-	   |     |     +--rw hello-interval?        uint16
-	   |     |     +--rw dead-interval?         uint32
-	   |     |     +--rw retransmit-interval?   uint16
-	   |     |     +--rw transmit-delay?        uint16
-	   |     |     +--rw lls?                   boolean {lls}?
-	   |     |     +--rw ttl-security {ttl-security}?
-	   |     |     |  +--rw enable?   boolean
-	   |     |     |  +--rw hops?     uint8
-	   |     |     +--rw enable?             boolean
-	   |     |                               {admin-control}?
-	   |     |     +--rw authentication
-	   |     |     |  +--rw (auth-type-selection)?
-	   |     |     |     +--:(auth-ipsec)
-	   |     |     |         {ospfv3-authentication-ipsec}?
-	   |     |     |     |  +--rw sa?                 string
-	   |     |     |     +--:(auth-trailer-key-chain)
-	   |     |     |     |  +--rw key-chain?
-	   |     |     |              key-chain:key-chain-ref
-	   |     |     |     +--:(auth-trailer-key)
-	   |     |     |        +--rw key?                string
-	   |     |     |        +--rw crypto-algorithm?   identityref
-	   |     |     +--rw cost?               uint16
-	   |     |     +--rw mtu-ignore?         boolean
-	   |     |                               {mtu-ignore}?
-	   |     |     +--rw prefix-suppression? boolean
-	   |     |                               {prefix-suppression}?
-	   |     |     +--ro state?              if-state-type
-	   |     |     +--ro hello-timer?        uint32
-	   |     |     +--ro wait-timer?         uint32
-	   |     |     +--ro dr-router-id?       rt-types:router-id
-	   |     |     +--ro dr-ip-addr?         inet:ip-address
-	   |     |     +--ro bdr-router-id?      rt-types:router-id
-	   |     |     +--ro bdr-ip-addr?        inet:ip-address
-	   |     |     +--ro statistics
-	   |     |     |  +--ro if-event-count?        yang:counter32
-	   |     |     |  +--ro link-scope-lsa-count?  yang:gauge32
-	   |     |     |  +--ro link-scope-lsa-cksum-sum?
-	   |     |     |                               uint32
-	   |     |     |  +--ro database
-	   |     |     |     +--ro link-scope-lsa-type*
-	   |     |     |        +--ro lsa-type?        uint16
-	   |     |     |        +--ro lsa-count?       yang:gauge32
-	   |     |     |        +--ro lsa-cksum-sum?   int32
-	   |     |     +--ro neighbors
-	   |     |     |  +--ro neighbor* [neighbor-router-id]
-	   |     |     |     +--ro neighbor-router-id
-	   |     |     |                           rt-types:router-id
-	   |     |     |     +--ro address?        inet:ip-address
-	   |     |     |     +--ro dr-router-id?   rt-types:router-id
-	   |     |     |     +--ro dr-ip-addr?     inet:ip-address
-	   |     |     |     +--ro bdr-router-id?  rt-types:router-id
-	   |     |     |     +--ro bdr-ip-addr?    inet:ip-address
-	   |     |     |     +--ro state?          nbr-state-type
-	   |     |     |     +--ro dead-timer?     uint32
-	   |     |     |     +--ro statistics
-	   |     |     |        +--ro nbr-event-count?
-	   |     |     |                           yang:counter32
-	   |     |     |        +--ro nbr-retrans-qlen?   
-	   |     |     |                           yang:gauge32
-	   |     |     +--ro database
-	   |     |        +--ro link-scope-lsa-type* [lsa-type]
-	   |     |           +--ro lsa-type           uint16
-	   |     |           +--ro link-scope-lsas
-	   .     .
-	   .     .
+       |     +--rw virtual-links
+       |     |  +--rw virtual-link* [transit-area-id router-id]
+       |     |     +--rw transit-area-id       -> ../../../../
+       |     |                                    area/area-id
+       |     |     +--rw router-id             rt-types:router-id
+       |     |     +--rw hello-interval?       uint16
+       |     |     +--rw dead-interval?        uint32
+       |     |     +--rw retransmit-interval?  uint16
+       |     |     +--rw transmit-delay?       uint16
+       |     |     +--rw lls?                  boolean {lls}?
+       |     |     +--rw ttl-security {ttl-security}?
+       |     |     |  +--rw enable?   boolean
+       |     |     |  +--rw hops?     uint8
+       |     |     +--rw enable?               boolean
+       |     |                                 {admin-control}?
+       |     |     +--rw authentication
+       |     |        +--rw (auth-type-selection)?
+       |     |           +--:(auth-ipsec)
+       |     |               {ospfv3-authentication-ipsec}?
+       |     |           |  +--rw sa?                 string
+       |     |           +--:(auth-trailer-key-chain)
+       |     |           |  +--rw key-chain?
+       |     |                    key-chain:key-chain-ref
+       |     |           +--:(auth-trailer-key)
+       |     |              +--rw key?                string
+       |     |              +--rw crypto-algorithm?   identityref
+       |     |     +--ro cost?                 uint16
+       |     |     +--ro state?                if-state-type
+       |     |     +--ro hello-timer?          uint32
+       |     |     +--ro wait-timer?           uint32
+       |     |     +--ro dr-router-id?         rt-types:router-id
+       |     |     +--ro dr-ip-addr?           inet:ip-address
+       |     |     +--ro bdr-router-id?        rt-types:router-id
+       |     |     +--ro bdr-ip-addr?          inet:ip-address
+       |     |     +--ro statistics
+       |     |     |  +--ro if-event-count?        yang:counter32
+       |     |     |  +--ro link-scope-lsa-count?  yang:gauge32
+       |     |     |  +--ro link-scope-lsa-cksum-sum?
+       |     |     |                               uint32
+       |     |     |  +--ro database
+       |     |     |     +--ro link-scope-lsa-type*
+       |     |     |        +--ro lsa-type?        uint16
+       |     |     |        +--ro lsa-count?       yang:gauge32
+       |     |     |        +--ro lsa-cksum-sum?   int32
+       |     |     +--ro neighbors
+       |     |     |  +--ro neighbor* [neighbor-router-id]
+       |     |     |     +--ro neighbor-router-id
+       |     |     |                           rt-types:router-id
+       |     |     |     +--ro address?        inet:ip-address
+       |     |     |     +--ro dr-router-id?   rt-types:router-id
+       |     |     |     +--ro dr-ip-addr?     inet:ip-address
+       |     |     |     +--ro bdr-router-id?  rt-types:router-id
+       |     |     |     +--ro bdr-ip-addr?    inet:ip-address
+       |     |     |     +--ro state?          nbr-state-type
+       |     |     |     +--ro dead-timer?     uint32
+       |     |     |     +--ro statistics
+       |     |     |        +--ro nbr-event-count?
+       |     |     |                           yang:counter32
+       |     |     |        +--ro nbr-retrans-qlen?   
+       |     |     |                           yang:gauge32
+       |     |     +--ro database
+       |     |        +--ro link-scope-lsa-type* [lsa-type]
+       |     |           +--ro lsa-type           uint16
+       |     |           +--ro link-scope-lsas
+       .     .
+       .     .
+       |     +--rw sham-links {pe-ce-protocol}?
+       |     |  +--rw sham-link* [local-id remote-id]
+       |     |     +--rw local-id               inet:ip-address
+       |     |     +--rw remote-id              inet:ip-address
+       |     |     +--rw hello-interval?        uint16
+       |     |     +--rw dead-interval?         uint32
+       |     |     +--rw retransmit-interval?   uint16
+       |     |     +--rw transmit-delay?        uint16
+       |     |     +--rw lls?                   boolean {lls}?
+       |     |     +--rw ttl-security {ttl-security}?
+       |     |     |  +--rw enable?   boolean
+       |     |     |  +--rw hops?     uint8
+       |     |     +--rw enable?             boolean
+       |     |                               {admin-control}?
+       |     |     +--rw authentication
+       |     |     |  +--rw (auth-type-selection)?
+       |     |     |     +--:(auth-ipsec)
+       |     |     |         {ospfv3-authentication-ipsec}?
+       |     |     |     |  +--rw sa?                 string
+       |     |     |     +--:(auth-trailer-key-chain)
+       |     |     |     |  +--rw key-chain?
+       |     |     |              key-chain:key-chain-ref
+       |     |     |     +--:(auth-trailer-key)
+       |     |     |        +--rw key?                string
+       |     |     |        +--rw crypto-algorithm?   identityref
+       |     |     +--rw cost?               uint16
+       |     |     +--rw mtu-ignore?         boolean
+       |     |                               {mtu-ignore}?
+       |     |     +--rw prefix-suppression? boolean
+       |     |                               {prefix-suppression}?
+       |     |     +--ro state?              if-state-type
+       |     |     +--ro hello-timer?        uint32
+       |     |     +--ro wait-timer?         uint32
+       |     |     +--ro dr-router-id?       rt-types:router-id
+       |     |     +--ro dr-ip-addr?         inet:ip-address
+       |     |     +--ro bdr-router-id?      rt-types:router-id
+       |     |     +--ro bdr-ip-addr?        inet:ip-address
+       |     |     +--ro statistics
+       |     |     |  +--ro if-event-count?        yang:counter32
+       |     |     |  +--ro link-scope-lsa-count?  yang:gauge32
+       |     |     |  +--ro link-scope-lsa-cksum-sum?
+       |     |     |                               uint32
+       |     |     |  +--ro database
+       |     |     |     +--ro link-scope-lsa-type*
+       |     |     |        +--ro lsa-type?        uint16
+       |     |     |        +--ro lsa-count?       yang:gauge32
+       |     |     |        +--ro lsa-cksum-sum?   int32
+       |     |     +--ro neighbors
+       |     |     |  +--ro neighbor* [neighbor-router-id]
+       |     |     |     +--ro neighbor-router-id
+       |     |     |                           rt-types:router-id
+       |     |     |     +--ro address?        inet:ip-address
+       |     |     |     +--ro dr-router-id?   rt-types:router-id
+       |     |     |     +--ro dr-ip-addr?     inet:ip-address
+       |     |     |     +--ro bdr-router-id?  rt-types:router-id
+       |     |     |     +--ro bdr-ip-addr?    inet:ip-address
+       |     |     |     +--ro state?          nbr-state-type
+       |     |     |     +--ro dead-timer?     uint32
+       |     |     |     +--ro statistics
+       |     |     |        +--ro nbr-event-count?
+       |     |     |                           yang:counter32
+       |     |     |        +--ro nbr-retrans-qlen?   
+       |     |     |                           yang:gauge32
+       |     |     +--ro database
+       |     |        +--ro link-scope-lsa-type* [lsa-type]
+       |     |           +--ro lsa-type           uint16
+       |     |           +--ro link-scope-lsas
+       .     .
+       .     .
       </artwork>
     </figure>
     </section>
@@ -718,111 +718,111 @@ module: ietf-ospf
     +--rw ospf
        .
        .
-	   +--rw areas
-	   |  +--rw area* [area-id]
-	   |     .
-	   |     .
-	   |     +--rw interfaces
-	   |        +--rw interface* [name]
-	   |           +--rw name                   if:interface-ref
-	   |           +--rw interface-type?        enumeration
-	   |           +--rw passive?               boolean
-	   |           +--rw demand-circuit?        boolean
-	   |                                        {demand-circuit}?
-	   |           +--rw priority?              uint8
-	   |           +--rw multi-areas {multi-area-adj}?
-	   |           |  +--rw multi-area* [multi-area-id]
-	   |           |     +--rw multi-area-id    area-id-type
-	   |           |     +--rw cost?            uint16
-	   |           +--rw static-neighbors
-	   |           |  +--rw neighbor* [identifier]
-	   |           |     +--rw identifier       inet:ip-address
-	   |           |     +--rw cost?            uint16
-	   |           |     +--rw poll-interval?   uint16
-	   |           |     +--rw priority?        uint8
-	   |           +--rw node-flag?             boolean
-	   |                                        {node-flag}?
-	   |           +--rw bfd {bfd}?
-	   |           |  +--rw enable?   boolean
-	   |           +--rw fast-reroute {fast-reroute}?
-	   |           |  +--rw lfa {lfa}?
-	   |           |     +--rw candidate-enable?   boolean
-	   |           |     +--rw enable?             boolean
-	   |           |     +--rw remote-lfa {remote-lfa}?
-	   |           |        +--rw enable?   boolean
-	   |           +--rw hello-interval?        uint16
-	   |           +--rw dead-interval?         uint32
-	   |           +--rw retransmit-interval?   uint16
-	   |           +--rw transmit-delay?        uint16
-	   |           +--rw lls?                   boolean {lls}?
-	   |           +--rw ttl-security {ttl-security}?
-	   |           |  +--rw enable?   boolean
-	   |           |  +--rw hops?     uint8
-	   |           +--rw enable?                boolean
-	   |                                        {admin-control}?
-	   |           +--rw authentication
-	   |           |  +--rw (auth-type-selection)?
-	   |           |     +--:(auth-ipsec)
-	   |           |     |   {ospfv3-authentication-ipsec}?
-	   |           |     |  +--rw sa?                 string
-	   |           |     +--:(auth-trailer-key-chain)
-	   |           |     |  +--rw key-chain?
-	   |           |     |        key-chain:key-chain-ref
-	   |           |     +--:(auth-trailer-key)
-	   |           |        +--rw key?                string
-	   |           |        +--rw crypto-algorithm?   identityref
-	   |           +--rw cost?               uint16
-	   |           +--rw mtu-ignore?         boolean
-	   |           |                         {mtu-ignore}?
-	   |           +--rw prefix-suppression? boolean
-	   |           |                         {prefix-suppression}?
-	   |           +--ro state?                 if-state-type
-	   |           +--ro hello-timer?        uint32
-	   |           +--ro wait-timer?         uint32
-	   |           +--ro dr-router-id?       rt-types:router-id
-	   |           +--ro dr-ip-addr?         inet:ip-address
-	   |           +--ro bdr-router-id?      rt-types:router-id
-	   |           +--ro bdr-ip-addr?        inet:ip-address
-	   |           +--ro statistics
-	   |           |  +--ro if-event-count?        yang:counter32
-	   |           |  +--ro link-scope-lsa-count?  yang:gauge32
-	   |           |  +--ro link-scope-lsa-cksum-sum?
-	   |           |                               uint32
-	   |           |  +--ro database
-	   |           |     +--ro link-scope-lsa-type*
-	   |           |        +--ro lsa-type?        uint16
-	   |           |        +--ro lsa-count?       yang:gauge32
-	   |           |        +--ro lsa-cksum-sum?   int32
-	   |           +--ro neighbors
-	   |           |  +--ro neighbor* [neighbor-router-id]
-	   |           |     +--ro neighbor-router-id
-	   |           |                           rt-types:router-id
-	   |           |     +--ro address?        inet:ip-address
-	   |           |     +--ro dr-router-id?   rt-types:router-id
-	   |           |     +--ro dr-ip-addr?     inet:ip-address
-	   |           |     +--ro bdr-router-id?  rt-types:router-id
-	   |           |     +--ro bdr-ip-addr?    inet:ip-address
-	   |           |     +--ro state?          nbr-state-type
-	   |           |     +--ro dead-timer?     uint32
-	   |           |     +--ro statistics
-	   |           |        +--ro nbr-event-count?
-	   |           |                           yang:counter32
-	   |           |        +--ro nbr-retrans-qlen?   
-	   |           |                           yang:gauge32
-	   |           +--ro database
-	   |           .  +--ro link-scope-lsa-type* [lsa-type]
-	   |           .     +--ro lsa-type           uint16
-	   |           .     +--ro link-scope-lsas
-	   .           .
-	   .           .
-	   |           +--rw topologies {ospf:multi-topology}?
-	   |           |  +--rw topology* [name]
-	   |           |     +--rw name  -> ../../../../../../../../
-	   |           |                    ../../../rt:ribs/rib/name
-	   |           |     +--rw cost? uint32
-	   |           +--rw instance-id?           uint8
-	   .
-	   .
+       +--rw areas
+       |  +--rw area* [area-id]
+       |     .
+       |     .
+       |     +--rw interfaces
+       |        +--rw interface* [name]
+       |           +--rw name                   if:interface-ref
+       |           +--rw interface-type?        enumeration
+       |           +--rw passive?               boolean
+       |           +--rw demand-circuit?        boolean
+       |                                        {demand-circuit}?
+       |           +--rw priority?              uint8
+       |           +--rw multi-areas {multi-area-adj}?
+       |           |  +--rw multi-area* [multi-area-id]
+       |           |     +--rw multi-area-id    area-id-type
+       |           |     +--rw cost?            uint16
+       |           +--rw static-neighbors
+       |           |  +--rw neighbor* [identifier]
+       |           |     +--rw identifier       inet:ip-address
+       |           |     +--rw cost?            uint16
+       |           |     +--rw poll-interval?   uint16
+       |           |     +--rw priority?        uint8
+       |           +--rw node-flag?             boolean
+       |                                        {node-flag}?
+       |           +--rw bfd {bfd}?
+       |           |  +--rw enable?   boolean
+       |           +--rw fast-reroute {fast-reroute}?
+       |           |  +--rw lfa {lfa}?
+       |           |     +--rw candidate-enable?   boolean
+       |           |     +--rw enable?             boolean
+       |           |     +--rw remote-lfa {remote-lfa}?
+       |           |        +--rw enable?   boolean
+       |           +--rw hello-interval?        uint16
+       |           +--rw dead-interval?         uint32
+       |           +--rw retransmit-interval?   uint16
+       |           +--rw transmit-delay?        uint16
+       |           +--rw lls?                   boolean {lls}?
+       |           +--rw ttl-security {ttl-security}?
+       |           |  +--rw enable?   boolean
+       |           |  +--rw hops?     uint8
+       |           +--rw enable?                boolean
+       |                                        {admin-control}?
+       |           +--rw authentication
+       |           |  +--rw (auth-type-selection)?
+       |           |     +--:(auth-ipsec)
+       |           |     |   {ospfv3-authentication-ipsec}?
+       |           |     |  +--rw sa?                 string
+       |           |     +--:(auth-trailer-key-chain)
+       |           |     |  +--rw key-chain?
+       |           |     |        key-chain:key-chain-ref
+       |           |     +--:(auth-trailer-key)
+       |           |        +--rw key?                string
+       |           |        +--rw crypto-algorithm?   identityref
+       |           +--rw cost?               uint16
+       |           +--rw mtu-ignore?         boolean
+       |           |                         {mtu-ignore}?
+       |           +--rw prefix-suppression? boolean
+       |           |                         {prefix-suppression}?
+       |           +--ro state?                 if-state-type
+       |           +--ro hello-timer?        uint32
+       |           +--ro wait-timer?         uint32
+       |           +--ro dr-router-id?       rt-types:router-id
+       |           +--ro dr-ip-addr?         inet:ip-address
+       |           +--ro bdr-router-id?      rt-types:router-id
+       |           +--ro bdr-ip-addr?        inet:ip-address
+       |           +--ro statistics
+       |           |  +--ro if-event-count?        yang:counter32
+       |           |  +--ro link-scope-lsa-count?  yang:gauge32
+       |           |  +--ro link-scope-lsa-cksum-sum?
+       |           |                               uint32
+       |           |  +--ro database
+       |           |     +--ro link-scope-lsa-type*
+       |           |        +--ro lsa-type?        uint16
+       |           |        +--ro lsa-count?       yang:gauge32
+       |           |        +--ro lsa-cksum-sum?   int32
+       |           +--ro neighbors
+       |           |  +--ro neighbor* [neighbor-router-id]
+       |           |     +--ro neighbor-router-id
+       |           |                           rt-types:router-id
+       |           |     +--ro address?        inet:ip-address
+       |           |     +--ro dr-router-id?   rt-types:router-id
+       |           |     +--ro dr-ip-addr?     inet:ip-address
+       |           |     +--ro bdr-router-id?  rt-types:router-id
+       |           |     +--ro bdr-ip-addr?    inet:ip-address
+       |           |     +--ro state?          nbr-state-type
+       |           |     +--ro dead-timer?     uint32
+       |           |     +--ro statistics
+       |           |        +--ro nbr-event-count?
+       |           |                           yang:counter32
+       |           |        +--ro nbr-retrans-qlen?   
+       |           |                           yang:gauge32
+       |           +--ro database
+       |           .  +--ro link-scope-lsa-type* [lsa-type]
+       |           .     +--ro lsa-type           uint16
+       |           .     +--ro link-scope-lsas
+       .           .
+       .           .
+       |           +--rw topologies {ospf:multi-topology}?
+       |           |  +--rw topology* [name]
+       |           |     +--rw name  -> ../../../../../../../../
+       |           |                    ../../../rt:ribs/rib/name
+       |           |     +--rw cost? uint32
+       |           +--rw instance-id?           uint8
+       .
+       .
       </artwork>
     </figure>
     </section>
