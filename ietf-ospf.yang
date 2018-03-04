@@ -97,7 +97,7 @@ module ietf-ospf {
 
   reference "RFC XXXX";
 
-  revision 2018-02-20 {
+  revision 2018-03-03 {
     description
       "Initial revision.";
     reference
@@ -1570,9 +1570,11 @@ module ietf-ospf {
     description
         "OSPFv2 LSA.";
     container header {
-      must "(derived-from-or-self(type, 'ospfv2-opaque-lsa-type') and "
+      must "(derived-from-or-self(type, "
+         + "'ospfv2-opaque-lsa-type') and "
          + "opaque-id and opaque-type) or "
-         + "(not(derived-from-or-self(type, 'ospfv2-opaque-lsa-type')) "
+         + "(not(derived-from-or-self(type, "
+         + "'ospfv2-opaque-lsa-type')) "
          + "and not(opaque-id) and not(opaque-type))" {
         description
           "Opaque type and ID only apply to Opaque LSAs.";
