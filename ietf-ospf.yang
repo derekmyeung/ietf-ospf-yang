@@ -680,7 +680,7 @@ module ietf-ospf {
       enum topology-changed {
         value "5";
         description
-          "Restart aorted due to topology change.";
+          "Restart aborted due to topology change.";
       }
     }
     description
