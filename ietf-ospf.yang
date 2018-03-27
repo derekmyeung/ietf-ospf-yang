@@ -16,7 +16,7 @@ module ietf-ospf {
 
   import ietf-interfaces {
     prefix "if";
-    reference "RFC XXXX - A YANG Data Model for Interface
+    reference "RFC 8343 - A YANG Data Model for Interface
                Management (NDMA Version)";
   }
 
@@ -34,7 +34,7 @@ module ietf-ospf {
 
   import ietf-routing {
     prefix "rt";
-    reference "RFC XXXX - A YANG Data Model for Routing
+    reference "RFC 8349 - A YANG Data Model for Routing
                Management (NMDA Version)";
   }
 
@@ -82,7 +82,7 @@ module ietf-ospf {
       This YANG model conforms to the Network Management
       Datastore Architecture (NDMA) as described in RFC XXXX.
 
-      Copyright (c) 2017 IETF Trust and the persons identified as
+      Copyright (c) 2018 IETF Trust and the persons identified as
       authors of the code.  All rights reserved.
 
        Redistribution and use in source and binary forms, with or
@@ -94,8 +94,6 @@ module ietf-ospf {
 
        This version of this YANG module is part of RFC XXXX;
        see the RFC itself for full legal notices.";
-
-  reference "RFC XXXX";
 
   revision 2018-03-03 {
     description
@@ -146,14 +144,14 @@ module ietf-ospf {
 
   feature ttl-security {
     description
-      "OSPF TTL security check.";
+      "OSPF Time to Live (TTL) security check support.";
     reference "RFC 5082 - The Generalized TTL Security
                Mechanism (GTSM)";
   }
 
   feature nsr {
     description
-      "Non-Stop-Routing (NSR).";
+      "Non-Stop-Routing (NSR) support.";
   }
 
   feature graceful-restart {
@@ -183,7 +181,7 @@ module ietf-ospf {
 
   feature max-lsa {
     description
-      "Setting maximum number of LSAs the OSPF instance
+      "Setting the maximum number of LSAs the OSPF instance
        will accept.";
     reference "RFC 1765 - OSPF Database Overload";
   }
@@ -212,46 +210,46 @@ module ietf-ospf {
 
   feature fast-reroute {
    description
-     "Support of IP Fast Reroute (IP-FRR).";
+     "Support for IP Fast Reroute (IP-FRR).";
    reference "RFC 5714 - IP Fast Rereoute Framework";
   }
 
   feature node-flag {
    description
-     "Support of node flag.";
+     "Support for node-flag for OSPF prefixes.";
    reference "RFC 7684 - OSPFv2 Prefix/Link Advertisement";
   }
 
   feature node-tag {
     description
-      "Support of node tag.";
+      "Support for node admin tag for OSPF routing instances.";
     reference "RFC 7777 - Advertising Node Administrative
                Tags in OSPF";
   }
 
   feature lfa {
    description
-     "Support of Loop Free Alternates (LFAs).";
+     "Support for Loop-Free Alternates (LFAs).";
    reference "RFC 5286 - Basic Specification for IP Fast
               Reroute: Loop-Free Alternates";
   }
 
   feature remote-lfa {
    description
-     "Support of Remote Loop Free Alternates (R-LFA).";
+     "Support for Remote Loop-Free Alternates (R-LFA).";
    reference "RFC 7490 - Remote Loop-Free Alternate (LFA)
               Fast Reroute (FRR)";
   }
 
   feature stub-router {
     description
-      "Support of RFC 6987 OSPF Stub Router Advertisement.";
+      "Support for RFC 6987 OSPF Stub Router Advertisement.";
     reference "RFC 6987 - OSPF Stub Router Advertisement";
   }
 
   feature pe-ce-protocol {
     description
-      "Support PE-CE protocol";
+      "Support for OSPF as a PE-CE protocol";
     reference "RFC 4577 - OSPF as the Provider/Customer Edge
                Protocol for BGP/MPLS IP Virtual Private
                Networks (VPNs)
@@ -261,23 +259,22 @@ module ietf-ospf {
 
   feature ietf-spf-delay {
     description
-      "Support of IETF SPF delay algorithm.";
+      "Support for IETF SPF delay algorithm.";
     reference "RFC XXXX - SPF Back-off algorithm for link
                state IGPs";
   }
 
   feature bfd {
     description
-      "Support of BFD.";
-    reference "RFC 5880 - Bidirectional Forwarding Detection
-              (BFD)
+      "Support for BFD detection of OSPF neighbor reachability.";
+    reference "RFC 5880 - Bidirectional Forwarding Detection (BFD)
                RFC 5881 - Bidirectional Forwarding Detection
                (BFD) for IPv4 and IPv6 (Single Hop)";
   }
 
   identity ospf-protocol {
     base "rt:routing-protocol";
-    description "Any version the OSPF protocol";
+    description "Any OSPF protocol version";
   }
 
   identity ospfv2 {
@@ -293,13 +290,6 @@ module ietf-ospf {
   identity operation-mode {
     description
       "OSPF operation mode.";
-  }
-
-  identity ships-in-the-night {
-    base operation-mode;
-    description
-      "Ships-in-the-night operation mode in which
-      each OSPF instance carries only one address family";
   }
 
   identity area-type {
@@ -323,14 +313,15 @@ module ietf-ospf {
 
   identity nssa-area {
     base stub-nssa-area;
-    description "OSPF NSSA area.";
+    description "OSPF Not-So-Stubby Area (NSSA).";
     reference "RFC 3101 - The OSPF Not-So-Stubby Area
                (NSSA) Option";
   }
 
   identity ospf-lsa-type {
     description
-      "Base identity for OSPFv3 and OSPFv3 LSA types";
+      "Base identity for OSPFv3 and OSPFv3
+       Link State Advertisement (LSA) types";
   }
 
   identity ospfv2-lsa-type {
@@ -685,8 +676,8 @@ module ietf-ospf {
     }
     description
       "Describes the outcome of the last attempt at a
-      graceful restart, either by itself or acting
-      as a helper.";
+       graceful restart, either by itself or acting
+       as a helper.";
   }
 
   typedef packet-type {
@@ -809,7 +800,7 @@ module ietf-ospf {
       leaf tag {
         type uint32;
         description
-          "Node tag value.";
+          "Node admin tag value.";
       }
       description
         "List of tags.";
@@ -844,7 +835,7 @@ module ietf-ospf {
       when "derived-from-or-self(../../header/type, "
           + "'ospf:ospfv2-router-lsa')" {
         description
-          "Only applies to Router LSAs.";
+          "Only applies to Router-LSAs.";
       }
       description
         "Router LSA.";
@@ -876,7 +867,7 @@ module ietf-ospf {
       }
       leaf num-of-links {
         type uint16;
-        description "Number of links.";
+        description "Number of links in Router LSA.";
       }
       container links {
         description "All router Links.";
@@ -1020,10 +1011,10 @@ module ietf-ospf {
 
       container node-tag-tlvs {
         description
-          "All node tag tlvs.";
+          "All node tag TLVs.";
         list node-tag-tlv {
           description
-            "Node tag tlv.";
+            "Node tag TLV.";
           uses node-tag-tlv;
         }
       }
@@ -1150,7 +1141,7 @@ module ietf-ospf {
                   "Node flag.";
               }
             }
-            description "Flags.";
+            description "Prefix Flags.";
           }
           leaf prefix {
             type inet:ip-prefix;
@@ -1214,7 +1205,7 @@ module ietf-ospf {
     leaf prefix {
       type inet:ip-prefix;
       description
-        "Prefix.";
+        "LSA Prefix.";
     }
     leaf prefix-options {
       type bits {
@@ -1345,23 +1336,26 @@ module ietf-ospf {
           description "Router LSA link.";
           leaf interface-id {
             type uint32;
-            description "Interface ID.";
+            description "Interface ID for link.";
           }
           leaf neighbor-interface-id {
             type uint32;
-            description "Neighbor Interface ID.";
+            description "Neighbor's Interface ID for link.";
           }
           leaf neighbor-router-id {
             type rt-types:router-id;
-            description "Neighbor Router ID.";
+            description "Neighbor's Router ID for link.";
           }
           leaf type {
             type uint8;
-            description "Link type.";
+            description "Link type: 1 - Point-to-Point Link
+                                    2 - Transit Network Link
+                                    3 - Stub Network Link Link
+                                    4 - Virtual Link";
           }
           leaf metric {
             type uint16;
-              description "Metric.";
+              description "Link Metric.";
           }
         }
       }
@@ -1370,7 +1364,7 @@ module ietf-ospf {
       when "derived-from-or-self(../../header/type, "
          + "'ospfv3-network-lsa')" {
         description
-          "Only applies to Network LSA.";
+          "Only applies to Network LSAs.";
       }
       description "Network LSA.";
 
@@ -1393,10 +1387,10 @@ module ietf-ospf {
       }
       leaf metric {
         type uint24;
-        description "Metric";
+        description "Inter-Area Prefix Metric";
       }
       uses ospfv3-lsa-prefix;
-      description "Inter-Area-Prefix LSA.";
+      description "Prefix LSA.";
     }
     container inter-area-router {
       when "derived-from-or-self(../../header/type, "
@@ -1407,12 +1401,12 @@ module ietf-ospf {
       uses ospfv3-lsa-options;
       leaf metric {
         type uint24;
-        description "Metric.";
+        description "AS Boundary Router (ASBR) Metric.";
       }
       leaf destination-router-id {
         type rt-types:router-id;
         description
-          "The Router ID of the router being described by the LSA.";
+          "The Router ID of the ASBR described by the LSA.";
       }
       description "Inter-Area-Router LSA.";
     }
@@ -1475,7 +1469,7 @@ module ietf-ospf {
       when "derived-from-or-self(../../header/type, "
          + "'ospfv3-intra-area-prefix-lsa')" {
         description
-          "Only applies to Intra-Area-Prefix LSA.";
+          "Only applies to Intra-Area-Prefix LSAs.";
       }
       description "Intra-Area-Prefix LSA.";
 
@@ -1526,6 +1520,8 @@ module ietf-ospf {
         }
       }
       description "Router Information LSA.";
+      reference "RFC 7770 -Extensions for Advertising Router
+                 Capabilities";
     }
   }
 
@@ -1542,7 +1538,7 @@ module ietf-ospf {
         base ospf-lsa-type;
       }
       mandatory true;
-      description "LSA type.";
+      description "LSA type";
     }
     leaf adv-router {
       type yang:dotted-quad;
@@ -1562,13 +1558,16 @@ module ietf-ospf {
     leaf length {
       type uint16;
       mandatory true;
-      description "LSA length.";
+      description "LSA length including the header.";
     }
   }
 
   grouping ospfv2-lsa {
     description
-        "OSPFv2 LSA.";
+        "OSPFv2 LSA - LSAs are uniquely identified by
+         the <LSA Type, Link-State ID, Advertising Router>
+         tuple with the sequence number differentiating
+         LSA instances.";
     container header {
       must "(derived-from-or-self(type, "
          + "'ospfv2-opaque-lsa-type') and "
@@ -1624,7 +1623,7 @@ module ietf-ospf {
       leaf lsa-id {
         type yang:dotted-quad;
         mandatory true;
-        description "LSA ID.";
+        description "Link-State ID.";
       }
 
       leaf opaque-type {
@@ -1708,7 +1707,7 @@ module ietf-ospf {
         type uint32;
       }
       description
-        "LSA ID.";
+        "Link-State ID.";
     }
     leaf adv-router {
       type inet:ipv4-address;
@@ -1729,12 +1728,12 @@ module ietf-ospf {
     }
     leaf as-scope-lsa-count {
       type yang:gauge32;
-      description "The number of AS Scope LSAs.";
+      description "The number of AS-scope LSAs.";
     }
     leaf as-scope-lsa-chksum-sum {
       type uint32;
       description
-        "The sum of the LSA checksums for AS Scope LSAs.";
+        "The sum of the LSA checksums for AS-scope LSAs.";
     }
     container database {
       description "Container for per AS-scope LSA statistics.";
@@ -1742,7 +1741,7 @@ module ietf-ospf {
         description "List of AS-scope LSA statistics";
         leaf lsa-type {
           type uint16;
-          description "AS-scope LSA type.";
+          description "AS-Scope LSA type.";
         }
         leaf lsa-count {
           type yang:gauge32;
@@ -1773,7 +1772,7 @@ module ietf-ospf {
     leaf asbr-count {
       type yang:gauge32;
       description
-        "The total number of AS Border Routers (ASBRs).";
+        "The total number of AS Boundary Routers (ASBRs).";
     }
     leaf ar-nssa-translator-event-count {
       type yang:counter32;
@@ -1783,19 +1782,19 @@ module ietf-ospf {
     leaf area-scope-lsa-count {
       type yang:gauge32;
       description
-        "The number of area scope LSAs in the area.";
+        "The number of area-scope LSAs in the area.";
     }
     leaf area-scope-lsa-cksum-sum {
       type int32;
-      description "The sum of the area scope LSAs checksums.";
+      description "The sum of the area-scope LSAs checksums.";
     }
     container database {
-      description "Container for area scope LSA type statistics.";
+      description "Container for area-scope LSA type statistics.";
       list area-scope-lsa-type {
-        description "List of area scope LSA statistics";
+        description "List of area-scope LSA statistics";
         leaf lsa-type {
           type uint16;
-          description "Area scope LSA type.";
+          description "Area-scope LSA type.";
         }
         leaf lsa-count {
           type yang:gauge32;
@@ -1820,16 +1819,16 @@ module ietf-ospf {
     }
     leaf link-scope-lsa-count {
       type yang:gauge32;
-      description "The number of link scope LSAs.";
+      description "The number of link-scope LSAs.";
     }
     leaf link-scope-lsa-cksum-sum {
       type uint32;
-      description "The sum of link scope LSA checksums.";
+      description "The sum of link-scope LSA checksums.";
     }
     container database {
-      description "Container for link scope LSA type statistics.";
+      description "Container for link-scope LSA type statistics.";
       list link-scope-lsa-type {
-        description "List of link scope LSA statistics";
+        description "List of link-scope LSA statistics";
         leaf lsa-type {
           type uint16;
           description "Link scope LSA type.";
@@ -1864,7 +1863,8 @@ module ietf-ospf {
 
   grouping instance-fast-reroute-config {
     description
-      "This group defines global configuration of IP-FRR.";
+      "This group defines global configuration of IP
+       Fast ReRoute (FRR).";
     container fast-reroute {
       if-feature fast-reroute;
       description
@@ -1874,8 +1874,8 @@ module ietf-ospf {
         if-feature lfa;
         description
           "This container may be augmented with
-           global parameters for LFA. Container creation
-           has no effect on LFA activation.";
+           global parameters for Loop-Free Alternatives (LFA).
+           Container creation has no effect on LFA activation.";
       }
     }
   }
@@ -1915,7 +1915,7 @@ module ietf-ospf {
           "LFA configuration.";
       }
       description
-        "IP Fast-reroute configuration.";
+        "Interface IP Fast-reroute configuration.";
     }
   }
 
@@ -1972,8 +1972,8 @@ module ietf-ospf {
           "The value MUST be greater than 'hello-internval'.";
       }
       description
-        "Interval after which a neighbor is
-         declared down (seconds).";
+        "Interval after which a neighbor is declared down
+         (seconds) if hello packets are not received.";
     }
 
     leaf retransmit-interval {
@@ -1993,7 +1993,7 @@ module ietf-ospf {
       units seconds;
       description
         "Estimated time needed to transmit Link State Update
-         packets on the interface (seconds).";
+         (LSU) packets on the interface (seconds).";
     }
 
     leaf lls {
@@ -2005,7 +2005,7 @@ module ietf-ospf {
 
     container ttl-security {
       if-feature ttl-security;
-      description "TTL security check.";
+      description "Time to Live (TTL) security check.";
       leaf enable {
         type boolean;
         description
@@ -2025,14 +2025,14 @@ module ietf-ospf {
       type boolean;
       default true;
       description
-        "Enable/disable protocol on the interface.";
+        "Enable/disable OSPF protocol on the interface.";
     }
 
     container authentication {
       description "Authentication configuration.";
       choice auth-type-selection {
         description
-          "Options for expressing authentication setting.";
+          "Options for OSPFv3 authentication configuration.";
         case auth-ipsec {
           when "derived-from-or-self(../../../../../../rt:type, "
             +  "'ospf:ospfv3')" {
@@ -2042,7 +2042,7 @@ module ietf-ospf {
           leaf sa {
               type string;
               description
-                "Security Association name.";
+                "Security Association (SA) name.";
           }
         }
         case auth-trailer-key-chain {
@@ -2068,7 +2068,7 @@ module ietf-ospf {
         }
       }
     }
-  } // interface-common-config
+  }
 
   grouping interface-config {
     description "Configuration for real interfaces.";
@@ -2149,7 +2149,7 @@ module ietf-ospf {
         leaf identifier {
           type inet:ip-address;
           description
-            "Neighbor router ID, IPv4 address, or IPv6 address.";
+            "Neighbor Router ID, IPv4 address, or IPv6 address.";
         }
 
         leaf cost {
@@ -2163,7 +2163,10 @@ module ietf-ospf {
             range "1..65535";
           }
           units seconds;
-          description "Neighbor poll interval (seconds).";
+          description
+            "Neighbor poll interval (seconds) for sending OSPF
+             hello packets to discover the neighbor on NBMA
+             networks.";
         }
         leaf priority {
           type uint8 {
@@ -2179,7 +2182,9 @@ module ietf-ospf {
       type boolean;
       default false;
       description
-        "Set prefix as a node representative prefix.";
+        "Set prefix as identifying the advertising router.";
+      reference "RFC 7684 - OSPFv2 Prefix/Link Attribute
+                 Advertisement";
     }
 
     container bfd {
@@ -2194,7 +2199,7 @@ module ietf-ospf {
     uses interface-fast-reroute-config;
     uses interface-common-config;
     uses interface-physical-link-config;
-  } // grouping interface-config
+  }
 
   grouping neighbor-state {
     description
@@ -2209,7 +2214,7 @@ module ietf-ospf {
     leaf dr-router-id {
       type rt-types:router-id;
       config false;
-      description "Neighbor's Designated Router (DR) router ID.";
+      description "Neighbor's Designated Router (DR) Router ID.";
     }
 
     leaf dr-ip-addr {
@@ -2222,7 +2227,7 @@ module ietf-ospf {
       type rt-types:router-id;
       config false;
       description
-        "Neighbor's Backup Designated Router (BDR) router ID.";
+        "Neighbor's Backup Designated Router (BDR) Router ID.";
     }
 
     leaf bdr-ip-addr {
@@ -2246,7 +2251,7 @@ module ietf-ospf {
     }
     container statistics {
       config false;
-      description "Per neighbor statistics";
+      description "Per-neighbor statistics";
       uses neighbor-stat;
     }
   }
@@ -2267,7 +2272,8 @@ module ietf-ospf {
       units "seconds";
       config false;
       description "This timer tracks the remaining time before
-                   the next hello packet is sent.";
+                   the next hello packet is sent on the
+                   interface.";
     }
 
     leaf wait-timer {
@@ -2281,7 +2287,7 @@ module ietf-ospf {
     leaf dr-router-id {
       type rt-types:router-id;
       config false;
-      description "Designated Router (DR) router ID.";
+      description "Designated Router (DR) Router ID.";
     }
 
     leaf dr-ip-addr {
@@ -2293,7 +2299,7 @@ module ietf-ospf {
     leaf bdr-router-id {
       type rt-types:router-id;
       config false;
-      description "Backup Designated Router (BDR) router ID.";
+      description "Backup Designated Router (BDR) Router ID.";
     }
 
     leaf bdr-ip-addr {
@@ -2304,7 +2310,7 @@ module ietf-ospf {
 
     container statistics {
       config false;
-      description "Per interface statistics";
+      description "Per-interface statistics";
       uses interface-stat;
     }
 
@@ -2314,32 +2320,32 @@ module ietf-ospf {
       list neighbor {
         key "neighbor-router-id";
         description
-          "List of OSPF neighbors.";
+          "List of interface OSPF neighbors.";
         leaf neighbor-router-id {
           type rt-types:router-id;
           description
-            "Neighbor router ID.";
+            "Neighbor Router ID.";
         }
         uses neighbor-state;
-      } // list of OSPF neighbors
+      }
     }
     container database {
       config false;
-      description "Link scope LSA database.";
+      description "Link-scope LSA database.";
       list link-scope-lsa-type {
         key "lsa-type";
         description
-          "List OSPF link scope LSA databases.";
+          "List OSPF link-scope LSA databases.";
         leaf lsa-type {
           type uint16;
-          description "OSPF link scope LSA type.";
+          description "OSPF link-scope LSA type.";
         }
         container link-scope-lsas {
           description
-            "All link scope LSAs of this LSA type.";
+            "All link-scope LSAs of this LSA type.";
           list link-scope-lsa {
             key "lsa-id adv-router";
-            description "List of OSPF link scope LSAs";
+            description "List of OSPF link-scope LSAs";
             uses lsa-key;
             uses lsa {
               refine "version/ospfv2/ospfv2" {
@@ -2359,9 +2365,9 @@ module ietf-ospf {
             }
           }
         }
-      } // list link-scope-lsas
+      }
     }
-  } // interface-common-state
+  }
 
   grouping interface-state {
     description
@@ -2404,7 +2410,6 @@ module ietf-ospf {
   grouping sham-link-state {
     description
       "OSPF sham link operational state.";
-    /* All container/leaf should be config false. */
     uses interface-common-state;
   }
 
@@ -2418,8 +2423,8 @@ module ietf-ospf {
       list range {
         key "prefix";
         description
-          "Summarize routes matching address/mask
-           (Area Border Routers (ABRs) only)";
+          "Summarize routes matching address/mask -
+           Applicable to Area Border Routers (ABRs) only.";
         leaf prefix {
           type inet:ip-prefix;
           description
@@ -2484,14 +2489,7 @@ module ietf-ospf {
     }
 
     uses area-common-config;
-
-    uses af-area-config {
-      when "derived-from-or-self(../../operation-mode, "
-         + "'ospf:ships-in-the-night')" {
-        description
-          "Ships in the night configuration.";
-      }
-    }
+    uses af-area-config;
   }
 
   grouping area-state {
@@ -2500,27 +2498,27 @@ module ietf-ospf {
 
     container statistics {
       config false;
-      description "Per area statistics";
+      description "Per-area statistics";
       uses area-stat;
     }
 
     container database {
       config false;
-      description "Area scope LSA database.";
+      description "Area-scope LSA database.";
       list area-scope-lsa-type {
         key "lsa-type";
-        description "List OSPF area scope LSA databases.";
+        description "List OSPF area-scope LSA databases.";
         leaf lsa-type {
           type uint16;
-          description "OSPF area scope LSA type.";
+          description "OSPF area-scope LSA type.";
         }
         container area-scope-lsas {
           description
-            "All area scope LSAs of an area scope
+            "All area-scope LSAs of an area-scope
              LSA type.";
           list area-scope-lsa {
             key "lsa-id adv-router";
-            description "List of OSPF area scope LSAs";
+            description "List of OSPF area-scope LSAs";
             uses lsa-key;
             uses lsa {
               refine "version/ospfv2/ospfv2" {
@@ -2540,12 +2538,13 @@ module ietf-ospf {
             }
           }
         }
-      } // list area-scope-lsas
+      }
     }
   }
 
   grouping local-rib {
-    description "Local-rib grouping.";
+    description "Local-rib - RIB for Routes computed by the local
+                 OSPF routing instance.";
     container local-rib {
       config false;
       description "Local-rib.";
@@ -2557,10 +2556,10 @@ module ietf-ospf {
           description "Destination prefix.";
         }
         container next-hops {
-          description "All next hops for the route.";
+          description "Next hops for the route.";
           list next-hop {
             key "next-hop";
-            description "List of next hop for the route";
+            description "List of next hops for the route";
             leaf outgoing-interface {
               type if:interface-ref;
               description
@@ -2640,7 +2639,7 @@ module ietf-ospf {
       }
       config false;
       description
-        "Current state of the algorithm.";
+        "Current SPF backoff algorithm state.";
     }
     leaf remaining-time-to-learn {
       type uint16;
@@ -2660,7 +2659,7 @@ module ietf-ospf {
       type yang:timestamp;
       config false;
       description
-        "Time of last IGP event received";
+        "Time of last SPF triggering event.";
     }
     leaf next-spf-time {
       type yang:timestamp;
@@ -2675,7 +2674,7 @@ module ietf-ospf {
         "Time of last SPF computation.";
       }
     description
-      "Grouping for IETF SPF delay operational states.";
+      "Grouping for IETF SPF backoff operational states.";
   }
 
   grouping node-tag-config {
@@ -2694,7 +2693,7 @@ module ietf-ospf {
           "List of tags.";
       }
       description
-        "Container for node tags.";
+        "Container for node admin tags.";
     }
   }
 
@@ -2753,7 +2752,7 @@ module ietf-ospf {
           leaf external {
             type uint8;
             description
-              "Preference for external routes.";
+              "Preference for AS external routes.";
           }
         }
       }
@@ -2774,7 +2773,8 @@ module ietf-ospf {
       if-feature graceful-restart;
       description
         "Graceful restart config state.";
-      reference "RFC3623 - OSPF Graceful Restart";
+      reference "RFC 3623 - OSPF Graceful Restart
+                 RFC 5178 - OSPFv3 Graceful Restart";
       leaf enable {
         type boolean;
         description
@@ -2789,10 +2789,10 @@ module ietf-ospf {
       }
       leaf restart-interval {
         type uint16 {
-          range "1..1800";  // Range is defined in RFC 3623.
+          range "1..1800";
         }
         units seconds;
-        default "120";  // Default is defined in RFC 3623.
+        default "120";
         description
           "Interval to attempt graceful restart prior
            to failing (RFC 3623 Section B.1) (seconds)";
@@ -2851,7 +2851,7 @@ module ietf-ospf {
         if-feature ietf-spf-delay;
         uses ietf-spf-delay-config;
         description
-          "IETF spf delay algorithm configuration.";
+          "IETF SPF delay algorithm configuration.";
       }
       description "SPF calculation control.";
     }
@@ -2897,12 +2897,12 @@ module ietf-ospf {
         leaf ipv4-router-id {
           type inet:ipv4-address;
           description
-            "Explicitly configure the TE IPv4 router ID.";
+            "Explicitly configure the TE IPv4 Router ID.";
         }
         leaf ipv6-router-id {
           type inet:ipv6-address;
           description
-            "Explicitly configure the TE IPv6 router ID.";
+            "Explicitly configure the TE IPv6 Router ID.";
         }
       }
       container ldp {
@@ -2936,34 +2936,33 @@ module ietf-ospf {
 
     container statistics {
       config false;
-      description "Per instance statistics";
+      description "Per-instance statistics";
       uses instance-stat;
     }
 
     container ietf-spf-delay {
       if-feature ietf-spf-delay;
       config false;
-      uses ietf-spf-delay-config;
       uses ietf-spf-delay-state;
       description
-        "IETF SPF delay operational states.";
+        "IETF SPF delay state.";
     }
 
     container database {
       config false;
-      description "AS scope LSA database.";
+      description "AS-scope LSA database.";
       list as-scope-lsa-type {
         key "lsa-type";
-        description "List OSPF AS scope LSA databases.";
+        description "List OSPF AS-scope LSA databases.";
         leaf lsa-type {
           type uint16;
           description "OSPF AS scope LSA type.";
         }
         container as-scope-lsas {
-          description "All AS scope of LSA of this LSA type.";
+          description "All AS-scope of LSA of this LSA type.";
           list as-scope-lsa {
             key "lsa-id adv-router";
-            description "List of OSPF area scope LSAs";
+            description "List of OSPF AS-scope LSAs";
             uses lsa-key;
             uses lsa {
               refine "version/ospfv2/ospfv2" {
@@ -2983,7 +2982,7 @@ module ietf-ospf {
             }
           }
         }
-      } // list as-scope-lsas
+      }
     }
     uses spf-log;
     uses lsa-log;
@@ -2991,22 +2990,12 @@ module ietf-ospf {
 
   grouping ospf-config {
     description
-      "OSPF top configuration state.";
-
-    leaf operation-mode {
-      type identityref {
-        base operation-mode;
-      }
-      default ospf:ships-in-the-night;
-      description
-        "OSPF operation mode.";
-    }
+      "OSPF top configuration state - currently empty.";
   }
 
   grouping ospf-state {
-    /* All leaf/container must be config false. */
     description
-      "OSPF top operational state.";
+      "OSPF top operational state - currently empty.";
   }
 
   grouping multi-topology-area-common-config {
@@ -3046,18 +3035,10 @@ module ietf-ospf {
       "OSPF multi-topology area configuration state.";
 
     uses multi-topology-area-common-config;
-
-    uses af-area-config {
-      when "derived-from-or-self(../../../../operation-mode, "
-         + "'ospf:ships-in-the-night')" {
-        description
-          "Ships in the night configuration.";
-      }
-    }
+    uses af-area-config;
   }
 
   grouping multi-topology-area-state {
-    /* All leaf/container must be config false. */
     description
       "OSPF multi-topology area operational state.";
   }
@@ -3068,7 +3049,6 @@ module ietf-ospf {
   }
 
   grouping multi-topology-state {
-    /* All leaf/container must be config false. */
     description
       "OSPF multi-topology operational state.";
 
@@ -3087,7 +3067,6 @@ module ietf-ospf {
   }
 
   grouping multi-topology-interface-state {
-    /* All leaf/container must be config false. */
     description
       "OSPF multi-topology operational state.";
   }
@@ -3125,13 +3104,6 @@ module ietf-ospf {
       description
         "Area ID";
     }
-    leaf link-id {
-      type union {
-        type inet:ipv4-address;
-        type yang:dotted-quad;
-      }
-      description "Link ID.";
-    }
     leaf type {
       type uint16;
       description
@@ -3139,7 +3111,7 @@ module ietf-ospf {
     }
     leaf lsa-id {
       type yang:dotted-quad;
-      description "LSA ID.";
+      description "Link-State ID.";
     }
     leaf adv-router {
       type yang:dotted-quad;
@@ -3163,54 +3135,53 @@ module ietf-ospf {
       list event {
         key id;
         description
-          "List of SPF logs.
-           It is used as a wrapping buffer.";
+          "List of SPF log entries represented
+           as a wrapping buffer.";
         leaf id {
           type uint32;
           description
-            "This leaf defines the event identifier.
-             This is a purely internal value.";
+            "Event identifier - Ppurely internal value.";
         }
         leaf spf-type {
           type enumeration {
             enum full {
               description
-                "Computation done is a Full SPF.";
+                "SPF computation was a Full SPF.";
             }
             enum intra {
               description
-                "Computation done is only for intra-area routes.";
+                "SPF computation was only for intra-area routes.";
             }
             enum inter {
               description
-                "Computation done is only for inter-area
+                "SPF computation was only for inter-area
                  summary routes.";
             }
             enum external {
               description
-                "Computation done is only for AS external routes.";
+                "SPF computation was only for AS external routes.";
             }
           }
           description
-            "The SPF computation type.";
+            "The SPF computation type for the SPF log entry.";
         }
         leaf schedule-timestamp {
           type yang:timestamp;
           description
-            "This leaf describes the timestamp
-             when the computation was scheduled.";
+            "This is the timestamp when the computation was
+             scheduled.";
         }
         leaf start-timestamp {
           type yang:timestamp;
           description
-            "This leaf describes the timestamp
-             when the computation was started.";
+            "This is the timestamp when the computation was
+             started.";
         }
         leaf end-timestamp {
           type yang:timestamp;
           description
-            "This leaf describes the timestamp
-             when the computation was completed.";
+            "This the timestamp when the computation was
+             completed.";
         }
         list trigger-lsa {
           description
@@ -3223,7 +3194,7 @@ module ietf-ospf {
 
   grouping lsa-log {
     description
-      "Grouping for LSA log.";
+      "Grouping for the LSA log.";
     container lsa-log {
       config false;
       description
@@ -3233,13 +3204,12 @@ module ietf-ospf {
       list event {
         key id;
         description
-          "List of LSA logs.
-           It is used as a wrapping buffer.";
+          "List of LSA log entries represented
+           as a wrapping buffer.";
         leaf id {
           type uint32;
           description
-            "This leaf defines the event identifier.
-             This is a purely internal value.";
+            "Event identifier - purely internal value.";
         }
         container lsa {
           description
@@ -3249,18 +3219,16 @@ module ietf-ospf {
         leaf received-timestamp {
           type yang:timestamp;
           description
-            "This leaf describes the timestamp
-             when the LSA was received.  In case of
-             local LSA update, the timestamp refers
-             to the local LSA update time.";
+            "This is the timestamp when the LSA was received.
+             In case of local LSA update, the timestamp refers
+             to the LSA origination time.";
         }
         leaf reason {
           type identityref {
             base lsa-log-reason;
           }
           description
-            "This leaf describes the reason
-             that resulted in this LSA log.";
+            "This reason for the LSA log entry.";
         }
       }
     }
@@ -3273,7 +3241,8 @@ module ietf-ospf {
         "This augmentation is only valid for a routing protocol
          instance of OSPF (type 'ospfv2' or 'ospfv3').";
     }
-    description "OSPF augmentation.";
+    description "OSPF protocol ietf-routing module
+                 control-plane-protocol augmentation.";
 
     container ospf {
       description
@@ -3338,7 +3307,7 @@ module ietf-ospf {
               leaf router-id {
                 type rt-types:router-id;
                 description
-                  "Virtual Link remote endpoint router ID.";
+                  "Virtual Link remote endpoint Router ID.";
               }
 
               uses virtual-link-config;
@@ -3355,12 +3324,12 @@ module ietf-ospf {
               leaf local-id {
                 type inet:ip-address;
                 description
-                  "Address of the local Sham Link endpoint.";
+                  "Address of the local sham Link endpoint.";
               }
               leaf remote-id {
                 type inet:ip-address;
                 description
-                  "Address of the remote Sham Link endpoint.";
+                  "Address of the remote sham Link endpoint.";
               }
               uses sham-link-config;
               uses sham-link-state;
@@ -3375,15 +3344,15 @@ module ietf-ospf {
               leaf name {
                 type if:interface-ref;
                 description
-                  "Interface name.";
+                  "Interface name reference.";
               }
               uses interface-config;
               uses interface-state;
-            } // list of interfaces
+            }
           }
-        } // list of areas
+        }
       }
-    } // OSPF instance
+    }
   }
 
   augment "/rt:routing/rt:control-plane-protocols/"
@@ -3391,7 +3360,7 @@ module ietf-ospf {
     when "derived-from(../rt:type, 'ospf:ospf-protocol')" {
       description
         "This augmentation is only valid for OSPF
-        (type 'ospfv2' or 'ospfv3').";
+         (type 'ospfv2' or 'ospfv3').";
     }
     if-feature multi-topology;
     description
@@ -3400,15 +3369,17 @@ module ietf-ospf {
     container topologies {
       description "All topologies.";
       list topology {
-        // Topology must be in the same routing-instance
-        //  and of same AF as the container.
         key "name";
-        description "OSPF topology.";
+        description
+          "OSPF topology - The OSPF topology address-family
+           must coincide with the routing-instance
+           address-family.";
         leaf name {
           type leafref {
             path "../../../../../../rt:ribs/rt:rib/rt:name";
           }
-          description "RIB";
+          description "RIB name corresponding to the OSPF
+                       topology.";
         }
 
         uses multi-topology-config;
@@ -3456,7 +3427,7 @@ module ietf-ospf {
                + "rt:ribs/rt:rib/rt:name";
           }
           description
-            "One of the topologies enabled on this interface.";
+            "Single topology enabled on this interface.";
         }
 
         uses multi-topology-interface-config;
@@ -3515,11 +3486,10 @@ module ietf-ospf {
 
   rpc clear-neighbor {
     description
-      "This RPC request clears a particular
-       set of OSPF neighbors. If the operation
-       fails for OSPF internal reason, then
-       error-tag and error-app-tag should be set
-       to a meaningful value.";
+      "This RPC request clears a particular set of OSPF neighbors.
+       If the operation fails for OSPF internal reason, then
+       error-tag and error-app-tag should be set to a meaningful
+       value.";
     input {
       leaf routing-protocol-name {
         type leafref {
@@ -3528,12 +3498,11 @@ module ietf-ospf {
         }
         mandatory "true";
         description
-          "Name of the OSPF protocol instance which information
-           is being queried.
+          "OSPF protocol instance which information for neighbors
+           are to be cleared.
 
-           If the OSPF instance with name equal to the
-           value of this parameter doesn't exist, then this
-           operation SHALL fail with error-tag 'data-missing'
+           If the referenced OSPF instance doesn't exist, then
+           this operation SHALL fail with error-tag 'data-missing'
            and error-app-tag
            'routing-protocol-instance-not-found'.";
       }
@@ -3541,12 +3510,12 @@ module ietf-ospf {
       leaf interface {
         type if:interface-ref;
           description
-            "Name of the OSPF interface.
+            "Name of the OSPF interface for which neighbors are to
+             be cleared.
 
-             If the OSPF interface with name equal to the
-             value of this parameter doesn't exist, then this
-             operation SHALL fail with error-tag 'data-missing'
-             and error-app-tag
+             If the referenced OSPF interface doesn't exist, then
+             this operation SHALL fail with error-tag
+             'data-missing'  and error-app-tag
              'ospf-interface-not-found'.";
       }
     }
@@ -3554,11 +3523,10 @@ module ietf-ospf {
 
   rpc clear-database {
     description
-      "This RPC request clears a particular
-       OSPF database. If the operation
-       fails for OSPF internal reason, then
-       error-tag and error-app-tag should be set
-       to a meaningful value.";
+      "This RPC request clears a particular OSPF link-state
+       database. If the operation fails for OSPF internal reason,
+       then error-tag and error-app-tag should be set to a
+       meaningful value.";
     input {
       leaf routing-protocol-name {
         type leafref {
@@ -3567,12 +3535,11 @@ module ietf-ospf {
         }
         mandatory "true";
         description
-          "Name of the OSPF protocol instance whose
-           information is being queried.
+          "OSPF protocol instance whose link-state database is to
+           be cleared.
 
-           If the OSPF instance with name equal to the
-           value of this parameter doesn't exist, then this
-           operation SHALL fail with error-tag 'data-missing'
+           If the referenced OSPF instance doesn't exist, then
+           this operation SHALL fail with error-tag 'data-missing'
            and error-app-tag
            'routing-protocol-instance-not-found'.";
       }
@@ -3585,8 +3552,8 @@ module ietf-ospf {
 
   grouping notification-instance-hdr {
     description
-     "This group describes common instance specific
-      data for notifications.";
+     "This grouping describes common instance specific
+      data for OSPF notifications.";
 
     leaf routing-protocol-name {
       type leafref {
@@ -3615,8 +3582,8 @@ module ietf-ospf {
 
   grouping notification-interface {
     description
-      "This grouping provides the interface information
-       for the notifications.";
+      "This grouping provides interface information
+       for the OSPF interface specific notification.";
 
     choice if-link-type-selection {
       description
@@ -3640,7 +3607,7 @@ module ietf-ospf {
         }
       }
       container sham-link {
-        description "sham-link.";
+        description "sham link.";
         leaf area-id {
           type area-id-type;
           description "Area ID.";
@@ -3660,7 +3627,7 @@ module ietf-ospf {
   grouping notification-neighbor {
     description
       "This grouping provides the neighbor information
-       for the notifications.";
+       for neighbor specific notifications.";
 
     leaf neighbor-router-id {
       type rt-types:router-id;
@@ -3683,7 +3650,7 @@ module ietf-ospf {
     }
     description
       "This notification is sent when an interface
-      state change is detected.";
+       state change is detected.";
   }
 
   notification if-config-error {
@@ -3736,7 +3703,7 @@ module ietf-ospf {
           description "MTU mismatch.";
         }
         enum "duplicate-router-id" {
-          description "Duplicate router ID.";
+          description "Duplicate Router ID.";
         }
         enum "no-error" {
           description "No error.";
@@ -3745,7 +3712,7 @@ module ietf-ospf {
       description "Error code.";
     }
     description
-      "This notification is sent when interface
+      "This notification is sent when an interface
        config error is detected.";
   }
 
@@ -3760,7 +3727,7 @@ module ietf-ospf {
     }
 
     description
-      "This notification is sent when neighbor
+      "This notification is sent when aa neighbor
        state change is detected.";
   }
 
@@ -3779,7 +3746,7 @@ module ietf-ospf {
       units seconds;
       description
         "Remaining time in current OSPF graceful restart
-         interval, if the router is acting as a restart
+         interval when the router is acting as a restart
          helper for the neighbor.";
     }
 
@@ -3825,7 +3792,7 @@ module ietf-ospf {
     description
       "This notification is sent when the number of LSAs
        in the router's link state database has exceeded
-       ninety percent of the ext-lsdb-limit.";
+       ninety percent of the AS-external limit (ext-lsdb-limit).";
   }
 
   notification lsdb-overflow {
@@ -3840,8 +3807,8 @@ module ietf-ospf {
 
     description
       "This notification is sent when the number of LSAs
-       in the router's link state database has exceeded
-       ext-lsdb-limit.";
+       in the router's link state database has exceeded the
+       AS-external limit (ext-lsdb-limit).";
   }
 
   notification nssa-translator-status-change {
