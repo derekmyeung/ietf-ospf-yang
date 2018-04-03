@@ -80,7 +80,7 @@ module ietf-ospf {
       for example route maps or route policies.
 
       This YANG model conforms to the Network Management
-      Datastore Architecture (NDMA) as described in RFC XXXX.
+      Datastore Architecture (NDMA) as described in RFC 8242.
 
       Copyright (c) 2018 IETF Trust and the persons identified as
       authors of the code.  All rights reserved.
@@ -95,7 +95,7 @@ module ietf-ospf {
        This version of this YANG module is part of RFC XXXX;
        see the RFC itself for full legal notices.";
 
-  revision 2018-03-03 {
+  revision 2018-04-03 {
     description
       "Initial revision.";
     reference
