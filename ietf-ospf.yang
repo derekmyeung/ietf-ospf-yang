@@ -158,7 +158,7 @@ module ietf-ospf {
     description
       "Graceful OSPF Restart as defined in RFC 3623 and
        RFC 5187.";
-    reference "RFC 3630 - Graceful OSPF Restart
+    reference "RFC 3623 - Graceful OSPF Restart
                RFC 5187 - OSPFv3 Graceful Restart";
   }
 
