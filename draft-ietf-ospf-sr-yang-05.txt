@@ -5,14 +5,14 @@
 Internet                                                        D. Yeung
 Internet-Draft                                                    Arrcus
 Intended status: Informational                                     Y. Qu
-Expires: December 27, 2018                                        Huawei
+Expires: January 2, 2019                                          Huawei
                                                                 J. Zhang
                                                         Juniper Networks
                                                                  I. Chen
                                                            Jabil Circuit
                                                                A. Lindem
                                                            Cisco Systems
-                                                           June 25, 2018
+                                                            July 1, 2018
 
 
          Yang Data Model for OSPF SR (Segment Routing) Protocol
@@ -38,7 +38,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on December 27, 2018.
+   This Internet-Draft will expire on January 2, 2019.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Yeung, et al.           Expires December 27, 2018               [Page 1]
+Yeung, et al.            Expires January 2, 2019                [Page 1]
 
-Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
+Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      July 2018
 
 
    to this document.  Code Components extracted from this document must
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Yeung, et al.           Expires December 27, 2018               [Page 2]
+Yeung, et al.            Expires January 2, 2019                [Page 2]
 
-Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
+Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      July 2018
 
 
    routing configuration independent of any specific routing protocol
@@ -165,9 +165,9 @@ Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
 
 
 
-Yeung, et al.           Expires December 27, 2018               [Page 3]
+Yeung, et al.            Expires January 2, 2019                [Page 3]
 
-Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
+Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      July 2018
 
 
             /ospf:ospfv2/ospf:ospfv2/ospf:body/ospf:opaque
@@ -221,9 +221,9 @@ Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
 
 
 
-Yeung, et al.           Expires December 27, 2018               [Page 4]
+Yeung, et al.            Expires January 2, 2019                [Page 4]
 
-Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
+Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      July 2018
 
 
       |     +--ro flags?                 bits
@@ -277,9 +277,9 @@ Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
 
 
 
-Yeung, et al.           Expires December 27, 2018               [Page 5]
+Yeung, et al.            Expires January 2, 2019                [Page 5]
 
-Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
+Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      July 2018
 
 
       +--ro sr-algorithm-tlv
@@ -333,9 +333,9 @@ Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
 
 
 
-Yeung, et al.           Expires December 27, 2018               [Page 6]
+Yeung, et al.            Expires January 2, 2019                [Page 6]
 
-Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
+Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      July 2018
 
 
          +--ro preference?   uint8
@@ -389,9 +389,9 @@ Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
 
 
 
-Yeung, et al.           Expires December 27, 2018               [Page 7]
+Yeung, et al.            Expires January 2, 2019                [Page 7]
 
-Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
+Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      July 2018
 
 
          Author:   Ing-Wher Chen
@@ -445,9 +445,9 @@ Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
 
 
 
-Yeung, et al.           Expires December 27, 2018               [Page 8]
+Yeung, et al.            Expires January 2, 2019                [Page 8]
 
-Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
+Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      July 2018
 
 
      revision 2017-07-02 {
@@ -501,9 +501,9 @@ Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
 
 
 
-Yeung, et al.           Expires December 27, 2018               [Page 9]
+Yeung, et al.            Expires January 2, 2019                [Page 9]
 
-Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
+Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      July 2018
 
 
           * Editorial changes.";
@@ -557,9 +557,9 @@ Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
 
 
 
-Yeung, et al.           Expires December 27, 2018              [Page 10]
+Yeung, et al.            Expires January 2, 2019               [Page 10]
 
-Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
+Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      July 2018
 
 
                  position 2;
@@ -613,9 +613,9 @@ Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
 
 
 
-Yeung, et al.           Expires December 27, 2018              [Page 11]
+Yeung, et al.            Expires January 2, 2019               [Page 11]
 
-Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
+Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      July 2018
 
 
              description "The number of prefixes covered by the
@@ -669,9 +669,9 @@ Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
 
 
 
-Yeung, et al.           Expires December 27, 2018              [Page 12]
+Yeung, et al.            Expires January 2, 2019               [Page 12]
 
-Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
+Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      July 2018
 
 
        }
@@ -725,9 +725,9 @@ Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
 
 
 
-Yeung, et al.           Expires December 27, 2018              [Page 13]
+Yeung, et al.            Expires January 2, 2019               [Page 13]
 
-Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
+Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      July 2018
 
 
          uses sr-cmn:srgb-cfg;
@@ -781,9 +781,9 @@ Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
 
 
 
-Yeung, et al.           Expires December 27, 2018              [Page 14]
+Yeung, et al.            Expires January 2, 2019               [Page 14]
 
-Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
+Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      July 2018
 
 
      augment "/rt:routing/"
@@ -837,9 +837,9 @@ Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
 
 
 
-Yeung, et al.           Expires December 27, 2018              [Page 15]
+Yeung, et al.            Expires January 2, 2019               [Page 15]
 
-Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
+Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      July 2018
 
 
            "This augmentation is only valid for OSPFv2.";
@@ -893,9 +893,9 @@ Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
 
 
 
-Yeung, et al.           Expires December 27, 2018              [Page 16]
+Yeung, et al.            Expires January 2, 2019               [Page 16]
 
-Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
+Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      July 2018
 
 
                  description
@@ -949,9 +949,9 @@ Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
 
 
 
-Yeung, et al.           Expires December 27, 2018              [Page 17]
+Yeung, et al.            Expires January 2, 2019               [Page 17]
 
-Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
+Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      July 2018
 
 
                  position 3;
@@ -1005,9 +1005,9 @@ Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
 
 
 
-Yeung, et al.           Expires December 27, 2018              [Page 18]
+Yeung, et al.            Expires January 2, 2019               [Page 18]
 
-Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
+Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      July 2018
 
 
        uses extended-prefix-range-tlvs;
@@ -1061,9 +1061,9 @@ Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
 
 
 
-Yeung, et al.           Expires December 27, 2018              [Page 19]
+Yeung, et al.            Expires January 2, 2019               [Page 19]
 
-Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
+Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      July 2018
 
 
        uses srms-preference-tlv;
@@ -1111,15 +1111,15 @@ Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
    [I-D.ietf-spring-sr-yang]
               Litkowski, S., Qu, Y., Sarkar, P., and J. Tantsura, "YANG
               Data Model for Segment Routing", draft-ietf-spring-sr-
-              yang-08 (work in progress), December 2017.
+              yang-09 (work in progress), June 2018.
 
 
 
 
 
-Yeung, et al.           Expires December 27, 2018              [Page 20]
+Yeung, et al.            Expires January 2, 2019               [Page 20]
 
-Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
+Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      July 2018
 
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
@@ -1173,9 +1173,9 @@ Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
 
 
 
-Yeung, et al.           Expires December 27, 2018              [Page 21]
+Yeung, et al.            Expires January 2, 2019               [Page 21]
 
-Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
+Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      July 2018
 
 
 6.2.  Informative References
@@ -1229,9 +1229,9 @@ Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
 
 
 
-Yeung, et al.           Expires December 27, 2018              [Page 22]
+Yeung, et al.            Expires January 2, 2019               [Page 22]
 
-Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
+Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      July 2018
 
 
 Appendix A.  Contributors' Addreses
@@ -1285,9 +1285,9 @@ Authors' Addresses
 
 
 
-Yeung, et al.           Expires December 27, 2018              [Page 23]
+Yeung, et al.            Expires January 2, 2019               [Page 23]
 
-Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
+Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      July 2018
 
 
    Acee Lindem
@@ -1341,4 +1341,4 @@ Internet-Draft  OSPF SR (Segment Routing) Yang Data Model      June 2018
 
 
 
-Yeung, et al.           Expires December 27, 2018              [Page 24]
+Yeung, et al.            Expires January 2, 2019               [Page 24]
