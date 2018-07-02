@@ -1101,7 +1101,7 @@ module: ietf-ospf
   <t>
     <figure>
       <artwork><![CDATA[
-<CODE BEGINS> file "ietf-ospf@2018-04-03.yang"
+<CODE BEGINS> file "ietf-ospf@2018-07-02.yang"
 module ietf-ospf {
   yang-version 1.1;
   namespace "urn:ietf:params:xml:ns:yang:ietf-ospf";
@@ -1199,7 +1199,7 @@ module ietf-ospf {
        This version of this YANG module is part of RFC XXXX;
        see the RFC itself for full legal notices.";
 
-  revision 2018-04-03 {
+  revision 2018-07-02 {
     description
       "Initial revision.";
     reference
@@ -1506,6 +1506,12 @@ module ietf-ospf {
       "OSPFv2 AS-Scoped Opaque LSA - Type 11";
   }
 
+  identity ospfv2-unknown-lsa-type {
+    base ospfv2-lsa-type;
+    description
+      "OSPFv2 Unknown LSA type";
+  }
+
   identity ospfv3-lsa-type {
     base ospf-lsa-type;
     description
@@ -1577,6 +1583,12 @@ module ietf-ospf {
     description
       "OSPFv3 Router Information LSA - Types 0x800C,
        0xA00C, and 0xC00C";
+  }
+
+  identity ospfv3-unknown-lsa-type {
+    base ospfv3-lsa-type;
+    description
+      "OSPFv3 Unknown LSA type";
   }
 
   identity lsa-log-reason {
@@ -1911,6 +1923,38 @@ module ietf-ospf {
     }
   }
 
+  grouping ospf-router-lsa-flags {
+    leaf flags {
+      type bits {
+        bit V {
+          description
+            "When set, the router is an endpoint of one or
+               more virtual links.";
+        }
+        bit E {
+          description
+            "When set, the router is an AS Boundary Router
+               (ASBR).";
+        }
+        bit B {
+          description
+            "When set, the router is an Area Border
+               Router (ABR).";
+        }
+        bit Nt {
+          description
+            "When set, the router is an NSSA border router
+               that is unconditionally translating NSSA LSAs
+               into AS-external LSAs.";
+        }
+      }
+      description "Router LSA Flags.";
+    }
+    description
+      "Router LSA Flags - Currently common for OSPFv2 and
+       OSPFv3 but it may diverge with future augmentations.";
+  }
+
   grouping ospfv2-router-link {
     description "OSPFv2 router link.";
     leaf link-id {
@@ -1943,32 +1987,7 @@ module ietf-ospf {
       }
       description
         "Router LSA.";
-      leaf flags {
-        type bits {
-          bit V {
-            description
-              "When set, the router is an endpoint of one or
-               more virtual links.";
-          }
-          bit E {
-            description
-              "When set, the router is an AS Boundary Router
-               (ASBR).";
-          }
-          bit B {
-            description
-              "When set, the router is an Area Border
-               Router (ABR).";
-          }
-          bit Nt {
-            description
-              "When set, the router is an NSSA border router
-               that is unconditionally translating NSSA LSAs
-               into AS-external LSAs.";
-          }
-        }
-        description "Flags.";
-      }
+      uses ospf-router-lsa-flags;
       leaf num-of-links {
         type uint16;
         description "Number of links in Router LSA.";
@@ -2371,8 +2390,15 @@ module ietf-ospf {
     }
 
     leaf referenced-ls-type {
-      type uint16;
+      type identityref {
+        base ospf:ospfv3-lsa-type;
+      }
       description "Referenced Link State type.";
+    }
+    leaf unknown-referenced-ls-type {
+      type uint16;
+      description
+        "Value for an unknown Referenced Link State type.";
     }
 
     uses ospfv3-lsa-prefix;
@@ -2389,7 +2415,7 @@ module ietf-ospf {
         "Route tag.";
     }
     leaf referenced-link-state-id {
-      type uint32;
+      type yang:dotted-quad;
       description
         "Referenced Link State ID.";
     }
@@ -2404,34 +2430,7 @@ module ietf-ospf {
           "Only applies to Router LSAs.";
       }
       description "Router LSA.";
-      leaf flags {
-        type bits {
-          bit V {
-            description
-              "When set, the router is an endpoint of one or
-               more virtual links.";
-          }
-          bit E {
-            description
-              "When set, the router is an AS Boundary Router
-               (ASBR).";
-          }
-          bit B {
-            description
-              "When set, the router is an Area Border
-               Router (ABR).";
-          }
-          bit Nt {
-            description
-              "When set, the router is an NSSA border router
-               that is unconditionally translating NSSA LSAs
-               into AS-external LSAs.";
-          }
-        }
-        mandatory true;
-        description "Router LSA flags.";
-      }
-
+      uses ospf-router-lsa-flags;
       uses ospfv3-lsa-options;
 
       container links {
@@ -2578,16 +2577,23 @@ module ietf-ospf {
       description "Intra-Area-Prefix LSA.";
 
       leaf referenced-ls-type {
-        type uint16;
+        type identityref {
+          base ospf:ospfv3-lsa-type;
+        }
         description "Referenced Link State type.";
       }
+      leaf unknown-referenced-ls-type {
+        type uint16;
+        description
+          "Value for an unknown Referenced Link State type.";
+      }
       leaf referenced-link-state-id {
-        type uint32;
+        type yang:dotted-quad;
         description
           "Referenced Link State ID.";
       }
       leaf referenced-adv-router {
-        type inet:ipv4-address;
+        type rt-types:router-id;
         description
           "Referenced Advertising Router.";
       }
@@ -2645,7 +2651,7 @@ module ietf-ospf {
       description "LSA type";
     }
     leaf adv-router {
-      type yang:dotted-quad;
+      type rt-types:router-id;
       mandatory true;
       description "LSA advertising router.";
     }
@@ -2814,7 +2820,7 @@ module ietf-ospf {
         "Link-State ID.";
     }
     leaf adv-router {
-      type inet:ipv4-address;
+      type rt-types:router-id;
       description
         "Advertising router.";
     }
@@ -4218,7 +4224,7 @@ module ietf-ospf {
       description "Link-State ID.";
     }
     leaf adv-router {
-      type yang:dotted-quad;
+      type rt-types:router-id;
       description
         "LSA advertising router.";
     }
