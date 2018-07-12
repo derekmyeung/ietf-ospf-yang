@@ -1886,6 +1886,192 @@ module ietf-ospf {
     }
   }
 
+  grouping instance-fast-reroute-state {
+    description "IPFRR state data grouping";
+
+    container protected-routes {
+      config false;
+      description "Instance protection statistics";
+
+      list af-stats {
+        key "af prefix alternate";
+        description "Per AF protected prefix information";
+
+        leaf af {
+          type iana-rt-types:address-family;
+          description
+            "Address-family";
+        }
+        leaf prefix {
+          type string;
+          description
+            "Protected prefix.";
+        }
+        leaf alternate {
+          type string;
+          description
+            "Alternate nexthop for the prefix.";
+        }
+        leaf alternate-type {
+          type enumeration {
+            enum equal-cost {
+              description
+                "ECMP alternate.";
+            }
+            enum lfa {
+              description
+                "LFA alternate.";
+            }
+            enum remote-lfa {
+              description
+                "Remote LFA alternate.";
+            }
+            enum tunnel {
+              description
+                "Tunnel based alternate
+                 (like RSVP-TE or GRE).";
+            }
+            enum ti-lfa {
+              description
+                "TI-LFA alternate.";
+            }
+            enum mrt {
+              description
+                "MRT alternate.";
+            }
+            enum other {
+              description
+                "Unknown alternate type.";
+            }
+          }
+          description
+            "Type of alternate.";
+        }
+        leaf best {
+          type boolean;
+          description
+            "Indicates if the alternate is the preferred.";
+        }
+        leaf non-best-reason {
+          type string;
+          description
+            "Information field to describe why the alternate
+             is not best.";
+        }
+        leaf protection-available {
+          type bits {
+            bit node-protect {
+              position 0;
+              description
+                "Node protection available.";
+            }
+            bit link-protect {
+              position 1;
+              description
+                "Link protection available.";
+            }
+            bit srlg-protect {
+              position 2;
+              description
+                "SRLG protection available.";
+            }
+            bit downstream-protect {
+              position 3;
+              description
+                "Downstream protection available.";
+            }
+            bit other {
+              position 4;
+              description
+                "Other protection available.";
+            }
+          }
+          description "Protection provided by the alternate.";
+        }
+        leaf alternate-metric1 {
+          type uint32;
+          description
+            "Metric from Point of Local Repair (PLR) to
+             destination through the alternate path.";
+        }
+        leaf alternate-metric2 {
+          type uint32;
+          description
+            "Metric from PLR to the alternate node";
+        }
+        leaf alternate-metric3 {
+          type uint32;
+          description
+            "Metric from alternate node to the destination";
+        }
+      }
+    }
+
+    container unprotected-routes {
+      config false;
+      description "List of prefixes that are not protected";
+
+      list af-stats {
+        key "af prefix";
+        description "Per AF unprotected prefix statistics.";
+
+        leaf af {
+          type iana-rt-types:address-family;
+
+          description "Address-family";
+        }
+        leaf prefix {
+          type string;
+          description "Unprotected prefix.";
+        }
+      }
+    }
+
+    list protection-statistics {
+      key frr-protection-method;
+      config false;
+      description "List protection method statistics";
+
+      leaf frr-protection-method {
+        type string;
+        description "Protection method used.";
+      }
+      list af-stats {
+        key af;
+        description "Per AF protection statistics.";
+
+        leaf af {
+          type iana-rt-types:address-family;
+          description "Address-family";
+        }
+        leaf total-routes {
+          type uint32;
+          description "Total prefixes.";
+        }
+        leaf unprotected-routes {
+          type uint32;
+          description
+            "Total prefixes that are not protected.";
+        }
+        leaf protected-routes {
+          type uint32;
+          description
+            "Total prefixes that are protected.";
+        }
+        leaf linkprotected-routes {
+          type uint32;
+          description
+            "Total prefixes that are link protected.";
+        }
+        leaf nodeprotected-routes {
+          type uint32;
+          description
+            "Total prefixes that are node protected.";
+        }
+      }
+    }
+  }
+
   grouping interface-fast-reroute-config {
     description
       "This group defines interface configuration of IP-FRR.";
@@ -2593,7 +2779,7 @@ module ietf-ospf {
     }
   }
 
-  grouping ietf-spf-delay-config {
+  grouping ietf-spf-delay {
     leaf initial-delay {
       type uint16;
       units msec;
@@ -2626,11 +2812,6 @@ module ietf-ospf {
         "Duration used to learn all the IGP events
          related to a single component failure (milliseconds).";
     }
-    description
-      "Grouping for IETF SPF delay configuration.";
-  }
-
-  grouping ietf-spf-delay-state {
     leaf current-state {
       type enumeration {
         enum "quiet" {
@@ -2680,7 +2861,7 @@ module ietf-ospf {
         "Time of last SPF computation.";
       }
     description
-      "Grouping for IETF SPF backoff operational states.";
+      "Grouping for IETF SPF delay configuration and state";
   }
 
   grouping node-tag-config {
@@ -2855,7 +3036,7 @@ module ietf-ospf {
       }
       container ietf-spf-delay {
         if-feature ietf-spf-delay;
-        uses ietf-spf-delay-config;
+        uses ietf-spf-delay;
         description
           "IETF SPF delay algorithm configuration.";
       }
@@ -2923,6 +3104,7 @@ module ietf-ospf {
       }
     }
     uses instance-fast-reroute-config;
+    uses instance-fast-reroute-state;
     uses node-tag-config;
   }
 
@@ -2944,14 +3126,6 @@ module ietf-ospf {
       config false;
       description "Per-instance statistics";
       uses instance-stat;
-    }
-
-    container ietf-spf-delay {
-      if-feature ietf-spf-delay;
-      config false;
-      uses ietf-spf-delay-state;
-      description
-        "IETF SPF delay state.";
     }
 
     container database {
