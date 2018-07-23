@@ -22,13 +22,13 @@ module ietf-ospf {
 
   import ietf-routing-types {
     prefix "rt-types";
-    reference "RFC 8291 - Common YANG Data Types for the
+    reference "RFC 8294 - Common YANG Data Types for the
                Routing Area";
   }
 
   import iana-routing-types {
     prefix "iana-rt-types";
-    reference "RFC 8291 - Common YANG Data Types for the
+    reference "RFC 8294 - Common YANG Data Types for the
                Routing Area";
   }
 
@@ -95,7 +95,7 @@ module ietf-ospf {
        This version of this YANG module is part of RFC XXXX;
        see the RFC itself for full legal notices.";
 
-  revision 2018-07-02 {
+  revision 2018-07-23 {
     description
       "Initial revision.";
     reference
