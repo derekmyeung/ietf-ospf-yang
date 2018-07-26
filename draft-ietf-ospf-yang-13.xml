@@ -97,9 +97,9 @@
     <!ENTITY RFC8349 PUBLIC '' 
       'http://xml.resource.org/public/rfc/bibxml/reference.RFC.8349.xml'>
     <!ENTITY I-D.ietf-bfd-yang PUBLIC '' 
-      'http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.draft-ietf-bfd-yang-13.xml'>
+      'http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.draft-ietf-bfd-yang-16.xml'>
     <!ENTITY I-D.ietf-rtgwg-backoff-algo PUBLIC '' 
-      'http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.draft-ietf-rtgwg-backoff-algo-10.xml'>
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.8405.xml'>
     ]>
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 <?rfc strict="no" ?>
@@ -110,7 +110,7 @@
 <?rfc rfcedstyle="yes" ?>
 <?rfc subcompact="no" ?>
 
-<rfc category="std" docName="draft-ietf-ospf-yang-12" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-ospf-yang-13" ipr="trust200902">
   <!-- category values: std, bcp, info, exp, and historic
      ipr values: full3667, noModification3667, noDerivatives3667
      you can add the attributes updates="NNNN" and obsoletes="NNNN" 
@@ -423,6 +423,12 @@ module: ietf-ospf
        |     +--rw long-delay?      uint16
        |     +--rw hold-down?       uint16
        |     +--rw time-to-learn?   uint16
+       |     +--ro current-state?             enumeration
+       |     +--ro remaining-time-to-learn?   uint16
+       |     +--ro remaining-hold-down?       uint16
+       |     +--ro last-event-received?       yang:timestamp
+       |     +--ro next-spf-time?             yang:timestamp
+       |     +--ro last-spf-time?             yang:timestamp
        +--rw database-control
        |  +--rw max-lsa?   uint32 {max-lsa}?
        +--rw stub-router {stub-router}?
@@ -437,6 +443,31 @@ module: ietf-ospf
        |     +--rw igp-sync?   boolean {ldp-igp-sync}?
        +--rw fast-reroute {fast-reroute}?
        |  +--rw lfa {lfa}?
+       +--ro protected-routes
+       |  +--ro af-stats* [af prefix alternate]
+       |     +--ro af                    iana-rt-types:address-family
+       |     +--ro prefix                string
+       |     +--ro alternate             string
+       |     +--ro alternate-type?       enumeration
+       |     +--ro best?                 boolean
+       |     +--ro non-best-reason?      string
+       |     +--ro protection-available? bits
+       |     +--ro alternate-metric1?    uint32
+       |     +--ro alternate-metric2?    uint32
+       |     +--ro alternate-metric3?    uint32
+       +--ro unprotected-routes
+       |  +--ro af-stats* [af prefix]
+       |     +--ro af        iana-rt-types:address-family
+       |     +--ro prefix    string
+       +--ro protection-statistics* [frr-protection-method]
+       |  +--ro frr-protection-method  string
+       |  +--ro af-stats* [af]
+       |     +--ro af                    iana-rt-types:address-family
+       |     +--ro total-routes?         uint32
+       |     +--ro unprotected-routes?   uint32
+       |     +--ro protected-routes?     uint32
+       |     +--ro linkprotected-routes? uint32
+       |     +--ro nodeprotected-routes? uint32
        +--rw node-tags {node-tag}?
        |  +--rw node-tag* [tag]
        |     +--rw tag    uint32
@@ -461,18 +492,6 @@ module: ietf-ospf
        |        +--ro lsa-type?        uint16
        |        +--ro lsa-count?       yang:gauge32
        |        +--ro lsa-cksum-sum?   int32
-       +--ro ietf-spf-delay
-       |  +--ro initial-delay?             uint16
-       |  +--ro short-delay?               uint16
-       |  +--ro long-delay?                uint16
-       |  +--ro hold-down?                 uint16
-       |  +--ro time-to-learn?             uint16
-       |  +--ro current-state?             enumeration
-       |  +--ro remaining-time-to-learn?   uint16
-       |  +--ro remaining-hold-down?       uint16
-       |  +--ro last-event-received?       yang:timestamp
-       |  +--ro next-spf-time?             yang:timestamp
-       |  +--ro last-spf-time?             yang:timestamp
        +--ro database
        |  +--ro as-scope-lsa-type* [lsa-type]
        |     +--ro as-scope-lsas
@@ -1096,12 +1115,12 @@ module: ietf-ospf
      <xref target="RFC6860"/>, <xref target="RFC6987"/>, <xref target="RFC7490"/>, 
      <xref target="RFC7684"/>, <xref target="RFC7770"/>, <xref target="RFC7777"/>, 
      <xref target="RFC8294"/>, <xref target="RFC8343"/>, <xref target="RFC8349"/>, 
-     <xref target="I-D.ietf-bfd-yang"/>, and <xref target="I-D.ietf-rtgwg-backoff-algo"/>.
+     <xref target="I-D.ietf-bfd-yang"/>, and <xref target="RFC8405"/>.
   </t>
   <t>
     <figure>
       <artwork><![CDATA[
-<CODE BEGINS> file "ietf-ospf@2018-07-23.yang"
+<CODE BEGINS> file "ietf-ospf@2018-07-27.yang"
 module ietf-ospf {
   yang-version 1.1;
   namespace "urn:ietf:params:xml:ns:yang:ietf-ospf";
@@ -1199,7 +1218,7 @@ module ietf-ospf {
        This version of this YANG module is part of RFC XXXX;
        see the RFC itself for full legal notices.";
 
-  revision 2018-07-23 {
+  revision 2018-07-27 {
     description
       "Initial revision.";
     reference
