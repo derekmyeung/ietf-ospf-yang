@@ -45,8 +45,9 @@ module ietf-ospf {
 
   import ietf-bfd-types {
     prefix "bfd-types";
-    reference "RFC XXXX - YANG Data Model for Bidirectional
-      Forwarding Detection (BFD)";
+    reference "RFC YYYY - YANG Data Model for Bidirectional
+      Forwarding Detection (BFD). Please replace YYYY with
+      published RFC number for draft-ietf-bfd-yang-17.";
   }
 
   organization
@@ -95,7 +96,7 @@ module ietf-ospf {
        This version of this YANG module is part of RFC XXXX;
        see the RFC itself for full legal notices.";
 
-  revision 2018-07-27 {
+  revision 2018-08-29 {
     description
       "Initial revision.";
     reference
@@ -260,7 +261,7 @@ module ietf-ospf {
   feature ietf-spf-delay {
     description
       "Support for IETF SPF delay algorithm.";
-    reference "RFC XXXX - SPF Back-off algorithm for link
+    reference "RFC 8405 - SPF Back-off algorithm for link
                state IGPs";
   }
 
@@ -697,27 +698,27 @@ module ietf-ospf {
       enum hello {
         value "1";
         description
-          "OSPF hello packet.";
+          "OSPF Hello packet.";
       }
       enum database-descripton {
         value "2";
         description
-          "OSPF database description packet.";
+          "OSPF Database Description packet.";
       }
       enum link-state-request {
         value "3";
         description
-          "OSPF link state request packet.";
+          "OSPF Link State Request packet.";
       }
       enum link-state-update {
         value "4";
         description
-          "OSPF link state update packet.";
+          "OSPF Link State Update packet.";
       }
       enum link-state-ack {
         value "5";
         description
-          "OSPF link state acknowlegement packet.";
+          "OSPF Link State Acknowlegement packet.";
       }
     }
     description
@@ -778,7 +779,7 @@ module ietf-ospf {
 
   grouping tlv {
     description
-      "TLV";
+      "Type-Length-Value (TLV)";
     leaf type {
       type uint16;
       description "TLV type.";
@@ -1575,10 +1576,10 @@ module ietf-ospf {
          tuple with the sequence number differentiating
          LSA instances.";
     container header {
-      must "(derived-from-or-self(type, "
+      must "(derived-from(type, "
          + "'ospfv2-opaque-lsa-type') and "
          + "opaque-id and opaque-type) or "
-         + "(not(derived-from-or-self(type, "
+         + "(not(derived-from(type, "
          + "'ospfv2-opaque-lsa-type')) "
          + "and not(opaque-id) and not(opaque-type))" {
         description
@@ -1890,6 +1891,7 @@ module ietf-ospf {
     description "IPFRR state data grouping";
 
     container protected-routes {
+      if-feature fast-reroute;
       config false;
       description "Instance protection statistics";
 
@@ -2008,6 +2010,7 @@ module ietf-ospf {
     }
 
     container unprotected-routes {
+      if-feature fast-reroute;
       config false;
       description "List of prefixes that are not protected";
 
@@ -2523,11 +2526,11 @@ module ietf-ospf {
     }
     container database {
       config false;
-      description "Link-scope LSA database.";
+      description "Link-scope Link State Database.";
       list link-scope-lsa-type {
         key "lsa-type";
         description
-          "List OSPF link-scope LSA databases.";
+          "List OSPF link-scope LSAs.";
         leaf lsa-type {
           type uint16;
           description "OSPF link-scope LSA type.";
@@ -2696,10 +2699,10 @@ module ietf-ospf {
 
     container database {
       config false;
-      description "Area-scope LSA database.";
+      description "Area-scope Link State Database.";
       list area-scope-lsa-type {
         key "lsa-type";
-        description "List OSPF area-scope LSA databases.";
+        description "List OSPF area-scope LSAs.";
         leaf lsa-type {
           type uint16;
           description "OSPF area-scope LSA type.";
@@ -2961,7 +2964,7 @@ module ietf-ospf {
       description
         "Graceful restart config state.";
       reference "RFC 3623 - OSPF Graceful Restart
-                 RFC 5178 - OSPFv3 Graceful Restart";
+                 RFC 5187 - OSPFv3 Graceful Restart";
       leaf enable {
         type boolean;
         description
@@ -3130,10 +3133,10 @@ module ietf-ospf {
 
     container database {
       config false;
-      description "AS-scope LSA database.";
+      description "AS-scope Link State Database.";
       list as-scope-lsa-type {
         key "lsa-type";
-        description "List OSPF AS-scope LSA databases.";
+        description "List OSPF AS-scope LSAs.";
         leaf lsa-type {
           type uint16;
           description "OSPF AS scope LSA type.";
@@ -3703,8 +3706,8 @@ module ietf-ospf {
 
   rpc clear-database {
     description
-      "This RPC request clears a particular OSPF link-state
-       database. If the operation fails for OSPF internal reason,
+      "This RPC request clears a particular OSPF Link State
+       Database. If the operation fails for OSPF internal reason,
        then error-tag and error-app-tag should be set to a
        meaningful value.";
     input {
@@ -3715,7 +3718,7 @@ module ietf-ospf {
         }
         mandatory "true";
         description
-          "OSPF protocol instance whose link-state database is to
+          "OSPF protocol instance whose Link State Database is to
            be cleared.
 
            If the referenced OSPF instance doesn't exist, then
@@ -3966,12 +3969,12 @@ module ietf-ospf {
       type uint32;
       description
         "The maximum number of non-default AS-external LSAs
-         entries that can be stored in the link state database.";
+         entries that can be stored in the Link State Database.";
     }
 
     description
       "This notification is sent when the number of LSAs
-       in the router's link state database has exceeded
+       in the router's Link State Database has exceeded
        ninety percent of the AS-external limit (ext-lsdb-limit).";
   }
 
@@ -3982,12 +3985,12 @@ module ietf-ospf {
       type uint32;
       description
         "The maximum number of non-default AS-external LSAs
-         entries that can be stored in the link state database.";
+         entries that can be stored in the Link State Database.";
     }
 
     description
       "This notification is sent when the number of LSAs
-       in the router's link state database has exceeded the
+       in the router's Link State Database has exceeded the
        AS-external limit (ext-lsdb-limit).";
   }
 
