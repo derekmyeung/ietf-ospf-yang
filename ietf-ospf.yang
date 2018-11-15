@@ -70,7 +70,7 @@ module ietf-ospf {
      Author:   Dean Bogdanovic
                <mailto:ivandean@gmail.com>
      Author:   Kiran Agrahara Sreenivasa
-               <mailto:kkoushik@cisco.com>";
+               <mailto:kk@employees.org";
 
   description
      "This YANG module defines the generic configuration and
