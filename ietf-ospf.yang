@@ -2196,7 +2196,11 @@ module ietf-ospf {
         range "1..65535";
       }
       description
-        "Interval between hello packets (seconds).";
+        "Interval between hello packets (seconds). It must
+         be the same for all routers on the same network. 
+         Different networks, implementations, and deployments
+         will use different hello-intervals. A sample value
+         for a LAN network would be 10 seconds.";
     }
 
     leaf dead-interval {
@@ -2212,7 +2216,9 @@ module ietf-ospf {
       }
       description
         "Interval after which a neighbor is declared down
-         (seconds) if hello packets are not received.";
+         (seconds) if hello packets are not received. It is
+         typically 3 or 4 times the hello-interval. A typical 
+         value for LAN networks is 40 seconds.";
     }
 
     leaf retransmit-interval {
@@ -2222,7 +2228,10 @@ module ietf-ospf {
       units seconds;
       description
         "Interval between retransmitting unacknowledged Link
-         State Advertisements (LSAs) (seconds).";
+         State Advertisements (LSAs) (seconds). This should
+         be well over the round-trip transmit delay for 
+         any two routers on the network. A sample value 
+         would be 5 seconds.";
     }
 
     leaf transmit-delay {
@@ -2232,7 +2241,9 @@ module ietf-ospf {
       units seconds;
       description
         "Estimated time needed to transmit Link State Update
-         (LSU) packets on the interface (seconds).";
+         (LSU) packets on the interface (seconds). LSAs have
+         their age incremented by this amount on advertised 
+         on the interface. A sample value would be 1 second.";
     }
 
     leaf lls {
@@ -2355,7 +2366,11 @@ module ietf-ospf {
     leaf priority {
       type uint8;
       description
-        "Configure OSPF router priority.";
+        "Configure OSPF router priority. On multi-access network
+         this value is for Designated Router (DR) election. The 
+         priority is ignored on other interface types. A value
+         of 0 indicates the router is not eligible to become
+         Designated Router or Backup Designated Router (BDR).";
     }
 
     container multi-areas {
@@ -2396,7 +2411,11 @@ module ietf-ospf {
           type uint16 {
             range "1..65535";
           }
-          description "Neighbor cost.";
+          description 
+            "Neighbor cost. Different implementations have different
+             default costs with some defaulting to a cost inversely
+             proportioal to the interface speed. Others will default
+             to 1 equating the cost to a hop count." ;
         }
         leaf poll-interval {
           type uint16 {
@@ -2406,7 +2425,9 @@ module ietf-ospf {
           description
             "Neighbor poll interval (seconds) for sending OSPF
              hello packets to discover the neighbor on NBMA
-             networks.";
+             networks. This interval dictates the granularity for
+             discovery of new neighbors. A sample would be 2 minutes
+             for a legacy Packet Data Network (PDN) X.25 network.";
         }
         leaf priority {
           type uint8 {
