@@ -69,6 +69,34 @@ module ietf-ospf-sr {
 
   reference "RFC XXXX";
 
+  revision 2019-03-05 {
+    description
+      "";
+    reference
+      "RFC XXXX: A YANG Data Model for OSPF Segment Routing.";
+  }
+
+  revision 2018-06-25 {
+    description
+      "";
+    reference
+      "RFC XXXX: A YANG Data Model for OSPF Segment Routing.";
+  }
+  
+  revision 2018-03-03 {
+    description
+      "* Remove OSPF instance.";
+    reference
+      "RFC XXXX: A YANG Data Model for OSPF Segment Routing.";
+  }
+
+  revision 2017-12-28 {
+    description
+      "";
+    reference
+      "RFC XXXX: A YANG Data Model for OSPF Segment Routing.";
+  }
+
   revision 2017-07-02 {
     description
       "* Implement NMDA model.
@@ -77,14 +105,13 @@ module ietf-ospf-sr {
     reference
       "RFC XXXX: A YANG Data Model for OSPF Segment Routing.";
   }
-  
+
   revision 2017-03-12 {
     description
       "* Add p-flag in adj-sid sub-tlv.";
     reference
       "RFC XXXX: A YANG Data Model for OSPF Segment Routing.";
   }
-
   revision 2016-10-31 {
     description
       "* Update authors information.
@@ -212,6 +239,14 @@ module ietf-ospf-sr {
       description "The list of range of prefixes.";
       list extended-prefix-range-tlv {    //type=2?
         description "The range of prefixes.";
+        leaf prefix-length {
+          type uint8;
+          description "Length of prefix in bits.";
+        }
+        leaf af {
+          type uint8;
+          description "Address family for the prefix.";
+        }
         leaf range-size {
           type uint16;
           description "The number of prefixes covered by the
@@ -266,7 +301,7 @@ module ietf-ospf-sr {
   }
 
   grouping local-block-tlvs {
-    description "The SR local block TLV contains the 
+    description "The SR local block TLV contains the
                  range of labels reserved for local SIDs.";
     container local-block-tlvs {
       description "List of SRLB TLVs.";
@@ -294,13 +329,13 @@ module ietf-ospf-sr {
         description "SRMS preference TLV, vlaue from 0 to 255.";
       }
     }
-  }  
+  }
 
   /* Configuration */
   augment "/rt:routing/rt:control-plane-protocols"
-        + "/rt:control-plane-protocol/ospf:ospf/ospf:instance" {
-    when "../../rt:type = 'ospf:ospfv2' or "
-       + "../../rt:type = 'ospf:ospfv3'" {
+        + "/rt:control-plane-protocol/ospf:ospf" {
+    when "../rt:type = 'ospf:ospfv2' or "
+       + "../rt:type = 'ospf:ospfv3'" {
       description
         "This augments the OSPF routing protocol when used.";
     }
@@ -317,10 +352,10 @@ module ietf-ospf-sr {
   }
 
   augment "/rt:routing/rt:control-plane-protocols/"
-        + "rt:control-plane-protocol/ospf:ospf/ospf:instance/"
+        + "rt:control-plane-protocol/ospf:ospf/"
         + "ospf:areas/ospf:area/ospf:interfaces/ospf:interface" {
-    when "../../../../../../rt:type = 'ospf:ospfv2' or "
-       + "../../../../../../rt:type = 'ospf:ospfv3'" {
+    when "../../../../../rt:type = 'ospf:ospfv2' or "
+       + "../../../../../rt:type = 'ospf:ospfv3'" {
       description
         "This augments the OSPF interface configuration
          when used.";
@@ -333,11 +368,11 @@ module ietf-ospf-sr {
   }
 
   augment "/rt:routing/rt:control-plane-protocols/"
-        + "rt:control-plane-protocol/ospf:ospf/ospf:instance/"
+        + "rt:control-plane-protocol/ospf:ospf/"
         + "ospf:areas/ospf:area/ospf:interfaces/ospf:interface/"
         + "ospf:fast-reroute" {
-    when "../../../../../../../rt:type = 'ospf:ospfv2' or "
-       + "../../../../../../../rt:type = 'ospf:ospfv3'" {
+    when "../../../../../../rt:type = 'ospf:ospfv2' or "
+       + "../../../../../../rt:type = 'ospf:ospfv3'" {
       description
         "This augments the OSPF routing protocol when used.";
     }
@@ -360,13 +395,13 @@ module ietf-ospf-sr {
   /* Database */
   augment "/rt:routing/"
         + "rt:control-plane-protocols/rt:control-plane-protocol/"
-        + "ospf:ospf/ospf:instance/ospf:areas/ospf:area/"
+        + "ospf:ospf/ospf:areas/ospf:area/"
         + "ospf:interfaces/ospf:interface/ospf:database/"
         + "ospf:link-scope-lsa-type/ospf:link-scope-lsas/"
         + "ospf:link-scope-lsa/ospf:version/ospf:ospfv2/"
         + "ospf:ospfv2/ospf:body/ospf:opaque/"
         + "ospf:extended-prefix-tlvs/ospf:extended-prefix-tlv" {
-    when "../../../../../../../../../../../../../../../"
+    when "../../../../../../../../../../../../../../"
        + "rt:type = 'ospf:ospfv2'" {
       description
         "This augmentation is only valid for OSPFv2.";
@@ -379,13 +414,13 @@ module ietf-ospf-sr {
 
   augment "/rt:routing/"
         + "rt:control-plane-protocols/rt:control-plane-protocol/"
-        + "ospf:ospf/ospf:instance/ospf:areas/"
+        + "ospf:ospf/ospf:areas/"
         + "ospf:area/ospf:database/"
         + "ospf:area-scope-lsa-type/ospf:area-scope-lsas/"
         + "ospf:area-scope-lsa/ospf:version/ospf:ospfv2/"
         + "ospf:ospfv2/ospf:body/ospf:opaque/"
         + "ospf:extended-prefix-tlvs/ospf:extended-prefix-tlv" {
-    when "../../../../../../../../../../../../../"
+    when "../../../../../../../../../../../../"
        + "rt:type = 'ospf:ospfv2'" {
       description
         "This augmentation is only valid for OSPFv2.";
@@ -398,12 +433,12 @@ module ietf-ospf-sr {
 
   augment "/rt:routing/"
         + "rt:control-plane-protocols/rt:control-plane-protocol/"
-        + "ospf:ospf/ospf:instance/ospf:database/"
+        + "ospf:ospf/ospf:database/"
         + "ospf:as-scope-lsa-type/ospf:as-scope-lsas/"
         + "ospf:as-scope-lsa/ospf:version/ospf:ospfv2/"
         + "ospf:ospfv2/ospf:body/ospf:opaque/"
         + "ospf:extended-prefix-tlvs/ospf:extended-prefix-tlv" {
-    when "../../../../../../../../../../../"
+    when "../../../../../../../../../../"
        + "rt:type = 'ospf:ospfv2'" {
       description
         "This augmentation is only valid for OSPFv2.";
@@ -416,13 +451,13 @@ module ietf-ospf-sr {
 
   augment "/rt:routing/"
         + "rt:control-plane-protocols/rt:control-plane-protocol/"
-        + "ospf:ospf/ospf:instance/ospf:areas/"
+        + "ospf:ospf/ospf:areas/"
         + "ospf:area/ospf:database/"
         + "ospf:area-scope-lsa-type/ospf:area-scope-lsas/"
         + "ospf:area-scope-lsa/ospf:version/ospf:ospfv2/"
         + "ospf:ospfv2/ospf:body/ospf:opaque/"
         + "ospf:extended-link-tlvs/ospf:extended-link-tlv" {
-    when "../../../../../../../../../../../../../"
+    when "../../../../../../../../../../../../"
        + "rt:type = 'ospf:ospfv2'" {
       description
         "This augmentation is only valid for OSPFv2.";
@@ -536,12 +571,12 @@ module ietf-ospf-sr {
 
   augment "/rt:routing/"
         + "rt:control-plane-protocols/rt:control-plane-protocol/"
-        + "ospf:ospf/ospf:instance/ospf:areas/ospf:area/"
+        + "ospf:ospf/ospf:areas/ospf:area/"
         + "ospf:interfaces/ospf:interface/ospf:database/"
         + "ospf:link-scope-lsa-type/ospf:link-scope-lsas/"
         + "ospf:link-scope-lsa/ospf:version/ospf:ospfv2/"
         + "ospf:ospfv2/ospf:body/ospf:opaque" {
-    when "../../../../../../../../../../../../../"
+    when "../../../../../../../../../../../../"
        + "rt:type = 'ospf:ospfv2'" {
       description
         "This augmentation is only valid for OSPFv2.";
@@ -559,12 +594,12 @@ module ietf-ospf-sr {
 
   augment "/rt:routing/"
         + "rt:control-plane-protocols/rt:control-plane-protocol/"
-        + "ospf:ospf/ospf:instance/ospf:areas/"
+        + "ospf:ospf/ospf:areas/"
         + "ospf:area/ospf:database/"
         + "ospf:area-scope-lsa-type/ospf:area-scope-lsas/"
         + "ospf:area-scope-lsa/ospf:version/ospf:ospfv2/"
         + "ospf:ospfv2/ospf:body/ospf:opaque" {
-    when "../../../../../../../../../../../"
+    when "../../../../../../../../../../"
        + "rt:type = 'ospf:ospfv2'" {
       description
         "This augmentation is only valid for OSPFv2.";
@@ -582,11 +617,11 @@ module ietf-ospf-sr {
 
   augment "/rt:routing/"
         + "rt:control-plane-protocols/rt:control-plane-protocol/"
-        + "ospf:ospf/ospf:instance/ospf:database/"
+        + "ospf:ospf/ospf:database/"
         + "ospf:as-scope-lsa-type/ospf:as-scope-lsas/"
         + "ospf:as-scope-lsa/ospf:version/ospf:ospfv2/"
         + "ospf:ospfv2/ospf:body/ospf:opaque" {
-    when "../../../../../../../../../"
+    when "../../../../../../../../"
        + "rt:type = 'ospf:ospfv2'" {
       description
         "This augmentation is only valid for OSPFv2.";

@@ -22,6 +22,10 @@
       'http://xml.resource.org/public/rfc/bibxml/reference.RFC.7950.xml'>
     <!ENTITY RFC8022 PUBLIC '' 
       'http://xml.resource.org/public/rfc/bibxml/reference.RFC.8022.xml'>
+    <!ENTITY RFC8340 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.8340.xml'>
+    <!ENTITY RFC8342 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.8342.xml'>
     <!ENTITY I-D.ietf-spring-sr-yang PUBLIC '' 
       'http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-spring-sr-yang'>
     <!ENTITY I-D.ietf-ospf-yang PUBLIC '' 
@@ -167,7 +171,10 @@
 
     <abstract>
       <t>This document defines a YANG data model that can be 
-      used to configure and manage OSPF Segment Routing.</t>
+      used to configure and manage OSPF Segment Routing. The model is based on
+      YANG 1.1 as defined in RFC 7950 and conforms to the
+      Network Management Datastore Architecture (NDMA) as described
+      in RFC 8342.</t>
     </abstract>
   </front>
 
@@ -185,6 +192,8 @@
     <t>This document defines a YANG data model that can be used to configure 
     and manage OSPF Segment Routing and it is an augmentation to the OSPF YANG data model.  
     </t>
+    <t> The YANG modules in this document conform to the Network Management
+Datastore Architecture (NMDA) <xref target="RFC8342"></xref>.</t>
                
       <section title="Requirements Language">
         <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
@@ -192,7 +201,11 @@
         document are to be interpreted as described in <xref target="RFC2119"></xref>.</t>
       </section>
     </section>
-  
+    
+    <section title="Tree Diagrams">
+       <t>This document uses the graphical representation of data models
+          defined in <xref target="RFC8340"/>.</t>
+    </section>
 
   <section title="OSPF Segment Routing">
 
@@ -403,7 +416,7 @@ module: ietf-ospf-sr
   <t>
     <figure>
       <artwork><![CDATA[
-<CODE BEGINS> file "ietf-ospf-sr@2018-06-25.yang"
+<CODE BEGINS> file "ietf-ospf-sr@2019-03-05.yang"
 module ietf-ospf-sr {
   namespace "urn:ietf:params:xml:ns:yang:ietf-ospf-sr";
 
@@ -475,13 +488,20 @@ module ietf-ospf-sr {
 
   reference "RFC XXXX";
 
-  revision 2018-06-25 {
+  revision 2019-03-05 {
     description
       "";
     reference
       "RFC XXXX: A YANG Data Model for OSPF Segment Routing.";
   }
 
+  revision 2018-06-25 {
+    description
+      "";
+    reference
+      "RFC XXXX: A YANG Data Model for OSPF Segment Routing.";
+  }
+  
   revision 2018-03-03 {
     description
       "* Remove OSPF instance.";
@@ -638,6 +658,14 @@ module ietf-ospf-sr {
       description "The list of range of prefixes.";
       list extended-prefix-range-tlv {    //type=2?
         description "The range of prefixes.";
+        leaf prefix-length {
+          type uint8;
+          description "Length of prefix in bits.";
+        }
+        leaf af {
+          type uint8;
+          description "Address family for the prefix.";
+        }
         leaf range-size {
           type uint16;
           description "The number of prefixes covered by the
@@ -1090,6 +1118,8 @@ module ietf-ospf-sr {
     <references title="Informative References">
       <!-- Here we use entities that we defined at the beginning. -->
       &RFC8022;
+      &RFC8340;
+      &RFC8342;
     </references>
    <section title="Contributors' Addreses">
    <figure>
