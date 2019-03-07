@@ -327,12 +327,12 @@ module: ietf-ospf-sr
     |  +--ro sr-algorithm*   uint8
     +--ro sid-range-tlvs
     |  +--ro sid-range-tlv*
-    |     +--ro range-size?    ospf:uint24
+    |     +--ro range-size?    uint24
     |     +--ro sid-sub-tlv
     |        +--ro sid?   uint32
     +--ro local-block-tlvs
     |  +--ro local-block-tlv*
-    |     +--ro range-size?    ospf:uint24
+    |     +--ro range-size?    uint24
     |     +--ro sid-sub-tlv
     |        +--ro sid?   uint32
     +--ro srms-preference-tlv
@@ -362,12 +362,12 @@ module: ietf-ospf-sr
     |  +--ro sr-algorithm*   uint8
     +--ro sid-range-tlvs
     |  +--ro sid-range-tlv*
-    |     +--ro range-size?    ospf:uint24
+    |     +--ro range-size?    uint24
     |     +--ro sid-sub-tlv
     |        +--ro sid?   uint32
     +--ro local-block-tlvs
     |  +--ro local-block-tlv*
-    |     +--ro range-size?    ospf:uint24
+    |     +--ro range-size?    uint24
     |     +--ro sid-sub-tlv
     |        +--ro sid?   uint32
     +--ro srms-preference-tlv
@@ -397,12 +397,12 @@ module: ietf-ospf-sr
     |  +--ro sr-algorithm*   uint8
     +--ro sid-range-tlvs
     |  +--ro sid-range-tlv*
-    |     +--ro range-size?    ospf:uint24
+    |     +--ro range-size?    uint24
     |     +--ro sid-sub-tlv
     |        +--ro sid?   uint32
     +--ro local-block-tlvs
     |  +--ro local-block-tlv*
-    |     +--ro range-size?    ospf:uint24
+    |     +--ro range-size?    uint24
     |     +--ro sid-sub-tlv
     |        +--ro sid?   uint32
     +--ro srms-preference-tlv
@@ -582,6 +582,14 @@ module ietf-ospf-sr {
        computation using segment routing.";
   }
 
+  typedef uint24 {
+    type uint32 {
+      range "0 .. 16777215";
+    }
+    description
+      "24-bit unsigned integer.";
+  }
+
   /* Groupings */
   grouping sid-sub-tlv {
     description "SID/Label sub-TLV grouping.";
@@ -711,7 +719,7 @@ module ietf-ospf-sr {
       list sid-range-tlv {
         description "SID range TLV.";
         leaf range-size {
-          type ospf:uint24;
+          type uint24;
           description "The SID range.";
         }
         uses sid-sub-tlv;
@@ -727,7 +735,7 @@ module ietf-ospf-sr {
       list local-block-tlv {
         description "SRLB TLV.";
         leaf range-size {
-          type ospf:uint24;
+          type uint24;
           description "The SID range.";
         }
         uses sid-sub-tlv;
@@ -761,10 +769,10 @@ module ietf-ospf-sr {
     description
       "This augments the OSPF protocol configuration
        with segment routing.";
-    uses sr:controlplane-cfg;
+    uses sr:sr-controlplane;
     container protocol-srgb {
       if-feature sr:protocol-srgb;
-      uses sr-cmn:srgb-cfg;
+      uses sr-cmn:srgb;
       description
         "Per-protocol SRGB.";
     }
@@ -783,7 +791,7 @@ module ietf-ospf-sr {
       "This augments the OSPF protocol interface
        configuration with segment routing.";
 
-    uses sr:igp-interface-cfg;
+    uses sr:igp-interface;
   }
 
   augment "/rt:routing/rt:control-plane-protocols/"
