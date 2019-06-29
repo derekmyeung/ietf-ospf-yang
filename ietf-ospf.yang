@@ -2439,7 +2439,8 @@ module ietf-ospf {
        including virtual links and sham links.";
 
     leaf hello-interval {
-      type rt-types:timer-value-seconds16;
+      type uint16;
+      units seconds;
       description
         "Interval between hello packets (seconds). It must
          be the same for all routers on the same network.
@@ -2449,7 +2450,8 @@ module ietf-ospf {
     }
 
     leaf dead-interval {
-      type rt-types:timer-value-seconds32;
+      type uint16;
+      units seconds;
       must "../dead-interval > ../hello-interval" {
         error-message "The dead interval must be "
                     + "larger than the hello interval";
@@ -2477,7 +2479,8 @@ module ietf-ospf {
     }
 
     leaf transmit-delay {
-      type rt-types:timer-value-seconds16;
+      type uint16;
+      units seconds;
       description
         "Estimated time needed to transmit Link State Update
          (LSU) packets on the interface (seconds). LSAs have
@@ -2732,7 +2735,8 @@ module ietf-ospf {
              default to 1 equating the cost to a hop count." ;
         }
         leaf poll-interval {
-          type rt-types:timer-value-seconds16;
+	  type uint16;
+          units seconds;
           description
             "Neighbor poll interval (seconds) for sending OSPF
              hello packets to discover the neighbor on NBMA
@@ -2741,9 +2745,7 @@ module ietf-ospf {
              for a legacy Packet Data Network (PDN) X.25 network.";
         }
         leaf priority {
-          type uint8 {
-            range "1..255";
-          }
+          type uint8;
           description "Neighbor priority for DR election.";
         }
       }
@@ -2821,7 +2823,7 @@ module ietf-ospf {
                    and Hybrid networks";
     }
     leaf dead-timer {
-      type rt-types:timer-value-seconds32;
+      type rt-types:timer-value-seconds16;
       config false;
       description "This timer tracks the remaining time before
                    the neighbor is declared dead.";
@@ -3162,28 +3164,33 @@ module ietf-ospf {
 
   grouping ietf-spf-delay {
     leaf initial-delay {
-      type rt-types:timer-value-milliseconds;
+      type uint32;
+      units milliseconds;
       description
         "Delay used while in QUIET state (milliseconds).";
     }
     leaf short-delay {
-      type rt-types:timer-value-milliseconds;
+      type uint32;
+      units milliseconds;
       description
         "Delay used while in SHORT_WAIT state (milliseconds).";
     }
     leaf long-delay {
-      type rt-types:timer-value-milliseconds;
+      type uint32;
+      units milliseconds;
       description
         "Delay used while in LONG_WAIT state (milliseconds).";
     }
     leaf hold-down {
-      type rt-types:timer-value-milliseconds;
+      type uint32;
+      units milliseconds;
       description
         "Timer used to consider an IGP stability period
          (milliseconds).";
     }
     leaf time-to-learn {
-      type rt-types:timer-value-milliseconds;
+      type uint32;
+      units milliseconds;
       description
         "Duration used to learn all the IGP events
          related to a single component failure (milliseconds).";
@@ -3205,13 +3212,13 @@ module ietf-ospf {
         "Current SPF back-off algorithm state.";
     }
     leaf remaining-time-to-learn {
-      type rt-types:timer-value-seconds16;
+      type rt-types:timer-value-milliseconds;
       config false;
       description
         "Remaining time until time-to-learn timer fires.";
     }
     leaf remaining-hold-down {
-      type rt-types:timer-value-seconds16;
+      type rt-types:timer-value-milliseconds;
       config false;
       description
         "Remaining time until hold-down timer fires.";
@@ -4292,7 +4299,7 @@ module ietf-ospf {
     }
 
     leaf age {
-      type rt-types:timer-value-seconds32;
+      type rt-types:timer-value-seconds16;
       description
         "Remaining time in current OSPF graceful restart
          interval when the router is acting as a restart
