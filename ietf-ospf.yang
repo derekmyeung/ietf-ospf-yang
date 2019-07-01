@@ -1,4 +1,4 @@
-module ietf-ospf {
+ module ietf-ospf {
   yang-version 1.1;
   namespace "urn:ietf:params:xml:ns:yang:ietf-ospf";
 
@@ -69,30 +69,40 @@ module ietf-ospf {
                <mailto:ingwherchen@mitre.org>";
 
   description
-     "This YANG module defines the generic configuration and
-      operational state for the OSPF protocol common to all
-      vendor implementations. It is intended that the module
-      will be extended by vendors to define vendor-specific
-      OSPF configuration parameters and policies,
-      for example, route maps or route policies.
+    "This YANG module defines the generic configuration and
+     operational state for the OSPF protocol common to all
+     vendor implementations. It is intended that the module
+     will be extended by vendors to define vendor-specific
+     OSPF configuration parameters and policies,
+     for example, route maps or route policies.
 
-      This YANG model conforms to the Network Management
-      Datastore Architecture (NDMA) as described in RFC 8242.
+     This YANG model conforms to the Network Management
+     Datastore Architecture (NDMA) as described in RFC 8242.
 
-      Copyright (c) 2018 IETF Trust and the persons identified as
-      authors of the code.  All rights reserved.
+     Copyright (c) 2018 IETF Trust and the persons identified as
+     authors of the code.  All rights reserved.
 
-       Redistribution and use in source and binary forms, with or
-       without modification, is permitted pursuant to, and subject
-       to the license terms contained in, the Simplified BSD License
-       set forth in Section 4.c of the IETF Trust's Legal Provisions
-       Relating to IETF Documents
-       (http://trustee.ietf.org/license-info).
+     Redistribution and use in source and binary forms, with or
+     without modification, is permitted pursuant to, and subject to
+     the license terms contained in, the Simplified BSD License set
+     forth in Section 4.c of the IETF Trust's Legal Provisions
+     Relating to IETF Documents
+     (https://trustee.ietf.org/license-info).
 
-       This version of this YANG module is part of RFC XXXX;
-       see the RFC itself for full legal notices.";
+     This version of this YANG module is part of RFC XXXX
+     (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
+     for full legal notices.
 
-  revision 2019-06-22 {
+     The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
+     NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
+     'MAY', and 'OPTIONAL' in this document are to be interpreted as
+     described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
+     they appear in all capitals, as shown here.
+
+     This version of this YANG module is part of RFC XXXX;
+     see the RFC itself for full legal notices.";
+
+  revision 2019-07-01 {
     description
       "Initial revision.";
     reference
@@ -154,7 +164,14 @@ module ietf-ospf {
 
   feature nsr {
     description
-      "Non-Stop-Routing (NSR) support.";
+      "Non-Stop-Routing (NSR) support. The OSPF NSR feature
+       allows  a router with redundant control-plane capability
+       (e.g., dual Route-Processor (RP) cards) to maintain its
+       state and adjacencies during planned and unplanned
+       OSPF instance restarts. It differs from graceful-restart
+       or Non-Stop Forwarding (NSF) in that no protocol signaling
+       or assistance from adjacent OSPF neighbors is required to
+       recover control-plane state.";
   }
 
   feature graceful-restart {
@@ -619,7 +636,7 @@ module ietf-ospf {
         description
           "Interface Designated Router (DR) state.";
       }
-      enum backup {
+      enum bdr {
         value "6";
         description
           "Interface Backup Designated Router (BDR) state.";
@@ -1955,10 +1972,14 @@ module ietf-ospf {
   grouping lsa-common {
     description
         "Common fields for OSPF LSA representation.";
-    leaf decoded-completed {
+    leaf decode-completed {
       type boolean;
       description
-        "The OSPF LSA body is fully decoded.";
+        "The OSPF LSA body was successfully decoded other than
+         unknown TLVs. Unknown LSAs types and OSPFv2 unknown
+         opaque LSA types are not decoded. Additionally,
+         malformed LSAs are generally not accepted and are
+         not be in the Link State Database.";
     }
     leaf raw-data {
       type yang:hex-string;
@@ -2170,7 +2191,7 @@ module ietf-ospf {
   }
 
   grouping instance-fast-reroute-state {
-    description "IPFRR state data grouping";
+    description "IP-FRR state data grouping";
 
     container protected-routes {
       if-feature fast-reroute;
@@ -2559,10 +2580,7 @@ module ietf-ospf {
                 description
                   "OSPFv2 authentication key. The
                    length of the key may be dependent on the
-                   cryptographic algorithm. In cases where it is
-                   not, a key length of at least 32 octets should
-                   be supported to allow for interoperability
-                   with strong keys.";
+                   cryptographic algorithm.";
               }
               leaf ospfv2-crypto-algorithm {
                 type identityref {
@@ -2612,12 +2630,9 @@ module ietf-ospf {
               leaf ospfv3-key {
                 type string;
                 description
-                  "OSPFv2 authentication key. The
+                  "OSPFv3 authentication key. The
                    length of the key may be dependent on the
-                   cryptographic algorithm. In cases where it is
-                   not, a key length of at least 32 octets should
-                   be supported to allow for interoperability
-                   with strong keys.";
+                   cryptographic algorithm.";
               }
               leaf ospfv3-crypto-algorithm {
                 type identityref {
@@ -2735,7 +2750,7 @@ module ietf-ospf {
              default to 1 equating the cost to a hop count." ;
         }
         leaf poll-interval {
-	  type uint16;
+          type uint16;
           units seconds;
           description
             "Neighbor poll interval (seconds) for sending OSPF
@@ -3285,7 +3300,13 @@ module ietf-ospf {
     }
 
     container preference {
-      description "Route preference config state.";
+      description
+        "Route preference configuration In many
+         implementations, preference is referred to as
+         administrative distance.";
+      reference
+        "RFC 8349 - A YANG Data Model for Routing Management
+         (NMDA Version)";
       choice scope {
         description
           "Options for expressing preference
@@ -3448,7 +3469,9 @@ module ietf-ospf {
             "Enables unconditional stub router support";
           description
             "Unconditional stub router state (advertise
-             transit links with max metric";
+             transit links with MaxLinkMetric";
+          reference "RFC 6987 - OSPF Stub Router
+                     Advertisement";
         }
       }
     }
