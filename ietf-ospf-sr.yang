@@ -36,7 +36,7 @@ module ietf-ospf-sr {
       Author:   Derek Yeung
                 <mailto:derek@arrcus.com>
       Author:   Yingzhen Qu
-                <mailto:yingzhen.qu@huawei.com>
+                <mailto:yingzhen.qu@futurewei.com>
       Author:   Acee Lindem
                 <mailto:acee@cisco.com>
       Author:   Jeffrey Zhang
@@ -68,6 +68,13 @@ module ietf-ospf-sr {
      see the RFC itself for full legal notices.";
 
   reference "RFC XXXX";
+
+  revision 2019-07-07 {
+    description
+      "";
+    reference
+      "RFC XXXX: A YANG Data Model for OSPF Segment Routing.";
+  }
 
   revision 2019-03-05 {
     description

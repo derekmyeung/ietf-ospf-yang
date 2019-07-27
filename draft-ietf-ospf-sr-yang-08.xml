@@ -44,7 +44,7 @@
 <?rfc rfcedstyle="yes" ?>
 <?rfc subcompact="no" ?>
 
-<rfc category="std" docName="draft-ietf-ospf-sr-yang-07" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-ospf-sr-yang-08" ipr="trust200902">
   <!-- category values: std, bcp, info, exp, and historic
      ipr values: full3667, noModification3667, noDerivatives3667
      you can add the attributes updates="NNNN" and obsoletes="NNNN" 
@@ -76,7 +76,7 @@
     </author>
 
     <author fullname="Yingzhen Qu" initials="Y" surname="Qu">
-      <organization>Huawei</organization>
+      <organization>Futurewei</organization>
 
       <address>
         <postal>
@@ -95,7 +95,7 @@
 
         <phone></phone>
 
-        <email>yingzhen.qu@huawei.com</email>
+        <email>yingzhen.qu@futurewei.com</email>
 
         <!-- uri and facsimile elements may also be added -->
       </address>
@@ -236,6 +236,10 @@ module: ietf-ospf-sr
           /ospf:areas/ospf:area/ospf:interface:
     +--rw segment-routing
        +--rw adjacency-sid
+          +--rw adj-sids* [value]
+          |  +--rw value-type?   enumeration
+          |  +--rw value         uint32
+          |  +--rw protected?    boolean
           +--rw advertise-adj-group-sid* [group-id]
           |  +--rw group-id    uint32
           +--rw advertise-protection?      enumeration
@@ -416,7 +420,7 @@ module: ietf-ospf-sr
   <t>
     <figure>
       <artwork><![CDATA[
-<CODE BEGINS> file "ietf-ospf-sr@2019-03-05.yang"
+<CODE BEGINS> file "ietf-ospf-sr@2019-07-07.yang"
 module ietf-ospf-sr {
   namespace "urn:ietf:params:xml:ns:yang:ietf-ospf-sr";
 
@@ -455,7 +459,7 @@ module ietf-ospf-sr {
       Author:   Derek Yeung
                 <mailto:derek@arrcus.com>
       Author:   Yingzhen Qu
-                <mailto:yingzhen.qu@huawei.com>
+                <mailto:yingzhen.qu@futurewei.com>
       Author:   Acee Lindem
                 <mailto:acee@cisco.com>
       Author:   Jeffrey Zhang
@@ -487,6 +491,13 @@ module ietf-ospf-sr {
      see the RFC itself for full legal notices.";
 
   reference "RFC XXXX";
+
+  revision 2019-07-07 {
+    description
+      "";
+    reference
+      "RFC XXXX: A YANG Data Model for OSPF Segment Routing.";
+  }
 
   revision 2019-03-05 {
     description
