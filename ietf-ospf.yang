@@ -6,46 +6,46 @@
 
   import ietf-inet-types {
     prefix "inet";
-    reference "RFC 6991 - Common YANG Data Types";
+    reference "RFC 6991: Common YANG Data Types";
   }
 
   import ietf-yang-types {
     prefix "yang";
-    reference "RFC 6991 - Common YANG Data Types";
+    reference "RFC 6991: Common YANG Data Types";
   }
 
   import ietf-interfaces {
     prefix "if";
-    reference "RFC 8343 - A YANG Data Model for Interface
+    reference "RFC 8343: A YANG Data Model for Interface
                Management (NDMA Version)";
   }
 
   import ietf-routing-types {
     prefix "rt-types";
-    reference "RFC 8294 - Common YANG Data Types for the
+    reference "RFC 8294: Common YANG Data Types for the
                Routing Area";
   }
 
   import iana-routing-types {
     prefix "iana-rt-types";
-    reference "RFC 8294 - Common YANG Data Types for the
+    reference "RFC 8294: Common YANG Data Types for the
                Routing Area";
   }
 
   import ietf-routing {
     prefix "rt";
-    reference "RFC 8349 - A YANG Data Model for Routing
+    reference "RFC 8349: A YANG Data Model for Routing
                Management (NMDA Version)";
   }
 
   import ietf-key-chain {
     prefix "key-chain";
-    reference "RFC 8177 - YANG Data Model for Key Chains";
+    reference "RFC 8177: YANG Data Model for Key Chains";
   }
 
   import ietf-bfd-types {
     prefix "bfd-types";
-    reference "RFC YYYY - YANG Data Model for Bidirectional
+    reference "RFC YYYY: YANG Data Model for Bidirectional
       Forwarding Detection (BFD). Please replace YYYY with
       published RFC number for draft-ietf-bfd-yang-17.";
   }
@@ -112,13 +112,13 @@
   feature multi-topology {
     description
       "Support Multiple-Topology Routing (MTR).";
-    reference "RFC 4915 - Multi-Topology Routing";
+    reference "RFC 4915: Multi-Topology Routing";
   }
 
   feature multi-area-adj {
     description
       "OSPF multi-area adjacency support as in RFC 5185.";
-    reference "RFC 5185 - Multi-Area Adjacency";
+    reference "RFC 5185: Multi-Area Adjacency";
   }
   feature explicit-router-id {
     description
@@ -128,7 +128,7 @@
   feature demand-circuit {
     description
       "OSPF demand circuit support as in RFC 1793.";
-    reference "RFC 1793 - OSPF Demand Circuits";
+    reference "RFC 1793: OSPF Demand Circuits";
   }
 
   feature mtu-ignore {
@@ -140,25 +140,25 @@
   feature lls {
     description
       "OSPF link-local signaling (LLS) as in RFC 5613.";
-    reference "RFC 5613 - OSPF Link-Local Signaling";
+    reference "RFC 5613: OSPF Link-Local Signaling";
   }
 
   feature prefix-suppression {
     description
       "OSPF prefix suppression support as in RFC 6860.";
-    reference "RFC 6860 - Hide Transit-Only Networks in OSPF";
+    reference "RFC 6860: Hide Transit-Only Networks in OSPF";
   }
 
   feature two-part-metric {
     description
       "OSPF 2-part metric support as described in RFC 8042.";
-    reference "RFC 8042 - OSPF Two-Part Metric";
+    reference "RFC 8042: OSPF Two-Part Metric";
   }
 
   feature ttl-security {
     description
       "OSPF Time to Live (TTL) security check support.";
-    reference "RFC 5082 - The Generalized TTL Security
+    reference "RFC 5082: The Generalized TTL Security
                Mechanism (GTSM)";
   }
 
@@ -178,15 +178,15 @@
     description
       "Graceful OSPF Restart as defined in RFC 3623 and
        RFC 5187.";
-    reference "RFC 3623 - Graceful OSPF Restart
-               RFC 5187 - OSPFv3 Graceful Restart";
+    reference "RFC 3623: Graceful OSPF Restart
+               RFC 5187: OSPFv3 Graceful Restart";
   }
 
   feature auto-cost {
     description
       "Calculate OSPF interface cost according to
        reference bandwidth.";
-     reference "RFC 2328 - OSPF Version 2";
+     reference "RFC 2328: OSPF Version 2";
   }
 
   feature max-ecmp {
@@ -198,7 +198,7 @@
     description
       "Setting the maximum number of LSAs the OSPF instance
        will accept.";
-    reference "RFC 1765 - OSPF Database Overload";
+    reference "RFC 1765: OSPF Database Overload";
   }
 
   feature te-rid {
@@ -207,32 +207,32 @@
        Router-ID, i.e., the Router Address described in Section
        2.4.1 of RFC3630 or the Router IPv6 Address TLV described
        in Section 3 of RFC5329.";
-    reference "RFC 3630 - Traffic Engineering (TE) Extensions
+    reference "RFC 3630: Traffic Engineering (TE) Extensions
                to OSPF Version 2
-               RFC 5329 - Traffic Engineering (TE) Extensions
+               RFC 5329: Traffic Engineering (TE) Extensions
                to OSPF Version 3";
   }
 
   feature ldp-igp-sync {
     description
       "LDP IGP synchronization.";
-    reference "RFC 5443 - LDP IGP Synchronization";
+    reference "RFC 5443: LDP IGP Synchronization";
   }
 
   feature ospfv2-authentication-trailer {
     description
       "Use OSPFv2 authentication trailer for OSPFv2
        authentication.";
-    reference "RFC 5709 - Supporting Authentication
+    reference "RFC 5709: Supporting Authentication
                Trailer for OSPFv2
-               RFC 7474 - Security Extension for OSPFv2 When
+               RFC 7474: Security Extension for OSPFv2 When
                Using Manual Key Management";
   }
 
   feature ospfv3-authentication-ipsec {
     description
       "Use IPsec for OSPFv3 authentication.";
-    reference "RFC 4552 - Authentication/Confidentiality
+    reference "RFC 4552: Authentication/Confidentiality
               for OSPFv3";
   }
 
@@ -240,84 +240,84 @@
     description
       "Use OSPFv3 authentication trailer for OSPFv3
        authentication.";
-    reference "RFC 7166 - Supporting Authentication
+    reference "RFC 7166: Supporting Authentication
                Trailer for OSPFv3";
   }
 
   feature fast-reroute {
    description
      "Support for IP Fast Reroute (IP-FRR).";
-   reference "RFC 5714 - IP Fast Reroute Framework";
+   reference "RFC 5714: IP Fast Reroute Framework";
   }
 
   feature key-chain {
     description
       "Support of keychain for authentication.";
-    reference "RFC8177 - YANG Data Model for Key Chains";
+    reference "RFC8177: YANG Data Model for Key Chains";
   }
 
   feature node-flag {
    description
      "Support for node-flag for OSPF prefixes.";
-   reference "RFC 7684 - OSPFv2 Prefix/Link Advertisement";
+   reference "RFC 7684: OSPFv2 Prefix/Link Advertisement";
   }
 
   feature node-tag {
     description
       "Support for node admin tag for OSPF routing instances.";
-    reference "RFC 7777 - Advertising Node Administrative
+    reference "RFC 7777: Advertising Node Administrative
                Tags in OSPF";
   }
 
   feature lfa {
    description
      "Support for Loop-Free Alternates (LFAs).";
-   reference "RFC 5286 - Basic Specification for IP Fast
+   reference "RFC 5286: Basic Specification for IP Fast
               Reroute: Loop-Free Alternates";
   }
 
   feature remote-lfa {
    description
      "Support for Remote Loop-Free Alternates (R-LFA).";
-   reference "RFC 7490 - Remote Loop-Free Alternate (LFA)
+   reference "RFC 7490: Remote Loop-Free Alternate (LFA)
               Fast Reroute (FRR)";
   }
 
   feature stub-router {
     description
       "Support for RFC 6987 OSPF Stub Router Advertisement.";
-    reference "RFC 6987 - OSPF Stub Router Advertisement";
+    reference "RFC 6987: OSPF Stub Router Advertisement";
   }
 
   feature pe-ce-protocol {
     description
       "Support for OSPF as a PE-CE protocol";
-    reference "RFC 4577 - OSPF as the Provider/Customer Edge
+    reference "RFC 4577: OSPF as the Provider/Customer Edge
                Protocol for BGP/MPLS IP Virtual Private
                Networks (VPNs)
-               RFC 6565 - OSPFv3 as a Provider Edge to Customer
+               RFC 6565: OSPFv3 as a Provider Edge to Customer
                Edge (PE-CE) Routing Protocol";
   }
 
   feature ietf-spf-delay {
     description
       "Support for IETF SPF delay algorithm.";
-    reference "RFC 8405 - SPF Back-off algorithm for link
+    reference "RFC 8405: SPF Back-off algorithm for link
                state IGPs";
   }
 
   feature bfd {
     description
       "Support for BFD detection of OSPF neighbor reachability.";
-    reference "RFC 5880 - Bidirectional Forwarding Detection (BFD)
-               RFC 5881 - Bidirectional Forwarding Detection
+    reference "RFC 5880: Bidirectional Forwarding Detection (BFD)
+               RFC 5881: Bidirectional Forwarding Detection
                (BFD) for IPv4 and IPv6 (Single Hop)";
   }
 
   feature hybrid-interface {
     description
       "Support for OSPF Hybrid interface type.";
-    reference "RFC 6845 - OSPF Hybrid Broadcast and
+    reference "RFC 6845: OSPF Hybrid Broadcast and
                Point-to-Multipoint Interface Type";
   }
 
@@ -363,7 +363,7 @@
   identity nssa-area {
     base stub-nssa-area;
     description "OSPF Not-So-Stubby Area (NSSA).";
-    reference "RFC 3101 - The OSPF Not-So-Stubby Area
+    reference "RFC 3101: The OSPF Not-So-Stubby Area
                (NSSA) Option";
   }
 
@@ -817,6 +817,7 @@
           "NSSA translator enabled state.";
       }
       enum elected {
+        value "2";
         description
           "NSSA translator elected state.";
       }
@@ -838,6 +839,7 @@
           "Router is not restarting.";
       }
       enum planned-restart {
+        value "2";
         description
           "Router is going through planned restart.";
       }
@@ -857,7 +859,7 @@
     }
      description
       "Fletcher 16-bit checksum in hex-string format 0xXXXX.";
-     reference "RFC 905 - ISO Transport Protocol specification
+     reference "RFC 905: ISO Transport Protocol specification
                 ISO DP 8073";
   }
 
@@ -867,7 +869,7 @@
         description
           "Support OSPF Authentication Trailer as
            described in RFC 5709";
-        reference "RFC 5709 - OSPFv2 HMAC-SHA Cryptographic
+        reference "RFC 5709: OSPFv2 HMAC-SHA Cryptographic
                   Authentication";
 
       }
@@ -876,7 +878,7 @@
           "Support OSPF Authentication Trailer as
            described in RFC 7474";
         reference
-          "RFC 7474 - Security Extension for OSPFv2
+          "RFC 7474: Security Extension for OSPFv2
            When Using Manual Key Management Authentication";
 
       }
@@ -930,43 +932,43 @@
 
   grouping router-capabilities-tlv {
     description "OSPF Router Capabilities TLV grouping.";
-    reference "RFC 7770 - OSPF Router Capabilities";
+    reference "RFC 7770: OSPF Router Capabilities";
     leaf informational-flags {
       type bits {
         bit graceful-restart-capability {
           description
             "When set, the router is capable of restarting
              gracefully.";
-          reference "RFC 3623 - Graceful OSPF Restart
-                     RFC 5187 - OSPFv3 Graceful Restart";
+          reference "RFC 3623: Graceful OSPF Restart
+                     RFC 5187: OSPFv3 Graceful Restart";
         }
         bit graceful-restart-helper {
           description
             "When set, the router is capable of acting as
              a graceful restart helper.";
-          reference "RFC 3623 - Graceful OSPF Restart
-                     RFC 5187 - OSPFv3 Graceful Restart";
+          reference "RFC 3623: Graceful OSPF Restart
+                     RFC 5187: OSPFv3 Graceful Restart";
         }
         bit stub-router {
           description
             "When set, the router is capable of acting as
              an OSPF Stub Router.";
-          reference "RFC 6987 - OSPF Stub Router Advertisement";
+          reference "RFC 6987: OSPF Stub Router Advertisement";
         }
         bit traffic-engineering {
           description
             "When set, the router is capable of OSPF traffic
              engineering.";
-          reference "RFC 3630 - Traffic Engineering (TE) Extensions
+          reference "RFC 3630: Traffic Engineering (TE) Extensions
                      to OSPF Version 2
-                     RFC 5329 - Traffic Engineering (TE) Extensions
+                     RFC 5329: Traffic Engineering (TE) Extensions
                      to OSPF Version 3";
         }
         bit p2p-over-lan {
           description
             "When set, the router is capable of OSPF Point-to-Point
              over LAN.";
-          reference "RFC 5309 - Point-to-Point Operation over LAN
+          reference "RFC 5309: Point-to-Point Operation over LAN
                      in Link State Routing Protocols";
         }
         bit experimental-te {
@@ -974,7 +976,7 @@
             "When set, the router is capable of OSPF experimental
              traffic engineering.";
           reference
-            "RFC 4973 - OSPF-xTE OSPF Experimental Traffic
+            "RFC 4973: OSPF-xTE OSPF Experimental Traffic
              Engineering";
         }
         bit two-part-metric {
@@ -982,7 +984,7 @@
             "When set, the router is capable of supporting OSPF
              2-part metrics.";
           reference
-            "RFC 8042 - OSPF Two-Part Metric";
+            "RFC 8042: OSPF Two-Part Metric";
         }
       }
       description
@@ -1010,7 +1012,7 @@
 
   grouping dynamic-hostname-tlv {
     description "Dynamic Hostname TLV";
-    reference "RFC 5642 - Dynamic Hostnames for OSPF";
+    reference "RFC 5642: Dynamic Hostnames for OSPF";
     leaf hostname {
       type string {
         length "1..255";
@@ -1021,7 +1023,7 @@
 
   grouping sbfd-discriminator-tlv {
     description "Seamless BFD Discriminator TLV";
-    reference "RFC 7884 - S-BFD Discriminators in OSPF";
+    reference "RFC 7884: S-BFD Discriminators in OSPF";
     list sbfd-discriminators {
       leaf sbfd-discriminator {
         type uint32;
@@ -1035,7 +1037,7 @@
   grouping maximum-sid-depth-tlv {
     description "Maximum SID Depth (MSD) TLV";
     reference
-      "RFC 8476 - Signaling Maximum Segment Depth (MSD)
+      "RFC 8476: Signaling Maximum Segment Depth (MSD)
        using OSPF";
     list msd-type {
       leaf msd-type {
@@ -1055,7 +1057,7 @@
   grouping network-to-router-metric-tlv {
     description "Network to Router Metric TLV";
     reference
-      "RFC 8042 - OSPF Two-Part Metric";
+      "RFC 8042: OSPF Two-Part Metric";
     leaf mt-id {
       type uint8;
       description
@@ -1126,7 +1128,7 @@
     description "OSPFv2 LSA body.";
     container router {
       when "derived-from-or-self(../../header/type, "
-          + "'ospf:ospfv2-router-lsa')" {
+          + "'ospfv2-router-lsa')" {
         description
           "Only applies to Router-LSAs.";
       }
@@ -1390,7 +1392,7 @@
             type uint32;
             description "Network to Router TE metric.";
             reference
-              "RFC 8042 - OSPF Two-Part Metric";
+              "RFC 8042: OSPF Two-Part Metric";
           }
           uses unknown-tlvs;
         }
@@ -1573,7 +1575,7 @@
 
     leaf referenced-ls-type {
       type identityref {
-        base ospf:ospfv3-lsa-type;
+        base ospfv3-lsa-type;
       }
       description "Referenced Link State type.";
     }
@@ -1760,7 +1762,7 @@
 
       leaf referenced-ls-type {
         type identityref {
-          base ospf:ospfv3-lsa-type;
+          base ospfv3-lsa-type;
         }
         description "Referenced Link State type.";
       }
@@ -1825,7 +1827,7 @@
         uses sbfd-discriminator-tlv;
       }
       description "Router Information LSA.";
-      reference "RFC 7770 -Extensions for Advertising Router
+      reference "RFC 7770: Extensions for Advertising Router
                  Capabilities";
     }
   }
@@ -2548,7 +2550,7 @@
            configuration.";
         case ospfv2-auth {
           when "derived-from-or-self(../../../../../../rt:type, "
-            +  "'ospf:ospfv2')" {
+            +  "'ospfv2')" {
             description "Applied to OSPFv2 only.";
           }
           leaf ospfv2-auth-trailer-rfc {
@@ -2594,7 +2596,7 @@
         }
         case ospfv3-auth-ipsec {
           when "derived-from-or-self(../../../../../../rt:type, "
-            +  "'ospf:ospfv3')" {
+            +  "'ospfv3')" {
             description "Applied to OSPFv3 only.";
           }
           if-feature ospfv3-authentication-ipsec;
@@ -2606,7 +2608,7 @@
         }
         case ospfv3-auth-trailer {
           when "derived-from-or-self(../../../../../../rt:type, "
-            +  "'ospf:ospfv3')" {
+            +  "'ospfv3')" {
             description "Applied to OSPFv3 only.";
           }
           if-feature ospfv3-authentication-trailer;
@@ -2772,7 +2774,7 @@
       default false;
       description
         "Set prefix as identifying the advertising router.";
-      reference "RFC 7684 - OSPFv2 Prefix/Link Attribute
+      reference "RFC 7684: OSPFv2 Prefix/Link Attribute
                  Advertisement";
     }
 
@@ -2853,7 +2855,8 @@
   grouping interface-common-state {
     description
       "OSPF interface common operational state.";
-    reference "RFC2328 Section 9";
+    reference "RFC2328 Section 9: OSPF Version2 -
+               The Interface Data Structure";
 
     leaf state {
       type if-state-type;
@@ -2943,14 +2946,14 @@
               refine "version/ospfv2/ospfv2" {
                 must "derived-from-or-self( "
                    + "../../../../../../../../../../"
-                   + "rt:type, 'ospf:ospfv2')" {
+                   + "rt:type, 'ospfv2')" {
                   description "OSPFv2 LSA.";
                 }
               }
               refine "version/ospfv3/ospfv3" {
                 must "derived-from-or-self( "
                    + "../../../../../../../../../../"
-                   + "rt:type, 'ospf:ospfv3')" {
+                   + "rt:type, 'ospfv3')" {
                   description "OSPFv3 LSA.";
                 }
               }
@@ -2964,7 +2967,8 @@
   grouping interface-state {
     description
       "OSPF interface operational state.";
-    reference "RFC2328 Section 9";
+    reference "RFC2328 Section 9: OSPF Version2 -
+               The Interface Data Structure";
 
     uses interface-common-state;
   }
@@ -3043,7 +3047,7 @@
       "OSPF area common configuration state.";
 
     leaf summary {
-      when "derived-from(../area-type,'ospf:stub-nssa-area')" {
+      when "derived-from(../area-type,'stub-nssa-area')" {
         description
           "Summary advertisement into the stub/NSSA area.";
       }
@@ -3053,7 +3057,7 @@
          NSSA area.";
     }
     leaf default-cost {
-      when "derived-from(../area-type,'ospf:stub-nssa-area')" {
+      when "derived-from(../area-type,'stub-nssa-area')" {
           description
             "Cost for LSA default route advertised into the
              stub or NSSA area.";
@@ -3114,14 +3118,14 @@
               refine "version/ospfv2/ospfv2" {
                 must "derived-from-or-self( "
                    + "../../../../../../../../"
-                   + "rt:type, 'ospf:ospfv2')" {
+                   + "rt:type, 'ospfv2')" {
                   description "OSPFv2 LSA.";
                 }
               }
               refine "version/ospfv3/ospfv3" {
                 must "derived-from-or-self( "
                    + "../../../../../../../../"
-                   + "rt:type, 'ospf:ospfv3')" {
+                   + "rt:type, 'ospfv3')" {
                   description "OSPFv3 LSA.";
                 }
               }
@@ -3305,7 +3309,7 @@
          implementations, preference is referred to as
          administrative distance.";
       reference
-        "RFC 8349 - A YANG Data Model for Routing Management
+        "RFC 8349: A YANG Data Model for Routing Management
          (NMDA Version)";
       choice scope {
         description
@@ -3369,8 +3373,8 @@
       if-feature graceful-restart;
       description
         "Graceful restart config state.";
-      reference "RFC 3623 - OSPF Graceful Restart
-                 RFC 5187 - OSPFv3 Graceful Restart";
+      reference "RFC 3623: OSPF Graceful Restart
+                 RFC 5187: OSPFv3 Graceful Restart";
       leaf enable {
         type boolean;
         description
@@ -3470,7 +3474,7 @@
           description
             "Unconditional stub router state (advertise
              transit links with MaxLinkMetric";
-          reference "RFC 6987 - OSPF Stub Router
+          reference "RFC 6987: OSPF Stub Router
                      Advertisement";
         }
       }
@@ -3550,14 +3554,14 @@
               refine "version/ospfv2/ospfv2" {
                 must "derived-from-or-self( "
                    + "../../../../../../"
-                   + "rt:type, 'ospf:ospfv2')" {
+                   + "rt:type, 'ospfv2')" {
                   description "OSPFv2 LSA.";
                 }
               }
               refine "version/ospfv3/ospfv3" {
                 must "derived-from-or-self( "
                    + "../../../../../../"
-                   + "rt:type, 'ospf:ospfv3')" {
+                   + "rt:type, 'ospfv3')" {
                   description "OSPFv3 LSA.";
                 }
               }
@@ -3816,7 +3820,7 @@
 
   augment "/rt:routing/rt:control-plane-protocols/"
         + "rt:control-plane-protocol" {
-     when "derived-from(rt:type, 'ospf:ospf-protocol')" {
+     when "derived-from(rt:type, 'ospf-protocol')" {
       description
         "This augmentation is only valid for a routing protocol
          instance of OSPF (type 'ospfv2' or 'ospfv3').";
@@ -3936,8 +3940,8 @@
   }
 
   augment "/rt:routing/rt:control-plane-protocols/"
-        + "rt:control-plane-protocol/ospf:ospf" {
-    when "derived-from(../rt:type, 'ospf:ospf-protocol')" {
+        + "rt:control-plane-protocol/ospf" {
+    when "derived-from(../rt:type, 'ospf-protocol')" {
       description
         "This augmentation is only valid for OSPF
          (type 'ospfv2' or 'ospfv3').";
@@ -3985,14 +3989,14 @@
   }
 
   augment "/rt:routing/rt:control-plane-protocols/"
-        + "rt:control-plane-protocol/ospf:ospf/"
-        + "ospf:areas/ospf:area/ospf:interfaces/ospf:interface" {
+        + "rt:control-plane-protocol/ospf/"
+        + "areas/area/interfaces/interface" {
     when "derived-from-or-self(../../../../../rt:type, "
-       + "'ospf:ospfv2')" {
+       + "'ospfv2')" {
       description
         "This augmentation is only valid for OSPFv2.";
     }
-    if-feature ospf:multi-topology;
+    if-feature multi-topology;
     description
       "OSPF multi-topology interface configuration state
        augmentation.";
@@ -4017,10 +4021,10 @@
   }
 
   augment "/rt:routing/rt:control-plane-protocols/"
-        + "rt:control-plane-protocol/ospf:ospf/"
-        + "ospf:areas/ospf:area/ospf:interfaces/ospf:interface" {
+        + "rt:control-plane-protocol/ospf/"
+        + "areas/area/interfaces/interface" {
     when "derived-from-or-self(../../../../../rt:type, "
-       + "'ospf:ospfv3')" {
+       + "'ospfv3')" {
       description
         "This augmentation is only valid for OSPFv3.";
     }
@@ -4050,7 +4054,7 @@
   }
 
   augment "/rt:routing/rt:ribs/rt:rib/rt:routes/rt:route" {
-    when "derived-from(rt:source-protocol, 'ospf:ospf-protocol')" {
+    when "derived-from(rt:source-protocol, 'ospf-protocol')" {
       description
         "This augmentation is only valid for routes whose
          source protocol is OSPF.";
@@ -4143,7 +4147,7 @@
       must "derived-from( "
         + "/rt:routing/rt:control-plane-protocols/"
         + "rt:control-plane-protocol[rt:name=current()]/"
-        + "rt:type, 'ospf:ospf-protocol')";
+        + "rt:type, 'ospf-protocol')";
       description
        "OSPF routing protocol instance name.";
     }
@@ -4153,7 +4157,7 @@
         path "/rt:routing/"
            + "rt:control-plane-protocols/rt:control-plane-protocol"
            + "[rt:name=current()/../routing-protocol-name]/"
-           + "ospf:ospf/address-family";
+           + "ospf/address-family";
       }
       description
         "Address family of the OSPF instance.";
