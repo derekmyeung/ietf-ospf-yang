@@ -63,8 +63,8 @@
                <mailto:acee@cisco.com>
      Author:   Yingzhen Qu
                <mailto:yingzhen.qu@huawei.com>
-     Author:   Jeffrey Zhang
-               <mailto:zzhang@juniper.net>
+     Author:   Salih K A
+               <mailto:salih@juniper.net>
      Author:   Ing-Wher Chen
                <mailto:ingwherchen@mitre.org>";
 
@@ -3550,16 +3550,6 @@
     uses lsa-log;
   }
 
-  grouping ospf-config {
-    description
-      "OSPF top configuration state - currently empty.";
-  }
-
-  grouping ospf-state {
-    description
-      "OSPF top operational state - currently empty.";
-  }
-
   grouping multi-topology-area-common-config {
     description
       "OSPF multi-topology area common configuration state.";
@@ -3594,11 +3584,6 @@
     uses address-family-area-config;
   }
 
-  grouping multi-topology-config {
-    description
-      "OSPF multi-topology configuration state.";
-  }
-
   grouping multi-topology-state {
     description
       "OSPF multi-topology operational state.";
@@ -3615,11 +3600,6 @@
      description
        "Interface cost for this topology.";
     }
-  }
-
-  grouping multi-topology-interface-state {
-    description
-      "OSPF multi-topology operational state.";
   }
 
   grouping ospfv3-interface-config {
@@ -3799,9 +3779,6 @@
       description
         "OSPF protocol Instance";
 
-      uses ospf-config;
-      uses ospf-state;
-
       leaf address-family {
         type iana-rt-types:address-family;
         description
@@ -3933,7 +3910,6 @@
                        topology.";
         }
 
-        uses multi-topology-config;
         uses multi-topology-state;
       }
     }
@@ -3997,7 +3973,6 @@
         }
 
         uses multi-topology-interface-config;
-        uses multi-topology-interface-state;
       }
     }
   }
