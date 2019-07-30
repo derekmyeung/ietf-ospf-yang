@@ -47,7 +47,7 @@
     prefix "bfd-types";
     reference "RFC YYYY: YANG Data Model for Bidirectional
       Forwarding Detection (BFD). Please replace YYYY with
-      published RFC number for draft-ietf-bfd-yang-17.";
+      published RFC number for draft-ietf-bfd-yang.";
   }
 
   organization
@@ -102,7 +102,7 @@
      This version of this YANG module is part of RFC XXXX;
      see the RFC itself for full legal notices.";
 
-  revision 2019-07-01 {
+  revision 2019-07-29 {
     description
       "Initial revision.";
     reference
@@ -147,12 +147,6 @@
     description
       "OSPF prefix suppression support as in RFC 6860.";
     reference "RFC 6860: Hide Transit-Only Networks in OSPF";
-  }
-
-  feature two-part-metric {
-    description
-      "OSPF 2-part metric support as described in RFC 8042.";
-    reference "RFC 8042: OSPF Two-Part Metric";
   }
 
   feature ttl-security {
@@ -571,6 +565,14 @@
       "OSPF Metric - 24-bit unsigned integer.";
   }
 
+  typedef ospf-link-metric {
+    type uint16 {
+      range "0 .. 65535";
+    }
+    description
+      "OSPF Link Metric - 16-bit unsigned integer.";
+  }
+
   typedef opaque-id {
     type uint32 {
       range "0 .. 16777215";
@@ -979,13 +981,6 @@
             "RFC 4973: OSPF-xTE OSPF Experimental Traffic
              Engineering";
         }
-        bit two-part-metric {
-          description
-            "When set, the router is capable of supporting OSPF
-             2-part metrics.";
-          reference
-            "RFC 8042: OSPF Two-Part Metric";
-        }
       }
       description
          "OSPF Router Informational Flag Definitions.";
@@ -1051,22 +1046,6 @@
       }
       description
         "List of Maximum Segment Depth (MSD) tuples";
-    }
-  }
-
-  grouping network-to-router-metric-tlv {
-    description "Network to Router Metric TLV";
-    reference
-      "RFC 8042: OSPF Two-Part Metric";
-    leaf mt-id {
-      type uint8;
-      description
-        "The MT-ID for the topology enabled on
-         the link.";
-    }
-    leaf metric {
-      type uint16;
-      description "Metric for the topology.";
     }
   }
 
@@ -1277,128 +1256,133 @@
       description
         "Opaque LSA.";
 
-      uses unknown-tlvs;
+      container ri-opaque {
+        description "OSPF Router Information (RI) opaque LSA.";
+        reference "RFC 7770: OSPF Router Capabilities";
 
-      container router-capabilities-tlv {
-        description
-          "Informational and functional router capabilities";
-        uses router-capabilities-tlv;
-      }
-
-      container node-tag-tlvs {
-        description
-          "All node tag TLVs.";
-        list node-tag-tlv {
+        container router-capabilities-tlv {
           description
-            "Node tag TLV.";
-          uses node-tag-tlv;
+            "Informational and functional router capabilities";
+          uses router-capabilities-tlv;
         }
-      }
 
-      container dynamic-hostname-tlv {
-        description "OSPF Dynamic Hostname";
-        uses dynamic-hostname-tlv;
-      }
-
-      container sbfd-discriminator-tlv {
-        description "OSPF S-BFD Discriminators";
-        uses sbfd-discriminator-tlv;
-      }
-
-      container maximum-sid-depth-tlv {
-        description "OSPF Maximum SID Depth (MSD) values";
-        uses maximum-sid-depth-tlv;
-      }
-
-      container router-address-tlv {
-        description
-          "Router address TLV.";
-        leaf router-address {
-          type inet:ipv4-address;
+        container node-tag-tlvs {
           description
-            "Router address.";
-        }
-      }
-
-      container link-tlvs {
-        description "All link TLVs in the LSA.";
-        list link-tlv {
-          description "Link TLV.";
-          leaf link-type {
-            type router-link-type;
-            mandatory true;
-            description "Link type.";
-          }
-          leaf link-id {
-            type union {
-              type inet:ipv4-address;
-              type yang:dotted-quad;
-            }
-            mandatory true;
-            description "Link ID.";
-          }
-          container local-if-ipv4-addrs {
-            description "All local interface IPv4 addresses.";
-            leaf-list local-if-ipv4-addr {
-              type inet:ipv4-address;
-              description
-                "List of local interface IPv4 addresses.";
-            }
-          }
-          container remote-if-ipv4-addrs {
-            description "All remote interface IPv4 addresses.";
-            leaf-list remote-if-ipv4-addr {
-              type inet:ipv4-address;
-              description
-                "List of remote interface IPv4 addresses.";
-            }
-          }
-          leaf te-metric {
-            type uint32;
-            description "TE metric.";
-          }
-          leaf max-bandwidth {
-            type rt-types:bandwidth-ieee-float32;
-            description "Maximum bandwidth.";
-          }
-          leaf max-reservable-bandwidth {
-            type rt-types:bandwidth-ieee-float32;
-            description "Maximum reservable bandwidth.";
-          }
-          container unreserved-bandwidths {
-            description "All unreserved bandwidths.";
-            list unreserved-bandwidth {
-              leaf priority {
-                type uint8 {
-                  range "0 .. 7";
-                }
-                description "Priority from 0 to 7.";
-              }
-              leaf unreserved-bandwidth {
-                type rt-types:bandwidth-ieee-float32;
-                description "Unreserved bandwidth.";
-              }
-              description
-                "List of unreserved bandwidths for different
-                 priorities.";
-            }
-          }
-          leaf admin-group {
-            type uint32;
+            "All node tag TLVs.";
+          list node-tag-tlv {
             description
-              "Administrative group/Resource Class/Color.";
+              "Node tag TLV.";
+            uses node-tag-tlv;
           }
-          leaf network-to-router-te-metric {
-            type uint32;
-            description "Network to Router TE metric.";
-            reference
-              "RFC 8042: OSPF Two-Part Metric";
-          }
-          uses unknown-tlvs;
         }
+
+        container dynamic-hostname-tlv {
+          description "OSPF Dynamic Hostname";
+          uses dynamic-hostname-tlv;
+        }
+
+        container sbfd-discriminator-tlv {
+          description "OSPF S-BFD Discriminators";
+          uses sbfd-discriminator-tlv;
+        }
+
+        container maximum-sid-depth-tlv {
+          description "OSPF Maximum SID Depth (MSD) values";
+          uses maximum-sid-depth-tlv;
+        }
+        uses unknown-tlvs;
       }
 
-      container extended-prefix-tlvs {
+      container te-opaque {
+        description "OSPFv2 Traffic Engineering (TE) opaque LSA.";
+        reference "RFC 3630: Traffic Engineering (TE)
+                   Extensions to OSPFv2";
+
+        container router-address-tlv {
+          description
+            "Router address TLV.";
+          leaf router-address {
+            type inet:ipv4-address;
+            description
+              "Router address.";
+          }
+        }
+
+        container link-tlvs {
+          description "All link TLVs in the LSA.";
+          list link-tlv {
+            description "Link TLV.";
+            leaf link-type {
+              type router-link-type;
+              mandatory true;
+              description "Link type.";
+            }
+            leaf link-id {
+              type union {
+                type inet:ipv4-address;
+                type yang:dotted-quad;
+              }
+              mandatory true;
+              description "Link ID.";
+            }
+            container local-if-ipv4-addrs {
+              description "All local interface IPv4 addresses.";
+              leaf-list local-if-ipv4-addr {
+                type inet:ipv4-address;
+                description
+                  "List of local interface IPv4 addresses.";
+              }
+            }
+            container remote-if-ipv4-addrs {
+              description "All remote interface IPv4 addresses.";
+              leaf-list remote-if-ipv4-addr {
+                type inet:ipv4-address;
+                description
+                  "List of remote interface IPv4 addresses.";
+              }
+            }
+            leaf te-metric {
+              type uint32;
+              description "TE metric.";
+            }
+            leaf max-bandwidth {
+              type rt-types:bandwidth-ieee-float32;
+              description "Maximum bandwidth.";
+            }
+            leaf max-reservable-bandwidth {
+              type rt-types:bandwidth-ieee-float32;
+              description "Maximum reservable bandwidth.";
+            }
+            container unreserved-bandwidths {
+              description "All unreserved bandwidths.";
+              list unreserved-bandwidth {
+                leaf priority {
+                  type uint8 {
+                    range "0 .. 7";
+                  }
+                  description "Priority from 0 to 7.";
+                }
+                leaf unreserved-bandwidth {
+                  type rt-types:bandwidth-ieee-float32;
+                  description "Unreserved bandwidth.";
+                }
+                description
+                  "List of unreserved bandwidths for different
+                   priorities.";
+              }
+            }
+            leaf admin-group {
+              type uint32;
+              description
+                "Administrative group/Resource Class/Color.";
+            }
+            uses unknown-tlvs;
+          }
+        }
+        uses unknown-tlvs;
+      }
+
+      container extended-prefix-opaque {
         description "All extended prefix TLVs in the LSA.";
         list extended-prefix-tlv {
           description "Extended prefix TLV.";
@@ -1448,19 +1432,14 @@
         }
       }
 
-      container extended-link-tlvs {
+      container extended-link-opaque {
         description "All extended link TLVs in the LSA.";
-        list extended-link-tlv {
+        container extended-link-tlv {
           description "Extended link TLV.";
           uses ospfv2-router-link;
           container maximum-sid-depth-tlv {
             description "OSPF Maximum SID Depth (MSD) values";
             uses maximum-sid-depth-tlv;
-          }
-          container network-to-router-metric-tlv {
-            description
-              "OSPF two-part metric network-to-router metric";
-            uses network-to-router-metric-tlv;
           }
           uses unknown-tlvs;
         }
@@ -1726,7 +1705,12 @@
       }
       leaf rtr-priority {
         type uint8;
-        description "Router Priority for the interface.";
+        description
+          "Router priority for DR election. A router with a
+           higher priority will be preferred in the election
+           and a value of 0 indicates the router is not
+           eligible to become Designated Router or Backup
+           Designated Router (BDR).";
       }
       uses ospfv3-lsa-options;
 
@@ -2258,7 +2242,7 @@
         leaf best {
           type boolean;
           description
-            "Indicates if the alternate is the preferred.";
+            "Indicates that this alternate is preferred.";
         }
         leaf non-best-reason {
           type string {
@@ -2427,9 +2411,7 @@
       "Interface cost configuration that only applies to
        physical interfaces (non-virtual) and sham links.";
     leaf cost {
-      type uint16 {
-        range "1..65535";
-      }
+      type ospf-link-metric;
       description
         "Interface cost.";
     }
@@ -2446,13 +2428,6 @@
       description
         "Suppress advertisement of the prefixes associated
          with the interface.";
-    }
-    leaf two-part-metric {
-      if-feature two-part-metric;
-      type boolean;
-      description
-        "Support advertisement and computation of the 2-part
-         metric.";
     }
   }
 
@@ -2702,9 +2677,11 @@
       description
         "Configure OSPF router priority. On multi-access network
          this value is for Designated Router (DR) election. The
-         priority is ignored on other interface types. A value
-         of 0 indicates the router is not eligible to become
-         Designated Router or Backup Designated Router (BDR).";
+         priority is ignored on other interface types. A router
+         with a higher priority will be preferred in the election
+         and a value of 0 indicates the router is not eligible to
+         become Designated Router or Backup Designated Router
+         (BDR).";
     }
 
     container multi-areas {
@@ -2720,7 +2697,7 @@
             "Multi-area adjacency area ID.";
         }
         leaf cost {
-          type uint16;
+          type ospf-link-metric;
           description
             "Interface cost for multi-area adjacency.";
         }
@@ -2742,9 +2719,7 @@
         }
 
         leaf cost {
-          type uint16 {
-            range "1..65535";
-          }
+          type ospf-link-metric;
           description
             "Neighbor cost. Different implementations have different
              default costs with some defaulting to a cost inversely
@@ -2763,7 +2738,12 @@
         }
         leaf priority {
           type uint8;
-          description "Neighbor priority for DR election.";
+          description
+             "Neighbor priority for DR election. A router with a
+              higher priority will be preferred in the election
+              and a value of 0 indicates the router is not
+              eligible to become Designated Router or Backup
+              Designated Router (BDR).";
         }
       }
     }
@@ -2782,9 +2762,9 @@
       if-feature bfd;
       description "BFD Client Configuration.";
       uses bfd-types:client-cfg-parms;
-      reference "draft-ietf-bfd-yang-xx.txt:
-                 YANG Data Model for Bidirectional Forwarding
-                 Detection (BFD)";
+      reference "RFC YYYY: YANG Data Model for Bidirectional
+        Forwarding Detection (BFD). Please replace YYYY with
+        published RFC number for draft-ietf-bfd-yang.";
     }
 
     uses interface-fast-reroute-config;
@@ -2834,7 +2814,7 @@
         "OSPF neighbor state.";
     }
     leaf cost {
-      type uint32;
+      type ospf-link-metric;
       config false;
       description "Cost to reach neighbor for Point-to-Multipoint
                    and Hybrid networks";
@@ -2985,9 +2965,7 @@
       "OSPF virtual link operational state.";
 
     leaf cost {
-      type uint16 {
-        range "1..65535";
-      }
+      type ospf-link-metric;
       config false;
       description
         "Virtual link interface cost.";
@@ -3032,11 +3010,9 @@
             "Advertise or hide.";
         }
         leaf cost {
-          type ospf-metric {
-            range "0..16777214";
-          }
+          type ospf-metric;
           description
-            "Advertised cost of summary route.";
+           "Advertised cost of summary route.";
         }
       }
     }
@@ -3588,9 +3564,7 @@
     description
       "OSPF multi-topology area common configuration state.";
     leaf summary {
-      when "derived-from("
-         + "../../../../../areas/area[area-id=current()/../area-id]/"
-         + "area-type, 'stub-nssa-area')" {
+      when "derived-from(../../../area-type, 'stub-nssa-area')" {
         description
           "Summary advertisement into the stub/NSSA area.";
       }
@@ -3600,9 +3574,7 @@
          topology in the stub or NSSA area.";
     }
     leaf default-cost {
-      when "derived-from("
-         + "../../../../../areas/area[area-id=current()/../area-id]/"
-         + "area-type, 'stub-nssa-area')" {
+      when "derived-from(../../../area-type, 'stub-nssa-area')" {
         description
           "Cost for LSA default route advertised into the
            topology into the stub or NSSA area.";
@@ -3622,11 +3594,6 @@
     uses address-family-area-config;
   }
 
-  grouping multi-topology-area-state {
-    description
-      "OSPF multi-topology area operational state.";
-  }
-
   grouping multi-topology-config {
     description
       "OSPF multi-topology configuration state.";
@@ -3644,9 +3611,9 @@
       "OSPF multi-topology configuration state.";
 
     leaf cost {
-       type uint32;
-       description
-         "Interface cost for this topology.";
+     type ospf-link-metric;
+     description
+       "Interface cost for this topology.";
     }
   }
 
@@ -3968,22 +3935,37 @@
 
         uses multi-topology-config;
         uses multi-topology-state;
+      }
+    }
+  }
 
-        container areas {
-          description "All areas in the topology.";
-          list area {
-            key "area-id";
-            description
-              "List of OSPF areas";
-            leaf area-id {
-              type area-id-type;
-              description
-                "Area ID.";
-            }
-            uses multi-topology-area-config;
-            uses multi-topology-area-state;
+  augment "/rt:routing/rt:control-plane-protocols/"
+        + "rt:control-plane-protocol/ospf/"
+        + "areas/area" {
+    when "derived-from-or-self(../../../rt:type, "
+       + "'ospfv2')" {
+      description
+        "This augmentation is only valid for OSPFv2.";
+    }
+    if-feature multi-topology;
+    description
+      "OSPF multi-topology area configuration state
+       augmentation.";
+    container topologies {
+      description "All topologies for the area.";
+      list topology {
+        key "name";
+        description "OSPF area topology.";
+        leaf name {
+          type leafref {
+            path "../../../../../../../../"
+               + "rt:ribs/rt:rib/rt:name";
           }
+          description
+            "Single topology enabled for this area.";
         }
+
+        uses multi-topology-area-config;
       }
     }
   }
