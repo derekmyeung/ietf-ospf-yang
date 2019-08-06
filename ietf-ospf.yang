@@ -62,7 +62,7 @@
      Author:   Acee Lindem
                <mailto:acee@cisco.com>
      Author:   Yingzhen Qu
-               <mailto:yingzhen.qu@huawei.com>
+               <mailto:yingzhen.qu@futurewei.com>
      Author:   Salih K A
                <mailto:salih@juniper.net>
      Author:   Ing-Wher Chen
@@ -1522,77 +1522,73 @@
         }
 
         container link-tlvs {
-          description "All link TLVs in the LSA.";
-          list link-tlv {
-            description "Link TLV.";
-            leaf link-type {
-              type router-link-type;
-              mandatory true;
-              description "Link type.";
-            }
-            leaf link-id {
-              type union {
-                type inet:ipv4-address;
-                type yang:dotted-quad;
-              }
-              mandatory true;
-              description "Link ID.";
-            }
-            container local-if-ipv4-addrs {
-              description "All local interface IPv4 addresses.";
-              leaf-list local-if-ipv4-addr {
-                type inet:ipv4-address;
-                description
-                  "List of local interface IPv4 addresses.";
-              }
-            }
-            container remote-if-ipv4-addrs {
-              description "All remote interface IPv4 addresses.";
-              leaf-list remote-if-ipv4-addr {
-                type inet:ipv4-address;
-                description
-                  "List of remote interface IPv4 addresses.";
-              }
-            }
-            leaf te-metric {
-              type uint32;
-              description "TE metric.";
-            }
-            leaf max-bandwidth {
-              type rt-types:bandwidth-ieee-float32;
-              description "Maximum bandwidth.";
-            }
-            leaf max-reservable-bandwidth {
-              type rt-types:bandwidth-ieee-float32;
-              description "Maximum reservable bandwidth.";
-            }
-            container unreserved-bandwidths {
-              description "All unreserved bandwidths.";
-              list unreserved-bandwidth {
-                leaf priority {
-                  type uint8 {
-                    range "0 .. 7";
-                  }
-                  description "Priority from 0 to 7.";
-                }
-                leaf unreserved-bandwidth {
-                  type rt-types:bandwidth-ieee-float32;
-                  description "Unreserved bandwidth.";
-                }
-                description
-                  "List of unreserved bandwidths for different
-                   priorities.";
-              }
-            }
-            leaf admin-group {
-              type uint32;
-              description
-                "Administrative group/Resource Class/Color.";
-            }
-            uses unknown-tlvs;
+          description "All link Sub-TLVs in the LSA.";
+          leaf link-type {
+            type router-link-type;
+            mandatory true;
+            description "Link type.";
           }
+          leaf link-id {
+            type union {
+              type inet:ipv4-address;
+              type yang:dotted-quad;
+            }
+            mandatory true;
+            description "Link ID.";
+          }
+          container local-if-ipv4-addrs {
+            description "All local interface IPv4 addresses.";
+            leaf-list local-if-ipv4-addr {
+              type inet:ipv4-address;
+              description
+                "List of local interface IPv4 addresses.";
+            }
+          }
+          container remote-if-ipv4-addrs {
+            description "All remote interface IPv4 addresses.";
+            leaf-list remote-if-ipv4-addr {
+              type inet:ipv4-address;
+              description
+                "List of remote interface IPv4 addresses.";
+            }
+          }
+          leaf te-metric {
+            type uint32;
+            description "TE metric.";
+          }
+          leaf max-bandwidth {
+            type rt-types:bandwidth-ieee-float32;
+            description "Maximum bandwidth.";
+          }
+          leaf max-reservable-bandwidth {
+            type rt-types:bandwidth-ieee-float32;
+            description "Maximum reservable bandwidth.";
+          }
+          container unreserved-bandwidths {
+            description "All unreserved bandwidths.";
+            list unreserved-bandwidth {
+              leaf priority {
+                type uint8 {
+                  range "0 .. 7";
+                }
+                description "Priority from 0 to 7.";
+              }
+              leaf unreserved-bandwidth {
+                type rt-types:bandwidth-ieee-float32;
+                description "Unreserved bandwidth.";
+              }
+              description
+                "List of unreserved bandwidths for different
+                 priorities.";
+            }
+          }
+          leaf admin-group {
+            type uint32;
+            description
+              "Administrative group/Resource Class/Color.";
+          }
+          uses unknown-tlvs;
         }
-        uses unknown-tlvs;
       }
 
       container extended-prefix-opaque {
