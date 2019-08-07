@@ -1521,8 +1521,9 @@
           }
         }
 
-        container link-tlvs {
-          description "All link Sub-TLVs in the LSA.";
+        container link-tlv {
+          description "Describes a singel link, and it is constructed
+          of a set of Sub-TLVs.";
           leaf link-type {
             type router-link-type;
             mandatory true;
