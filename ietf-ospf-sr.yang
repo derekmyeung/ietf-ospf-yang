@@ -177,6 +177,87 @@ module ietf-ospf-sr {
        computation using segment routing.";
   }
 
+  identity prefix-sid-bit {
+    description
+      "Base identity for prefix sid sub-tlv bits.";
+  }
+
+  identity np-bit {
+    base prefix-sid-bit;
+    description
+      "No-PHP flag.";
+  }
+  
+  identity m-bit {
+    base prefix-sid-bit;
+    description
+      "Mapping server flag.";
+  }
+  
+  identity e-bit {
+    base prefix-sid-bit;
+    description
+      "Explicit-NULL flag.";
+  }
+  
+  identity v-bit {
+    base prefix-sid-bit;
+    description
+      "Value/Index flag.";
+  }
+  
+  identity l-bit {
+    base prefix-sid-bit;
+    description
+      "Local flag.";
+  }
+
+  identity extended-prefix-range-bit {
+    description
+      "Base identity for extended prefix range TLV bits.";
+  }
+
+  identity ia-bit {
+    base extended-prefix-range-bit;
+    description 
+      "Inter-Area flag. If set, advertisement is of inter-area type.";
+  }
+
+  identity adj-sid-bit {
+    description
+      "Base identity for adj sid sub-tlv bits.";
+  }
+ 
+  identity  b-bit {
+    base adj-sid-bit;
+    description
+      "Backup flag.";
+  }
+  
+  identity vi-bit {
+    base adj-sid-bit;
+    description
+      "Value/Index flag.";
+  }
+  
+  identity lo-bit {
+    base adj-sid-bit;
+    description
+      "Local/Global flag.";
+  }
+  
+  identity g-bit {
+    base adj-sid-bit;
+    description
+      "Group flag.";
+  }
+  
+  identity p-bit {
+    base adj-sid-bit;
+    description
+      "Persistent flag.";
+  }
+
   typedef uint24 {
     type uint32 {
       range "0 .. 16777215";
@@ -207,33 +288,13 @@ module ietf-ospf-sr {
       description "Prefix SID sub-TLV.";
       list prefix-sid-sub-tlv {
         description "Prefix SID sub-TLV.";
-        leaf flags {
-          type bits {
-            bit NP {
-              position 1;
-              description
-                "No-PHP flag.";
+        container flags {
+          leaf-list flags {
+            type identityref {
+              base prefix-sid-bit;
             }
-            bit M {
-              position 2;
-              description
-                "Mapping server flag.";
-            }
-            bit E {
-              position 3;
-              description
-                "Explicit-NULL flag.";
-            }
-            bit V {
-              position 4;
-              description
-                "Value/Index flag.";
-            }
-            bit L {
-              position 5;
-              description
-                "Local flag.";
-            }
+            description
+              "Prefix SID Sub-TLV flag bits list.";
           }
           description "Segment Identifier (SID) Flags.";
         }
@@ -274,15 +335,14 @@ module ietf-ospf-sr {
           description "The number of prefixes covered by the
                        advertisement.";
         }
-        leaf flags {
-          type bits {
-            bit IA {
-              position 0;
-              description
-                "Inter-Area flag.";
+        container extended-prefix-range-flags {
+          leaf-list bits {
+            type identityref {
+              base extended-prefix-range-bit;
             }
+            description "Extended prefix range TLV flags list.";
           }
-          description "Flags.";
+          description "Extended Prefix Range TLV flags.";
         }
         leaf prefix {
           type inet:ip-prefix;
@@ -492,35 +552,14 @@ module ietf-ospf-sr {
       description "Adjacency SID optional sub-TLVs.";
       list adj-sid-sub-tlv {
         description "List of Adjacency SID sub-TLVs.";
-        leaf flags {
-          type bits {
-            bit B {
-              position 0;
-              description
-                "Backup flag.";
+        container adj-sid-flags {
+          leaf-list bits {
+            type identityref {
+              base adj-sid-bit;
             }
-            bit V {
-              position 1;
-              description
-                "Value/Index flag.";
-            }
-            bit L {
-              position 2;
-              description
-                "Local/Global flag.";
-            }
-            bit G {
-              position 3;
-              description
-                "Group flag.";
-            }
-            bit P {
-              position 4;
-              description
-                "Persistent flag.";
-            }
+            description "Adj sid sub-tlv flags list.";
           }
-          description "Flags.";
+          description "Adj-sid sub-tlv flags.";
         }
         leaf mt-id {
           type uint8;
@@ -541,35 +580,14 @@ module ietf-ospf-sr {
       description "LAN Adjacency SID optional sub-TLVs.";
       list lan-adj-sid-sub-tlv {
         description "List of LAN adjacency SID sub-TLVs.";
-        leaf flags {
-          type bits {
-            bit B {
-              position 0;
-              description
-                "Backup flag.";
+        container lan-adj-sid-flags {
+          leaf-list bits {
+            type identityref {
+              base adj-sid-bit;
             }
-            bit V {
-              position 1;
-              description
-                "Value/Index flag.";
-            }
-            bit L {
-              position 2;
-              description
-                "Local/Global flag.";
-            }
-            bit G {
-              position 3;
-              description
-                "Group flag.";
-            }
-            bit P {
-              position 4;
-              description
-                "Persistent flag.";
-            }
+            description "LAN adj sid sub-tlv flags list.";
           }
-          description "Flags.";
+          description "LAN adj-sid sub-tlv flags.";
         }
         leaf mt-id {
           type uint8;

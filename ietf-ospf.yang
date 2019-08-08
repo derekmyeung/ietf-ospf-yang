@@ -1252,7 +1252,7 @@ module ietf-ospf {
   }
 
   grouping ospf-router-lsa-bits {
-    container rputer-bits {
+    container router-bits {
       leaf-list rtr-lsa-bits {
         type identityref {
           base router-lsa-bit;
