@@ -288,8 +288,8 @@ module ietf-ospf-sr {
       description "Prefix SID sub-TLV.";
       list prefix-sid-sub-tlv {
         description "Prefix SID sub-TLV.";
-        container flags {
-          leaf-list flags {
+        container prefix-sid-flags {
+          leaf-list bits {
             type identityref {
               base prefix-sid-bit;
             }
