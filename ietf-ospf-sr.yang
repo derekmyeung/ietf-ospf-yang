@@ -69,6 +69,13 @@ module ietf-ospf-sr {
 
   reference "RFC XXXX";
 
+  revision 2019-08-13 {
+    description
+      "";
+    reference
+      "RFC XXXX: A YANG Data Model for OSPF Segment Routing.";
+  }
+
   revision 2019-08-07 {
     description
       "";
