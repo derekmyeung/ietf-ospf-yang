@@ -1,4 +1,4 @@
-module ietf-ospf {
+ module ietf-ospf {
   yang-version 1.1;
   namespace "urn:ietf:params:xml:ns:yang:ietf-ospf";
 
@@ -17,7 +17,7 @@ module ietf-ospf {
   import ietf-interfaces {
     prefix "if";
     reference "RFC 8343: A YANG Data Model for Interface
-               Management (NDMA Version)";
+               Management (NMDA Version)";
   }
 
   import ietf-routing-types {
@@ -77,7 +77,7 @@ module ietf-ospf {
      for example, route maps or route policies.
 
      This YANG model conforms to the Network Management
-     Datastore Architecture (NDMA) as described in RFC 8242.
+     Datastore Architecture (NMDA) as described in RFC 8242.
 
      Copyright (c) 2018 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
@@ -102,7 +102,7 @@ module ietf-ospf {
      This version of this YANG module is part of RFC XXXX;
      see the RFC itself for full legal notices.";
 
-  revision 2019-08-07 {
+  revision 2019-08-22 {
     description
       "Initial revision.";
     reference
@@ -134,7 +134,9 @@ module ietf-ospf {
   feature mtu-ignore {
     description
       "Disable OSPF Database Description packet MTU
-       mismatch checking.";
+       mismatch checking specified in the OSPF
+       protocol specification.";
+    reference "RFC 2328: OSPF Version 2, section 10.6";
   }
 
   feature lls {
@@ -215,7 +217,7 @@ module ietf-ospf {
 
   feature ospfv2-authentication-trailer {
     description
-      "Use OSPFv2 authentication trailer for OSPFv2
+      "Support OSPFv2 authentication trailer for OSPFv2
        authentication.";
     reference "RFC 5709: Supporting Authentication
                Trailer for OSPFv2
@@ -225,14 +227,14 @@ module ietf-ospf {
 
   feature ospfv3-authentication-ipsec {
     description
-      "Use IPsec for OSPFv3 authentication.";
+      "Support IPsec for OSPFv3 authentication.";
     reference "RFC 4552: Authentication/Confidentiality
               for OSPFv3";
   }
 
   feature ospfv3-authentication-trailer {
     description
-      "Use OSPFv3 authentication trailer for OSPFv3
+      "Support OSPFv3 authentication trailer for OSPFv3
        authentication.";
     reference "RFC 7166: Supporting Authentication
                Trailer for OSPFv3";
@@ -699,21 +701,21 @@ module ietf-ospf {
   identity nu-bit {
     base ospfv3-prefix-option;
     description
-      "When set, the prefix should be excluded
+      "NU Bit, when set, the prefix should be excluded
        from IPv6 unicast calculations.";
   }
 
   identity la-bit {
     base ospfv3-prefix-option;
     description
-      "When set, the prefix is actually an IPv6 interface
-       address of the Advertising Router.";
+      "LA bit, when set, the prefix is actually an IPv6
+       interface address of the Advertising Router.";
   }
 
   identity p-bit {
     base ospfv3-prefix-option;
     description
-      "When set, the NSSA area prefix should be
+      "P bit, when set, the NSSA area prefix should be
        translated to an AS External LSA and advertised
        by the translating NSSA Border Router.";
   }
@@ -721,33 +723,33 @@ module ietf-ospf {
   identity dn-bit {
     base ospfv3-prefix-option;
     description
-      "When set, the inter-area-prefix LSA or
+      "DN bit, when set, the inter-area-prefix LSA or
        AS-external LSA prefix has been advertised as an
        L3VPN prefix.";
   }
 
   identity ospfv2-lsa-option {
     description
-      "Baes idenity for OSPFv2 LSA option flags.";
+      "Base identity for OSPFv2 LSA option flags.";
   }
 
   identity mt-bit {
     base ospfv2-lsa-option;
     description
-      "When set, the router supports multi-topology as
+      "MT bit, When set, the router supports multi-topology as
        in RFC 4915.";
   }
 
   identity v2-dc-bit {
     base ospfv2-lsa-option;
     description
-      "When set, the router supports demand circuits.";
+      "DC bit, When set, the router supports demand circuits.";
   }
 
   identity v2-p-bit {
     base ospfv2-lsa-option;
     description
-      "Only used in type-7 LSA. When set, an NSSA
+      "P bit, wnly used in type-7 LSA. When set, an NSSA
        border router should translate the type-7 LSA
        to a type-5 LSA.";
   }
@@ -755,28 +757,28 @@ module ietf-ospf {
   identity mc-flag {
     base ospfv2-lsa-option;
     description
-      "When set, the router supports MOSPF.";
+      "MC Bit, when set, the router supports MOSPF.";
   }
 
   identity v2-e-flag {
     base ospfv2-lsa-option;
     description
-      "This bit describes the way AS-external LSAs
+      "E Bit, this bit describes the way AS-external LSAs
        are flooded.";
   }
 
   identity o-bit {
     base ospfv2-lsa-option;
     description
-      "When set, the router is opaque-capable as in
+      "O bit, when set, the router is opaque-capable as in
        RFC 5250.";
   }
 
   identity v2-dn-bit {
     base ospfv2-lsa-option;
     description
-      "When a type 3, 5 or 7 LSA is sent from a PE to a CE,
-       the DN bit must be set. See RFC 4576.";
+      "DN bit, when a type 3, 5 or 7 LSA is sent from a PE
+       to a CE, the DN bit must be set. See RFC 4576.";
   }
 
   identity ospfv2-extended-prefix-flag {
@@ -787,13 +789,17 @@ module ietf-ospf {
   identity a-flag {
     base ospfv2-extended-prefix-flag;
     description
-      "Attach flag.";
+      "Attach flag, when set it indicates that the prefix
+       corresponds and a route what is directly connected to
+       the advertising router..";
   }
 
   identity node-flag {
     base ospfv2-extended-prefix-flag;
     description
-      "Node flag.";
+      "Node flag, when set, it indicates that the prefix is
+       used to represent the advertising node, e.g., a loopback
+       address.";
   }
 
   typedef ospf-metric {
@@ -1175,7 +1181,7 @@ module ietf-ospf {
     description "OSPF Router Capabilities TLV grouping.";
     reference "RFC 7770: OSPF Router Capabilities";
     container router-informational-capabilities {
-      leaf-list informational-capabilitiess {
+      leaf-list informational-capabilities {
         type identityref {
           base informational-capability;
         }
@@ -1187,23 +1193,27 @@ module ietf-ospf {
       description
          "OSPF Router Informational Flag Definitions.";
     }
-    list informational-capabilities {
+    list informational-capabilities-flags {
       leaf informational-flag {
         type uint32;
         description
-          "Informational flag.";
+          "Individual informational capability flag.";
       }
       description
-        "List of capabilities.";
+        "List of informational capability flags. This will
+         return all the 32-bit informational flags irrespective
+         of whether or not they are known to the device.";
     }
     list functional-capabilities {
-      leaf informational-flag {
+      leaf functional-flag {
         type uint32;
         description
-          "Functional flag.";
+          "Individual informational capability flag.";
       }
       description
-        "List of functional capabilities.";
+        "List of functional capability flags. This will
+         return all the 32-bit functional flags irrespective
+         of whether or not they are known to the device.";
     }
   }
 
@@ -1252,7 +1262,7 @@ module ietf-ospf {
   }
 
   grouping ospf-router-lsa-bits {
-    container rputer-bits {
+    container router-bits {
       leaf-list rtr-lsa-bits {
         type identityref {
           base router-lsa-bit;
@@ -1340,14 +1350,14 @@ module ietf-ospf {
       description
         "Network LSA.";
       leaf network-mask {
-        type inet:ipv4-address;
+        type yang:dotted-quad;
         description
           "The IP address mask for the network.";
       }
       container attached-routers {
         description "All attached routers.";
         leaf-list attached-router {
-          type yang:dotted-quad;
+          type inet:ipv4-address;
           description
             "List of the routers attached to the network.";
         }
@@ -1497,7 +1507,7 @@ module ietf-ospf {
         }
 
         container link-tlv {
-          description "Describes a singel link, and it is constructed
+          description "Describes a single link, and it is constructed
           of a set of Sub-TLVs.";
           leaf link-type {
             type router-link-type;
@@ -1724,7 +1734,7 @@ module ietf-ospf {
         "Route tag.";
     }
     leaf referenced-link-state-id {
-      type yang:dotted-quad;
+      type uint32;
       description
         "Referenced Link State ID.";
     }
@@ -1785,7 +1795,7 @@ module ietf-ospf {
       container attached-routers {
         description "All attached routers.";
         leaf-list attached-router {
-          type yang:dotted-quad;
+          type rt-types:router-id;
           description
             "List of the routers attached to the network.";
         }
@@ -1902,7 +1912,7 @@ module ietf-ospf {
           "Value for an unknown Referenced Link State type.";
       }
       leaf referenced-link-state-id {
-        type yang:dotted-quad;
+        type uint32;
         description
           "Referenced Link State ID.";
       }
@@ -2085,7 +2095,7 @@ module ietf-ospf {
         "The OSPF LSA body was successfully decoded other than
          unknown TLVs. Unknown LSAs types and OSPFv2 unknown
          opaque LSA types are not decoded. Additionally,
-         malformed LSAs are generally not accepted and are
+         malformed LSAs are generally not accepted and will
          not be in the Link State Database.";
     }
     leaf raw-data {
@@ -2116,7 +2126,8 @@ module ietf-ospf {
 
   grouping lsa-key {
     description
-      "OSPF LSA key.";
+      "OSPF LSA key - the database key for each LSA of a given
+       type in the Link State DataBase (LSDB).";
     leaf lsa-id {
       type union {
         type yang:dotted-quad;
@@ -2149,7 +2160,13 @@ module ietf-ospf {
     leaf as-scope-lsa-chksum-sum {
       type uint32;
       description
-        "The sum of the LSA checksums for AS-scope LSAs.";
+        "The module 2**32 sum of the LSA checksums
+         for AS-scope LSAs. The value should be treated as
+         unsigned when comparing two sums of checksums. While
+         differing checksums indicate a different combination
+         of LSAs, equivalent checksums don't guarantee that the
+         LSAs are the same given that multiple combinations of
+         LSAs can result in the same checksum.";
     }
     container database {
       description "Container for per AS-scope LSA statistics.";
@@ -2166,7 +2183,14 @@ module ietf-ospf {
         leaf lsa-cksum-sum {
           type uint32;
           description
-            "The sum of the LSA checksums of the LSA type.";
+            "The module 2**32 sum of the LSA checksums
+             for the LSAs of this type. The value should be
+             treated as unsigned when comparing two sums of
+             checksums. While differing checksums indicate a
+             different combination of LSAs, equivalent checksums
+             don't guarantee that the LSAs are the same given that
+             multiple combinations of LSAs can result in the same
+             checksum.";
         }
       }
     }
@@ -2203,7 +2227,14 @@ module ietf-ospf {
     }
     leaf area-scope-lsa-cksum-sum {
       type uint32;
-      description "The sum of the area-scope LSAs checksums.";
+      description
+        "The module 2**32 sum of the LSA checksums
+         for area-scope LSAs. The value should be treated as
+         unsigned when comparing two sums of checksums. While
+         differing checksums indicate a different combination
+         of LSAs, equivalent checksums don't guarantee that the
+         LSAs are the same given that multiple combinations of
+         LSAs can result in the same checksum.";
     }
     container database {
       description "Container for area-scope LSA type statistics.";
@@ -2220,7 +2251,14 @@ module ietf-ospf {
         leaf lsa-cksum-sum {
           type uint32;
           description
-            "The sum of the LSA checksums of the LSA type.";
+            "The module 2**32 sum of the LSA checksums
+             for the LSAs of this type. The value should be
+             treated as unsigned when comparing two sums of
+             checksums. While differing checksums indicate a
+             different combination of LSAs, equivalent checksums
+             don't guarantee that the LSAs are the same given that
+             multiple combinations of LSAs can result in the same
+             checksum.";
         }
       }
     }
@@ -2240,7 +2278,14 @@ module ietf-ospf {
     }
     leaf link-scope-lsa-cksum-sum {
       type uint32;
-      description "The sum of link-scope LSA checksums.";
+      description
+        "The module 2**32 sum of the LSA checksums
+         for link-scope LSAs. The value should be treated as
+         unsigned when comparing two sums of checksums. While
+         differing checksums indicate a different combination
+         of LSAs, equivalent checksums don't guarantee that the
+         LSAs are the same given that multiple combinations of
+         LSAs can result in the same checksum.";
     }
     container database {
       description "Container for link-scope LSA type statistics.";
@@ -2257,7 +2302,14 @@ module ietf-ospf {
         leaf lsa-cksum-sum {
           type uint32;
           description
-            "The sum of the LSA checksums of the LSA type.";
+            "The module 2**32 sum of the LSA checksums
+             for the LSAs of this type. The value should be
+             treated as unsigned when comparing two sums of
+             checksums. While differing checksums indicate a
+             different combination of LSAs, equivalent checksums
+             don't guarantee that the LSAs are the same given that
+             multiple combinations of LSAs can result in the same
+             checksum.";
         }
       }
     }
@@ -2541,7 +2593,8 @@ module ietf-ospf {
       type boolean;
       description
         "Enable/Disable bypassing the MTU mismatch check in
-         Database Description packets.";
+         Database Description packets specified in RFC 2328,
+         section 10.6.";
     }
     leaf prefix-suppression {
       if-feature prefix-suppression;
@@ -2566,6 +2619,7 @@ module ietf-ospf {
          Different networks, implementations, and deployments
          will use different hello-intervals. A sample value
          for a LAN network would be 10 seconds.";
+      reference "RFC 2328: OSPF Version 2, Appendix C.3";
     }
 
     leaf dead-interval {
@@ -2575,13 +2629,14 @@ module ietf-ospf {
         error-message "The dead interval must be "
                     + "larger than the hello interval";
         description
-          "The value MUST be greater than 'hello-interval'.";
+          "The value must be greater than the 'hello-interval'.";
       }
       description
         "Interval after which a neighbor is declared down
          (seconds) if hello packets are not received. It is
          typically 3 or 4 times the hello-interval. A typical
          value for LAN networks is 40 seconds.";
+       reference "RFC 2328: OSPF Version 2, Appendix C.3";
     }
 
     leaf retransmit-interval {
@@ -2595,6 +2650,7 @@ module ietf-ospf {
          be well over the round-trip transmit delay for
          any two routers on the network. A sample value
          would be 5 seconds.";
+       reference "RFC 2328: OSPF Version 2, Appendix C.3";
     }
 
     leaf transmit-delay {
@@ -2603,8 +2659,9 @@ module ietf-ospf {
       description
         "Estimated time needed to transmit Link State Update
          (LSU) packets on the interface (seconds). LSAs have
-         their age incremented by this amount on advertised
+         their age incremented by this amount when advertised
          on the interface. A sample value would be 1 second.";
+       reference "RFC 2328: OSPF Version 2, Appendix C.3";
     }
 
     leaf lls {
@@ -2626,6 +2683,7 @@ module ietf-ospf {
         type uint8 {
           range "1..254";
         }
+        default 1;
         description
           "Maximum number of hops that an OSPF packet may
            have traversed before reception.";
@@ -2854,8 +2912,10 @@ module ietf-ospf {
             "Neighbor poll interval (seconds) for sending OSPF
              hello packets to discover the neighbor on NBMA
              networks. This interval dictates the granularity for
-             discovery of new neighbors. A sample would be 2 minutes
-             for a legacy Packet Data Network (PDN) X.25 network.";
+             discovery of new neighbors. A sample would be
+             120 seconds (2 minutes) for a legacy Packet Data
+             Network (PDN) X.25 network.";
+          reference "RFC 2328: OSPF Version 2, Appendix C.5";
         }
         leaf priority {
           type uint8;
@@ -2974,7 +3034,7 @@ module ietf-ospf {
     }
 
     leaf wait-timer {
-      type rt-types:timer-value-seconds32;
+      type rt-types:timer-value-seconds16;
       config false;
       description "This timer tracks the remaining time before
                    the interface exits the Waiting state.";
@@ -3402,7 +3462,7 @@ module ietf-ospf {
 
     container preference {
       description
-        "Route preference configuration In many
+        "Route preference configuration. In many
          implementations, preference is referred to as
          administrative distance.";
       reference
@@ -3762,7 +3822,10 @@ module ietf-ospf {
         "LSA type.";
     }
     leaf lsa-id {
-      type yang:dotted-quad;
+      type union {
+        type inet:ipv4-address;
+        type yang:dotted-quad;
+      }
       description "Link-State ID.";
     }
     leaf adv-router {
@@ -3788,7 +3851,9 @@ module ietf-ospf {
         key id;
         description
           "List of SPF log entries represented
-           as a wrapping buffer.";
+           as a wrapping buffer in chronological
+           order with the oldest entry returned
+           first.";
         leaf id {
           type uint32;
           description
@@ -3857,7 +3922,8 @@ module ietf-ospf {
         key id;
         description
           "List of LSA log entries represented
-           as a wrapping buffer.";
+           as a wrapping buffer in chronological order
+           with the oldest entries returned first.";
         leaf id {
           type uint32;
           description
@@ -4297,7 +4363,7 @@ module ietf-ospf {
     }
 
     leaf neighbor-ip-addr {
-      type yang:dotted-quad;
+      type inet:ip-address;
       description "Neighbor address.";
     }
   }
@@ -4320,7 +4386,7 @@ module ietf-ospf {
     uses notification-interface;
 
     leaf packet-source {
-      type yang:dotted-quad;
+      type inet:ip-address;
       description "Source address.";
     }
 
@@ -4389,7 +4455,7 @@ module ietf-ospf {
     }
 
     description
-      "This notification is sent when aa neighbor
+      "This notification is sent when a neighbor
        state change is detected.";
   }
 
@@ -4426,7 +4492,7 @@ module ietf-ospf {
     uses notification-interface;
 
     leaf packet-source {
-      type yang:dotted-quad;
+      type inet:ip-address;
       description "Source address.";
     }
 
