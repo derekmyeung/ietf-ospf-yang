@@ -5904,19 +5904,52 @@ module: ietf-ospf
       writable/creatable/deletable (i.e., config true, which is the default).
       These data nodes may be considered sensitive or vulnerable in some network
       environments. Write operations (e.g., edit-config) to these data nodes without
-      proper protection can have a negative effect on network operations. For OSPF,
+      proper protection can have a negative effect on network operations.
+      Writable data node represent configuration of each instance, area, virtual link,
+      sham-link, and interface. These correspond to the following schema nodes:
+      <list style="empty">
+       <t>/ospf</t>
+       <t>/ospf/areas/</t>
+       <t>/ospf/areas/area[area-id]</t>
+       <t>/ospf/virtual-links/</t>
+       <t>/ospf/virtual-links/virtual-link[transit-area-id router-id]</t>
+       <t>/ospf/areas/area[area-id]/interfaces</t>
+       <t>/ospf/areas/area[area-id]/interfaces/interface[name]</t>
+       <t>/ospf/area/area[area-id]/sham-links</t>
+       <t>/ospf/area/area[area-id]/sham-links/sham-link[local-id remote-id]</t>
+      </list></t>
+     <t>For OSPF,
       the ability to modify OSPF configuration will allow the entire OSPF domain
       to be compromised including peering with unauthorized routers to
-      misroute traffic or mount a massive Denial-of-Service (DoS) attack.</t>
+      misroute traffic or mount a massive Denial-of-Service (DoS) attack. For example,
+      adding OSPF on any unprotected interface could allow an OSPF adjacency to be
+      formed with an unauthorized and malicious neighbor. Once an adjacency is formed,
+      traffic could be hijacked. As a simpler example, a Denial-of-Service attack could
+      be mounted by changing the cost of an OSPF interface to be asymmetric such that a
+      hard routing loop ensues. In general, unauthorized modification of most OSPF features
+      will pose  there own set of security risks and the "Security Considerations" in the
+      respective reference RFCs should be consulted.</t>
 
    <t>Some of the readable data nodes in the ietf-ospf.yang module may be considered
       sensitive or vulnerable in some network environments. It is thus
       important to control read access (e.g., via get, get-config, or notification)
       to these data nodes. The exposure of the Link State Database (LSDB) will
-      expose the detailed topology of the network. This may be undesirable since
-      both due to the fact that exposure may facilitate other attacks. Additionally,
-      network operators may consider their topologies to be sensitive confidential
-      data.</t>
+      expose the detailed topology of the network. There is a separate Link State
+      Database for each instance, area, virtual link, sham-link, and interface. These
+      correspond to the following schema nodes:
+      <list style="empty">
+       <t>/ospf/database</t>
+       <t>/ospf/areas/area[area-id]/database</t>
+       <t>/ospf/virtual-links/virtual-link[transit-area-id router-id]/database</t>
+       <t>/ospf/areas/area[area-id]/interfaces/interface[name]/database</t>
+       <t>/ospf/area/area[area-id]/sham-links/sham-link[local-id remote-id]/database</t>
+      </list></t>
+    <t>Exposure of the Link State Database includes information beyond the scope of the
+      OSPF router and this may be undesirable since exposure may facilitate other attacks.
+      Additionally, in the case of an area LSDB, the complete IP network topology and,
+      if deployed, the traffic engineering topology of the OSPF area can be
+      reconstucted. Network operators may consider their topologies to be sensitive
+      confidential data.</t>
 
     <t>For OSPF authentication, configuration is supported via the specification
        of key-chains <xref target="RFC8177"/> or the direct specification of
@@ -5939,6 +5972,9 @@ module: ietf-ospf
       access to these operations. The OSPF YANG module supports the "clear-neighbor"
       and "clear-database" RPCs. If access to either of these is compromised, they
       can result in temporary network outages be employed to mount DoS attacks.</t>
+
+   <t>Implementations with keys provided via this model should store them
+      using best current security practices.</t>
    </section>
    <section title="IANA Considerations">
      <t>This document registers a URI in the IETF XML registry
