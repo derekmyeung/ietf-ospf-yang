@@ -580,6 +580,7 @@ module: ietf-ospf
        |     +--ro route-type?   route-type
        |     +--ro route-tag?    uint32
        +--ro statistics
+       |  +--ro discontinuity-time         yang:date-and-time
        |  +--ro originate-new-lsa-count?   yang:counter32
        |  +--ro rx-new-lsas-count?         yang:counter32
        |  +--ro as-scope-lsa-count?        yang:gauge32
@@ -675,6 +676,7 @@ module: ietf-ospf
        |     |            +--rw advertise?   boolean
        |     |            +--rw cost?        ospf-metric
        |     +--ro statistics
+       |     |  +--ro discontinuity-time           yang:date-and-time
        |     |  +--ro spf-runs-count?              yang:counter32
        |     |  +--ro abr-count?                   yang:gauge32
        |     |  +--ro asbr-count?                  yang:gauge32
@@ -804,6 +806,7 @@ module: ietf-ospf
        |     |     +--ro bdr-router-id?     rt-types:router-id
        |     |     +--ro bdr-ip-addr?       inet:ip-address
        |     |     +--ro statistics
+       |     |     |  +--ro discontinuity-time     yang:date-and-time
        |     |     |  +--ro if-event-count?        yang:counter32
        |     |     |  +--ro link-scope-lsa-count?  yang:gauge32
        |     |     |  +--ro link-scope-lsa-cksum-sum?
@@ -826,6 +829,8 @@ module: ietf-ospf
        |     |     |     +--ro dead-timer? rt-types:
        |     |     |     |                  rtimer-value-seconds16
        |     |     |     +--ro statistics
+       |     |     |        +--ro discontinuity-time
+       |     |     |                           yang:date-and-time
        |     |     |        +--ro nbr-event-count?
        |     |     |                           yang:counter32
        |     |     |        +--ro nbr-retrans-qlen?
@@ -893,6 +898,7 @@ module: ietf-ospf
        |     |     +--ro bdr-router-id?      rt-types:router-id
        |     |     +--ro bdr-ip-addr?        inet:ip-address
        |     |     +--ro statistics
+       |     |     |  +--ro discontinuity-time     yang:date-and-time
        |     |     |  +--ro if-event-count?        yang:counter32
        |     |     |  +--ro link-scope-lsa-count?  yang:gauge32
        |     |     |  +--ro link-scope-lsa-cksum-sum?
@@ -1286,8 +1292,8 @@ module: ietf-ospf
   <t>
     <figure>
       <artwork><![CDATA[
-<CODE BEGINS> file "ietf-ospf@2019-08-22.yang"
- module ietf-ospf {
+<CODE BEGINS> file "ietf-ospf@2019-08-26.yang"
+module ietf-ospf {
   yang-version 1.1;
   namespace "urn:ietf:params:xml:ns:yang:ietf-ospf";
 
@@ -1391,7 +1397,7 @@ module: ietf-ospf
      This version of this YANG module is part of RFC XXXX;
      see the RFC itself for full legal notices.";
 
-  revision 2019-08-22 {
+  revision 2019-08-26 {
     description
       "Initial revision.";
     reference
@@ -3434,13 +3440,30 @@ module: ietf-ospf
 
   grouping instance-stat {
     description "Per-instance statistics";
+    leaf discontinuity-time {
+      type yang:date-and-time;
+      description
+        "The time on the most recent occasion at which any one or
+         more of this OSPF instance's counters suffered a
+         discontinuity.  If no such discontinuities have occurred
+         since the OSPF instance was last re-initialized, then
+         this node contains the time the OSPF instance was
+         re-initialized which normally occurs when it was
+         created.";
+    }
     leaf originate-new-lsa-count {
       type yang:counter32;
-      description "The number of new LSAs originated.";
+      description
+        "The number of new LSAs originated. Discontinuities in the
+         value of this counter can occur when the OSPF instance is
+         re-initialized.";
     }
     leaf rx-new-lsas-count {
       type yang:counter32;
-      description "The number of LSAs received.";
+      description
+        "The number of new LSAs received. Discontinuities in the
+         value of this counter can occur when the OSPF instance is
+         re-initialized.";
     }
     leaf as-scope-lsa-count {
       type yang:gauge32;
@@ -3488,10 +3511,23 @@ module: ietf-ospf
 
   grouping area-stat {
     description "Per-area statistics.";
+    leaf discontinuity-time {
+      type yang:date-and-time;
+      description
+        "The time on the most recent occasion at which any one or
+          more of this OSPF area's counters suffered a
+          discontinuity.  If no such discontinuities have occurred
+          since the OSPF area was last re-initialized, then
+          this node contains the time the OSPF area was
+          re-initialized which normally occurs when it was
+          created.";
+    }
     leaf spf-runs-count {
       type yang:counter32;
       description
-        "The number of times the intra-area SPF has run.";
+        "The number of times the intra-area SPF has run.
+         Discontinuities in the value of this counter can occur
+         when the OSPF area is re-initialized.";
     }
     leaf abr-count {
       type yang:gauge32;
@@ -3507,7 +3543,9 @@ module: ietf-ospf
     leaf ar-nssa-translator-event-count {
       type yang:counter32;
       description
-        "The number of NSSA translator-state changes.";
+        "The number of NSSA translator-state changes.
+         Discontinuities in the value of this counter can occur
+         when the OSPF area is re-initialized.";
     }
     leaf area-scope-lsa-count {
       type yang:gauge32;
@@ -3555,11 +3593,24 @@ module: ietf-ospf
 
   grouping interface-stat {
     description "Per-interface statistics";
+    leaf discontinuity-time {
+      type yang:date-and-time;
+      description 
+        "The time on the most recent occasion at which any one or
+         more of this OSPF interface's counters suffered a
+         discontinuity.  If no such discontinuities have occurred
+         since the OSPF interface was last re-initialized, then
+         this node contains the time the OSPF interface was
+         re-initialized which normally occurs when it was
+         created.";
+    }
     leaf if-event-count {
       type yang:counter32;
       description
         "The number of times this interface has changed its
-         state or an error has occurred.";
+         state or an error has occurred. Discontinuities in the
+         value of this counter can occur when the OSPF interface
+         is re-initialized.";
     }
     leaf link-scope-lsa-count {
       type yang:gauge32;
@@ -3606,11 +3657,24 @@ module: ietf-ospf
 
   grouping neighbor-stat {
     description "Per-neighbor statistics.";
+    leaf discontinuity-time {
+      type yang:date-and-time;
+      description
+        "The time on the most recent occasion at which any one or
+         more of this OSPF neighbor's counters suffered a
+         discontinuity.  If no such discontinuities have occurred
+         since the OSPF neighbor was last re-initialized, then
+         this node contains the time the OSPF neighbor was
+         re-initialized which normally occurs when the neighbor
+         is dynamically discovered andcreated.";
+    }
     leaf nbr-event-count {
       type yang:counter32;
       description
         "The number of times this neighbor has changed
-         state or an error has occurred.";
+         state or an error has occurred. Discontinuities in the
+         value of this counter can occur when the OSPF neighbor
+         is re-initialized.";
     }
     leaf nbr-retrans-qlen {
       type yang:gauge32;
