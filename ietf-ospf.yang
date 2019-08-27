@@ -1208,7 +1208,7 @@ module ietf-ospf {
       leaf functional-flag {
         type uint32;
         description
-          "Individual informational capability flag.";
+          "Individual functional capability flag.";
       }
       description
         "List of functional capability flags. This will

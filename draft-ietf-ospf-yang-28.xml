@@ -2503,7 +2503,7 @@ module ietf-ospf {
       leaf functional-flag {
         type uint32;
         description
-          "Individual informational capability flag.";
+          "Individual functional capability flag.";
       }
       description
         "List of functional capability flags. This will
@@ -6036,9 +6036,12 @@ module ietf-ospf {
       access to these operations. The OSPF YANG module supports the "clear-neighbor"
       and "clear-database" RPCs. If access to either of these is compromised, they
       can result in temporary network outages be employed to mount DoS attacks.</t>
+   <t>The actual authentication key data (whether locally specified or part of a
+      key-chain) is sensitive and needs to be kept secret from unauthorized
+      parties; compromise of the key data would allow an attacker to forge OSPF
+      traffic that would be accepted as authentic, potentially compromising the
+      entirety OSPF domain.</t>
 
-   <t>Implementations with keys provided via this model should store them
-      using best current security practices.</t>
    </section>
    <section title="IANA Considerations">
      <t>This document registers a URI in the IETF XML registry
