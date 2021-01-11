@@ -50,7 +50,7 @@
 <?rfc rfcedstyle="yes" ?>
 <?rfc subcompact="no" ?>
 
-<rfc category="std" docName="draft-ietf-ospf-sr-yang-12" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-ospf-sr-yang-13" ipr="trust200902">
   <!-- category values: std, bcp, info, exp, and historic
      ipr values: full3667, noModification3667, noDerivatives3667
      you can add the attributes updates="NNNN" and obsoletes="NNNN" 
@@ -196,9 +196,10 @@
       interfaces, such as CLI and programmatic APIs.</t>
 
     <t>This document defines a YANG data model that can be used to configure 
-    and manage OSPF Segment Routing and it is an augmentation to the OSPF YANG data model.  
+    and manage OSPF Segment Routing <xref target="RFC8665"></xref> and it is 
+    an augmentation to the OSPF YANG data model.  
     </t>
-    <t> The YANG modules in this document conform to the Network Management
+    <t> The YANG module in this document conforms to the Network Management
 Datastore Architecture (NMDA) <xref target="RFC8342"></xref>.</t>
                
       <section title="Requirements Language">
@@ -441,7 +442,7 @@ module: ietf-ospf-sr
   <t>
     <figure>
       <artwork><![CDATA[
-<CODE BEGINS> file "ietf-ospf-sr@2020-02-05.yang"
+<CODE BEGINS> file "ietf-ospf-sr@2021-01-10.yang"
 module ietf-ospf-sr {
   yang-version 1.1;
   namespace "urn:ietf:params:xml:ns:yang:ietf-ospf-sr";
@@ -503,35 +504,35 @@ module ietf-ospf-sr {
      define vendor-specific OSPF Segment Routing configuration
      and operational parameters and policies.
 
-    This YANG model conforms to the Network Management
-    Datastore Architecture (NMDA) as described in RFC 8242.
+     This YANG model conforms to the Network Management
+     Datastore Architecture (NMDA) as described in RFC 8242.
 
-    Copyright (c) 2020 IETF Trust and the persons identified as
-    authors of the code.  All rights reserved.
+     Copyright (c) 2021 IETF Trust and the persons identified as
+     authors of the code.  All rights reserved.
 
-    Redistribution and use in source and binary forms, with or
-    without modification, is permitted pursuant to, and subject to
-    the license terms contained in, the Simplified BSD License set
-    forth in Section 4.c of the IETF Trust's Legal Provisions
-    Relating to IETF Documents
-    (https://trustee.ietf.org/license-info).
+     Redistribution and use in source and binary forms, with or
+     without modification, is permitted pursuant to, and subject to
+     the license terms contained in, the Simplified BSD License set
+     forth in Section 4.c of the IETF Trust's Legal Provisions
+     Relating to IETF Documents
+     (https://trustee.ietf.org/license-info).
 
-    This version of this YANG module is part of RFC XXXX
-    (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
-    for full legal notices.
+     This version of this YANG module is part of RFC XXXX
+     (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
+     for full legal notices.
 
-    The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
-    NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
-    'MAY', and 'OPTIONAL' in this document are to be interpreted as
-    described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
-    they appear in all capitals, as shown here.
+     The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
+     NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
+     'MAY', and 'OPTIONAL' in this document are to be interpreted as
+     described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
+     they appear in all capitals, as shown here.
 
-    This version of this YANG module is part of RFC XXXX;
-    see the RFC itself for full legal notices.";
+     This version of this YANG module is part of RFC XXXX;
+     see the RFC itself for full legal notices.";
 
   reference "RFC XXXX";
 
-  revision 2020-07-12 {
+  revision 2021-01-10 {
     description
       "Initial revision.";
     reference
@@ -791,7 +792,7 @@ module ietf-ospf-sr {
     description
       "This augments the OSPF protocol configuration
        with segment routing.";
-    uses sr-mpls:sr-controlplane;
+    uses sr-mpls:sr-control-plane;
     container protocol-srgb {
       if-feature sr-mpls:protocol-srgb;
       uses sr-cmn:srgb;
