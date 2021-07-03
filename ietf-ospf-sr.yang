@@ -21,9 +21,13 @@ module ietf-ospf-sr {
   }
   import ietf-segment-routing-common {
     prefix "sr-cmn";
+    reference "RFC 9020 - YANG Data Model for Segment
+               Routing";
   }
   import ietf-segment-routing-mpls {
     prefix "sr-mpls";
+    reference "RFC 9020 - YANG Data Model for Segment
+               Routing";
   }
   import ietf-ospf {
     prefix "ospf";
@@ -60,7 +64,7 @@ module ietf-ospf-sr {
      and operational parameters and policies.
 
      This YANG model conforms to the Network Management
-     Datastore Architecture (NMDA) as described in RFC 8242.
+     Datastore Architecture (NMDA) as described in RFC 8342.
 
      Copyright (c) 2021 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
@@ -87,7 +91,7 @@ module ietf-ospf-sr {
 
   reference "RFC XXXX";
 
-  revision 2021-01-10 {
+  revision 2021-07-02 {
     description
       "Initial revision.";
     reference
@@ -243,7 +247,7 @@ module ietf-ospf-sr {
 
     container extended-prefix-range-tlvs {
       description "The list of range of prefixes.";
-      list extended-prefix-range-tlv {    //type=2?
+      list extended-prefix-range-tlv {
         description "The range of prefixes.";
         leaf prefix-length {
           type uint8;
@@ -331,7 +335,7 @@ module ietf-ospf-sr {
         type uint8 {
           range "0 .. 255";
         }
-        description "SRMS preference TLV, vlaue from 0 to 255.";
+        description "SRMS preference TLV, value from 0 to 255.";
       }
     }
   }
@@ -398,6 +402,65 @@ module ietf-ospf-sr {
   }
 
   /* Database */
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
+        + "ospf:ospf/ospf:areas/ospf:area/"
+        + "ospf:interfaces/ospf:interface/ospf:database/"
+        + "ospf:link-scope-lsa-type/ospf:link-scope-lsas/"
+        + "ospf:link-scope-lsa/ospf:version/ospf:ospfv2/"
+        + "ospf:ospfv2/ospf:body/ospf:opaque/"
+        + "ospf:extended-prefix-opaque" {
+    when "../../../../../../../../../../../../../"
+       + "rt:type = 'ospf:ospfv2'" {
+      description
+        "This augmentation is only valid for OSPFv2.";
+    }
+    description
+      "SR specific TLVs for OSPFv2 extended prefix LSA
+       in type 9 opaque LSA.";
+
+    uses extended-prefix-range-tlvs;
+  }
+
+    augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
+        + "ospf:ospf/ospf:areas/"
+        + "ospf:area/ospf:database/"
+        + "ospf:area-scope-lsa-type/ospf:area-scope-lsas/"
+        + "ospf:area-scope-lsa/ospf:version/ospf:ospfv2/"
+        + "ospf:ospfv2/ospf:body/ospf:opaque/"
+        + "ospf:extended-prefix-opaque" {
+    when "../../../../../../../../../../../"
+       + "rt:type = 'ospf:ospfv2'" {
+      description
+        "This augmentation is only valid for OSPFv2.";
+    }
+    description
+      "SR specific TLVs for OSPFv2 extended prefix LSA
+       in type 10 opaque LSA.";
+
+    uses extended-prefix-range-tlvs;
+  }
+
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
+        + "ospf:ospf/ospf:database/"
+        + "ospf:as-scope-lsa-type/ospf:as-scope-lsas/"
+        + "ospf:as-scope-lsa/ospf:version/ospf:ospfv2/"
+        + "ospf:ospfv2/ospf:body/ospf:opaque/"
+        + "ospf:extended-prefix-opaque" {
+    when "../../../../../../../../../"
+       + "rt:type = 'ospf:ospfv2'" {
+      description
+        "This augmentation is only valid for OSPFv2.";
+    }
+    description
+      "SR specific TLVs for OSPFv2 extended prefix LSA
+       in type 11 opaque LSA.";
+
+    uses extended-prefix-range-tlvs;
+  }
+
   augment "/rt:routing/"
         + "rt:control-plane-protocols/rt:control-plane-protocol/"
         + "ospf:ospf/ospf:areas/ospf:area/"
@@ -538,8 +601,8 @@ module ietf-ospf-sr {
         + "ospf:interfaces/ospf:interface/ospf:database/"
         + "ospf:link-scope-lsa-type/ospf:link-scope-lsas/"
         + "ospf:link-scope-lsa/ospf:version/ospf:ospfv2/"
-        + "ospf:ospfv2/ospf:body/ospf:opaque" {
-    when "../../../../../../../../../../../../"
+        + "ospf:ospfv2/ospf:body/ospf:opaque/ospf:ri-opaque" {
+    when "../../../../../../../../../../../../../"
        + "rt:type = 'ospf:ospfv2'" {
       description
         "This augmentation is only valid for OSPFv2.";
@@ -548,7 +611,6 @@ module ietf-ospf-sr {
     description
       "SR specific TLVs for OSPFv2 type 9 opaque LSA.";
 
-    uses extended-prefix-range-tlvs;
     uses sr-algorithm-tlv;
     uses sid-range-tlvs;
     uses local-block-tlvs;
@@ -561,8 +623,8 @@ module ietf-ospf-sr {
         + "ospf:area/ospf:database/"
         + "ospf:area-scope-lsa-type/ospf:area-scope-lsas/"
         + "ospf:area-scope-lsa/ospf:version/ospf:ospfv2/"
-        + "ospf:ospfv2/ospf:body/ospf:opaque" {
-    when "../../../../../../../../../../"
+        + "ospf:ospfv2/ospf:body/ospf:opaque/ospf:ri-opaque" {
+    when "../../../../../../../../../../../"
        + "rt:type = 'ospf:ospfv2'" {
       description
         "This augmentation is only valid for OSPFv2.";
@@ -571,7 +633,6 @@ module ietf-ospf-sr {
     description
       "SR specific TLVs for OSPFv2 type 10 opaque LSA.";
 
-    uses extended-prefix-range-tlvs;
     uses sr-algorithm-tlv;
     uses sid-range-tlvs;
     uses local-block-tlvs;
@@ -583,16 +644,15 @@ module ietf-ospf-sr {
         + "ospf:ospf/ospf:database/"
         + "ospf:as-scope-lsa-type/ospf:as-scope-lsas/"
         + "ospf:as-scope-lsa/ospf:version/ospf:ospfv2/"
-        + "ospf:ospfv2/ospf:body/ospf:opaque" {
-    when "../../../../../../../../"
+        + "ospf:ospfv2/ospf:body/ospf:opaque/ospf:ri-opaque" {
+    when "../../../../../../../../../"
        + "rt:type = 'ospf:ospfv2'" {
       description
         "This augmentation is only valid for OSPFv2.";
     }
     description
       "SR specific TLVs for OSPFv2 type 11 opaque LSA.";
-
-    uses extended-prefix-range-tlvs;
+    
     uses sr-algorithm-tlv;
     uses sid-range-tlvs;
     uses local-block-tlvs;
