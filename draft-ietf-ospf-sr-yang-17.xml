@@ -54,7 +54,7 @@
 <?rfc rfcedstyle="yes" ?>
 <?rfc subcompact="no" ?>
 
-<rfc category="std" docName="draft-ietf-ospf-sr-yang-16" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-ospf-sr-yang-17" ipr="trust200902">
   <!-- category values: std, bcp, info, exp, and historic
      ipr values: full3667, noModification3667, noDerivatives3667
      you can add the attributes updates="NNNN" and obsoletes="NNNN" 
@@ -679,7 +679,7 @@ module: ietf-ospf-sr
           +--ro extended-prefix-range-flags
           |  +--ro bits*   identityref
           +--ro prefix?                        inet:ip-prefix
-          +--ro perfix-sid-sub-tlvs
+          +--ro prefix-sid-sub-tlvs
           |  +--ro prefix-sid-sub-tlv* []
           |     +--ro prefix-sid-flags
           |     |  +--ro bits*   identityref
@@ -704,7 +704,7 @@ module: ietf-ospf-sr
           +--ro extended-prefix-range-flags
           |  +--ro bits*   identityref
           +--ro prefix?                        inet:ip-prefix
-          +--ro perfix-sid-sub-tlvs
+          +--ro prefix-sid-sub-tlvs
           |  +--ro prefix-sid-sub-tlv* []
           |     +--ro prefix-sid-flags
           |     |  +--ro bits*   identityref
@@ -729,7 +729,7 @@ module: ietf-ospf-sr
           +--ro extended-prefix-range-flags
           |  +--ro bits*   identityref
           +--ro prefix?                        inet:ip-prefix
-          +--ro perfix-sid-sub-tlvs
+          +--ro prefix-sid-sub-tlvs
           |  +--ro prefix-sid-sub-tlv* []
           |     +--ro prefix-sid-flags
           |     |  +--ro bits*   identityref
@@ -748,7 +748,7 @@ module: ietf-ospf-sr
           /ospf:link-scope-lsa/ospf:version/ospf:ospfv2/ospf:ospfv2
           /ospf:body/ospf:opaque/ospf:extended-prefix-opaque
           /ospf:extended-prefix-tlv:
-    +--ro perfix-sid-sub-tlvs
+    +--ro prefix-sid-sub-tlvs
        +--ro prefix-sid-sub-tlv* []
           +--ro prefix-sid-flags
           |  +--ro bits*   identityref
@@ -761,7 +761,7 @@ module: ietf-ospf-sr
           /ospf:area-scope-lsa/ospf:version/ospf:ospfv2/ospf:ospfv2
           /ospf:body/ospf:opaque/ospf:extended-prefix-opaque
           /ospf:extended-prefix-tlv:
-    +--ro perfix-sid-sub-tlvs
+    +--ro prefix-sid-sub-tlvs
        +--ro prefix-sid-sub-tlv* []
           +--ro prefix-sid-flags
           |  +--ro bits*   identityref
@@ -773,7 +773,7 @@ module: ietf-ospf-sr
           /ospf:as-scope-lsa-type/ospf:as-scope-lsas/ospf:as-scope-lsa
           /ospf:version/ospf:ospfv2/ospf:ospfv2/ospf:body/ospf:opaque
           /ospf:extended-prefix-opaque/ospf:extended-prefix-tlv:
-    +--ro perfix-sid-sub-tlvs
+    +--ro prefix-sid-sub-tlvs
        +--ro prefix-sid-sub-tlv* []
           +--ro prefix-sid-flags
           |  +--ro bits*   identityref
