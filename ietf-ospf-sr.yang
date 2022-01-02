@@ -211,7 +211,7 @@ module ietf-ospf-sr {
 
   grouping prefix-sid-sub-tlvs {
     description "Prefix Segment ID (SID) sub-TLVs.";
-    container perfix-sid-sub-tlvs{
+    container prefix-sid-sub-tlvs{
       description "Prefix SID sub-TLV.";
       list prefix-sid-sub-tlv {
         description "Prefix SID sub-TLV.";
