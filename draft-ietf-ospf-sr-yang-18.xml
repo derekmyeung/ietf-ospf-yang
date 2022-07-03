@@ -1,0 +1,1728 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+    <!ENTITY RFC2119 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml'>
+    <!ENTITY RFC3688 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.3688.xml'>
+    <!ENTITY RFC6020 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.6020.xml'>
+    <!ENTITY RFC6241 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.6241.xml'>
+    <!ENTITY RFC7223 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.7223.xml'>
+    <!ENTITY RFC2328 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.2328.xml'>
+    <!ENTITY RFC5340 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.5340.xml'>
+    <!ENTITY RFC5838 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.5838.xml'>
+    <!ENTITY RFC4750 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.4750.xml'>
+    <!ENTITY RFC5643 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.5643.xml'>
+    <!ENTITY RFC6242 PUBLIC ''
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.6242.xml'>
+    <!ENTITY RFC7950 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.7950.xml'>
+    <!ENTITY RFC8022 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.8022.xml'>
+    <!ENTITY RFC8040 PUBLIC ''
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.8040.xml'>
+    <!ENTITY RFC8340 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.8340.xml'>
+    <!ENTITY RFC8341 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.8341.xml'>
+    <!ENTITY RFC8342 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.8342.xml'>
+    <!ENTITY RFC8446 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.8446.xml'>
+    <!ENTITY RFC8476 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.8476.xml'>
+    <!ENTITY RFC8665 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.8665.xml'>
+    <!ENTITY RFC9020 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.9020.xml'>
+    <!ENTITY I-D.ietf-ospf-yang PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-ospf-yang'>
+    ]>
+<?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
+<?rfc strict="no" ?>
+<?rfc toc="yes" ?>
+<?rfc symrefs="yes" ?>
+<?rfc sortrefs="yes"?>
+
+<?rfc rfcedstyle="yes" ?>
+<?rfc subcompact="no" ?>
+
+<rfc category="std" docName="draft-ietf-ospf-sr-yang-17" ipr="trust200902">
+  <!-- category values: std, bcp, info, exp, and historic
+     ipr values: full3667, noModification3667, noDerivatives3667
+     you can add the attributes updates="NNNN" and obsoletes="NNNN" 
+     they will automatically be output with "(if approved)" -->
+
+  <!-- ***** FRONT MATTER ***** -->
+
+  <front>
+    <!-- The abbreviated title is used in the page header - it is only necessary if the 
+         full title is longer than 39 characters -->
+
+  <title abbrev="OSPF SR (Segment Routing) YANG Data Model">YANG Data Model for OSPF Segment Routing
+    </title>
+
+    <!-- add 'role="editor"' below for the editors if appropriate -->
+
+    <!-- Another author who claims to be an editor -->
+
+    <author fullname="Derek Yeung" initials="D" surname="Yeung">
+      <organization>Arrcus</organization>
+
+      <address>
+        <phone></phone>
+
+        <email>derek@arrcus.com</email>
+
+        <!-- uri and facsimile elements may also be added -->
+      </address>
+    </author>
+
+    <author fullname="Yingzhen Qu" initials="Y" surname="Qu">
+      <organization>Futurewei</organization>
+
+      <address>
+        <postal>
+          <street>2330 Central Expressway</street>
+
+          <!-- Reorder these if your country does things differently -->
+
+          <city>Santa Clara</city>
+
+          <region>CA</region>
+
+          <code>95050</code>
+
+          <country>USA</country>
+        </postal>
+
+        <phone></phone>
+
+        <email>yingzhen.qu@futurewei.com</email>
+
+        <!-- uri and facsimile elements may also be added -->
+      </address>
+    </author>
+
+    <author fullname="Jeffrey Zhang" initials="J" surname="Zhang">
+
+      <organization>Juniper Networks</organization>
+
+      <address>
+        <postal>
+          <street>10 Technology Park Drive</street>
+
+          <!-- Reorder these if your country does things differently -->
+
+          <city>Westford</city>
+
+          <region>MA</region>
+
+          <code>01886</code>
+
+          <country>USA</country>
+        </postal>
+        <phone></phone>
+
+        <email>zzhang@juniper.net</email>
+
+        <!-- uri and facsimile elements may also be added -->
+      </address>
+    </author>
+    
+    <author fullname="Ing-Wher Chen" initials="I." surname="Chen">
+      <organization>The MITRE Corporation</organization>
+      <address>
+        <email>ingwherchen@mitre.org</email>
+      </address>
+    </author>
+
+    <author fullname="Acee Lindem" initials="A." surname="Lindem">
+      <organization>Cisco Systems</organization>
+      <address>
+        <postal>
+          <street>301 Midenhall Way</street>
+          <city>Cary, NC 27513</city>
+        </postal>
+        <email>acee@cisco.com</email>
+      </address>
+    </author>
+    <date/>
+
+    <!-- If the month and year are both specified and are the current ones, xml2rfc will fill 
+         in the current day for you. If only the current year is specified, xml2rfc will fill 
+   in the current day and month for you. If the year is not the current one, it is 
+   necessary to specify at least a month (xml2rfc assumes day="1" if not specified for the 
+   purpose of calculating the expiry date).  With drafts it is normally sufficient to 
+   specify just the year. -->
+
+    <!-- Meta-data Declarations -->
+
+    <area>General</area>
+
+    <workgroup>Internet</workgroup>
+
+    <!-- WG name at the upperleft corner of the doc,
+         IETF is fine for individual submissions.  
+   If this element is not present, the default is "Network Working Group",
+         which is used by the RFC Editor as a nod to the history of the IETF. -->
+
+    <!-- Keywords will be incorporated into HTML output
+         files in a meta tag but they have no effect on text or nroff
+         output. If you submit your draft to the RFC Editor, the
+         keywords will be used for the search engine. -->
+
+    <abstract>
+      <t>This document defines a YANG data module that can be 
+      used to configure and manage OSPF Extensions for Segment Routing.
+      It also defines a module for management of Signaling Maximum SID Depth (MSD) 
+      Using OSPF.</t>
+    </abstract>
+  </front>
+
+  <middle>
+    <section title="Overview">
+      <t>YANG <xref target="RFC7950"></xref> is a data definition language 
+      used to define the contents of a conceptual data store 
+      that allows networked devices to be managed using NETCONF 
+      <xref target="RFC6241"></xref>.  YANG is proving relevant beyond its 
+      initial confines, as bindings to other interfaces (e.g., ReST) and 
+      encodings other than XML (e.g., JSON) are being defined.  Furthermore, 
+      YANG data models can be used as the basis for implementation of other 
+      interfaces, such as CLI and programmatic APIs.</t>
+
+    <t>This document defines a YANG data model that can be used to configure 
+    and manage OSPFv2 extensions for Segment Routing <xref target="RFC8665"></xref> and it is 
+    an augmentation to the OSPF YANG data model.  
+    </t>
+    <t>This document also defines a YANG data model for Signaling 
+      Maximum SID Depth (MSD) Using OSPF <xref target="RFC8476"></xref>,
+      which augments the base OSPF YANG data model.</t>
+    <t> The YANG module in this document conforms to the Network Management
+Datastore Architecture (NMDA) <xref target="RFC8342"></xref>.</t>
+               
+      <section title="Requirements Language">
+        <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+        "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+        document are to be interpreted as described in <xref target="RFC2119"></xref>.</t>
+      </section>
+
+    
+    <section title="Tree Diagrams">
+       <t>This document uses the graphical representation of data models
+          defined in <xref target="RFC8340"/>.</t>
+    </section>
+    </section>
+  <section title="OSPF MSD">
+    <t>This document defines a model for Signaling Maximum SID Depth 
+      (MSD) Using OSPF <xref target="RFC8476"></xref>. It is an augmentation
+      of the OSPF base model.</t>
+    <figure align="left">
+      <artwork align="left">
+module: ietf-ospf-msd
+  augment /rt:routing/rt:control-plane-protocols
+          /rt:control-plane-protocol/ospf:ospf/ospf:areas/ospf:area
+          /ospf:database/ospf:area-scope-lsa-type/ospf:area-scope-lsas
+          /ospf:area-scope-lsa/ospf:version/ospf:ospfv2/ospf:ospfv2
+          /ospf:body/ospf:opaque/ospf:ri-opaque:
+    +--ro node-msd-tlv
+       +--ro node-msds* [msd-type]
+          +--ro msd-type     identityref
+          +--ro msd-value?   uint8
+  augment /rt:routing/rt:control-plane-protocols
+          /rt:control-plane-protocol/ospf:ospf/ospf:database
+          /ospf:as-scope-lsa-type/ospf:as-scope-lsas/ospf:as-scope-lsa
+          /ospf:version/ospf:ospfv2/ospf:ospfv2/ospf:body/ospf:opaque
+          /ospf:ri-opaque:
+    +--ro node-msd-tlv
+       +--ro node-msds* [msd-type]
+          +--ro msd-type     identityref
+          +--ro msd-value?   uint8
+  augment /rt:routing/rt:control-plane-protocols
+          /rt:control-plane-protocol/ospf:ospf/ospf:areas/ospf:area
+          /ospf:database/ospf:area-scope-lsa-type/ospf:area-scope-lsas
+          /ospf:area-scope-lsa/ospf:version/ospf:ospfv3/ospf:ospfv3
+          /ospf:body/ospf:router-information:
+    +--ro node-msd-tlv
+       +--ro node-msds* [msd-type]
+          +--ro msd-type     identityref
+          +--ro msd-value?   uint8
+  augment /rt:routing/rt:control-plane-protocols
+          /rt:control-plane-protocol/ospf:ospf/ospf:database
+          /ospf:as-scope-lsa-type/ospf:as-scope-lsas/ospf:as-scope-lsa
+          /ospf:version/ospf:ospfv3/ospf:ospfv3/ospf:body
+          /ospf:router-information:
+    +--ro node-msd-tlv
+       +--ro node-msds* [msd-type]
+          +--ro msd-type     identityref
+          +--ro msd-value?   uint8
+  augment /rt:routing/rt:control-plane-protocols
+          /rt:control-plane-protocol/ospf:ospf/ospf:areas/ospf:area
+          /ospf:interfaces/ospf:interface/ospf:database
+          /ospf:link-scope-lsa-type/ospf:link-scope-lsas
+          /ospf:link-scope-lsa/ospf:version/ospf:ospfv2/ospf:ospfv2
+          /ospf:body/ospf:opaque/ospf:extended-link-opaque
+          /ospf:extended-link-tlv:
+    +--ro link-msd-sub-tlv
+       +--ro link-msds* [msd-type]
+          +--ro msd-type     identityref
+          +--ro msd-value?   uint8
+  augment /rt:routing/rt:control-plane-protocols
+          /rt:control-plane-protocol/ospf:ospf/ospf:areas/ospf:area
+          /ospf:database/ospf:area-scope-lsa-type/ospf:area-scope-lsas
+          /ospf:area-scope-lsa/ospf:version/ospf:ospfv2/ospf:ospfv2
+          /ospf:body/ospf:opaque/ospf:extended-link-opaque
+          /ospf:extended-link-tlv:
+    +--ro link-msd-sub-tlv
+       +--ro link-msds* [msd-type]
+          +--ro msd-type     identityref
+          +--ro msd-value?   uint8
+  augment /rt:routing/rt:control-plane-protocols
+          /rt:control-plane-protocol/ospf:ospf/ospf:database
+          /ospf:as-scope-lsa-type/ospf:as-scope-lsas/ospf:as-scope-lsa
+          /ospf:version/ospf:ospfv2/ospf:ospfv2/ospf:body/ospf:opaque
+          /ospf:extended-link-opaque/ospf:extended-link-tlv:
+    +--ro link-msd-sub-tlv
+       +--ro link-msds* [msd-type]
+          +--ro msd-type     identityref
+          +--ro msd-value?   uint8
+  augment /rt:routing/rt:control-plane-protocols
+          /rt:control-plane-protocol/ospf:ospf/ospf:areas/ospf:area
+          /ospf:database/ospf:area-scope-lsa-type/ospf:area-scope-lsas
+          /ospf:area-scope-lsa/ospf:version/ospf:ospfv3/ospf:ospfv3
+          /ospf:body/ospfv3-e-lsa:e-router/ospfv3-e-lsa:e-router-tlvs:
+    +--ro link-msd-sub-tlv
+       +--ro link-msds* [msd-type]
+          +--ro msd-type     identityref
+          +--ro msd-value?   uint8
+      </artwork>
+    </figure>         
+ 
+
+  <section title="OSPF MSD YANG Module">
+  <t>
+    <figure>
+      <artwork><![CDATA[
+<CODE BEGINS> file "ietf-ospf-msd@2022-01-02.yang"
+module ietf-ospf-msd {
+  yang-version 1.1;
+  namespace "urn:ietf:params:xml:ns:yang:ietf-ospf-msd";
+  prefix ospf-msd;
+
+  import ietf-routing {
+    prefix rt;
+    reference "RFC 8349: A YANG Data Model for Routing
+               Management (NMDA Version)";
+  }
+
+  import ietf-ospf {
+    prefix ospf;
+  }
+
+  import ietf-ospfv3-extended-lsa {
+    prefix ospfv3-e-lsa;
+  }
+
+  organization
+    "IETF LSR - LSR Working Group";
+  contact
+    "WG Web:   <https://tools.ietf.org/wg/mpls/>
+     WG List:  <mailto:mpls@ietf.org>
+
+     Author:    Yingzhen Qu
+               <mailto:yingzhen.qu@futurewei.com>
+     Author:    Acee Lindem
+               <mailto:acee@cisco.com>
+     Author:    Stephane Litkowski
+               <mailto:slitkows.ietf@gmail.com>
+     Author:    Jeff Tantsura
+               <jefftant.ietf@gmail.com>
+
+    ";
+  description
+    "The YANG module augments the base OSPF model to 
+     manage different types of MSDs.
+
+     This YANG model conforms to the Network Management
+     Datastore Architecture (NMDA) as described in RFC 8342.
+
+     Copyright (c) 2022 IETF Trust and the persons identified as
+     authors of the code.  All rights reserved.
+
+     Redistribution and use in source and binary forms, with or
+     without modification, is permitted pursuant to, and subject to
+     the license terms contained in, the Revised BSD License set
+     forth in Section 4.c of the IETF Trust's Legal Provisions
+     Relating to IETF Documents
+     (https://trustee.ietf.org/license-info).
+
+     This version of this YANG module is part of RFC XXXX;
+     see the RFC itself for full legal notices.
+
+     The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
+     NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
+     'MAY', and 'OPTIONAL' in this document are to be interpreted as
+     described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
+     they appear in all capitals, as shown here.";
+
+
+  reference "RFC XXXX: YANG Data Model for OSPF MSD.";
+
+  revision 2022-01-02 {
+    description
+      "Initial Version";
+    reference "RFC XXXX: YANG Data Model for OSPF MSD.";
+  }
+
+  identity msd-base-type {
+    description
+      "Base identity for MSD Type";
+  }
+
+  identity base-mpls-msd {
+    base msd-base-type;
+    description
+      "Base MPLS Imposition MSD.";
+    reference
+      "RFC 8491: Singling MSD using IS-IS.";
+  }
+
+  identity erld-msd {
+    base msd-base-type;
+    description
+      "ERLD-MSD is defined to advertise the ERLD.";
+    reference
+      "RFC 8662: Entropy Label for Source Packet Routing in 
+                 Networking (SPRING) Tunnels";
+  }
+
+  grouping node-msd-tlv {
+    description
+      "Grouping for node MSD.";
+    container node-msd-tlv {
+      list node-msds {
+        key "msd-type";
+        leaf msd-type {
+          type identityref {
+          base msd-base-type;
+          }
+          description
+            "MSD-Types";
+        }
+        leaf msd-value {
+          type uint8;
+          description
+            "MSD value, in the range of 0-255.";
+        }
+        description
+          "Node MSD is the smallest link MSD supported by
+           the node.";
+      }
+      description
+        "Node MSD is the number of SIDs supported by a node.";
+      reference
+        "RFC 8476: Signaling Maximum SID Depth (MSD) Using OSPF";
+    }
+  }
+
+  grouping link-msd-sub-tlv {
+    description
+      "Link Maximum SID Depth (MSD) grouping for an interface.";
+    container link-msd-sub-tlv {
+      list link-msds {
+        key "msd-type";
+        leaf msd-type {
+          type identityref {
+            base msd-base-type;
+          }
+          description
+            "MSD-Types";
+        }
+        leaf msd-value {
+          type uint8;
+          description
+            "MSD value, in the range of 0-255.";
+        }
+        description
+          "List of link MSDs";
+      }
+      description
+        "Link MSD sub-tlvs.";
+    }
+  }
+
+  /* Node MSD TLV */
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
+        + "ospf:ospf/ospf:areas/"
+        + "ospf:area/ospf:database/"
+        + "ospf:area-scope-lsa-type/ospf:area-scope-lsas/"
+        + "ospf:area-scope-lsa/ospf:version/ospf:ospfv2/"
+        + "ospf:ospfv2/ospf:body/ospf:opaque/"
+        + "ospf:ri-opaque" {
+    when "../../../../../../../../../../../"
+       + "rt:type = 'ospf:ospfv2'" {
+      description
+        "This augmentation is only valid for OSPFv2.";
+    }
+    description
+      "Node MSD TLV is an optional TLV of OSPFv2 RI Opaque 
+       LSA (RFC7770) and has a type of 12.";
+
+    uses node-msd-tlv;  
+  } 
+
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
+        + "ospf:ospf/ospf:database/"
+        + "ospf:as-scope-lsa-type/ospf:as-scope-lsas/"
+        + "ospf:as-scope-lsa/ospf:version/ospf:ospfv2/"
+        + "ospf:ospfv2/ospf:body/ospf:opaque/"
+        + "ospf:ri-opaque" {
+    when "../../../../../../../../../"
+       + "rt:type = 'ospf:ospfv2'" {
+      description
+        "This augmentation is only valid for OSPFv2.";
+    }
+    description
+      "Node MSD TLV is an optional TLV of OSPFv2 RI Opaque 
+       LSA (RFC7770) and has a type of 12.";
+
+    uses node-msd-tlv;  
+  } 
+
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
+        + "ospf:ospf/ospf:areas/"
+        + "ospf:area/ospf:database/"
+        + "ospf:area-scope-lsa-type/ospf:area-scope-lsas/"
+        + "ospf:area-scope-lsa/ospf:version/ospf:ospfv3/"
+        + "ospf:ospfv3/ospf:body/ospf:router-information" {
+    when "../../../../../../../../../../"
+       + "rt:type = 'ospf:ospfv3'" {
+      description
+        "This augmentation is only valid for OSPFv3.";
+    }
+    description
+      "Node MSD TLV is an optional TLV of OSPFv3 RI Opaque 
+       LSA (RFC7770) and has a type of 12.";
+
+    uses node-msd-tlv;  
+  } 
+
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
+        + "ospf:ospf/ospf:database/"
+        + "ospf:as-scope-lsa-type/ospf:as-scope-lsas/"
+        + "ospf:as-scope-lsa/ospf:version/ospf:ospfv3/"
+        + "ospf:ospfv3/ospf:body/ospf:router-information" {
+    when "../../../../../../../../"
+       + "rt:type = 'ospf:ospfv3'" {
+      description
+        "This augmentation is only valid for OSPFv3.";
+    }
+    description
+      "Node MSD TLV is an optional TLV of OSPFv3 RI Opaque 
+       LSA (RFC7770) and has a type of 12.";
+
+    uses node-msd-tlv;  
+  } 
+
+  /* link MSD sub-tlv */
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
+        + "ospf:ospf/ospf:areas/ospf:area/"
+        + "ospf:interfaces/ospf:interface/ospf:database/"
+        + "ospf:link-scope-lsa-type/ospf:link-scope-lsas/"
+        + "ospf:link-scope-lsa/ospf:version/ospf:ospfv2/"
+        + "ospf:ospfv2/ospf:body/ospf:opaque/"
+        + "ospf:extended-link-opaque/ospf:extended-link-tlv" {
+    when "../../../../../../../../../../../../../../"
+       + "rt:type = 'ospf:ospfv2'" {
+      description
+        "This augmentation is only valid for OSPFv2.";
+    }
+    description
+      "Link MSD sub-TLV is an optional sub-TLV of OSPFv2 extended
+       link TLV as defined in RFC 7684 and has a type of 6.";
+
+    uses link-msd-sub-tlv;  
+  }
+
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
+        + "ospf:ospf/ospf:areas/"
+        + "ospf:area/ospf:database/"
+        + "ospf:area-scope-lsa-type/ospf:area-scope-lsas/"
+        + "ospf:area-scope-lsa/ospf:version/ospf:ospfv2/"
+        + "ospf:ospfv2/ospf:body/ospf:opaque/"
+        + "ospf:extended-link-opaque/ospf:extended-link-tlv" {
+    when "../../../../../../../../../../../../"
+       + "rt:type = 'ospf:ospfv2'" {
+      description
+        "This augmentation is only valid for OSPFv2.";
+    }
+    description
+      "Link MSD sub-TLV is an optional sub-TLV of OSPFv2 extended
+       link TLV as defined in RFC 7684 and has a type of 6.";
+
+    uses link-msd-sub-tlv;  
+  } 
+
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
+        + "ospf:ospf/ospf:database/"
+        + "ospf:as-scope-lsa-type/ospf:as-scope-lsas/"
+        + "ospf:as-scope-lsa/ospf:version/ospf:ospfv2/"
+        + "ospf:ospfv2/ospf:body/ospf:opaque/"
+        + "ospf:extended-link-opaque/ospf:extended-link-tlv" {
+    when "../../../../../../../../../../"
+       + "rt:type = 'ospf:ospfv2'" {
+      description
+        "This augmentation is only valid for OSPFv2.";
+    }
+    description
+      "Link MSD sub-TLV is an optional sub-TLV of OSPFv2 extended
+       link TLV as defined in RFC 7684 and has a type of 6.";
+
+    uses link-msd-sub-tlv;  
+  } 
+
+  augment "/rt:routing/"
+       + "rt:control-plane-protocols/rt:control-plane-protocol/"
+       + "ospf:ospf/ospf:areas/ospf:area/ospf:database/"
+       + "ospf:area-scope-lsa-type/ospf:area-scope-lsas/"
+       + "ospf:area-scope-lsa/ospf:version/ospf:ospfv3/"
+       + "ospf:ospfv3/ospf:body/ospfv3-e-lsa:e-router"
+       + "/ospfv3-e-lsa:e-router-tlvs" {
+       when "'ospf:../../../../../../../../"
+         + "rt:type' = 'ospf:ospfv3'" {
+         description
+           "This augmentation is only valid for OSPFv3
+            E-Router LSAs";
+       }
+    description
+      "Augment OSPFv3 Area scope router-link TLV.";
+
+    uses link-msd-sub-tlv;
+  }
+}
+<CODE ENDS>
+      ]]></artwork>
+    </figure>
+  </t>      
+  </section>
+  </section>
+
+  <section title="OSPF Segment Routing">
+
+    <t>This document defines a model for OSPF Segment Routing feature <xref target="RFC8665"></xref>. It is an
+      augmentation of the OSPF base model.</t>
+    <t>The OSPF SR YANG module requires support for the base segment 
+    routing module <xref target="RFC9020"></xref>, 
+    which defines the global segment routing configuration independent 
+    of any specific routing protocol configuration, and support of OSPF base
+    model<xref target="I-D.ietf-ospf-yang"></xref> which defines basic OSPF configuration and state.</t>
+    <figure align="left">
+      <artwork align="left">     
+module: ietf-ospf-sr
+  augment /rt:routing/rt:control-plane-protocols
+          /rt:control-plane-protocol/ospf:ospf:
+    +--rw segment-routing
+    |  +--rw enabled?    boolean
+    |  +--rw bindings {mapping-server}?
+    |     +--rw advertise
+    |     |  +--rw policies*   -> /rt:routing/sr:segment-routing
+    |     |                       /sr-mpls:sr-mpls/bindings
+    |     |                       /mapping-server/policy/name
+    |     +--rw receive?     boolean
+    +--rw protocol-srgb {sr-mpls:protocol-srgb}?
+       +--rw srgb* [lower-bound upper-bound]
+          +--rw lower-bound    uint32
+          +--rw upper-bound    uint32
+  augment /rt:routing/rt:control-plane-protocols
+          /rt:control-plane-protocol/ospf:ospf/ospf:areas/ospf:area
+          /ospf:interfaces/ospf:interface:
+    +--rw segment-routing
+       +--rw adjacency-sid
+          +--rw adj-sids* [value]
+          |  +--rw value-type?   enumeration
+          |  +--rw value         uint32
+          |  +--rw protected?    boolean
+          |  +--rw weight?       uint8
+          +--rw advertise-adj-group-sid* [group-id]
+          |  +--rw group-id    uint32
+          +--rw advertise-protection?      enumeration
+  augment /rt:routing/rt:control-plane-protocols
+          /rt:control-plane-protocol/ospf:ospf/ospf:areas/ospf:area
+          /ospf:interfaces/ospf:interface/ospf:fast-reroute:
+    +--rw ti-lfa {ti-lfa}?
+       +--rw enable?   boolean
+  augment /rt:routing/rt:control-plane-protocols
+          /rt:control-plane-protocol/ospf:ospf/ospf:areas/ospf:area
+          /ospf:interfaces/ospf:interface/ospf:database
+          /ospf:link-scope-lsa-type/ospf:link-scope-lsas
+          /ospf:link-scope-lsa/ospf:version/ospf:ospfv2/ospf:ospfv2
+          /ospf:body/ospf:opaque/ospf:extended-prefix-opaque:
+    +--ro extended-prefix-range-tlvs
+       +--ro extended-prefix-range-tlv* []
+          +--ro prefix-length?                 uint8
+          +--ro af?                            uint8
+          +--ro range-size?                    uint16
+          +--ro extended-prefix-range-flags
+          |  +--ro bits*   identityref
+          +--ro prefix?                        inet:ip-prefix
+          +--ro prefix-sid-sub-tlvs
+          |  +--ro prefix-sid-sub-tlv* []
+          |     +--ro prefix-sid-flags
+          |     |  +--ro bits*   identityref
+          |     +--ro mt-id?              uint8
+          |     +--ro algorithm?          uint8
+          |     +--ro sid?                uint32
+          +--ro unknown-tlvs
+             +--ro unknown-tlv* []
+                +--ro type?     uint16
+                +--ro length?   uint16
+                +--ro value?    yang:hex-string
+  augment /rt:routing/rt:control-plane-protocols
+          /rt:control-plane-protocol/ospf:ospf/ospf:areas/ospf:area
+          /ospf:database/ospf:area-scope-lsa-type/ospf:area-scope-lsas
+          /ospf:area-scope-lsa/ospf:version/ospf:ospfv2/ospf:ospfv2
+          /ospf:body/ospf:opaque/ospf:extended-prefix-opaque:
+    +--ro extended-prefix-range-tlvs
+       +--ro extended-prefix-range-tlv* []
+          +--ro prefix-length?                 uint8
+          +--ro af?                            uint8
+          +--ro range-size?                    uint16
+          +--ro extended-prefix-range-flags
+          |  +--ro bits*   identityref
+          +--ro prefix?                        inet:ip-prefix
+          +--ro prefix-sid-sub-tlvs
+          |  +--ro prefix-sid-sub-tlv* []
+          |     +--ro prefix-sid-flags
+          |     |  +--ro bits*   identityref
+          |     +--ro mt-id?              uint8
+          |     +--ro algorithm?          uint8
+          |     +--ro sid?                uint32
+          +--ro unknown-tlvs
+             +--ro unknown-tlv* []
+                +--ro type?     uint16
+                +--ro length?   uint16
+                +--ro value?    yang:hex-string
+  augment /rt:routing/rt:control-plane-protocols
+          /rt:control-plane-protocol/ospf:ospf/ospf:database
+          /ospf:as-scope-lsa-type/ospf:as-scope-lsas
+          /ospf:as-scope-lsa/ospf:version/ospf:ospfv2/ospf:ospfv2
+          /ospf:body/ospf:opaque/ospf:extended-prefix-opaque:
+    +--ro extended-prefix-range-tlvs
+       +--ro extended-prefix-range-tlv* []
+          +--ro prefix-length?                 uint8
+          +--ro af?                            uint8
+          +--ro range-size?                    uint16
+          +--ro extended-prefix-range-flags
+          |  +--ro bits*   identityref
+          +--ro prefix?                        inet:ip-prefix
+          +--ro prefix-sid-sub-tlvs
+          |  +--ro prefix-sid-sub-tlv* []
+          |     +--ro prefix-sid-flags
+          |     |  +--ro bits*   identityref
+          |     +--ro mt-id?              uint8
+          |     +--ro algorithm?          uint8
+          |     +--ro sid?                uint32
+          +--ro unknown-tlvs
+             +--ro unknown-tlv* []
+                +--ro type?     uint16
+                +--ro length?   uint16
+                +--ro value?    yang:hex-string
+  augment /rt:routing/rt:control-plane-protocols
+          /rt:control-plane-protocol/ospf:ospf/ospf:areas/ospf:area
+          /ospf:interfaces/ospf:interface/ospf:database
+          /ospf:link-scope-lsa-type/ospf:link-scope-lsas
+          /ospf:link-scope-lsa/ospf:version/ospf:ospfv2/ospf:ospfv2
+          /ospf:body/ospf:opaque/ospf:extended-prefix-opaque
+          /ospf:extended-prefix-tlv:
+    +--ro prefix-sid-sub-tlvs
+       +--ro prefix-sid-sub-tlv* []
+          +--ro prefix-sid-flags
+          |  +--ro bits*   identityref
+          +--ro mt-id?              uint8
+          +--ro algorithm?          uint8
+          +--ro sid?                uint32
+  augment /rt:routing/rt:control-plane-protocols
+          /rt:control-plane-protocol/ospf:ospf/ospf:areas/ospf:area
+          /ospf:database/ospf:area-scope-lsa-type/ospf:area-scope-lsas
+          /ospf:area-scope-lsa/ospf:version/ospf:ospfv2/ospf:ospfv2
+          /ospf:body/ospf:opaque/ospf:extended-prefix-opaque
+          /ospf:extended-prefix-tlv:
+    +--ro prefix-sid-sub-tlvs
+       +--ro prefix-sid-sub-tlv* []
+          +--ro prefix-sid-flags
+          |  +--ro bits*   identityref
+          +--ro mt-id?              uint8
+          +--ro algorithm?          uint8
+          +--ro sid?                uint32
+  augment /rt:routing/rt:control-plane-protocols
+          /rt:control-plane-protocol/ospf:ospf/ospf:database
+          /ospf:as-scope-lsa-type/ospf:as-scope-lsas/ospf:as-scope-lsa
+          /ospf:version/ospf:ospfv2/ospf:ospfv2/ospf:body/ospf:opaque
+          /ospf:extended-prefix-opaque/ospf:extended-prefix-tlv:
+    +--ro prefix-sid-sub-tlvs
+       +--ro prefix-sid-sub-tlv* []
+          +--ro prefix-sid-flags
+          |  +--ro bits*   identityref
+          +--ro mt-id?              uint8
+          +--ro algorithm?          uint8
+          +--ro sid?                uint32
+  augment /rt:routing/rt:control-plane-protocols
+          /rt:control-plane-protocol/ospf:ospf/ospf:areas/ospf:area
+          /ospf:database/ospf:area-scope-lsa-type/ospf:area-scope-lsas
+          /ospf:area-scope-lsa/ospf:version/ospf:ospfv2/ospf:ospfv2
+          /ospf:body/ospf:opaque/ospf:extended-link-opaque
+          /ospf:extended-link-tlv:
+    +--ro adj-sid-sub-tlvs
+    |  +--ro adj-sid-sub-tlv* []
+    |     +--ro adj-sid-flags
+    |     |  +--ro bits*   identityref
+    |     +--ro mt-id?           uint8
+    |     +--ro weight?          uint8
+    |     +--ro sid?             uint32
+    +--ro lan-adj-sid-sub-tlvs
+       +--ro lan-adj-sid-sub-tlv* []
+          +--ro lan-adj-sid-flags
+          |  +--ro bits*   identityref
+          +--ro mt-id?                uint8
+          +--ro weight?               uint8
+          +--ro neighbor-router-id?   yang:dotted-quad
+          +--ro sid?                  uint32
+  augment /rt:routing/rt:control-plane-protocols
+          /rt:control-plane-protocol/ospf:ospf/ospf:areas/ospf:area
+          /ospf:interfaces/ospf:interface/ospf:database
+          /ospf:link-scope-lsa-type/ospf:link-scope-lsas
+          /ospf:link-scope-lsa/ospf:version/ospf:ospfv2/ospf:ospfv2
+          /ospf:body/ospf:opaque/ospf:ri-opaque:
+    +--ro sr-algorithm-tlv
+    |  +--ro sr-algorithm*   uint8
+    +--ro sid-range-tlvs
+    |  +--ro sid-range-tlv* []
+    |     +--ro range-size?    uint24
+    |     +--ro sid-sub-tlv
+    |        +--ro sid?   uint32
+    +--ro local-block-tlvs
+    |  +--ro local-block-tlv* []
+    |     +--ro range-size?    uint24
+    |     +--ro sid-sub-tlv
+    |        +--ro sid?   uint32
+    +--ro srms-preference-tlv
+       +--ro preference?   uint8
+  augment /rt:routing/rt:control-plane-protocols
+          /rt:control-plane-protocol/ospf:ospf/ospf:areas/ospf:area
+          /ospf:database/ospf:area-scope-lsa-type/ospf:area-scope-lsas
+          /ospf:area-scope-lsa/ospf:version/ospf:ospfv2/ospf:ospfv2
+          /ospf:body/ospf:opaque/ospf:ri-opaque:
+    +--ro sr-algorithm-tlv
+    |  +--ro sr-algorithm*   uint8
+    +--ro sid-range-tlvs
+    |  +--ro sid-range-tlv* []
+    |     +--ro range-size?    uint24
+    |     +--ro sid-sub-tlv
+    |        +--ro sid?   uint32
+    +--ro local-block-tlvs
+    |  +--ro local-block-tlv* []
+    |     +--ro range-size?    uint24
+    |     +--ro sid-sub-tlv
+    |        +--ro sid?   uint32
+    +--ro srms-preference-tlv
+       +--ro preference?   uint8
+  augment /rt:routing/rt:control-plane-protocols
+          /rt:control-plane-protocol/ospf:ospf/ospf:database
+          /ospf:as-scope-lsa-type/ospf:as-scope-lsas/ospf:as-scope-lsa
+          /ospf:version/ospf:ospfv2/ospf:ospfv2/ospf:body/ospf:opaque
+          /ospf:ri-opaque:
+    +--ro sr-algorithm-tlv
+    |  +--ro sr-algorithm*   uint8
+    +--ro sid-range-tlvs
+    |  +--ro sid-range-tlv* []
+    |     +--ro range-size?    uint24
+    |     +--ro sid-sub-tlv
+    |        +--ro sid?   uint32
+    +--ro local-block-tlvs
+    |  +--ro local-block-tlv* []
+    |     +--ro range-size?    uint24
+    |     +--ro sid-sub-tlv
+    |        +--ro sid?   uint32
+    +--ro srms-preference-tlv
+       +--ro preference?   uint8
+
+
+      </artwork>
+    </figure>         
+
+  
+
+  <section title="OSPF Segment Routing YANG Module">
+  <t>
+    <figure>
+      <artwork><![CDATA[
+<CODE BEGINS> file "ietf-ospf-sr@2022-01-02.yang"
+module ietf-ospf-sr {
+  yang-version 1.1;
+  namespace "urn:ietf:params:xml:ns:yang:ietf-ospf-sr";
+
+  prefix ospf-sr;
+
+  import ietf-inet-types {
+    prefix "inet";
+    reference "RFC 6991 - Common YANG Data Types";
+  }
+
+  import ietf-yang-types {
+    prefix "yang";
+    reference "RFC 6991 - Common YANG Data Types";
+  }
+
+  import ietf-routing {
+    prefix "rt";
+    reference "RFC 8349 - A YANG Data Model for Routing
+               Management (NMDA Version)";
+  }
+  import ietf-segment-routing-common {
+    prefix "sr-cmn";
+    reference "RFC 9020 - YANG Data Model for Segment
+               Routing";
+  }
+  import ietf-segment-routing-mpls {
+    prefix "sr-mpls";
+    reference "RFC 9020 - YANG Data Model for Segment
+               Routing";
+  }
+  import ietf-ospf {
+    prefix "ospf";
+  }
+
+  organization
+    "IETF LSR - Link State Routing Working Group";
+
+  contact
+     "WG Web:   <http://tools.ietf.org/wg/lsr/>
+      WG List:  <mailto:lsr@ietf.org>
+
+      Editor:   Derek Yeung
+                <mailto:derek@arrcus.com>
+      Author:   Derek Yeung
+                <mailto:derek@arrcus.com>
+      Author:   Yingzhen Qu
+                <mailto:yingzhen.qu@futurewei.com>
+      Author:   Acee Lindem
+                <mailto:acee@cisco.com>
+      Author:   Jeffrey Zhang
+                <mailto:zzhang@juniper.net>
+      Author:   Ing-Wher Chen
+                <mailto:ingwherchen@mitre.org>
+      Author:   Greg Hankins
+                <mailto:greg.hankins@alcatel-lucent.com>";
+
+  description
+    "This YANG module defines the generic configuration
+     and operational state for OSPF Segment Routing, which is
+     common across all of the vendor implementations. It is
+     intended that the module will be extended by vendors to
+     define vendor-specific OSPF Segment Routing configuration
+     and operational parameters and policies.
+
+     This YANG model conforms to the Network Management
+     Datastore Architecture (NMDA) as described in RFC 8342.
+
+     Copyright (c) 2022 IETF Trust and the persons identified as
+     authors of the code.  All rights reserved.
+
+     Redistribution and use in source and binary forms, with or
+     without modification, is permitted pursuant to, and subject to
+     the license terms contained in, the Revised BSD License set
+     forth in Section 4.c of the IETF Trust's Legal Provisions
+     Relating to IETF Documents
+     (https://trustee.ietf.org/license-info).
+
+
+     This version of this YANG module is part of RFC XXXX
+     (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
+     for full legal notices.
+
+     The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
+     NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
+     'MAY', and 'OPTIONAL' in this document are to be interpreted as
+     described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
+     they appear in all capitals, as shown here.
+
+     This version of this YANG module is part of RFC XXXX;
+     see the RFC itself for full legal notices.";
+
+  reference "RFC XXXX";
+
+  revision 2022-01-02 {
+    description
+      "Initial revision.";
+    reference
+      "RFC XXXX: A YANG Data Model for OSPF Segment Routing.";
+  }
+
+  feature ti-lfa {
+    description
+      "Topology-Independent Loop-Free Alternate (TI-LFA)
+       computation using segment routing.";
+  }
+
+  identity prefix-sid-bit {
+    description
+      "Base identity for prefix sid sub-tlv bits.";
+  }
+
+  identity np-bit {
+    base prefix-sid-bit;
+    description
+      "No-PHP flag.";
+  }
+  
+  identity m-bit {
+    base prefix-sid-bit;
+    description
+      "Mapping server flag.";
+  }
+  
+  identity e-bit {
+    base prefix-sid-bit;
+    description
+      "Explicit-NULL flag.";
+  }
+  
+  identity v-bit {
+    base prefix-sid-bit;
+    description
+      "Value/Index flag.";
+  }
+  
+  identity l-bit {
+    base prefix-sid-bit;
+    description
+      "Local flag.";
+  }
+
+  identity extended-prefix-range-bit {
+    description
+      "Base identity for extended prefix range TLV bits.";
+  }
+
+  identity ia-bit {
+    base extended-prefix-range-bit;
+    description 
+      "Inter-Area flag. If set, advertisement is of inter-area type.";
+  }
+
+  identity adj-sid-bit {
+    description
+      "Base identity for adj sid sub-tlv bits.";
+  }
+ 
+  identity  b-bit {
+    base adj-sid-bit;
+    description
+      "Backup flag.";
+  }
+  
+  identity vi-bit {
+    base adj-sid-bit;
+    description
+      "Value/Index flag.";
+  }
+  
+  identity lo-bit {
+    base adj-sid-bit;
+    description
+      "Local/Global flag.";
+  }
+  
+  identity g-bit {
+    base adj-sid-bit;
+    description
+      "Group flag.";
+  }
+  
+  identity p-bit {
+    base adj-sid-bit;
+    description
+      "Persistent flag.";
+  }
+
+  typedef uint24 {
+    type uint32 {
+      range "0 .. 16777215";
+    }
+    description
+      "24-bit unsigned integer.";
+  }
+
+  /* Groupings */
+  grouping sid-sub-tlv {
+    description "SID/Label sub-TLV grouping.";
+    container sid-sub-tlv {
+      description
+        "Used to advertise the SID/Label associated with a
+         prefix or adjacency.";
+      leaf sid {
+        type uint32;
+        description
+          "Segment Identifier (SID) - A 20 bit label or
+           32 bit SID.";
+      }
+    }
+  }
+
+  grouping prefix-sid-sub-tlvs {
+    description "Prefix Segment ID (SID) sub-TLVs.";
+    container prefix-sid-sub-tlvs{
+      description "Prefix SID sub-TLV.";
+      list prefix-sid-sub-tlv {
+        description "Prefix SID sub-TLV.";
+        container prefix-sid-flags {
+          leaf-list bits {
+            type identityref {
+              base prefix-sid-bit;
+            }
+            description
+              "Prefix SID Sub-TLV flag bits list.";
+          }
+          description "Segment Identifier (SID) Flags.";
+        }
+        leaf mt-id {
+          type uint8;
+          description "Multi-topology ID.";
+        }
+        leaf algorithm {
+          type uint8;
+          description
+            "The algorithm associated with the prefix-SID.";
+        }
+        leaf sid {
+          type uint32;
+          description "An index or label.";
+        }
+      }
+    }
+  }
+
+  grouping extended-prefix-range-tlvs {
+    description "Extended prefix range TLV grouping.";
+
+    container extended-prefix-range-tlvs {
+      description "The list of range of prefixes.";
+      list extended-prefix-range-tlv {
+        description "The range of prefixes.";
+        leaf prefix-length {
+          type uint8;
+          description "Length of prefix in bits.";
+        }
+        leaf af {
+          type uint8;
+          description "Address family for the prefix.";
+        }
+        leaf range-size {
+          type uint16;
+          description "The number of prefixes covered by the
+                       advertisement.";
+        }
+        container extended-prefix-range-flags {
+          leaf-list bits {
+            type identityref {
+              base extended-prefix-range-bit;
+            }
+            description "Extended prefix range TLV flags list.";
+          }
+          description "Extended Prefix Range TLV flags.";
+        }
+        leaf prefix {
+          type inet:ip-prefix;
+          description "Address prefix.";
+        }
+        uses prefix-sid-sub-tlvs;
+        uses ospf:unknown-tlvs;
+      }
+    }
+  }
+
+  grouping sr-algorithm-tlv {
+    description "SR algorithm TLV grouping.";
+    container sr-algorithm-tlv {
+      description "All SR algorithm TLVs.";
+      leaf-list sr-algorithm {
+        type uint8;
+        description
+          "The Segment Routing (SR) algorithms that the router is
+           currently using.";
+      }
+    }
+  }
+
+  grouping sid-range-tlvs {
+    description "SID Range TLV grouping.";
+    container sid-range-tlvs {
+      description "List of SID range TLVs.";
+      list sid-range-tlv {
+        description "SID range TLV.";
+        leaf range-size {
+          type uint24;
+          description "The SID range.";
+        }
+        uses sid-sub-tlv;
+      }
+    }
+  }
+
+  grouping local-block-tlvs {
+    description "The SR local block TLV contains the
+                 range of labels reserved for local SIDs.";
+    container local-block-tlvs {
+      description "List of SRLB TLVs.";
+      list local-block-tlv {
+        description "SRLB TLV.";
+        leaf range-size {
+          type uint24;
+          description "The SID range.";
+        }
+        uses sid-sub-tlv;
+      }
+    }
+  }
+
+  grouping srms-preference-tlv {
+    description "The SRMS preference TLV is used to advertise
+                 a preference associated with the node that acts
+                 as an SR Mapping Server.";
+    container srms-preference-tlv {
+      description "SRMS Preference TLV.";
+      leaf preference {
+        type uint8 {
+          range "0 .. 255";
+        }
+        description "SRMS preference TLV, value from 0 to 255.";
+      }
+    }
+  }
+
+  /* Configuration */
+  augment "/rt:routing/rt:control-plane-protocols"
+        + "/rt:control-plane-protocol/ospf:ospf" {
+    when "../rt:type = 'ospf:ospfv2' or "
+       + "../rt:type = 'ospf:ospfv3'" {
+      description
+        "This augments the OSPF routing protocol when used.";
+    }
+    description
+      "This augments the OSPF protocol configuration
+       with segment routing.";
+    uses sr-mpls:sr-control-plane;
+    container protocol-srgb {
+      if-feature sr-mpls:protocol-srgb;
+      uses sr-cmn:srgb;
+      description
+        "Per-protocol SRGB.";
+    }
+  }
+
+  augment "/rt:routing/rt:control-plane-protocols/"
+        + "rt:control-plane-protocol/ospf:ospf/"
+        + "ospf:areas/ospf:area/ospf:interfaces/ospf:interface" {
+    when "../../../../../rt:type = 'ospf:ospfv2' or "
+       + "../../../../../rt:type = 'ospf:ospfv3'" {
+      description
+        "This augments the OSPF interface configuration
+         when used.";
+    }
+    description
+      "This augments the OSPF protocol interface
+       configuration with segment routing.";
+
+    uses sr-mpls:igp-interface;
+  }
+
+  augment "/rt:routing/rt:control-plane-protocols/"
+        + "rt:control-plane-protocol/ospf:ospf/"
+        + "ospf:areas/ospf:area/ospf:interfaces/ospf:interface/"
+        + "ospf:fast-reroute" {
+    when "../../../../../../rt:type = 'ospf:ospfv2' or "
+       + "../../../../../../rt:type = 'ospf:ospfv3'" {
+      description
+        "This augments the OSPF routing protocol when used.";
+    }
+    description
+      "This augments the OSPF protocol IP-FRR with TI-LFA.";
+
+    container ti-lfa {
+      if-feature ti-lfa;
+      leaf enable {
+        type boolean;
+        description
+         "Enables TI-LFA computation.";
+      }
+      description
+        "Topology Independent Loop Free Alternate
+         (TI-LFA) support.";
+    }
+  }
+
+  /* Database */
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
+        + "ospf:ospf/ospf:areas/ospf:area/"
+        + "ospf:interfaces/ospf:interface/ospf:database/"
+        + "ospf:link-scope-lsa-type/ospf:link-scope-lsas/"
+        + "ospf:link-scope-lsa/ospf:version/ospf:ospfv2/"
+        + "ospf:ospfv2/ospf:body/ospf:opaque/"
+        + "ospf:extended-prefix-opaque" {
+    when "../../../../../../../../../../../../../"
+       + "rt:type = 'ospf:ospfv2'" {
+      description
+        "This augmentation is only valid for OSPFv2.";
+    }
+    description
+      "SR specific TLVs for OSPFv2 extended prefix LSA
+       in type 9 opaque LSA.";
+
+    uses extended-prefix-range-tlvs;
+  }
+
+    augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
+        + "ospf:ospf/ospf:areas/"
+        + "ospf:area/ospf:database/"
+        + "ospf:area-scope-lsa-type/ospf:area-scope-lsas/"
+        + "ospf:area-scope-lsa/ospf:version/ospf:ospfv2/"
+        + "ospf:ospfv2/ospf:body/ospf:opaque/"
+        + "ospf:extended-prefix-opaque" {
+    when "../../../../../../../../../../../"
+       + "rt:type = 'ospf:ospfv2'" {
+      description
+        "This augmentation is only valid for OSPFv2.";
+    }
+    description
+      "SR specific TLVs for OSPFv2 extended prefix LSA
+       in type 10 opaque LSA.";
+
+    uses extended-prefix-range-tlvs;
+  }
+
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
+        + "ospf:ospf/ospf:database/"
+        + "ospf:as-scope-lsa-type/ospf:as-scope-lsas/"
+        + "ospf:as-scope-lsa/ospf:version/ospf:ospfv2/"
+        + "ospf:ospfv2/ospf:body/ospf:opaque/"
+        + "ospf:extended-prefix-opaque" {
+    when "../../../../../../../../../"
+       + "rt:type = 'ospf:ospfv2'" {
+      description
+        "This augmentation is only valid for OSPFv2.";
+    }
+    description
+      "SR specific TLVs for OSPFv2 extended prefix LSA
+       in type 11 opaque LSA.";
+
+    uses extended-prefix-range-tlvs;
+  }
+
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
+        + "ospf:ospf/ospf:areas/ospf:area/"
+        + "ospf:interfaces/ospf:interface/ospf:database/"
+        + "ospf:link-scope-lsa-type/ospf:link-scope-lsas/"
+        + "ospf:link-scope-lsa/ospf:version/ospf:ospfv2/"
+        + "ospf:ospfv2/ospf:body/ospf:opaque/"
+        + "ospf:extended-prefix-opaque/ospf:extended-prefix-tlv" {
+    when "../../../../../../../../../../../../../../"
+       + "rt:type = 'ospf:ospfv2'" {
+      description
+        "This augmentation is only valid for OSPFv2.";
+    }
+    description
+      "SR specific TLVs for OSPFv2 extended prefix TLV
+       in type 9 opaque LSA.";
+    uses prefix-sid-sub-tlvs;
+  }
+
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
+        + "ospf:ospf/ospf:areas/"
+        + "ospf:area/ospf:database/"
+        + "ospf:area-scope-lsa-type/ospf:area-scope-lsas/"
+        + "ospf:area-scope-lsa/ospf:version/ospf:ospfv2/"
+        + "ospf:ospfv2/ospf:body/ospf:opaque/"
+        + "ospf:extended-prefix-opaque/ospf:extended-prefix-tlv" {
+    when "../../../../../../../../../../../../"
+       + "rt:type = 'ospf:ospfv2'" {
+      description
+        "This augmentation is only valid for OSPFv2.";
+    }
+    description
+      "SR specific TLVs for OSPFv2 extended prefix TLV
+       in type 10 opaque LSA.";
+    uses prefix-sid-sub-tlvs;
+  }
+
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
+        + "ospf:ospf/ospf:database/"
+        + "ospf:as-scope-lsa-type/ospf:as-scope-lsas/"
+        + "ospf:as-scope-lsa/ospf:version/ospf:ospfv2/"
+        + "ospf:ospfv2/ospf:body/ospf:opaque/"
+        + "ospf:extended-prefix-opaque/ospf:extended-prefix-tlv" {
+    when "../../../../../../../../../../"
+       + "rt:type = 'ospf:ospfv2'" {
+      description
+        "This augmentation is only valid for OSPFv2.";
+    }
+    description
+      "SR specific TLVs for OSPFv2 extended prefix TLV
+       in type 11 opaque LSA.";
+    uses prefix-sid-sub-tlvs;
+  }
+
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
+        + "ospf:ospf/ospf:areas/"
+        + "ospf:area/ospf:database/"
+        + "ospf:area-scope-lsa-type/ospf:area-scope-lsas/"
+        + "ospf:area-scope-lsa/ospf:version/ospf:ospfv2/"
+        + "ospf:ospfv2/ospf:body/ospf:opaque/"
+        + "ospf:extended-link-opaque/ospf:extended-link-tlv" {
+    when "../../../../../../../../../../../../"
+       + "rt:type = 'ospf:ospfv2'" {
+      description
+        "This augmentation is only valid for OSPFv2.";
+    }
+    description
+      "SR specific TLVs for OSPFv2 extended link TLV
+       in type 10 opaque LSA.";
+
+    container adj-sid-sub-tlvs {
+      description "Adjacency SID optional sub-TLVs.";
+      list adj-sid-sub-tlv {
+        description "List of Adjacency SID sub-TLVs.";
+        container adj-sid-flags {
+          leaf-list bits {
+            type identityref {
+              base adj-sid-bit;
+            }
+            description "Adj sid sub-tlv flags list.";
+          }
+          description "Adj-sid sub-tlv flags.";
+        }
+        leaf mt-id {
+          type uint8;
+          description "Multi-topology ID.";
+        }
+        leaf weight {
+          type uint8;
+          description "Weight used for load-balancing.";
+        }
+        leaf sid {
+          type uint32;
+          description "Segment Identifier (SID) index/label.";
+        }
+      }
+    }
+
+    container lan-adj-sid-sub-tlvs {
+      description "LAN Adjacency SID optional sub-TLVs.";
+      list lan-adj-sid-sub-tlv {
+        description "List of LAN adjacency SID sub-TLVs.";
+        container lan-adj-sid-flags {
+          leaf-list bits {
+            type identityref {
+              base adj-sid-bit;
+            }
+            description "LAN adj sid sub-tlv flags list.";
+          }
+          description "LAN adj-sid sub-tlv flags.";
+        }
+        leaf mt-id {
+          type uint8;
+          description "Multi-topology ID.";
+        }
+        leaf weight {
+          type uint8;
+          description "Weight used for load-balancing.";
+        }
+        leaf neighbor-router-id {
+          type yang:dotted-quad;
+          description "Neighbor router ID.";
+        }
+        leaf sid {
+          type uint32;
+          description "Segment Identifier (SID) index/label.";
+        }
+      }
+    }
+  }
+
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
+        + "ospf:ospf/ospf:areas/ospf:area/"
+        + "ospf:interfaces/ospf:interface/ospf:database/"
+        + "ospf:link-scope-lsa-type/ospf:link-scope-lsas/"
+        + "ospf:link-scope-lsa/ospf:version/ospf:ospfv2/"
+        + "ospf:ospfv2/ospf:body/ospf:opaque/ospf:ri-opaque" {
+    when "../../../../../../../../../../../../../"
+       + "rt:type = 'ospf:ospfv2'" {
+      description
+        "This augmentation is only valid for OSPFv2.";
+    }
+
+    description
+      "SR specific TLVs for OSPFv2 type 9 opaque LSA.";
+
+    uses sr-algorithm-tlv;
+    uses sid-range-tlvs;
+    uses local-block-tlvs;
+    uses srms-preference-tlv;
+  }
+
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
+        + "ospf:ospf/ospf:areas/"
+        + "ospf:area/ospf:database/"
+        + "ospf:area-scope-lsa-type/ospf:area-scope-lsas/"
+        + "ospf:area-scope-lsa/ospf:version/ospf:ospfv2/"
+        + "ospf:ospfv2/ospf:body/ospf:opaque/ospf:ri-opaque" {
+    when "../../../../../../../../../../../"
+       + "rt:type = 'ospf:ospfv2'" {
+      description
+        "This augmentation is only valid for OSPFv2.";
+    }
+
+    description
+      "SR specific TLVs for OSPFv2 type 10 opaque LSA.";
+
+    uses sr-algorithm-tlv;
+    uses sid-range-tlvs;
+    uses local-block-tlvs;
+    uses srms-preference-tlv;
+  }
+
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
+        + "ospf:ospf/ospf:database/"
+        + "ospf:as-scope-lsa-type/ospf:as-scope-lsas/"
+        + "ospf:as-scope-lsa/ospf:version/ospf:ospfv2/"
+        + "ospf:ospfv2/ospf:body/ospf:opaque/ospf:ri-opaque" {
+    when "../../../../../../../../../"
+       + "rt:type = 'ospf:ospfv2'" {
+      description
+        "This augmentation is only valid for OSPFv2.";
+    }
+    description
+      "SR specific TLVs for OSPFv2 type 11 opaque LSA.";
+    
+    uses sr-algorithm-tlv;
+    uses sid-range-tlvs;
+    uses local-block-tlvs;
+    uses srms-preference-tlv;
+  }
+}
+<CODE ENDS>
+      ]]></artwork>
+    </figure>
+  </t>      
+  </section>
+    </section>
+
+    <!-- Possibly a 'Contributors' section ... -->
+
+    <section anchor="Security" title="Security Considerations">
+      <t>The YANG modules specified in this document define a schema for 
+      data that is designed to be accessed via network
+      management protocols such as NETCONF <xref target="RFC6241"/> or
+      RESTCONF <xref target="RFC8040"/>. The lowest NETCONF layer is the secure transport
+      layer, and the mandatory-to-implement secure transport is Secure Shell (SSH)
+      <xref target="RFC6242"/>. The lowest RESTCONF layer is HTTPS, and the
+      mandatory-to-implement secure transport is TLS <xref target="RFC8446"/>.</t>
+
+      <t>The NETCONF Configuration Access Control model (NACM) <xref target="RFC8341"/> provides the 
+      means to restrict access for particular NETCONF or RESTCONF users to a
+      pre-configured subset of all available NETCONF or RESTCONF protocol 
+      operations and content.</t>
+
+      <t>There are a number of data nodes defined in the modules
+      that are writable/creatable/deletable (i.e., config true, which is the default). 
+      These data nodes may be considered sensitive or vulnerable in some network 
+      environments. Write operations (e.g., edit-config) to these data nodes without 
+      proper protection can have a negative effect on network operations.
+      These are the subtrees and data nodes and their sensitivity/vulnerability:
+      <list style="empty">
+        <t>/ospf:ospf/segment-routing/enabled - Modification to the
+          enablement for SR could result in a Denial-of-Service (Dos)
+          attack. If an attacker disables SR, it will cause traffic disruption. </t>
+        <t>/ospf:ospf/segment-routing/bindings - Modification to the local
+          bindings could result in a Denial-of-Service (Dos) attack.</t>
+        <t>/ospf:ospf/protocol-srgb - Modification of the protocol SRGB
+          could be used to mount a DoS attack. For example, if the protocol
+          SRBG size is reduced to a very small value, a lot of existing
+          segments could no longer be installed leading to a traffic disruption.</t>
+        <t>/ospf:interfaces/ospf:interface/segment-routing - Modification of the
+          Adjacency Segment Identifier (Adj-SID) could be used to mount a
+          DoS attack. Change of an Adj-SID could be used to redirect traffic.</t>
+        <t>/ospf:interfaces/ospf:interface/ospf:fast-reroute/ti-lfa - Modification
+          of the TI-LFA enablement could lead to traffic disruption.</t>
+
+      </list></t>  
+
+      <t>Some of the readable data nodes in the modules
+      may be considered sensitive or vulnerable in some network environments. It is thus 
+      important to control read access (e.g., via get, get-config, or notification)
+      to these data nodes.</t>
+      <t>Both module ietf-ospf-sr and ietf-ospf-msd augment base OSPF module data base with
+      various TLVs. Knowledge of these data nodes ca be used to attack other
+      routers in the OSPF domain.</t>
+    </section>
+
+    <section anchor="Acknowledgements" title="Acknowledgements">
+      <t>The authors wish to thank Yi Yang, Alexander Clemm, 
+      Gaurav Gupta, Ladislav Lhotka, Stephane Litkowski, 
+      Greg Hankins, Manish Gupta and Alan Davey for their thorough reviews 
+      and helpful comments.</t>
+      <t>This document was produced using Marshall Rose's xml2rfc tool.</t>
+      <t>Author affiliation with The MITRE Corporation is provided for
+      identification purposes only, and is not intended to convey or imply MITRE's
+      concurrence with, or support for, the positions, opinions or viewpoints
+      expressed.  MITRE has approved this document for Public Release,
+      Distribution Unlimited, with Public Release Case Number 18-3281.</t>
+    </section>   
+        <section anchor="IANA" title="IANA Considerations" toc="default">
+      <t>This document registers a URI in the IETF XML registry
+   <xref target="RFC3688"/>.  Following the format in <xref target="RFC3688"/>,
+   the following registration is requested to be made:
+   <figure>
+   <artwork>
+   URI: urn:ietf:params:xml:ns:yang:ietf-ospf-sr
+   Registrant Contact: The IESG.
+   XML: N/A, the requested URI is an XML namespace.
+   </artwork>
+   </figure>
+   <figure>
+   <artwork>
+   URI: urn:ietf:params:xml:ns:yang:ietf-ospf-msd
+   Registrant Contact: The IESG.
+   XML: N/A, the requested URI is an XML namespace.
+   </artwork>
+   </figure>
+   </t>
+   <t>This document registers a YANG module in the YANG Module Names
+   registry <xref target="RFC6020"/>.
+   <figure>
+   <artwork>
+   name: ietf-ospf-sr
+   namespace: urn:ietf:params:xml:ns:yang:ietf-ospf-sr
+   prefix: ospf-sr
+   reference: RFC XXXX
+   </artwork>
+   </figure>
+   <figure>
+   <artwork>
+   name: ietf-ospf-msd
+   namespace: urn:ietf:params:xml:ns:yang:ietf-ospf-msd
+   prefix: ospf-msd
+   reference: RFC XXXX
+   </artwork>
+   </figure>
+    </t>
+    </section>
+  </middle>
+
+  <!--  *****BACK MATTER ***** -->
+
+  <back>
+    <!-- References split into informative and normative -->
+
+    <!-- There are 2 ways to insert reference entries from the citation libraries:
+     1. define an ENTITY at the top, and use "ampersand character"RFC2629; here (as shown)
+     2. simply use a PI "less than character"?rfc include="reference.RFC.2119.xml"?> here
+        (for I-Ds: include="reference.I-D.narten-iana-considerations-rfc2434bis.xml")
+
+     Both are cited textually in the same manner: by using xref elements.
+     If you use the PI option, xml2rfc will, by default, try to find included files in the same
+     directory as the including file. You can also define the XML_LIBRARY environment variable
+     with a value containing a set of directories to search.  These can be either in the local
+     filing system or remote ones accessed by http (http://domain/dir/... ).-->
+
+    <references title="Normative References">
+      <!--?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml"?-->
+      &RFC6020;
+      &RFC6241;
+      &RFC2119;
+      &RFC3688;
+      &RFC7223;
+      &RFC2328;
+      &RFC5340;
+      &RFC5838;
+      &RFC4750;
+      &RFC5643;
+      &RFC6242;
+      &RFC7950;
+      &RFC8040;
+      &RFC8341;
+      &RFC8446;
+      &RFC8476;
+      &RFC8665;
+      &RFC9020;
+      &I-D.ietf-ospf-yang;
+    </references>
+    <references title="Informative References">
+      <!-- Here we use entities that we defined at the beginning. -->
+      &RFC8022;
+      &RFC8340;
+      &RFC8342;
+    </references>
+   <section title="Contributors' Addreses">
+   <figure>
+   <artwork>  
+
+Dean Bogdanovic
+Volta Networks, Inc. 
+ 
+EMail: dean@voltanet.io
+
+
+Kiran Koushik Agrahara Sreenivasa
+Cisco Systems
+12515 Research Blvd, Bldg 4
+Austin, TX  78681
+USA
+
+EMail: kkoushik@cisco.com
+
+   </artwork> 
+   </figure>
+  </section>
+
+    <!-- Change Log
+
+v00 2006-03-15  EBD   Initial version
+
+v01 2006-04-03  EBD   Moved PI location back to position 1 -
+                      v3.1 of XMLmind is better with them at this location.
+v02 2007-03-07  AH    removed extraneous nested_list attribute,
+                      other minor corrections
+v03 2007-03-09  EBD   Added comments on null IANA sections and fixed heading capitalization.
+                      Modified comments around figure to reflect non-implementation of
+                      figure indent control.  Put in reference using anchor="DOMINATION".
+                      Fixed up the date specification comments to reflect current truth.
+v04 2007-03-09 AH     Major changes: shortened discussion of PIs,
+                      added discussion of rfc include.
+v05 2007-03-10 EBD    Added preamble to C program example to tell about ABNF and alternative 
+                      images. Removed meta-characters from comments (causes problems).  -->
+  </back>
+</rfc>
